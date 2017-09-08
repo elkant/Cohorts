@@ -1,0 +1,36 @@
+CACHE MANIFEST
+# 2017-10-07 v1.0.7
+sites.json
+months.json
+indicators1.json
+images/logo.png
+css/dataTables.bootstrap.min.css
+css/bootstrap.css
+css/bootstrap-datepicker.min.css
+css/select2.min.css
+css/styles.css
+js/jquery.min.js
+js/jquery-1.9.1.js
+js/bootstrap.js
+js/scripts.js
+js/bootstrap-datepicker.min.js
+js/select2.min.js
+js/datatables.min.js
+js/pouchdb-4.0.1.js
+images/favicon.ico
+images/sort_asc.png
+images/sort_asc_disabled.png
+images/sort_both.png
+images/sort_desc.png
+images/sort_desc_disabled.png
+fonts/glyphicons-halflings-regular.woff2
+fonts/glyphicons-halflings-regular.woff
+fonts/glyphicons-halflings-regular.ttf
+
+NETWORK:
+#index.jsp
+#MOIS.xlsm
+#919B2700
+
+FALLBACK:
+#/html/ /offline.html
