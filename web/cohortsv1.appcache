@@ -1,8 +1,8 @@
 CACHE MANIFEST
-# 2017-10-07 v1.0.7
+# 2017-10-07 v1.0.47
 sites.json
 months.json
-indicators1.json
+indicators2.json
 images/logo.png
 css/dataTables.bootstrap.min.css
 css/bootstrap.css

@@ -76,8 +76,13 @@ String error;
     //id=yearstring+"_"+monthstring+"_"+mflcode+"_"+indicatorid;
     
     //
-     String artparameters[]={"1_adult","1_child","1_tl","2_adult","2_child","2_tl","3_adult","3_child","3_tl","4_adult","4_child","4_tl","5_adult","5_child","5_tl","6_adult","6_child","6_tl","7_adult","7_child","7_tl","8_adult","8_child","8_tl","9_adult","9_child","9_tl","10_adult","10_child","10_tl","11_adult","11_child","11_tl","12_adult","12_child","12_tl"};
-   String pmtctparameters[]={"1_kp","1_np","1_tl","2_kp","2_np","2_tl","3_kp","3_np","3_tl","4_kp","4_np","4_tl","5_kp","5_np","5_tl","6_kp","6_np","6_tl","7_kp","7_np","7_tl","8_kp","8_np","8_tl","9_kp","9_np","9_tl","10_kp","10_np","10_tl","11_kp","11_np","11_tl","12_kp","12_np","12_tl"};
+     //String artparameters[]={"1_adult","1_child","1_tl","2_adult","2_child","2_tl","3_adult","3_child","3_tl","4_adult","4_child","4_tl","5_adult","5_child","5_tl","6_adult","6_child","6_tl","7_adult","7_child","7_tl","8_adult","8_child","8_tl","9_adult","9_child","9_tl","10_adult","10_child","10_tl","11_adult","11_child","11_tl","12_adult","12_child","12_tl"};
+   //String pmtctparameters[]={"1_kp","1_np","1_tl","2_kp","2_np","2_tl","3_kp","3_np","3_tl","4_kp","4_np","4_tl","5_kp","5_np","5_tl","6_kp","6_np","6_tl","7_kp","7_np","7_tl","8_kp","8_np","8_tl","9_kp","9_np","9_tl","10_kp","10_np","10_tl","11_kp","11_np","11_tl","12_kp","12_np","12_tl"};
+   
+    //note art indicators start from 13 to 23
+     String artparameters[]={"1_adult","1_child","1_tl","2_adult","2_child","2_tl","3_adult","3_child","3_tl","4_adult","4_child","4_tl","5_adult","5_child","5_tl","6_adult","6_child","6_tl","7_adult","7_child","7_tl","8_adult","8_child","8_tl","9_adult","9_child","9_tl","10_adult","10_child","10_tl","11_adult","11_child","11_tl"};
+     String artparameters2[]={"13_adult","13_child","13_tl","14_adult","14_child","14_tl","15_adult","15_child","15_tl","16_adult","16_child","16_tl","17_adult","17_child","17_tl","18_adult","18_child","18_tl","19_adult","19_child","19_tl","20_adult","20_child","20_tl","21_adult","21_child","21_tl","22_adult","22_child","22_tl","23_adult","23_child","23_tl"};
+   String pmtctparameters[]={"1_kp","1_np","1_tl","2_kp","2_np","2_tl","3_kp","3_np","3_tl","4_kp","4_np","4_tl","5_kp","5_np","5_tl","6_kp","6_np","6_tl","7_kp","7_np","7_tl","8_kp","8_np","8_tl","9_kp","9_np","9_tl","10_kp","10_np","10_tl","11_kp","11_np","11_tl"};
     
 ArrayList artvals=new ArrayList();
 ArrayList pmtctvals=new ArrayList();
@@ -94,7 +99,7 @@ for(int a=0;a<artparameters.length;a++){
 artvals.add(val);
 
 //further processing here
-insertorUpdateData(val,tablename,artparameters[a].split("_")[1]+"_"+cohortmonths,conn, yr, mn, mflcode,artparameters[a].split("_")[0]);
+insertorUpdateData(val,tablename,artparameters[a].split("_")[1]+"_"+cohortmonths,conn, yr, mn, mflcode,artparameters2[a].split("_")[0]);
 }
 }
 else if(tablename.equals("pmtct_cohort")) {

@@ -40,6 +40,18 @@
         <servlet-name>loadSavedCohort</servlet-name>
         <servlet-class>data.loadSavedCohort</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>cleanduplicates</servlet-name>
+        <servlet-class>scripts.cleanduplicates</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>addbirthyearmonth</servlet-name>
+        <servlet-class>scripts.addbirthyearmonth</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>importpns</servlet-name>
+        <servlet-class>imports.importpns</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loadcohort</servlet-name>
         <url-pattern>/loadcohort</url-pattern>
@@ -79,6 +91,18 @@
     <servlet-mapping>
         <servlet-name>loadSavedCohort</servlet-name>
         <url-pattern>/loadSavedCohort</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>cleanduplicates</servlet-name>
+        <url-pattern>/cleanduplicates</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>addbirthyearmonth</servlet-name>
+        <url-pattern>/addbirthyearmonth</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>importpns</servlet-name>
+        <url-pattern>/importpns</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

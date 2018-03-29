@@ -142,7 +142,7 @@ String yearmonth="";
      }
      if(!fileName.endsWith(".xlsx")){
          nextpage="importpmtct.jsp";
-         session.setAttribute("upload_success", "<font color=\"red\">Failed to load the excel file. Please choose a .xlsx excel file .</font>");
+         session.setAttribute("uploadedpmtct", "<font color=\"red\">Failed to load the excel file. Please choose a .xlsx excel file .</font>");
      }
      else{
          
@@ -202,6 +202,9 @@ String yearmonth="";
                      else if(cellyear.getCellType()==1){
                          reportingyear =cellyear.getStringCellValue();
                      }
+                         if(reportingyear.equals("2016")){ 
+                     reportingyear="2017";
+                 }
                      
                      //-----------month-----------------------
                      XSSFCell cellmonth = worksheet.getRow(0).getCell((short) 5);
@@ -550,7 +553,7 @@ String yearmonth="";
                  
                  
                  
-                 String getindicator="SELECT indicators_id,id,indicator FROM pmtct_art_cohort.indicators where cohort='art' and indicator like '%"+indicator+"'";
+                 String getindicator="SELECT indicators_id,id,indicator FROM pmtct_art_cohort.indicators where cohort='pmtct' and indicator like '%"+indicator+"'";
                  //dbConn conn= new dbConn();
                  //System.out.println(" Qry "+getindicator);     
                  conn.rs=conn.state.executeQuery(getindicator);
@@ -602,7 +605,7 @@ String yearmonth="";
 //                        DISTRICT FOUND ADD THE HF TO THE SYSTEM.........................
                      
                    
-                  
+                  // if(new Integer(yearmonth)>=201710 && new Integer(yearmonth)<=201712 ){
                      
                      if(checker==0){
                          
@@ -675,7 +678,7 @@ String yearmonth="";
                           conn.pst.executeUpdate();
                          updated++;
                      }
-                     
+                  // }//end of if current period
                  }
                  
                  else{
@@ -714,7 +717,7 @@ String yearmonth="";
           }
 }
     String sessionText="<br/><b> "+added+ "</b> New data added <br/> <b> "+updated+"</b> updated facilities<br> <br> <b>"+missing+"</b> sites not in Imis Facilities List ";    
-    session.setAttribute("upload_success", sessionText);
+    session.setAttribute("uploadedpmtct"," File name is "+fileName+". "+ sessionText);
     response.sendRedirect(nextpage);  
  
 

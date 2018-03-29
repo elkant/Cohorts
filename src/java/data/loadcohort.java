@@ -427,7 +427,42 @@ c.add(Calendar.MONTH, deductvalue);
     
     //=============================end of getimisyearmonth===================================
     
+    //get yearmonth 6 digits value
+      
+       
+      public String getyearmonthkey(int currentyear, int currentmonth,int deductvalue){
     
+        String returnedyearmonth="190000";
+       
+        if(currentyear>=1900){
+         
+        deductvalue=deductvalue-1;  //since different months have different end dates, instead use fisrt of everymonth and deduct 1 month   
+                     
+Calendar c = Calendar.getInstance(); 
+c.setTime(new Date(currentyear-1900,currentmonth,1)); 
+c.add(Calendar.MONTH, deductvalue);
+           
+
+       int mwezi= (c.get(Calendar.MONTH)+1);
+       String mn=""+mwezi;
+       if (mwezi<10){
+       
+       mn="0"+mwezi;
+       }
+            
+       returnedyearmonth=""+c.get(Calendar.YEAR)+""+mn;     
+        
+       //returnedyearmonth=returnedyearmonth.substring(0, 4)+" "+ getmonthname(returnedyearmonth.substring(4));
+        
+       
+        }
+        
+       
+        
+    
+        return returnedyearmonth;
+        
+    }
     
     
     
@@ -453,5 +488,9 @@ c.add(Calendar.MONTH, deductvalue);
         
      return mwezi;   
     }
+    
+    
+    
+    
     
 }

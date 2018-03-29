@@ -78,6 +78,7 @@ public class enrolledFromImis extends HttpServlet {
             if(ct.equalsIgnoreCase("art")){
             
             sql="select  IFNULL((HV0323 + HV0324),0) as adult ,  IFNULL((HV0321 + HV0322),0) as children,  IFNULL((HV0323 + HV0324+HV0321 + HV0322),0) as ttl  ";
+           
             }
             
             
@@ -89,15 +90,22 @@ public class enrolledFromImis extends HttpServlet {
             
             sql+=" from internal_system.moh731 where id='"+id+"'";
             
-            
+                System.out.println(""+sql);
             conn.rs=conn.st0.executeQuery(sql);
             
-            while (conn.rs.next()){
+            if (conn.rs.next()){
             
-        jo.put("val1", conn.rs.getInt(1));
+             
+            jo.put("val1", conn.rs.getInt(1));
         jo.put("val2", conn.rs.getInt(2));
         jo.put("tl", conn.rs.getInt(3));
-                
+            }
+            //if no values in IMIS
+            else {
+       jo.put("val1", "");
+        jo.put("val2", "");
+        jo.put("tl", "");
+    
             
             }
             

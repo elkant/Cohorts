@@ -78,7 +78,7 @@ public class loadSavedCohort extends HttpServlet {
             //get and return data
             if(ct.equalsIgnoreCase("art")){
             
-            sql="select id, indicator, IFNULL(adult_"+cm+",'') as adult_"+cm+" , IFNULL(child_"+cm+",'') as child_"+cm+", IFNULL(tl_"+cm+",'') as tl_"+cm+"  ";
+            sql="select id, indicator, IFNULL(adult_"+cm+",'0') as adult_"+cm+" , IFNULL(child_"+cm+",'0') as child_"+cm+", IFNULL(tl_"+cm+",'0') as tl_"+cm+"  ";
             }
             
             
@@ -88,19 +88,43 @@ public class loadSavedCohort extends HttpServlet {
             
             }
             
-            sql+=" from "+tablename+" where mflcode='"+mflcode+"' and yearmonth='"+yr+mn+"' order by indicator ";
+            sql+=" from "+tablename+" where mflcode='"+mflcode+"' and yearmonth='"+yr+mn+"' and (indicator!='12' ) and (indicator!='24' ) order by indicator ";
             
             
             conn.rs=conn.st0.executeQuery(sql);
                 System.out.println(""+sql);
             
             while (conn.rs.next()){
-                System.out.println("Indicator "+conn.rs.getInt(2));
+                
              JSONObject jo= new JSONObject(); 
         jo.put("indicator", conn.rs.getString(2));
-        jo.put("val1", conn.rs.getInt(3));
-        jo.put("val2", conn.rs.getInt(4));
-        jo.put("val3", conn.rs.getInt(5));
+        //always show 0's for LTFU 3m
+             if( cm.equalsIgnoreCase("3m") && (conn.rs.getString(2).equals("6") || conn.rs.getString(2).equals("18") )){
+        jo.put("val1", 0);
+        jo.put("val2", 0);
+        jo.put("val3", 0);
+        System.out.println("Indicator "+conn.rs.getInt(2)+" no LTFU");
+             }
+              //no values for vl done and suppressed Np 3m
+             else if(ct.equalsIgnoreCase("pmtct") && cm.equalsIgnoreCase("3m") && (conn.rs.getString(2).equals("10")|| conn.rs.getString(2).equals("11") ) ){
+        jo.put("val1",  conn.rs.getString(3));
+        jo.put("val2", 0);
+        jo.put("val3", conn.rs.getString(5));
+        System.out.println("Indicator "+conn.rs.getString(2)+" if 2------");
+             }
+             //no values for vl done and suppressed
+             else if(  cm.equals("9m") && (conn.rs.getString(2).equals("10")|| conn.rs.getString(2).equals("11") ) ){
+        jo.put("val1", 0);
+        jo.put("val2", 0);
+        jo.put("val3", 0);
+        System.out.println("Indicator "+conn.rs.getString(2)+" if 3------");
+             }
+             else {
+        jo.put("val1", conn.rs.getString(3));
+        jo.put("val2", conn.rs.getString(4));
+        jo.put("val3", conn.rs.getString(5));
+             
+             }
          
         ar.put(jo);
             

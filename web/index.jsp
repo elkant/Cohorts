@@ -14,7 +14,7 @@
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
-		<title>PCA/ART Cohorts</title>
+		<title>MCA/ACA</title>
 		<meta name="generator" content="Bootply" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
                   <link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
@@ -31,7 +31,7 @@
 		<link href="css/styles.css" rel="stylesheet">
                 
 	</head>
-	<body>
+	<body >
 <!-- header -->
 <div id="top-nav" class="navbar navbar-inverse navbar-static-top">
     <div class="container-fluid">
@@ -82,7 +82,7 @@
 
             
             
-          <h5 style="text-align: center;color:blue;">PMTCT/ART COHORT ANALYSIS REPORTING TOOL </h5>
+          <h5 style="text-align: center;color:blue;">MATERNAL/ART COHORT ANALYSIS SYSTEM [Ver 1.0.0]</h5>
 
             <div class="row">
                 <!-- center left-->
@@ -170,10 +170,10 @@
                                 <div class="control-group">
                                  
                                    <div class="controls">
-                                       <select  onchange='createdynamicinputs();getFacilitiesJson();load731();loadcohorts();' required="true"  name="cohortttype" id="cohortttype" class="form-control" >
+                                       <select  onchange='createdynamicinputs();getFacilitiesJson();load731();loadcohorts();hiddenelements();cohortmonths();isdisplayindicators();' required="true"  name="cohortttype" id="cohortttype" class="form-control" >
                                            
                                             <option value="art">ART</option>
-                                            <option value="pmtct">PMTCT</option>
+                                            <option value="pmtct">MCA</option>
                                         </select>
                                     
                                 </div>
@@ -183,7 +183,7 @@
                                <div class="control-group">
                                     
                                     <div class="controls">
-                                       <select required="true" onclick="getmonth();cohortmonths();load731();loadcohorts();"   name="year" id="year" class="form-control" >
+                                       <select required="true" onclick="getmonth();cohortmonths();load731();loadcohorts();isdisplayindicators();"   name="year" id="year" class="form-control" >
                                             <option value=''>Select Year</option>
                                               <%
                                                 
@@ -237,7 +237,7 @@
                                 <div class="control-group">
                                    
                                     <div class="controls">
-                                       <select required="true"    name="month" id="month" onchange="cohortmonths();load731();loadcohorts();" class="form-control" >
+                                       <select required="true"    name="month" id="month" onchange="cohortmonths();load731();loadcohorts();isdisplayindicators();" class="form-control" >
                                             <option>Select Month</option>
                                             <option value="01">January</option>
                                             <option value="02">February</option>
@@ -262,7 +262,7 @@
                                 <div class="control-group">
                                    
                                     <div class="controls">
-                                       <select required="true" onchange="load731();loadcohorts();"  name="cohortmonth" id="cohortmonth" class="form-control" >
+                                       <select required="true" onchange="load731();loadcohorts();hiddenelements();isdisplayindicators();"  name="cohortmonth" id="cohortmonth" class="form-control" >
                                             <option value=''>Select reporting year and month</option>
                                             
                                            
@@ -282,7 +282,7 @@
                                   <div class="control-group">
                                     <label> <font color="red"><b>*</b></font>  Facility Name:</label>
                                     <div class="controls">
-                                        <select required="true"  onchange="load731();loadcohorts();"   name="facilityname" id="facilityname" class="form-control" >
+                                        <select required="true"  onchange="load731();loadcohorts();isdisplayindicators();"   name="facilityname" id="facilityname" class="form-control" >
                                             <option>Select Facility Name</option>
                                            
                                         </select>
@@ -294,7 +294,7 @@
                                    
                                   
                                     </table>
-                                         <table class='table table-striped table-bordered' id="dynamicindicators"  > 
+                                         <table class='table table-striped table-bordered' id="dynamicindicators" style="display:none;" > 
                                    
                                 <!------INDICATORS----->
                                  <tr ><td class='col-xs-12' colspan='3'>
@@ -495,7 +495,7 @@
                 <h4 class="modal-title">Help</h4>
             </div>
             <div class="modal-body">
-                <p>This  application is created for aiding users in collecting data for the PMTCT/ART Cohort Analysis. One is expected to enter data per facility.</p>
+                <p>This  application is created for aiding users in collecting data for the MCA/ART Cohort Analysis. One is expected to enter data per facility.</p>
                 <h3>Indicators</h3>
                 <p>The specific indicators that one should enter data for are;</p>
                 <ul>
@@ -517,7 +517,7 @@
 
                 </ul>
              <h3> Facilities</h3>
-                 <p> The selected cohort type(PMTCT/ART) determines the list of facilities availed for choosing </p>
+                 <p> The selected cohort type(MCA/ART) determines the list of facilities availed for choosing </p>
               </div>
             <div class="modal-footer">
                 <a href="#" data-dismiss="modal" class="btn">Close</a>
@@ -533,7 +533,7 @@
 
 
 	<!-- script references -->
-        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-1.9.1.js"></script>
 		<script src="js/bootstrap.js"></script>
 		<script src="js/scripts.js"></script>
                 <script src="js/bootstrap-datepicker.min.js"></script>
@@ -909,7 +909,7 @@ function createdynamicinputs(){
          
        
    
-         $.getJSON("indicators1.json",function(result){
+         $.getJSON("indicators2.json",function(result){
              var table="";
              var row1="";
              var row2="";
@@ -967,7 +967,7 @@ function createdynamicinputs(){
               }
               
               
-              row2+="<td class='"+tdclass+"' colspan='"+colspan+"' > <div class='control-group' > <label> "+label+" </label> <div class='controls'> <input  required='true' onkeypress='return numbers(event);' "+isreadonly+"  "+tabindex+" onblur=\""+onblur+"\" type='"+inputtype+"' min ='"+minimum+"' max='"+maximum+"'  name='"+indicatorid+"' id='"+indicatorid+"' class='form-control'> </div> </div> </td> ";
+              row2+="<td class='"+tdclass+"' colspan='"+colspan+"' > <div class='control-group' > <label> "+label+" </label> <div class='controls'> <input   required='true' onkeypress='return numbers(event);' "+isreadonly+"  "+tabindex+" onblur=\""+onblur+"\" type='tel' maxlength='4' min ='"+minimum+"' max='"+maximum+"'  name='"+indicatorid+"' id='"+indicatorid+"' class='form-control inputs'> </div> </div> </td> ";
             //IndicatorID	Age	IndicatorName	Level	datainputtype	Min	Max	onblur	onkeypress	Class	Required
     
      
@@ -1174,8 +1174,8 @@ function clearweeklyfields()
    // $("#facilityname").val("");
    //No facility name should have an underscore since its a special key
    
-$("#startdate").val("");   
-$("#enddate").val("");
+//$("#startdate").val("");   
+//$("#enddate").val("");
 
 for(b=0;b<allindicatorsarray.length;b++){
     
@@ -2424,11 +2424,11 @@ $("#reportsform").submit(function(e){
 
 $('form').on('focus', 'input[type=number]', function (e) {
   $(this).on('mousewheel.disableScroll', function (e) {
-    e.preventDefault()
+    e.preventDefault();
   })
 });
 $('form').on('blur', 'input[type=number]', function (e) {
-  $(this).off('mousewheel.disableScroll')
+  $(this).off('mousewheel.disableScroll');
 });
 
 
@@ -2551,6 +2551,7 @@ function load731(){
                        
                         
                         if(ct==='art'){
+                             if(1==2){
                            $("#1_adult").val(data.val1); 
                            $("#1_child").val(data.val2); 
                            $("#1_tl").val(data.tl);
@@ -2576,9 +2577,11 @@ function load731(){
                           $("#1_tl").prop("readonly", false);   
                             
                         }
-                            
+                    }   
                         }
                         else {
+                            //disabled from fetching data from moh731 for PMTCT
+                            if(1==2){
                           $("#1_kp").val(data.val1); 
                            $("#1_np").val(data.val2); 
                            $("#1_tl").val(data.tl);
@@ -2605,7 +2608,7 @@ function load731(){
                             
                         }
                             
-                            
+        }    
                         }
                         
                     }
@@ -2638,6 +2641,7 @@ function loadcohorts(){
                        
                         //alert(data.length);
                         var a=1;
+                        //display the values first
                         for(a=1;a<=data.length;a++){
                         
 //                        
@@ -2661,6 +2665,29 @@ function loadcohorts(){
                          
                         }//end of ifs
                         }
+                        
+                        
+                        
+                        //=============blur===============
+              for(a=1;a<=data.length;a++){
+                        
+//                        
+     if(ct==='art'){
+                          // if(data[a-1].val1!==''){                           
+                           $("#"+a+"_adult").blur();
+                           $("#"+a+"_child").blur();
+                       //}
+                   }
+    if(ct==='pmtct'){
+                          // if(data[a-1].val1!==''){                           
+                           $("#"+a+"_kp").blur();
+                           $("#"+a+"_np").blur();
+                      // }
+                         
+                    }//end of ifs
+                        }
+                        
+                        
                     }
                 });
                 
@@ -2698,6 +2725,238 @@ function clearfields( indics ){
 
 }
 //load the other elements
+
+//a function to disable or enable hidden elements
+
+function hiddenelements(){
+  var cm_=$("#cohortmonth").val();  
+  var ct_=$("#cohortttype").val();  
+  
+ if(cm_==='3m' && ct_==='pmtct'){ 
+     
+ 
+      $("#6_kp").attr("readonly",true);  
+      $("#6_np").attr("readonly",true);  
+      
+     
+      //tab index
+      $("#6_kp").attr("tabindex",-1);  
+      $("#6_np").attr("tabindex",-1); 
+      //$("#6_tl").attr("readonly",true);
+      $("#10_np").attr("readonly",true);
+      $("#11_np").attr("readonly",true);
+      
+      //tab index
+      $("#10_np").attr("tabindex",-1); 
+      $("#11_np").attr("tabindex",-1); 
+      
+      //remove the required attribute
+       $("#6_kp").removeAttr("required");
+       $("#6_np").removeAttr("required");
+       //$("#6_tl").removeAttr("required");
+       $("#10_np").removeAttr("required");
+      $("#11_np").removeAttr("required");
+        
+     // set disabled elements to 0
+     
+      $("#6_np").val("0");
+      $("#6_kp").val("0");
+      $("#6_tl").val("0");   
+      $("#10_np").val("0");
+      $("#11_np").val("0");
+        
+        }
+        
+        
+        
+        else  if(cm_==='9m' && ct_==='pmtct')
+        { 
+ 
+      $("#10_kp").attr("readonly",true);  
+      $("#10_np").attr("readonly",true);
+      
+      //tabindex
+      $("#10_kp").attr("tabindex",-1);   
+      $("#10_np").attr("tabindex",-1);  
+      //$("#10_tl").attr("readonly",true);
+      
+      $("#11_kp").attr("readonly",true);  
+      $("#11_np").attr("readonly",true);  
+     // $("#11_tl").attr("readonly",true);
+     
+     //tabindex
+      $("#11_kp").attr("tabindex",-1);   
+      $("#11_np").attr("tabindex",-1);
+            
+       $("#10_kp").removeAttr("required");
+       $("#10_np").removeAttr("required");
+      // $("#10_tl").removeAttr("required");
+       
+       $("#11_kp").removeAttr("required");
+       $("#11_np").removeAttr("required");
+     //  $("#11_tl").removeAttr("required");     
+     //========
+     $("#10_np").val("0");
+      $("#11_np").val("0");     
+     
+        
+        }
+        
+        else  if(cm_==='9m' && ct_==='art')
+        { 
+ 
+      $("#10_child").attr("readonly",true);  
+      $("#10_adult").attr("readonly",true);
+      
+      //tabindex
+      $("#10_child").attr("tabindex",-1);   
+      $("#10_adult").attr("tabindex",-1);  
+      //$("#10_tl").attr("readonly",true);
+      
+      $("#11_child").attr("readonly",true);  
+      $("#11_adult").attr("readonly",true);  
+     // $("#11_tl").attr("readonly",true);
+     
+     //tabindex
+      $("#11_child").attr("tabindex",-1);   
+      $("#11_adult").attr("tabindex",-1);
+            
+       $("#10_adult").removeAttr("required");
+       $("#10_adult").removeAttr("required");
+      // $("#10_tl").removeAttr("required");
+       
+       $("#11_child").removeAttr("required");
+       $("#11_adult").removeAttr("required");
+     //$("#11_tl").removeAttr("required");     
+     //========
+     $("#10_child").val("0");
+     $("#11_adult").val("0");     
+     
+        
+        }
+        
+        
+   else  if(cm_==='3m' && ct_==='art'){ 
+     
+ 
+      $("#6_child").attr("readonly",true);  
+      $("#6_adult").attr("readonly",true);  
+      
+     
+      //tab index
+      $("#6_child").attr("tabindex",-1);  
+      $("#6_adult").attr("tabindex",-1); 
+      //$("#6_tl").attr("readonly",true);
+           
+      //tab index      
+      
+      //remove the required attribute
+       $("#6_adult").removeAttr("required");
+       $("#6_child").removeAttr("required");
+       //$("#6_tl").removeAttr("required");
+      
+        
+     // set disabled elements to 0
+     
+      $("#6_adult").val("0");
+      $("#6_child").val("0");
+      $("#6_tl").val("0");   
+     
+        
+        }     
+        
+      
+        else { 
+ 
+      $("#10_kp").removeAttr("readonly");  
+      $("#10_np").removeAttr("readonly"); 
+      
+       $("#10_kp").removeAttr("tabindex");  
+      $("#10_np").removeAttr("tabindex"); 
+    //  $("#10_tl").removeAttr("readonly");
+      
+      $("#11_kp").removeAttr("readonly");  
+      $("#11_np").removeAttr("readonly");
+      
+      $("#11_kp").removeAttr("tabindex");  
+      $("#11_np").removeAttr("tabindex"); 
+     // $("#11_tl").removeAttr("readonly");
+      
+       $("#6_kp").removeAttr("readonly");
+       $("#6_np").removeAttr("readonly");
+       
+       $("#6_kp").removeAttr("tabindex");
+       $("#6_np").removeAttr("tabindex");
+    //   $("#6_tl").removeAttr("readonly");
+      
+ 
+      $("#10_kp").attr("required",true);  
+      $("#10_np").attr("required",true);  
+   //   $("#10_tl").attr("required",true);
+ 
+      $("#11_kp").attr("required",true);  
+      $("#11_np").attr("required",true);  
+   //   $("#11_tl").attr("required",true);
+      
+       $("#6_kp").attr("required",true);
+       $("#6_np").attr("required",true);
+     //  $("#6_tl").attr("required",true);
+        
+        }
+    
+    
+    
+}
+
+
+function isdisplayindicators()
+{ 
+    var yr=$("#year").val();
+    var mn=$("#month").val();
+    var cm=$("#cohortmonth").val();
+    var fc=$("#facilityname").val();
+    
+    if( yr!='' && mn!='' && cm!='' && fc!='' && fc!='Select Facility')
+    {        
+    // display facility name
+    $("#dynamicindicators").show();    
+        
+    }
+    else 
+    {
+    $("#dynamicindicators").hide();
+    //        
+    }
+    
+    
+}
+
+
+
+
+ 
+  
+
+
+$('#dataentry').on('keydown', 'input, select, textarea', function(e) {
+    var self = $(this)
+      , form = self.parents('form:eq(0)')
+      , focusable
+      , next
+      ;
+    if (e.keyCode == 13) {
+        focusable = form.find('input,a,select,button,textarea').filter(':visible');
+        next = focusable.eq(focusable.index(this)+1);
+        if (next.length) {
+            next.focus();
+        } else {
+            form.submit();
+        }
+        return false;
+    }
+});
+
+
 
               </script>
 

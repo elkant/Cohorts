@@ -7,6 +7,7 @@
 
 
 
+<%@page import="db.dbConn"%>
 <%@page import="java.util.Calendar"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -16,7 +17,7 @@
 <head>
    <meta charset="utf-8" />
    <title>Upload ART Cohort  </title>
-     <link rel="shortcut icon" href="images/index.JPG"/>
+   <link rel="shortcut icon" href="images/logo.png"/>
    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
    <meta content="" name="description" />
    <meta content="" name="author" />
@@ -158,9 +159,10 @@
 
                          
                            <div class="form-actions">
-                              <button type="submit" class="btn blue">Load Excel.</button>
+                              <button type="submit" class="btn blue">Upload ART Excel.</button>
 
                            </div>
+                        <div class="form-actions" id="matokeo">
                         <div class="form-actions">
                             
                         </div>
@@ -186,14 +188,14 @@
    </div>
    <!-- END CONTAINER -->
    <!-- BEGIN FOOTER -->
-   <div class="footer">
+    <div class="footer">
        <%
 
               Calendar cal = Calendar.getInstance();
                     int year = cal.get(Calendar.YEAR);       
 %>
-       
-       &copy; APHIAplus | USAID <%=year%>.
+     <% dbConn conn= new dbConn(); %>  
+     <h4 class="portlet-title" style="text-align: center;color:black;"> &copy; APHIAplus | USAID <%=year%>. Host Name :<b><i> <%=conn.dbsetup[0]%></i></b> &nbsp;   Database Name :<i> <%=conn.dbsetup[1]%></i></h4>
       <div class="span pull-right">
          <span class="go-top"><i class="icon-angle-up"></i></span>
       </div>
@@ -241,6 +243,41 @@
 <script > 
                 
 </script>
+
+
+
+                  
+ <%if (session.getAttribute("uploadedart") != null) { %>
+                                <script type="text/javascript"> 
+                    
+                    
+$("#matokeo").html('<%=session.getAttribute("uploadedart")%>');
+                         
+      $.notify(
+      {
+  message:'<%=session.getAttribute("uploadedart")%>'},
+      {
+	icon_type: 'image'
+      }, 
+      {
+	offset: {
+		x: 600,
+		y: 300
+	}
+       }
+       
+            ); 
+                    
+                </script>
+                
+                <%
+                //session.removeAttribute("uploadedart");
+                            }
+
+                        %>
+
+
+
    
  <%if (session.getAttribute("resp1") != null) { %>
                                 <script type="text/javascript"> 
