@@ -57,7 +57,7 @@ public class updatedbpword extends HttpServlet {
         
         
         if(request.getParameter("database")==null){
-       dbase="pmtct_art_cohort";
+       dbase="halisi";
         }
         else{
          dbase=request.getParameter("database");
@@ -80,7 +80,7 @@ public class updatedbpword extends HttpServlet {
     String allpath = getServletContext().getRealPath("/dbase.txt");
         String mydrive = allpath.substring(0, 1);
         //dbconnpath=mydrive+":\\MNHC_SYSTEM_APHIA_PLUS\\"; 
-      dbconnpath=mydrive+":\\APHIAPLUS\\COHORT\\DO_NOT_DELETE\\_\\_\\_"; 
+      dbconnpath=mydrive+":\\HALISI\\DATA\\DO_NOT_DELETE\\_\\_\\_"; 
        
       //create a directory
       

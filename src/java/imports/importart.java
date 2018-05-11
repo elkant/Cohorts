@@ -726,7 +726,7 @@ String yearmonth="";
                  
                  yearmonth=reportingyear+""+reportingmonth;
                  
-                 
+                 System.out.println("yearmonth is "+yearmonth); 
                  //================================continue from here========================================
                  
                  //get indicator id from list of indicators

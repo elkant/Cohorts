@@ -49,7 +49,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
   private static final String UPLOAD_DIR = "uploads";
   String nextpage="";
   String quarterName,facilityName,facilityID,id,missingFacility;
-          
+    int nomflcodesites;      
  
 
  @Override
@@ -62,7 +62,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
      
         session=request.getSession();
         
-       
+      nomflcodesites=0; 
       
      /***  
 id
@@ -105,7 +105,9 @@ if(!weekstart.equals("")){
  session.setAttribute("weekstart",weekstart );
  session.setAttribute("weekend",weekend );
 }
-
+String updatedfacil="";
+String insertedfacil="";
+String missingwithdatafacil="";
 String pns_ukf="";
 String pns_ukm="";
 String pns_1="";
@@ -189,7 +191,7 @@ String reportingmonth="";
          
          //if(1==1){
          //skip pivot PNS
-         if(!sheetname.equals("Pivot PNS")){
+         if(!sheetname.equals("Pivot PNS") && !sheetname.equals("do not delete1") ){
          
          Iterator rowIterator = worksheet.rowIterator();
              
@@ -236,7 +238,16 @@ String reportingmonth="";
                      else if(cellmfl.getCellType()==1){
                          mflcode =cellmfl.getStringCellValue();
                      }
+                     else if(cellmfl.getCellType()==2){
+                         mflcode =cellmfl.getRawValue();
+                         mflcode =cellmfl.getRawValue();
+                     }
+                     else {
+                         System.out.println("mflcode__"+mflcode);
+                       mflcode =cellmfl.getRawValue();
                      
+                     }
+                     System.out.println("Mfl code is "+mflcode);
                      //-----------year-----------------------
                      XSSFCell cellyear = worksheet.getRow(row).getCell((short) 4);
                      
@@ -247,7 +258,7 @@ String reportingmonth="";
                      else if(cellyear.getCellType()==1){
                          reportingyear =cellyear.getStringCellValue();
                      }
-                     
+                     reportingyear=weekend.substring(0,4);
                    
                      
                      //-----------month-----------------------
@@ -260,6 +271,8 @@ String reportingmonth="";
                      else if(cellmonth.getCellType()==1){
                          reportingmonth =cellmonth.getStringCellValue();
                      }
+                     
+                     reportingmonth=weekend.substring(5,7);
                      
                      //-----------weekstart-----------------------
                      XSSFCell cellws = worksheet.getRow(row).getCell((short) 6);
@@ -678,20 +691,17 @@ String reportingmonth="";
                  if(conn.rs.next()==true)
                  {
                      facilityID=conn.rs.getString(1);
-                     //supporttype=conn.rs.getString("ART_Support");
-                     //mflcode=conn.rs.getInt(3);
+                    
                         checker=1;
-                     //if(supporttype==null){supporttype=conn.rs.getString("HTC_Support1");}
-                     //if(supporttype==null){supporttype=conn.rs.getString("PMTCT_Support");}
-                     //if(supporttype==null){supporttype="";}
+                    
                  }
-                 if(!mflcode.equals("")) {
+                 if(!mflcode.equals("") && !mflcode.equals("Enter MFL Code")) {
 //                        DISTRICT FOUND ADD THE HF TO THE SYSTEM.........................
                      
                   // if(new Integer(yearmonth)>=201710 && new Integer(yearmonth)<=201712 ){
                   
                      if(checker==0){
-                          System.out.println("**inserting data ");
+                          System.out.println("** Inserting data ");
                          //id	SubPartnerID 	Mflcode	samplecode	collectiondate	testingdate	validation	enrollment	treatment_init_date	enroll_cccno	other_reasons	year	quarter
                          
                          String inserter="INSERT INTO "+dbname+" (id,mflcode,year,month,weekstart,weekend,indicator,pns_ukf,pns_ukm,pns_1,pns_9,pns_14f,pns_14m,pns_19m,pns_19f,pns_24m,pns_24f,pns_29m,pns_29f,pns_49m,pns_49f,pns_50f,pns_50m,pns_t,yearmonth) "
@@ -726,7 +736,13 @@ String reportingmonth="";
                          conn.pst.executeUpdate();
                           System.out.println(""+conn.pst);
                          
+                         //added++;
+                         
+                         if(!insertedfacil.contains(facilityName))
+                         {
+                         insertedfacil+=facilityName+",";
                          added++;
+                         }
                          
                      }
                      else {
@@ -765,24 +781,50 @@ String reportingmonth="";
                          conn.pst.setString(25,yearmonth);
                          conn.pst.setString(26,id);
                          conn.pst.executeUpdate();
+                         
+                         
+                         if(!updatedfacil.contains(facilityName))
+                         {
+                         updatedfacil+=facilityName+",";
                          updated++;
+                         }
                      }
                      
                  //}
              }
+                 else if(mflcode.equals("Enter MFL Code") && !pns_t.equals("0")){
+                
+                  missingFacility+="facility  : "+sheetname+" mfl code : "+mflcode+" not in system "+row+"<br>";
+                     System.out.println(sheetname+ " has no mflcode but has data.");
+                     
+                     if(!missingwithdatafacil.contains(sheetname)){
+                         
+                     missingwithdatafacil+=sheetname+",";
+                     nomflcodesites++;
+                     
+                     }
+                     
+                 }
+                 
+                 else if(mflcode.equals("Enter MFL Code") && pns_t.equals("0")){
+                
+                 // missingFacility+="facility  : "+sheetname+" mfl code : "+mflcode+" not in system "+row+"<br>";
+                     System.out.println(sheetname+ " has no data.");
+                 }
+                 
                  else{
                      missing++; 
 //                        missing facilities
-                     missingFacility+="facility  : "+facilityName+" mfl code : "+mflcode+" not in system "+row+"<br>";
-                     System.out.println(facilityName+ " has no mflcode.");
-                 }
+                     missingFacility+="facility  : "+sheetname+" mfl code : "+mflcode+" not in system "+row+"<br>";
+                     System.out.println(sheetname+ " has no mflcode.");
+                     }
                  
                  } //end of iterator
              catch (SQLException ex) {
                  Logger.getLogger(importpns.class.getName()).log(Level.SEVERE, null, ex);
              }
            row++;  
-             System.out.println(" eeend of while looop");
+             //System.out.println(" eeend of while looop");
            
          }
          
@@ -809,7 +851,36 @@ String reportingmonth="";
               Logger.getLogger(importpns.class.getName()).log(Level.SEVERE, null, ex);
           }
 }
-    String sessionText="<br/><b> "+added+ "</b> New data added <br/> <b> "+updated+"</b> updated facilities<br> <br> <b>"+missing+"</b> sites not in Imis Facilities List ";    
+      String unimporteddata="";
+      
+      if(nomflcodesites>0){
+          if(nomflcodesites==1){
+      unimporteddata="<br/> Data for <b>"+nomflcodesites+"</b> Sheet <b>("+missingwithdatafacil+")</b> skipped because it has no MFLCode";
+          }
+      
+       else
+      {
+      
+      
+      unimporteddata="<br/> Data for <b>"+nomflcodesites+"</b> Sheets  <i>("+missingwithdatafacil+")</i>  skipped because no MflCode ";
+      
+     
+      }
+      }
+     
+      String updateddata="";
+      if(updated>0){
+       updateddata=" <br/>  Data for <b>"+updated+" </b> sites <i>("+updatedfacil+")</i> updated <br> ";
+      }
+      
+      String newdaata="";
+      if(added>0){
+      
+      newdaata=" Data for <b>"+added+ " </b> sites newly imported ";
+      }
+      
+    String sessionText="<br/>"+newdaata+"   "+updateddata+" "+unimporteddata+" ";    
+     System.out.println(""+sessionText);
     session.setAttribute("uploadedpns"," File name is "+fileName+". "+ sessionText);
     response.sendRedirect(nextpage);  
  
