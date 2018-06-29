@@ -154,7 +154,7 @@
                             <div class="control-group">
                               <label class="control-label">Week Start date:<font color='red'><b>*</b></font></label>
                               <div class="controls">
-                                  <input required type="text" title="this is the date that the week started" value="<%if (session.getAttribute("weekstart") != null) {out.println(session.getAttribute("weekstart")); }%>" class="form-control input-lg tarehe" name="weekstart" id="weekstart">
+                                  <input required type="text" title="this is the date that the week started" value="<%if (session.getAttribute("weekstart") != null) {out.println(session.getAttribute("weekstart")); }%>" class="form-control input-lg tarehe" name="weekstart" autocomplete="off" id="weekstart">
                               </div>
                            </div>
                             
@@ -162,7 +162,7 @@
                              <div class="control-group">
                               <label class="control-label">Week End date:<font color='red'><b>*</b></font></label>
                               <div class="controls">
-                                  <input required type="text" title="this is the date that the week ended" value="<%if (session.getAttribute("weekend") != null) {out.println(session.getAttribute("weekend")); }%>" class="form-control input-lg tarehe" name="weekend" id="weekend">
+                                  <input required type="text" title="this is the date that the week ended" value="<%if (session.getAttribute("weekend") != null) {out.println(session.getAttribute("weekend")); }%>" class="form-control input-lg tarehe" name="weekend" id="weekend" autocomplete="off">
                               </div>
                            </div>
                             
@@ -180,10 +180,30 @@
 
 
                          
-                           <div class="form-actions">
+                          
+                        <table style="width: 100%;">
+                           <tr><td class="col-xs-2">
+                            <div class="form-actions">
                               <button type="submit" class="btn blue">Upload PNS Excel.</button>
 
                            </div>
+                                   </td>
+                                   
+                                   <td class="col-xs-10">
+                           <div class="form-actions">
+                             
+                         
+                              
+  <label id="generaterpt" class="btn green" onclick="getReport();">Generate report</label>
+                          
+
+                         
+                           </div>
+                                   </td>
+                            </tr> 
+                         </table>
+                        <img src='images/ajax_loader.gif' alt='loading' style="display:none; margin-left:30% ;" class='loading'/>
+                                        
                         <div class="form-actions" id="matokeo">
                         <div class="form-actions">
                             
@@ -231,7 +251,7 @@
 
 <script type="text/javascript" src="js/bootstrap-notify.js"></script>
 
-
+ <script type="text/javascript" src="js/jquery.fileDownload.js"></script>
       
    
    <script type="text/javascript" src="assets/ckeditor/ckeditor.js"></script>  
@@ -277,6 +297,59 @@
     $(this).datepicker('hide');
 });
       
+      
+      
+     
+function getReport(){
+    
+    
+    var exelstart=$("#weekstart").val();
+    var exelend=$("#weekend").val();
+  
+        
+        if (exelstart==='')
+     {
+         
+     alert('Select report begining date');
+   $("#startdaterpt").focus();    
+     }    
+   //end date
+      else if (exelend==='')
+     {
+         
+     alert('Select report ending date');
+   $("#enddaterpt").focus();    
+     } 
+     
+      else  if(Date.parse(exelstart) > Date.parse(exelend)){
+                    alert(" Report Start date cannot be greater than end date.");   
+                    $("#enddaterpt").focus();  
+                }
+                else {
+                    //call the report generation page
+                 downloadrpt(exelstart,exelend) ;  
+                    
+                }
+        
+    
+}
+
+
+
+  function downloadrpt(startdate,enddate){
+      
+                $('.loading').show();
+                $('#generaterpt').hide();
+               
+                //?startdate=" + startdate + "&enddate=" + enddate + "&cbos=" + cbos
+             
+                var ur="rawdata?startdate=" + startdate + "&enddate=" + enddate;
+ console.log(ur);
+                $.fileDownload(ur).done(function () { $('.loading').hide(); $('#generaterpt').show(); $('#generaterpt').html("<i class='glyphicon glyphicon-ok'></i> Report Generated"); }).fail(function () { alert('Report generation failed, kindly try again!'); $('.loading').hide(); $('#generaterpt').show(); });
+ 
+                //$('.loading').hide();
+            }
+
       
    </script>
 

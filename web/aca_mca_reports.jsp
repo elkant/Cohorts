@@ -16,7 +16,7 @@
 <!-- BEGIN HEAD -->
 <head>
    <meta charset="utf-8" />
-   <title>Upload ART Cohort  </title>
+   <title>ACA MCA Reports</title>
    <link rel="shortcut icon" href="images/logo.png"/>
    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
    <meta content="" name="description" />
@@ -70,7 +70,7 @@
       <div class="navbar-inner">
          <div class="container-fluid">
             <!-- BEGIN LOGO -->
-            <h1 style="text-align:center;font-size: 50px;color:white;padding-bottom:16px ;font-weight: bolder;">ART Cohorts</h1><br/>
+            <h1 style="text-align:center;font-size: 50px;color:white;padding-bottom:16px ;font-weight: bolder;">MCA Reports</h1><br/>
             
             <!-- END LOGO -->
             <!-- BEGIN RESPONSIVE MENU TOGGLER -->
@@ -129,7 +129,7 @@
                   <ul class="breadcrumb">
                      <li style="width: 900px;">
                         <i class="icon-home"></i>
-                        <a href="#" style="margin-left:40%;">Upload ART Cohort excel file.</a> 
+                        <a href="#" style="margin-left:40%;">Generate ACA & MCA Reports</a> 
                         <!--<span class="icon-angle-right"></span>-->
                      </li>
            
@@ -148,20 +148,106 @@
                      </div>
                      <div class="portlet-body form">
                         <!-- BEGIN FORM-->
-                        <form action="importart" method="post" enctype="multipart/form-data" class="form-horizontal" >
+                        <form action="importpns" method="post" enctype="multipart/form-data" class="form-horizontal" >
                        
                             
+                            <div class="control-group">
+                              <label class="control-label">Report Start date:<font color='red'><b>*</b></font></label>
+                              <div class="controls">
+                                  <input required type="text" title="this is the date that the week started" value="<%if (session.getAttribute("weekstart") != null) {out.println(session.getAttribute("weekstart")); }%>" class="form-control input-lg tarehe" name="weekstart" autocomplete="off" id="weekstart">
+                              </div>
+                           </div>
+                            <%
+                            Calendar cal= Calendar.getInstance();
+                            
+                            %>
+                            
+                             <div class="control-group">
+                              <label class="control-label">Report End date:<font color='red'><b>*</b></font></label>
+                              <div class="controls">
+                                  <input required type="text" title="this is the date that the week ended" value="<%if (session.getAttribute("weekend") != null) {out.println(session.getAttribute("weekend")); }%>" class="form-control input-lg tarehe" name="weekend" id="weekend" autocomplete="off">
+                              </div>
+                           </div>
+                            
+                              
+                              <div class="control-group" >
+                              <label class="control-label">Specify Output:<font color='red'><b>*</b></font></label>
+                              <div class="controls">
+                                  <select required type="text" title="" onchange='selectoutput();'  class="form-control input-lg" name="output" id="output" >
+                                      
+                                      <option value='ACA_MCA_Rawdata'>Reports</option>
+                                      <option value='ACA_MCA_tracker'>Tracker</option>
+                                      
+                                             
+                                      </select>
+                              </div>
+                           </div>
+                              
+                              
+                              
+                              <div class="control-group" id='pepfardiv'>
+                              <label class="control-label">Pepfar Year:<font color='red'><b>*</b></font></label>
+                              <div class="controls">
+                                  <select required type="text" title="this is the date that the week ended"  class="form-control input-lg" name="year" id="year" >
+                                      
+                                      <option value=''>Select Year</option>
+                                              <%
+                                                
+                                                
+                                                int curyear=cal.get(Calendar.YEAR);
+                                                
+                                            for(int a=curyear-1;a<=curyear+1;a++){
+                                             out.println("<option value='"+a+"'>"+a+"</option>");
+                                                %>
+                                            
+                                            
+                                            <%
+                                            }
+                                            
+                                            %>
+                                      </select>
+                              </div>
+                           </div>
+                              
+                            
+<!--                             <div class="control-group">
+                              <label class="control-label">Excel file<font color='red'><b>*</b></font></label>
+                              <div class="controls">
+                                  <input required type="file" name="file_name" id="upload" value="" class="textbox" required>  
+                              </div>
+                           </div>-->
                           
-                          <input type="file" name="file_name" id="upload" multiple value="" class="textbox" required>   
+                           
                         <br><br><br><br>
 
 
 
                          
-                           <div class="form-actions">
-                              <button type="submit" class="btn blue">Upload ART Excel.</button>
+                          
+                        <table style="width: 100%;">
+                           <tr>
+<!--                               <td class="col-xs-2">
+                            <div class="form-actions">
+                              <button type="submit" class="btn blue">Generate Report Excel.</button>
 
                            </div>
+                                   </td>-->
+                                   
+                                   <td class="col-xs-10">
+                           <div class="form-actions">
+                             
+                         
+                              
+  <label id="generaterpt" class="btn green" onclick="getReport();">Generate report</label>
+                          
+
+                         
+                           </div>
+                                   </td>
+                            </tr> 
+                         </table>
+                        <img src='images/ajax_loader.gif' alt='loading' style="display:none; margin-left:30% ;" class='loading'/>
+                                        
                         <div class="form-actions" id="matokeo">
                         <div class="form-actions">
                             
@@ -191,7 +277,7 @@
     <div class="footer">
        <%
 
-              Calendar cal = Calendar.getInstance();
+            
                     int year = cal.get(Calendar.YEAR);       
 %>
      <% dbConn conn= new dbConn(); %>  
@@ -209,7 +295,7 @@
 
 <script type="text/javascript" src="js/bootstrap-notify.js"></script>
 
-
+ <script type="text/javascript" src="js/jquery.fileDownload.js"></script>
       
    
    <script type="text/javascript" src="assets/ckeditor/ckeditor.js"></script>  
@@ -244,18 +330,110 @@
                 
 </script>
 
+<script>
+      
+   
+  
+      
+      $(".tarehe").datepicker({
+    clearBtn: true
+}).on('changeDate', function(ev){
+    $(this).datepicker('hide');
+});
+      
+      
+      
+     
+function getReport(){
+    
+    
+    var exelstart=$("#weekstart").val();
+    var exelend=$("#weekend").val();
+  var year=$("#year").val();
+        
+        if (exelstart==='')
+     {
+         
+     alert('Select report begining date');
+   $("#startdaterpt").focus();    
+     }    
+   //end date
+      else if (exelend==='')
+     {
+         
+     alert('Select report ending date');
+   $("#enddaterpt").focus();    
+     } 
+     
+      else  if(Date.parse(exelstart) > Date.parse(exelend)){
+                    alert(" Report Start date cannot be greater than end date.");   
+                    $("#enddaterpt").focus();  
+                }
+                
+                  else  if($("#year").is(":visible") && $("#year").val()===''){
+                    alert(" Select Pepfar Year.");   
+                    $("#year").focus();  
+                }
+                
+                else {
+                    //call the report generation page
+                 downloadrpt(exelstart,exelend,year) ;  
+                    
+                }
+        
+    
+}
 
+
+
+  function downloadrpt(startdate,enddate,year){
+      
+                $('.loading').show();
+                $('#generaterpt').hide();
+               var urel=$("#output").val();
+                //?startdate=" + startdate + "&enddate=" + enddate + "&cbos=" + cbos
+             
+                var ur=urel+"?startdate=" + startdate + "&enddate=" + enddate+"&year="+year;
+ console.log(ur);
+                $.fileDownload(ur).done(function () { $('.loading').hide(); $('#generaterpt').show(); $('#generaterpt').html("<i class='glyphicon glyphicon-ok'></i> Report Generated"); }).fail(function () { alert('Report generation failed, kindly try again!'); $('.loading').hide(); $('#generaterpt').show(); });
+ 
+                //$('.loading').hide();
+            }
+
+
+
+
+function selectoutput(){
+    
+    
+    var outputii=$("#output").val();
+    
+    if(outputii==='ACA_MCA_Rawdata'){
+        
+    $("#pepfardiv").hide();    
+        
+    }
+    else {
+      $("#pepfardiv").show();     
+        
+        
+    }
+    
+}
+selectoutput();
+      
+   </script>
 
                   
- <%if (session.getAttribute("uploadedart") != null) { %>
+ <%if (session.getAttribute("uploadedpns") != null) { %>
                                 <script type="text/javascript"> 
                     
                     
-$("#matokeo").html('<%=session.getAttribute("uploadedart")%>');
+//$("#matokeo").html('<%=session.getAttribute("uploadedpns")%>');
                          
       $.notify(
       {
-  message:'<%=session.getAttribute("uploadedart")%>'},
+  message:'<%=session.getAttribute("uploadedpns")%>'},
       {
 	icon_type: 'image'
       }, 

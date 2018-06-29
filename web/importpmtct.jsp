@@ -144,7 +144,7 @@
                        
                             
                           
-                          <input type="file" name="file_name" id="upload" value="" class="textbox" required>   
+                            <input type="file" name="file_name" id="upload" value="" multiple="" class="textbox" required>   
                         <br><br><br><br>
 
 

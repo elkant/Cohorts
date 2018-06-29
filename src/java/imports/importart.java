@@ -50,16 +50,18 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
   String nextpage="";
   String quarterName,facilityName,facilityID,id,missingFacility;
           
- 
+  String fileNames="";
 
  @Override
  protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
  
-    
+     String nomflsheets="";
+     
       int year,quarter,checker,missing = 0,added = 0,updated = 0;
       String county_name,county_id, district_name,district_id,hf_name,hf_id;
-     
+     fileNames="";
+     fileName="";
      /***  
       id	1
 indicator	A. Enrolled into cohort
@@ -96,8 +98,8 @@ yearmonth	201510
      
      
   id=""; 
-  String indicator="";
-  String indicatorid="";
+String indicator="";
+String indicatorid="";
 String adult_3m="";
 String child_3m="";
 String tl_3m="";
@@ -149,12 +151,12 @@ String yearmonth="";
          fileName = getFileName(part);
          part.write(uploadFilePath + File.separator + fileName);
          System.out.println("file name is  :  "+fileName);
-     }
-     if(!fileName.endsWith(".xlsx")){
+          if(!fileName.endsWith(".xlsx")){
          nextpage="importart.jsp";
          session.setAttribute("upload_success", "<font color=\"red\">Failed to load the excel file. Please choose a .xlsx excel file .</font>");
      }
      else{
+           fileNames+=fileName+", ";
          
          full_path=fileSaveDir.getAbsolutePath()+"\\"+fileName;
          
@@ -203,6 +205,14 @@ String yearmonth="";
                      else if(cellmfl.getCellType()==1){
                          mflcode =cellmfl.getStringCellValue();
                      }
+                     
+                     
+                     if(mflcode==null || mflcode.equals("")){
+                     
+                     nomflsheets+=workbook.getSheetName(a)+" ,";
+                     
+                     }
+                     
                      
                      //-----------year-----------------------
                      XSSFCell cellyear = worksheet.getRow(0).getCell((short) 7);
@@ -891,7 +901,11 @@ String yearmonth="";
          
          }//end of worksheets loop
 
-     }//end of checking if excel file is valid
+     
+          }
+         
+     }
+    //end of checking if excel file is valid
      if(conn.rs!=null){try {
          conn.rs.close();
           } catch (SQLException ex) {
@@ -910,8 +924,18 @@ String yearmonth="";
               Logger.getLogger(importart.class.getName()).log(Level.SEVERE, null, ex);
           }
 }
-    String sessionText="<br/><b> "+added+ "</b> New data added <br/> <b> "+updated+"</b> updated facilities<br> <br> <b>"+missing+"</b> sites not in Imis Facilities List ";    
-    session.setAttribute("uploadedart"," File name is "+fileName+". "+ sessionText);
+       String nomflcode="";
+      if(!nomflsheets.equals("")){
+      
+      nomflcode="<b> "+nomflsheets+"</b> have no mflcodes ";
+      }
+      
+     String sessionText="<br/><b> "+added+ "</b> New data added <br/> <b> "+updated+"</b> updated facilities<br> <br> <b>"+nomflcode+"</b>";    
+     session.setAttribute("uploadedart"," Workbooks: "+fileNames+". "+ sessionText);
+    
+ 
+  
+    
     response.sendRedirect(nextpage);  
  
 

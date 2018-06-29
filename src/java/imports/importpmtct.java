@@ -41,6 +41,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
   
   String full_path="";
   String fileName="";
+  String fileNames="";
   int checker_dist,checker_hf;
   File file_source;
   HttpSession session;
@@ -58,7 +59,9 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
     
       int year,quarter,checker,missing = 0,added = 0,updated = 0;
       String county_name,county_id, district_name,district_id,hf_name,hf_id;
-     
+     fileNames="";
+     fileName="";
+      String nomflsheets="";
      /***  
       id	1
 indicator	A. Enrolled into cohort
@@ -139,12 +142,13 @@ String yearmonth="";
          fileName = getFileName(part);
          part.write(uploadFilePath + File.separator + fileName);
          System.out.println("file name is  :  "+fileName);
-     }
-     if(!fileName.endsWith(".xlsx")){
+         if(!fileName.endsWith(".xlsx")){
          nextpage="importpmtct.jsp";
          session.setAttribute("uploadedpmtct", "<font color=\"red\">Failed to load the excel file. Please choose a .xlsx excel file .</font>");
      }
      else{
+         
+        fileNames+=fileName+", ";
          
          full_path=fileSaveDir.getAbsolutePath()+"\\"+fileName;
          
@@ -190,6 +194,13 @@ String yearmonth="";
                      }
                      else if(cellmfl.getCellType()==1){
                          mflcode =cellmfl.getStringCellValue();
+                     }
+                     
+                     
+                     if(mflcode==null || mflcode.equals("")){
+                     
+                     nomflsheets+=workbook.getSheetName(a)+" ,";
+                     
                      }
                      
                      //-----------year-----------------------
@@ -697,7 +708,13 @@ String yearmonth="";
          
          }//end of worksheets loop
 
-     }//end of checking if excel file is valid
+      
+         
+         }//end of checking if excel file is valid
+         
+         
+     }
+     
      if(conn.rs!=null){try {
          conn.rs.close();
           } catch (SQLException ex) {
@@ -716,8 +733,14 @@ String yearmonth="";
               Logger.getLogger(importart.class.getName()).log(Level.SEVERE, null, ex);
           }
 }
-    String sessionText="<br/><b> "+added+ "</b> New data added <br/> <b> "+updated+"</b> updated facilities<br> <br> <b>"+missing+"</b> sites not in Imis Facilities List ";    
-    session.setAttribute("uploadedpmtct"," File name is "+fileName+". "+ sessionText);
+      String nomflcode="";
+      if(!nomflsheets.equals("")){
+      
+      nomflcode="<b> "+nomflsheets+"</b> have no mflcodes ";
+      }
+      
+    String sessionText="<br/><b> "+added+ "</b> New data added <br/> <b> "+updated+"</b> updated facilities<br> <br> <b>"+nomflcode+"</b>";    
+    session.setAttribute("uploadedpmtct"," Workboaks: "+fileNames+". "+ sessionText);
     response.sendRedirect(nextpage);  
  
 

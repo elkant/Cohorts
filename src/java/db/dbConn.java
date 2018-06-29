@@ -141,7 +141,7 @@ public final class dbConn {
 
 
 
-            String dbconnpath = drive + ":\\APHIAPLUS\\COHORT\\DO_NOT_DELETE\\_\\_\\_\\dbconnection.txt";
+            String dbconnpath = drive + ":\\APHIAPLUS\\COHORT\\DO_NOT_DELETE\\_\\_\\dbconnection.txt";
 
             //File file = new File("");
             // InputStream inStream = getClass().getResourceAsStream("Web-INF/classes/dbconnection.txt");  

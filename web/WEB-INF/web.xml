@@ -60,6 +60,14 @@
         <servlet-name>IdGenerator</servlet-name>
         <servlet-class>General.IdGenerator</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ACA_MCA_Rawdata</servlet-name>
+        <servlet-class>reports.ACA_MCA_Rawdata</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ACA_MCA_tracker</servlet-name>
+        <servlet-class>reports.ACA_MCA_tracker</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loadcohort</servlet-name>
         <url-pattern>/loadcohort</url-pattern>
@@ -119,6 +127,14 @@
     <servlet-mapping>
         <servlet-name>IdGenerator</servlet-name>
         <url-pattern>/IdGenerator</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ACA_MCA_Rawdata</servlet-name>
+        <url-pattern>/ACA_MCA_Rawdata</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ACA_MCA_tracker</servlet-name>
+        <url-pattern>/ACA_MCA_tracker</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

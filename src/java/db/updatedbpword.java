@@ -80,8 +80,9 @@ public class updatedbpword extends HttpServlet {
     String allpath = getServletContext().getRealPath("/dbase.txt");
         String mydrive = allpath.substring(0, 1);
         //dbconnpath=mydrive+":\\MNHC_SYSTEM_APHIA_PLUS\\"; 
-      dbconnpath=mydrive+":\\HALISI\\DATA\\DO_NOT_DELETE\\_\\_\\_"; 
-       
+      dbconnpath=mydrive+":\\APHIAPLUS\\COHORT\\DO_NOT_DELETE\\_\\_\\"; 
+        // String dbconnpath = drive + ":\\APHIAPLUS\\COHORT\\DO_NOT_DELETE\\_\\_\\dbconnection.txt";
+
       //create a directory
       
       // new File(dbconnpath).mkdir();
