@@ -186,7 +186,7 @@
                     int year = cal.get(Calendar.YEAR);       
 %>
      <% dbConn conn= new dbConn(); %>  
-     <h4 class="portlet-title" style="text-align: center;color:black;"> &copy; APHIAplus | USAID <%=year%>. Host Name :<b><i> <%=conn.dbsetup[0]%></i></b> &nbsp;   Database Name :<i> <%=conn.dbsetup[1]%></i></h4>
+     <h4 class="portlet-title" style="text-align: center;color:black;"> &copy; HSDSA | USAID <%=year%>. Host Name :<b><i> <%=conn.dbsetup[0]%></i></b> &nbsp;   Database Name :<i> <%=conn.dbsetup[1]%></i></h4>
       <div class="span pull-right">
          <span class="go-top"><i class="icon-angle-up"></i></span>
       </div>

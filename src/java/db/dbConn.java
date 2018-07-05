@@ -17,6 +17,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static scripts.OSValidator.isUnix;
+import static scripts.OSValidator.isWindows;
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -141,7 +143,19 @@ public final class dbConn {
 
 
 
-            String dbconnpath = drive + ":\\APHIAPLUS\\COHORT\\DO_NOT_DELETE\\_\\_\\dbconnection.txt";
+            //String dbconnpath = drive + ":\\APHIAPLUS\\COHORT\\DO_NOT_DELETE\\_\\_\\dbconnection.txt";
+            
+            
+             String dbconnpath =null;
+            
+            if (isWindows()) {
+			dbconnpath = drive + ":/APHIAPLUS/COHORT/DO_NOT_DELETE/_/_/./dbconnection.txt";
+
+		}
+            else if (isUnix()) {
+	               dbconnpath = "APHIAPLUS/COHORT/DO_NOT_DELETE/_/_/dbconnection.txt";
+
+		}
 
             //File file = new File("");
             // InputStream inStream = getClass().getResourceAsStream("Web-INF/classes/dbconnection.txt");  

@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import static scripts.OSValidator.isUnix;
 
 /**
  *
@@ -80,13 +81,27 @@ public class updatedbpword extends HttpServlet {
     String allpath = getServletContext().getRealPath("/dbase.txt");
         String mydrive = allpath.substring(0, 1);
         //dbconnpath=mydrive+":\\MNHC_SYSTEM_APHIA_PLUS\\"; 
-      dbconnpath=mydrive+":\\APHIAPLUS\\COHORT\\DO_NOT_DELETE\\_\\_\\"; 
+      dbconnpath=mydrive+":\\APHIAPLUS\\COHORT\\DO_NOT_DELETE\\_\\_\\";
+      
+      
+      
+      String stfresponsepath=mydrive+":\\APHIAPLUS\\COHORT\\Stf_UploadResults";
+      String defaulterresponsepath=mydrive+":\\APHIAPLUS\\COHORT\\Defaulter_UploadResults";
+      
+        if(isUnix()){  
+            dbconnpath="APHIAPLUS/COHORT/DO_NOT_DELETE/_/_";
+            stfresponsepath="APHIAPLUS/COHORT/Stf_UploadResults";  
+            defaulterresponsepath="APHIAPLUS/COHORT/Defaulter_UploadResults";  
+        }
+      
         // String dbconnpath = drive + ":\\APHIAPLUS\\COHORT\\DO_NOT_DELETE\\_\\_\\dbconnection.txt";
 
       //create a directory
       
       // new File(dbconnpath).mkdir();
      new File(dbconnpath).mkdirs();
+     new File(stfresponsepath).mkdirs();
+     new File(defaulterresponsepath).mkdirs();
         
         
         

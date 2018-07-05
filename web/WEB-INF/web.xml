@@ -68,6 +68,14 @@
         <servlet-name>ACA_MCA_tracker</servlet-name>
         <servlet-class>reports.ACA_MCA_tracker</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>importstf</servlet-name>
+        <servlet-class>imports.importstf</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>importndefaulter</servlet-name>
+        <servlet-class>imports.importndefaulter</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loadcohort</servlet-name>
         <url-pattern>/loadcohort</url-pattern>
@@ -135,6 +143,14 @@
     <servlet-mapping>
         <servlet-name>ACA_MCA_tracker</servlet-name>
         <url-pattern>/ACA_MCA_tracker</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>importstf</servlet-name>
+        <url-pattern>/importstf</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>importndefaulter</servlet-name>
+        <url-pattern>/importndefaulter</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

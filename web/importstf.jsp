@@ -16,7 +16,7 @@
 <!-- BEGIN HEAD -->
 <head>
    <meta charset="utf-8" />
-   <title>Upload ART Cohort  </title>
+   <title>Upload STF Adherence Cohort  </title>
    <link rel="shortcut icon" href="images/logo.png"/>
    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
    <meta content="" name="description" />
@@ -29,20 +29,8 @@
    <link href="assets/css/style.css" rel="stylesheet" />
    <link href="assets/css/style_responsive.css" rel="stylesheet" />
    <link href="assets/css/style_default.css" rel="stylesheet" id="style_color" />
-   <link rel="stylesheet" type="text/css" href="assets/gritter/css/jquery.gritter.css" />
-   <link rel="stylesheet" type="text/css" href="assets/chosen-bootstrap/chosen/chosen.css" />
-   <link rel="stylesheet" type="text/css" href="assets/jquery-tags-input/jquery.tagsinput.css" />
-   <link rel="stylesheet" type="text/css" href="assets/clockface/css/clockface.css" />
-   <link rel="stylesheet" type="text/css" href="assets/bootstrap-wysihtml5/bootstrap-wysihtml5.css" />
-   <link rel="stylesheet" type="text/css" href="assets/bootstrap-datepicker/css/datepicker.css" />
-   <link rel="stylesheet" type="text/css" href="assets/bootstrap-timepicker/compiled/timepicker.css" />
-   <link rel="stylesheet" type="text/css" href="assets/bootstrap-colorpicker/css/colorpicker.css" />
-   <link rel="stylesheet" href="assets/bootstrap-toggle-buttons/static/stylesheets/bootstrap-toggle-buttons.css" />
-   <link rel="stylesheet" href="assets/data-tables/DT_bootstrap.css" />
-   <link rel="stylesheet" type="text/css" href="assets/bootstrap-daterangepicker/daterangepicker.css" />
-   <link rel="stylesheet" type="text/css" href="assets/uniform/css/uniform.default.css" />
-<link rel="stylesheet" href="select2/css/select2.css">
-<link rel="stylesheet" href="css/animate.css">
+
+
 
 
                 
@@ -59,6 +47,10 @@
                     
                 </style>
                 
+                
+ 
+                
+                
   
 </head>
 <!-- END HEAD -->
@@ -70,7 +62,7 @@
       <div class="navbar-inner">
          <div class="container-fluid">
             <!-- BEGIN LOGO -->
-            <h1 style="text-align:center;font-size: 50px;color:white;padding-bottom:16px ;font-weight: bolder;">ART Cohorts</h1><br/>
+            <h1 style="text-align:center;font-size: 50px;color:white;padding-bottom:16px ;font-weight: bolder;">STF Adherence Cohorts</h1><br/>
             
             <!-- END LOGO -->
             <!-- BEGIN RESPONSIVE MENU TOGGLER -->
@@ -129,7 +121,7 @@
                   <ul class="breadcrumb">
                      <li style="width: 900px;">
                         <i class="icon-home"></i>
-                        <a href="#" style="margin-left:40%;">Upload ART Cohort excel file.</a> 
+                        <a href="#" style="margin-left:40%;">Upload STF adherence Cohort excel file.</a> 
                         <!--<span class="icon-angle-right"></span>-->
                      </li>
            
@@ -148,22 +140,21 @@
                      </div>
                      <div class="portlet-body form">
                         <!-- BEGIN FORM-->
-                        <form action="importart" method="post" enctype="multipart/form-data" class="form-horizontal" >
+                        <form action="importstf" method="post" enctype="multipart/form-data" class="form-horizontal" >
                        
                             
                           
-                          <input type="file" name="file_name" id="upload" multiple value="" class="textbox" required>   
+                            <input type="file" name="file_name" id="upload" value="" multiple="" class="textbox" required>   
                         <br><br><br><br>
 
 
 
                          
                            <div class="form-actions">
-                              <button type="submit" class="btn blue">Upload ART Excel.</button>
+                              <button type="submit" class="btn blue">Upload STF Excel.</button>
 
                            </div>
                         <div class="form-actions" id="matokeo">
-                        <div class="form-actions">
                             
                         </div>
                         </form>
@@ -207,36 +198,22 @@
 <script src="assets/js/jquery-1.8.3.min.js"></script>
    
 
-<script type="text/javascript" src="js/bootstrap-notify.js"></script>
+<script type="text/javascript" src="assets/js/bootstrap-notify.js"></script>
 
 
       
    
-   <script type="text/javascript" src="assets/ckeditor/ckeditor.js"></script>  
-   <script src="assets/breakpoints/breakpoints.js"></script>       
+   
    <script src="assets/bootstrap/js/bootstrap.min.js"></script>   
    <script type="text/javascript" src="assets/bootstrap-fileupload/bootstrap-fileupload.js"></script>
    <script src="assets/js/jquery.blockui.js"></script>
-   <script src="assets/js/jquery.cookie.js"></script>
-   <!-- ie8 fixes -->
    <!--[if lt IE 9]>
    <script src="assets/js/excanvas.js"></script>
    <script src="assets/js/respond.js"></script>
    <![endif]-->
-   <script type="text/javascript" src="assets/chosen-bootstrap/chosen/chosen.jquery.min.js"></script>
-   <script type="text/javascript" src="assets/uniform/jquery.uniform.min.js"></script>
-   <script type="text/javascript" src="assets/bootstrap-wysihtml5/wysihtml5-0.3.0.js"></script> 
-   <script type="text/javascript" src="assets/bootstrap-wysihtml5/bootstrap-wysihtml5.js"></script>
-   <script type="text/javascript" src="assets/jquery-tags-input/jquery.tagsinput.min.js"></script>
-   <script type="text/javascript" src="assets/bootstrap-toggle-buttons/static/js/jquery.toggle.buttons.js"></script>
-   <script type="text/javascript" src="assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-   <script type="text/javascript" src="assets/clockface/js/clockface.js"></script>
-   <script type="text/javascript" src="assets/bootstrap-daterangepicker/date.js"></script>
-   <script type="text/javascript" src="assets/bootstrap-daterangepicker/daterangepicker.js"></script> 
-   <script type="text/javascript" src="assets/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>  
-   <script type="text/javascript" src="assets/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
+
    <script src="assets/js/app.js"></script>  
-   <script src="select2/js/select2.js"></script>
+ 
   
      
 
@@ -247,15 +224,15 @@
 
 
                   
- <%if (session.getAttribute("uploadedart") != null) { %>
+ <%if (session.getAttribute("uploadedstf") != null) { %>
                                 <script type="text/javascript"> 
                     
                     
-$("#matokeo").html('<%=session.getAttribute("uploadedart")%>');
+                    $("#matokeo").html('<%=session.getAttribute("uploadedstf")%>');
                          
       $.notify(
       {
-  message:'<%=session.getAttribute("uploadedart")%>'},
+  message:'<%=session.getAttribute("uploadedstf")%>'},
       {
 	icon_type: 'image'
       }, 
@@ -271,11 +248,10 @@ $("#matokeo").html('<%=session.getAttribute("uploadedart")%>');
                 </script>
                 
                 <%
-                //session.removeAttribute("uploadedart");
+                //session.removeAttribute("uploadedpmtct");
                             }
 
                         %>
-
 
 
    
