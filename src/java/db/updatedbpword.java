@@ -81,17 +81,18 @@ public class updatedbpword extends HttpServlet {
     String allpath = getServletContext().getRealPath("/dbase.txt");
         String mydrive = allpath.substring(0, 1);
         //dbconnpath=mydrive+":\\MNHC_SYSTEM_APHIA_PLUS\\"; 
-      dbconnpath=mydrive+":\\APHIAPLUS\\COHORT\\DO_NOT_DELETE\\_\\_\\";
+      dbconnpath=mydrive+":\\HSDSA\\COHORT\\DO_NOT_DELETE\\_\\_\\";
       
       
       
-      String stfresponsepath=mydrive+":\\APHIAPLUS\\COHORT\\Stf_UploadResults";
-      String defaulterresponsepath=mydrive+":\\APHIAPLUS\\COHORT\\Defaulter_UploadResults";
-      
+      String stfresponsepath=mydrive+":\\HSDSA\\COHORT\\Stf_UploadResults";
+      String defaulterresponsepath=mydrive+":\\HSDSA\\COHORT\\Defaulter_UploadResults";
+       dbsetup =dbconnpath+"\\dbconnection.txt";
         if(isUnix()){  
-            dbconnpath="APHIAPLUS/COHORT/DO_NOT_DELETE/_/_";
-            stfresponsepath="APHIAPLUS/COHORT/Stf_UploadResults";  
-            defaulterresponsepath="APHIAPLUS/COHORT/Defaulter_UploadResults";  
+            dbconnpath="HSDSA/COHORT/DO_NOT_DELETE/_/_";
+            stfresponsepath="HSDSA/COHORT/Stf_UploadResults";  
+            defaulterresponsepath="HSDSA/COHORT/Defaulter_UploadResults";
+             dbsetup =dbconnpath+"/dbconnection.txt";
         }
       
         // String dbconnpath = drive + ":\\APHIAPLUS\\COHORT\\DO_NOT_DELETE\\_\\_\\dbconnection.txt";
@@ -106,7 +107,7 @@ public class updatedbpword extends HttpServlet {
         
         
 
-    dbsetup =dbconnpath+"\\dbconnection.txt";
+   
         
     //dbsetup=ctx.getRealPath("/dbase.txt");
         
@@ -240,6 +241,9 @@ File file = new File(dbsetup);
           String  mydrive = location.getFile().substring(1, 2);
           
             String command=mydrive+":/wamp/bin/mysql/mysql5.1.36/bin mysql -u root -p"+password+" "+dbase+"  FILE.sql";
+            if(isUnix()){
+             command=" mysql -u root -p"+password+" "+dbase+"  FILE.sql";
+            }
             Runtime.getRuntime().exec(command);
         } catch (IOException ex) {
             Logger.getLogger(updatedbpword.class.getName()).log(Level.SEVERE, null, ex);

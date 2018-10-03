@@ -203,13 +203,13 @@ String yearmonth="";
                          mflcode =""+(int)cellmfl.getNumericCellValue();
                      }
                      else if(cellmfl.getCellType()==1){
-                         mflcode =cellmfl.getStringCellValue();
+                         mflcode =cellmfl.getStringCellValue().trim();
                      }
                      
                      
                      if(mflcode==null || mflcode.equals("")){
                      
-                     nomflsheets+=workbook.getSheetName(a)+" ,";
+                     nomflsheets+=workbook.getSheetName(a)+"("+fileName+") ,";
                      
                      }
                      

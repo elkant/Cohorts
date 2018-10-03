@@ -47,14 +47,14 @@ public class getCohortMonths extends HttpServlet {
 data="<option value=''>Select Month</option>"+
 "<option value='3m'>3m. Cohort ("+lc.getpreviousmonth(new Integer(year),new Integer(monthstring), -3)+") </option>"+
 "<option value='6m'>6m. Cohort ("+lc.getpreviousmonth(new Integer(year),new Integer(monthstring), -6)+")</option>"+
-"<option value='9m'>9m. Cohort ("+lc.getpreviousmonth(new Integer(year),new Integer(monthstring), -9)+") </option>"+
+//"<option value='9m'>9m. Cohort ("+lc.getpreviousmonth(new Integer(year),new Integer(monthstring), -9)+") </option>"+
 "<option value='12m'>12m. Cohort ("+lc.getpreviousmonth(new Integer(year),new Integer(monthstring), -12)+") </option>"+
 "<option value='24m'>24m. Cohort ("+lc.getpreviousmonth(new Integer(year),new Integer(monthstring), -24)+") </option>";
 
 if(cohorttype.equalsIgnoreCase("art")){
-data+="<option value='36m'>36m. Cohort("+lc.getpreviousmonth(new Integer(year),new Integer(monthstring), -36)+")</option>"+
+data+="<option value='36m'>36m. Cohort("+lc.getpreviousmonth(new Integer(year),new Integer(monthstring), -36)+")</option>";
 //"<option value='48m'>48m. Cohort("+lc.getpreviousmonth(new Integer(year),new Integer(monthstring), -48)+")</option>"+
-"<option value='60m'>60m. Cohort("+lc.getpreviousmonth(new Integer(year),new Integer(monthstring), -60)+")</option>";
+//+"<option value='60m'>60m. Cohort("+lc.getpreviousmonth(new Integer(year),new Integer(monthstring), -60)+")</option>";
 }     
           
             

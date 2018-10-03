@@ -101,7 +101,7 @@ public class ACA_MCA_tracker extends HttpServlet {
         stylesum.setFont(fontx);
         stylesum.setWrapText(true);
 
-        HSSFSheet acashet = wb.createSheet("ACA & MCA Missing Reports");
+        HSSFSheet acashet = wb.createSheet("Missing Reports");
         
         
         HSSFSheet Sheetnames[]={acashet};
@@ -274,7 +274,7 @@ rw.setHeightInPoints(26);
         response.setContentType("application/ms-excel");
         response.setContentLength(outArray.length);
         response.setHeader("Expires:", "0"); // eliminates browser caching
-        response.setHeader("Content-Disposition", "attachment; filename=" + "ACA_MCA_tracker_from_"+startdate+"_to_"+enddate+"_gen_" + createdOn.trim() + ".xls");
+        response.setHeader("Content-Disposition", "attachment; filename=" + "ACA_MCA_IPT_SGBV_tracker_from_"+startdate+"_to_"+enddate+"_gen_" + createdOn.trim() + ".xls");
          response.setHeader("Set-Cookie","fileDownload=true; path=/");
         OutputStream outStream = response.getOutputStream();
         outStream.write(outArray);

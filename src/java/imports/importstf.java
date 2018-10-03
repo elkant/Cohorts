@@ -210,7 +210,9 @@ String yearmonth="";
          
          System.out.println( a+" ("+workbook.getSheetName(a)+") out of "+totalsheets+" sheets");
          //if(!isSheetEmpty(worksheet)){
-         if(1==1){
+         //if(1==1){
+         String sheetni=workbook.getSheetName(a);
+         if(!sheetni.contains("Sheet") &&!sheetni.equalsIgnoreCase("Calendar guide") && !sheetni.equalsIgnoreCase("STF instructions ") ){
             
 //______________________________________________________________________
                  anyerrors=false;
@@ -254,7 +256,7 @@ String yearmonth="";
                      }
                     
                      
-                    
+                   
                      
                      //-----------year-----------------------
                      XSSFCell cellyear = worksheet.getRow(2).getCell((short) 7);
@@ -307,7 +309,7 @@ String yearmonth="";
                  }
                  
          
-       
+        mflcode=mflcode.replace("*Mfl Code: ", "");
              
    
          
@@ -570,7 +572,19 @@ String yearmonth="";
                  yearmonth=reportingyear+""+reportingmonth;
                  
                  
-                 
+if(adult_3m.length()>4){adult_3m="0";}
+if(ayp_3m.length()>4){ayp_3m="0";}
+if(tl_3m.length()>4){tl_3m="0";}
+if(adult_6m.length()>4){adult_6m="0";}
+if(ayp_6m.length()>4){ayp_6m="0";}
+if(tl_6m.length()>4){tl_6m="0";}
+if(adult_9m.length()>4){adult_9m="0";}
+if(ayp_9m.length()>4){ayp_9m="0";}
+if(tl_9m.length()>4){tl_9m="0";}
+if(adult_12m.length()>4){adult_12m="0";}
+if(ayp_12m.length()>4){ayp_12m="0";}
+if(tl_12m.length()>4){tl_12m="0";}
+
                  
                  
                  //================================continue from here========================================
@@ -659,7 +673,7 @@ String yearmonth="";
                          conn.pst.setString(16,reportingyear);
                          conn.pst.setString(17,reportingmonth);
                          conn.pst.setString(18,yearmonth);
-                         //System.out.println(""+conn.pst);
+                         System.out.println(""+conn.pst);
                          conn.pst.executeUpdate();
                          
                          
@@ -721,6 +735,7 @@ String yearmonth="";
                  } //end of try
              catch (SQLException ex) {
                  Logger.getLogger(importart.class.getName()).log(Level.SEVERE, null, ex);
+                 //break;
              }
              
          }//end of iterator
@@ -730,6 +745,8 @@ String yearmonth="";
           
         
          }
+         
+         
          }//end of worksheets loop
 
       //now delete unwanted sheets
@@ -811,7 +828,8 @@ out.close();
       }
       
     String sessionText="<br/><b> "+added+ "</b> New sheets added <br/> <b> "+updated+"</b> updated sheets<br> <br> <b>"+nomflcode+"</b> <br> Please Check the folder <b>C:/APHIAPLUS/COHORT/Stf_UploadResults </b> for any files with missing information";    
-    session.setAttribute("uploadedstf"," Workbooks: "+fileNames+". "+ sessionText);
+    session.setAttribute("uploadedstf"," Workbooks: "+fileNames.replace("'","")+". "+ sessionText.replace("'",""));
+     System.out.println("__"+sessionText);
    response.sendRedirect(nextpage);  
  
 

@@ -54,6 +54,14 @@ String error;
         if(!request.getParameter("facilityname").equals("")){
         mflcode=facil.split("_")[0];
         }
+        
+       session.setAttribute("ct", ct);
+       session.setAttribute("mn", mn);
+       session.setAttribute("yr", yr);
+       session.setAttribute("facil", facil);
+        
+        
+        
             System.out.println("mflcode is:"+mflcode);
         
       
@@ -137,7 +145,7 @@ insertorUpdateData(val,tablename,pmtctparameters[a].split("_")[1]+"_"+cohortmont
      
 System.out.println("error : "+error);
  out.println(error);
-  response.sendRedirect("index.jsp");
+  response.sendRedirect("dataentry.jsp");
         } finally {
             out.close();
         }

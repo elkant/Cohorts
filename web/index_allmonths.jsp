@@ -141,7 +141,7 @@
                                
                                     <!--<label><font color="red"><b>*</b></font> Reporting Month </label>-->
                                     <div class="controls">
-                                       <select style="width:140px;" onchange='funguacohort();'  name="cohortttype" id="cohortttype" class="form-control col-xs-2" >
+                                       <select style="width:140px;" onchange='getFacilitiesJson();funguacohort();'  name="cohortttype" id="cohortttype" class="form-control col-xs-2" >
                                             <option value="">Choose cohort type</option>
                                             <option value="art">ART</option>
                                             <option value="pmtct">PMTCT</option>
@@ -718,11 +718,7 @@ function showfacils(){
  
       cnt++;
 	   //console.log(doc);
-	   for(a=0;a<
-                   
-                
-                
-                doc.total_rows;a++){
+	   for(a=0;a<doc.total_rows;a++){
 	   var dat={};
 	   dat=doc.rows[a];
 	      //console.log(dat.doc.title);
@@ -758,7 +754,53 @@ function showfacils(){
 
 
 //showfacils
-showfacils();
+//showfacils();
+
+
+function getFacilitiesJson(){
+       
+       var ct=$("#cohortttype").val();
+       
+        var facilities="<option value=''>Select Facility</option>";
+        
+        //alert("facilities list");
+              $.ajax({
+                         url:'sites.json',                            
+                    type:'post',  
+                    dataType: 'json',  
+                    success: function(data) {
+                     for(var i=0;i<data.length;i++){
+                         if(ct!='art' && ct!=''){
+                             if(data[i].pmtct===1){
+                  facilities+="<option value='"+data[i].mflcode+"_"+data[i].subpartnerid+"_"+data[i].facility_name+"'>"+data[i].facility_name+"</option>"; 
+              }
+              }
+              
+              else if(ct!='pmtct' && ct!=''){
+                             if(data[i].art===1){
+                  facilities+="<option value='"+data[i].mflcode+"_"+data[i].subpartnerid+"_"+data[i].facility_name+"'>"+data[i].facility_name+"</option>"; 
+              }
+              }
+              else if (ct==='') {
+                facilities="<option value=''> select Cohort type</option>";    
+                  
+              }
+                        
+                     }
+                     //alert(facilities);
+                      $("#facilityname").html(facilities);
+                   $(document).ready(function() {
+            //$('#lyricstable').DataTable();
+              $('#facilityname').select2(); 
+             
+                                 } );
+                     
+                      }});
+   
+   }
+   
+   getFacilitiesJson();
+
 
 //========================SAVE TARGETS============================
 //========================SAVE TARGETS============================
@@ -904,7 +946,7 @@ function createdynamicinputs(){
          
        
    
-         $.getJSON("indicators.json",function(result){
+         $.getJSON("indicators1.json",function(result){
              var table="";
              var row1="";
              var row2="";

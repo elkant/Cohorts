@@ -210,7 +210,9 @@ String yearmonth="";
          
          System.out.println( a+" ("+workbook.getSheetName(a)+") out of "+totalsheets+" sheets");
          //if(!isSheetEmpty(worksheet)){
-         if(1==1){
+         String sheetni=workbook.getSheetName(a);
+         if(!sheetni.contains("New & Defaulter instructions")&&!sheetni.contains("Sheet") &&!sheetni.equalsIgnoreCase("Calendar guide") && !sheetni.equalsIgnoreCase("STF instructions ") ){
+            
             
 //______________________________________________________________________
                  anyerrors=false;
@@ -570,8 +572,26 @@ String yearmonth="";
                  yearmonth=reportingyear+""+reportingmonth;
                  
                  
+                
+if(np_3m.length()>4  || np_3m.equals("N/A") ||  np_3m.equals("NA")){np_3m="0";}
+if(def_3m.length()>4 || def_3m.equals("N/A") ||  def_3m.equals("NA")){def_3m="0";}
+if(tl_3m.length()>4 || tl_3m.equals("N/A") ||  tl_3m.equals("NA")){tl_3m="0";}
+if(np_6m.length()>4 || np_6m.equals("N/A") ||  np_6m.equals("NA")){np_6m="0";}
+if(def_6m.length()>4 || def_6m.equals("N/A") ||  def_6m.equals("NA")){def_6m="0";}
+if(tl_6m.length()>4 || tl_6m.equals("N/A") ||  tl_6m.equals("NA")){tl_6m="0";}
+if(tl_6m.length()>4 || tl_6m.equals("N/A") ||  tl_6m.equals("NA")){tl_6m="0";}
+if(np_9m.length()>4 || np_9m.equals("N/A") ||  np_9m.equals("NA")){np_9m="0";}
+if(tl_9m.length()>4 || tl_9m.equals("N/A") ||  tl_9m.equals("NA")){tl_9m="0";}
+if(def_9m.length()>4 || def_9m.equals("N/A") ||  def_9m.equals("NA")){def_9m="0";}
+if(tl_9m.length()>4 || tl_9m.equals("N/A") ||  tl_9m.equals("NA")){tl_9m="0";}
+if(np_12m.length()>4 || np_12m.equals("N/A") ||  np_12m.equals("NA")){np_12m="0";}
+if(def_12m.length()>4 || def_12m.equals("N/A") ||  def_12m.equals("NA")){def_12m="0";}
+if(tl_12m.length()>4 || tl_12m.equals("N/A") ||  tl_12m.equals("NA")){tl_12m="0";}
                  
-                 
+   
+
+
+
                  
                  //================================continue from here========================================
                  
@@ -659,7 +679,7 @@ String yearmonth="";
                          conn.pst.setString(16,reportingyear);
                          conn.pst.setString(17,reportingmonth);
                          conn.pst.setString(18,yearmonth);
-                         //System.out.println(""+conn.pst);
+                         System.out.println(""+conn.pst);
                          conn.pst.executeUpdate();
                          
                          
@@ -721,6 +741,9 @@ String yearmonth="";
                  } //end of try
              catch (SQLException ex) {
                  Logger.getLogger(importart.class.getName()).log(Level.SEVERE, null, ex);
+                 System.out.println(" Sheetname "+sheetni+" failed uploading");
+                 
+                 break;
              }
              
          }//end of iterator
@@ -811,7 +834,9 @@ out.close();
       }
       
     String sessionText="<br/><b> "+added+ "</b> New sheets added <br/> <b> "+updated+"</b> updated sheets<br> <br> <b>"+nomflcode+"</b> <br> Please Check the folder <b>C:/APHIAPLUS/COHORT/Defaulter_UploadResults </b> for any files with missing information";    
-    session.setAttribute("uploadeddefaulter"," Workbooks: "+fileNames+". "+ sessionText);
+    session.setAttribute("uploadeddefaulter"," Workbooks: "+fileNames.replace("'","")+". "+ sessionText.replace("'",""));
+     System.out.println("__"+sessionText);
+    
    response.sendRedirect(nextpage);  
  
 

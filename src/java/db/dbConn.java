@@ -149,11 +149,11 @@ public final class dbConn {
              String dbconnpath =null;
             
             if (isWindows()) {
-			dbconnpath = drive + ":/APHIAPLUS/COHORT/DO_NOT_DELETE/_/_/./dbconnection.txt";
+			dbconnpath = drive + ":/HSDSA/COHORT/DO_NOT_DELETE/_/_/dbconnection.txt";
 
 		}
             else if (isUnix()) {
-	               dbconnpath = "APHIAPLUS/COHORT/DO_NOT_DELETE/_/_/dbconnection.txt";
+	               dbconnpath = "HSDSA/COHORT/DO_NOT_DELETE/_/_/dbconnection.txt";
 
 		}
 

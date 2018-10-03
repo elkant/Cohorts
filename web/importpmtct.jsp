@@ -84,7 +84,7 @@
       <!-- BEGIN SIDEBAR -->
       <div class="page-sidebar nav-collapse collapse">
          <!-- BEGIN SIDEBAR MENU -->         
-      
+         <%@include file="menu.jsp" %>
          <!-- END SIDEBAR MENU -->
       </div>
       <!-- END SIDEBAR -->
