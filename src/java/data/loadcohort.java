@@ -323,6 +323,10 @@ public class loadcohort extends HttpServlet {
            
           
         }
+        if(conn.rs!=null){conn.rs.close();}
+            if(conn.st!=null){conn.st.close();}
+            if(conn.connect!=null){conn.connect.close();}
+           // if(conndb.pst!=null){conndb.pst.close();}
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

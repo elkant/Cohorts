@@ -258,6 +258,7 @@ rw.setHeightInPoints(26);
         if(conn.rs1!=null){conn.rs1.close();}
         if(conn.st!=null){conn.st.close();}
         if(conn.st1!=null){conn.st1.close();}
+        if(conn.connect!=null){conn.connect.close();}
         
         
         IdGenerator IG = new IdGenerator();

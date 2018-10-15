@@ -1033,6 +1033,14 @@ System.out.println(sheetname+ " has no mflcode.");
               Logger.getLogger(importpns.class.getName()).log(Level.SEVERE, null, ex);
           }
 }
+      
+  
+            if(conn.connect!=null){try {
+                conn.connect.close();
+      } catch (SQLException ex) {
+          Logger.getLogger(importpns.class.getName()).log(Level.SEVERE, null, ex);
+      }
+}
      
       
        if(conn.connect!=null){try {

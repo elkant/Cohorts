@@ -335,8 +335,10 @@
    
   
       
-      $(".tarehe").datepicker({
-    clearBtn: true
+     $(".tarehe").datepicker({
+    clearBtn: true,
+    format: "yyyy-mm-dd",
+    endDate: "now()"
 }).on('changeDate', function(ev){
     $(this).datepicker('hide');
 });

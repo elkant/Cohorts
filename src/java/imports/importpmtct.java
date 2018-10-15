@@ -150,7 +150,7 @@ String yearmonth="";
          
         fileNames+=fileName+", ";
          
-         full_path=fileSaveDir.getAbsolutePath()+"\\"+fileName;
+         full_path=fileSaveDir.getAbsolutePath()+"/"+fileName;
          
          System.out.println("the saved file directory is  :  "+full_path);
 // GET DATA FROM THE EXCEL AND AND OUTPUT IT ON THE CONSOLE..................................
@@ -733,6 +733,14 @@ String yearmonth="";
               Logger.getLogger(importart.class.getName()).log(Level.SEVERE, null, ex);
           }
 }
+  
+            if(conn.connect!=null){try {
+                conn.connect.close();
+          } catch (SQLException ex) {
+              Logger.getLogger(importpmtct.class.getName()).log(Level.SEVERE, null, ex);
+          }
+}
+      
       String nomflcode="";
       if(!nomflsheets.equals("")){
       

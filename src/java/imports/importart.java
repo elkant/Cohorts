@@ -118,12 +118,12 @@ String tl_24m="";
 String adult_36m="";
 String child_36m="";
 String tl_36m="";
-String adult_48m="";
-String child_48m="";
-String tl_48m="";
-String adult_60m="";
-String child_60m="";
-String tl_60m="";
+String adult_48m="0";
+String child_48m="0";
+String tl_48m="0";
+String adult_60m="0";
+String child_60m="0";
+String tl_60m="0";
 String mflcode="";
 String reportingyear="";
 String reportingmonth="";
@@ -158,7 +158,7 @@ String yearmonth="";
      else{
            fileNames+=fileName+", ";
          
-         full_path=fileSaveDir.getAbsolutePath()+"\\"+fileName;
+         full_path=fileSaveDir.getAbsolutePath()+"/"+fileName;
          
          System.out.println("the saved file directory is  :  "+full_path);
 // GET DATA FROM THE EXCEL AND AND OUTPUT IT ON THE CONSOLE..................................
@@ -625,52 +625,52 @@ String yearmonth="";
                      
                      //adult_48m
                      
-                     XSSFCell adult_48mcell = rowi.getCell((short) 20);
-                     
-                     adult_48mcell.setCellType(adult_48mcell.CELL_TYPE_STRING);
-                     
-                     
-                     
-                     if(adult_48mcell.getCellType()==0){
-                         //numeric
-                         adult_48m =""+(int)adult_48mcell.getNumericCellValue();
-                     }
-                     else if(adult_48mcell.getCellType()==1){
-                         
-                         adult_48m =adult_48mcell.getStringCellValue();
-                         
-                     
-                     }
-                   
-                   
-                     
-                     //child_48m
-                     
-                     XSSFCell child_48mcell = rowi.getCell((short) 21);
-              child_48mcell.setCellType(child_48mcell.CELL_TYPE_STRING);
-                     
-                     if(child_48mcell.getCellType()==0){
-                         //numeric
-                         child_48m =""+(int)child_48mcell.getNumericCellValue();
-                     }
-                     else if(child_48mcell.getCellType()==1){
-                         child_48m =child_48mcell.getStringCellValue();
-                     }
-                    
-                     
-                     //tl_48m
-                     
-                     XSSFCell tl_48mcell = rowi.getCell((short) 22);
-                    tl_48mcell.setCellType(tl_48mcell.CELL_TYPE_STRING);
-                     if(tl_48mcell.getCellType()==0){
-                         //numeric
-                         tl_48m =""+(int)tl_48mcell.getNumericCellValue();
-                     }
-                     else if(tl_48mcell.getCellType()==1){
-                         tl_48m =tl_48mcell.getStringCellValue();
-                         
-                     }
-                    
+//                     XSSFCell adult_48mcell = rowi.getCell((short) 20);
+//                     
+//                     adult_48mcell.setCellType(adult_48mcell.CELL_TYPE_STRING);
+//                     
+//                     
+//                     
+//                     if(adult_48mcell.getCellType()==0){
+//                         //numeric
+//                         adult_48m =""+(int)adult_48mcell.getNumericCellValue();
+//                     }
+//                     else if(adult_48mcell.getCellType()==1){
+//                         
+//                         adult_48m =adult_48mcell.getStringCellValue();
+//                         
+//                     
+//                     }
+//                   
+//                   
+//                     
+//                     //child_48m
+//                     
+//                     XSSFCell child_48mcell = rowi.getCell((short) 21);
+//              child_48mcell.setCellType(child_48mcell.CELL_TYPE_STRING);
+//                     
+//                     if(child_48mcell.getCellType()==0){
+//                         //numeric
+//                         child_48m =""+(int)child_48mcell.getNumericCellValue();
+//                     }
+//                     else if(child_48mcell.getCellType()==1){
+//                         child_48m =child_48mcell.getStringCellValue();
+//                     }
+//                    
+//                     
+//                     //tl_48m
+//                     
+//                     XSSFCell tl_48mcell = rowi.getCell((short) 22);
+//                    tl_48mcell.setCellType(tl_48mcell.CELL_TYPE_STRING);
+//                     if(tl_48mcell.getCellType()==0){
+//                         //numeric
+//                         tl_48m =""+(int)tl_48mcell.getNumericCellValue();
+//                     }
+//                     else if(tl_48mcell.getCellType()==1){
+//                         tl_48m =tl_48mcell.getStringCellValue();
+//                         
+//                     }
+//                    
                      
                      if(adult_48m.trim().equals("")){adult_48m="0";}
                      if(child_48m.trim().equals("")){child_48m="0";}
@@ -682,47 +682,47 @@ String yearmonth="";
                      
                      //adult_60m
                      
-                     XSSFCell adult_60mcell = rowi.getCell((short) 23);
-                        adult_60mcell.setCellType(adult_60mcell.CELL_TYPE_STRING);
-                     if(adult_60mcell.getCellType()==0){
-                         //numeric
-                         adult_60m =""+(int)adult_60mcell.getNumericCellValue();
-                     }
-                     else if(adult_60mcell.getCellType()==1){
-                         adult_60m =adult_60mcell.getStringCellValue();
-                     }
-                    
-                     
-                     
-                     //child_60m
-                     
-                     XSSFCell child_60mcell = rowi.getCell((short) 24);
-                     child_60mcell.setCellType(child_60mcell.CELL_TYPE_STRING);
-                     if(child_60mcell.getCellType()==0){
-                         //numeric
-                         child_60m =""+(int)child_60mcell.getNumericCellValue();
-                     }
-                     else if(child_60mcell.getCellType()==1){
-                         child_60m =child_60mcell.getStringCellValue();
-                     }
-                    
-                     
-                     
-                     //tl_60m
-                     
-                     XSSFCell tl_60mcell = rowi.getCell((short) 25);
-                     
-                     tl_60mcell.setCellType(tl_60mcell.CELL_TYPE_STRING);
-                     
-                     if(tl_60mcell.getCellType()==0){
-                         //numeric
-                         tl_60m =""+(int)tl_60mcell.getNumericCellValue();
-                     }
-                     else if(tl_60mcell.getCellType()==1){
-                         tl_60m =tl_60mcell.getStringCellValue();
-                         
-                     }
-                    
+//                     XSSFCell adult_60mcell = rowi.getCell((short) 23);
+//                        adult_60mcell.setCellType(adult_60mcell.CELL_TYPE_STRING);
+//                     if(adult_60mcell.getCellType()==0){
+//                         //numeric
+//                         adult_60m =""+(int)adult_60mcell.getNumericCellValue();
+//                     }
+//                     else if(adult_60mcell.getCellType()==1){
+//                         adult_60m =adult_60mcell.getStringCellValue();
+//                     }
+//                    
+//                     
+//                     
+//                     //child_60m
+//                     
+//                     XSSFCell child_60mcell = rowi.getCell((short) 24);
+//                     child_60mcell.setCellType(child_60mcell.CELL_TYPE_STRING);
+//                     if(child_60mcell.getCellType()==0){
+//                         //numeric
+//                         child_60m =""+(int)child_60mcell.getNumericCellValue();
+//                     }
+//                     else if(child_60mcell.getCellType()==1){
+//                         child_60m =child_60mcell.getStringCellValue();
+//                     }
+//                    
+//                     
+//                     
+//                     //tl_60m
+//                     
+//                     XSSFCell tl_60mcell = rowi.getCell((short) 25);
+//                     
+//                     tl_60mcell.setCellType(tl_60mcell.CELL_TYPE_STRING);
+//                     
+//                     if(tl_60mcell.getCellType()==0){
+//                         //numeric
+//                         tl_60m =""+(int)tl_60mcell.getNumericCellValue();
+//                     }
+//                     else if(tl_60mcell.getCellType()==1){
+//                         tl_60m =tl_60mcell.getStringCellValue();
+//                         
+//                     }
+//                    
                      
                      if(adult_60m.trim().equals("")){adult_60m="0";}
                      if(child_60m.trim().equals("")){child_60m="0";}
@@ -924,6 +924,14 @@ String yearmonth="";
               Logger.getLogger(importart.class.getName()).log(Level.SEVERE, null, ex);
           }
 }
+    
+            if(conn.connect!=null){try {
+                conn.connect.close();
+         } catch (SQLException ex) {
+             Logger.getLogger(importart.class.getName()).log(Level.SEVERE, null, ex);
+         }
+}
+      
        String nomflcode="";
       if(!nomflsheets.equals("")){
       

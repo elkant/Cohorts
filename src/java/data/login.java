@@ -34,7 +34,7 @@ String userAccess;
             throws ServletException, IOException, NoSuchAlgorithmException, SQLException {
       session=request.getSession();
           dbConn conn = new dbConn();
-         conn.st.executeUpdate("Set GLOBAL  max_connections=6000");
+         //conn.st.executeUpdate("Set GLOBAL  max_connections=6000");
           
           username=password=fname=mname=lname=userid=level=pass=fullname=status=nextPage="";
           userAccess=",";

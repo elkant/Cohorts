@@ -141,6 +141,7 @@ insertorUpdateData(val,tablename,pmtctparameters[a].split("_")[1]+"_"+cohortmont
      if(conn.rs!=null){conn.rs.close();}
      if(conn.rs1!=null){conn.rs1.close();}
      if(conn.rs2!=null){conn.rs2.close();}
+     if(conn.connect!=null){conn.connect.close();}
     
      
 System.out.println("error : "+error);

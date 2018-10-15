@@ -131,7 +131,10 @@ public class loadSavedCohort extends HttpServlet {
             }
             
             }
-            
+            if(conn.rs!=null){conn.rs.close();}
+            if(conn.st0!=null){conn.st0.close();}
+            if(conn.connect!=null){conn.connect.close();}
+           
             
              out.println(ar);
             

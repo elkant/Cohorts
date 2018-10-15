@@ -76,6 +76,14 @@
 
 <!-- Main -->
 <div class="container-fluid">
+    
+    <div class="row">
+         <label class="col-sm-2"></label>
+        <a class='btn btn-success col-sm-3' style="text-align: center;" href='https://hsdsacluster2.fhi360.org'>Dashboards Home</a>
+        <label class="col-sm-2"></label>
+          <a class='btn btn-success col-sm-3' style="text-align: center;" href='aca_mca_reports.jsp'>Generate Reports</a>
+           <label class="col-sm-2"></label>
+    </div>
     <div class="row">
         
         <!-- /col-3 -->
@@ -83,8 +91,7 @@
 
             
             
-          <a class='btn btn-success' style="text-align: center;" href='https://hsdsacluster2.fhi360.org'>Dashboards Home</a>
-          <a class='btn btn-success' style="text-align: center;margin-left: 300px;" href='aca_mca_reports.jsp'>Generate Reports</a>
+          
           <h5 style="text-align: center;color:blue;">MATERNAL/ART COHORT ANALYSIS SYSTEM [Ver 1.0.0]</h5>
 
             <div class="row">

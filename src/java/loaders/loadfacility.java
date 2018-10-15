@@ -77,11 +77,11 @@ public class loadfacility extends HttpServlet {
 //value='"+data[i].mflcode+"_"+data[i].subpartnerid+"_"+data[i].facility_name+"'>"+data[i].facility_name+"</option>"; 
      if(curfacil.equals(mflcode+"_"+subpartnerid+"_"+facilname)){
          
-facil+="<option selected value='"+mflcode+"_"+subpartnerid+"_"+facilname+"'>"+facilname+"</option>";
+facil+="<option selected value=\""+mflcode+"_"+subpartnerid+"_"+facilname+"\">"+facilname+"</option>";
 
      }
      else {
-     facil+="<option value='"+mflcode+"_"+subpartnerid+"_"+facilname+"'>"+facilname+"</option>";
+     facil+="<option value=\""+mflcode+"_"+subpartnerid+"_"+facilname+"\">"+facilname+"</option>";
      
      }
 
@@ -90,7 +90,10 @@ facil+="<option selected value='"+mflcode+"_"+subpartnerid+"_"+facilname+"'>"+fa
             
          
             out.println(facil);
-           
+          if(conn.rs!=null){conn.rs.close();}
+            if(conn.st!=null){conn.st.close();}
+            if(conn.connect!=null){conn.connect.close();}
+            
         }
     }
 

@@ -96,7 +96,7 @@ public class enrolledFromImis extends HttpServlet {
             if (conn.rs.next()){
             
              
-            jo.put("val1", conn.rs.getInt(1));
+        jo.put("val1", conn.rs.getInt(1));
         jo.put("val2", conn.rs.getInt(2));
         jo.put("tl", conn.rs.getInt(3));
             }
@@ -110,6 +110,11 @@ public class enrolledFromImis extends HttpServlet {
             }
             
             }
+            
+            if(conn.rs!=null){conn.rs.close();}
+            if(conn.st0!=null){conn.st0.close();}
+            if(conn.connect!=null){conn.connect.close();}
+           
             
             
              out.println(jo);
