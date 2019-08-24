@@ -196,18 +196,18 @@ for(int a=0;a<totalsheets;a++){
     id="";
     String indicator="";
     String indicatorid="";
-    String np_3m="";
-    String def_3m="";
-    String tl_3m="";
-    String np_6m="";
-    String def_6m="";
-    String tl_6m="";
-    String np_9m="";
-    String def_9m="";
-    String tl_9m="";
-    String np_12m="";
-    String def_12m="";
-    String tl_12m="";
+    String np_3m="0";
+    String def_3m="0";
+    String tl_3m="0";
+    String np_6m="0";
+    String def_6m="0";
+    String tl_6m="0";
+    String np_9m="0";
+    String def_9m="0";
+    String tl_9m="0";
+    String np_12m="0";
+    String def_12m="0";
+    String tl_12m="0";
     
     String mflcode="";
     String reportingyear="";
@@ -357,19 +357,20 @@ while(i<=18){
             
             XSSFCell np_3mcell = rowi.getCell((short) 2);
             
-            if(np_3mcell.getCellType()==0){
-                //numeric
-                np_3m =""+(int)np_3mcell.getNumericCellValue();
-            }
-            else if(np_3mcell.getCellType()==1){
-                np_3m =np_3mcell.getStringCellValue();
-            }
-            else {
-                
-                np_3m =""+(int)np_3mcell.getNumericCellValue();
+            switch (np_3mcell.getCellType()) {
+                case 0:
+                    //numeric
+                    np_3m =""+(int)np_3mcell.getNumericCellValue();
+                    break;
+                case 1:
+                    np_3m =np_3mcell.getStringCellValue();
+                    break;
+                default:
+                    np_3m =""+np_3mcell.getRawValue();
+                    break;
             }
             
-            if(np_3m.trim().equals("")){np_3m="";}
+            if(np_3m.trim().equals("")){np_3m="0";}
             
             
             //def_3m
@@ -385,10 +386,10 @@ while(i<=18){
             }
             
             else {
-                def_3m =""+(int)def_3mcell.getNumericCellValue();
+                def_3m =""+def_3mcell.getRawValue();
             }
             
-            if(def_3m.trim().equals("")){def_3m="";}
+            if(def_3m.trim().equals("")){def_3m="0";}
             
             //tl_3m
             
@@ -403,11 +404,11 @@ while(i<=18){
             }
             else {
                 
-                tl_3m =""+(int)tl_3mcell.getNumericCellValue();
+                tl_3m =""+tl_3mcell.getRawValue();
             }
             
             
-            if(tl_3m.trim().equals("")){tl_3m="";}
+            if(tl_3m.trim().equals("")){tl_3m="0";}
             
             //np_6m
             
@@ -421,9 +422,9 @@ while(i<=18){
                 np_6m =np_6mcell.getStringCellValue();
             }
             else {
-                np_6m =""+(int)np_6mcell.getNumericCellValue();
+                np_6m =""+np_6mcell.getRawValue();
             }
-            if(np_6m.trim().equals("")){np_6m="";}
+            if(np_6m.trim().equals("")){np_6m="0";}
             
             //def_6m
             
@@ -438,11 +439,11 @@ while(i<=18){
             }
             else {
                 
-                def_6m =""+(int)def_6mcell.getNumericCellValue();
+                def_6m =""+def_6mcell.getRawValue();
                 
             }
             
-            if(def_6m.trim().equals("")){def_6m="";}
+            if(def_6m.trim().equals("")){def_6m="0";}
             
             //tl_7m
             
@@ -456,10 +457,10 @@ while(i<=18){
                 tl_6m =tl_6mcell.getStringCellValue();
             }
             else {
-                tl_6m =""+(int)tl_6mcell.getNumericCellValue();
+                tl_6m =""+tl_6mcell.getRawValue();
                 
             }
-            if(tl_6m.trim().equals("")){tl_6m="";}
+            if(tl_6m.trim().equals("")){tl_6m="0";}
             
             //np_9m
             
@@ -473,7 +474,7 @@ while(i<=18){
                 np_9m =np_9mcell.getStringCellValue();
             }
             else {
-                np_9m =""+(int)np_9mcell.getNumericCellValue();
+                np_9m =""+np_9mcell.getRawValue();
                 
             }
             
@@ -491,7 +492,7 @@ while(i<=18){
             }
             else {
                 
-                def_9m =""+(int)def_9mcell.getNumericCellValue();
+                def_9m =""+def_9mcell.getRawValue();
                 
             }
             
@@ -510,7 +511,7 @@ while(i<=18){
             
             else {
                 
-                tl_9m =""+(int)tl_9mcell.getNumericCellValue();
+                tl_9m =""+tl_9mcell.getRawValue();
                 
             }
             
@@ -531,7 +532,7 @@ while(i<=18){
             }
             else {
                 
-                np_12m =""+(int)np_12mcell.getNumericCellValue();
+                np_12m =""+np_12mcell.getRawValue();
             }
             
             
@@ -547,7 +548,7 @@ while(i<=18){
                 def_12m =def_12mcell.getStringCellValue();
             }
             else {
-                def_12m =""+(int)def_12mcell.getNumericCellValue();
+                def_12m =""+def_12mcell.getRawValue();
                 
             }
             
@@ -563,7 +564,7 @@ while(i<=18){
                 tl_12m =tl_12mcell.getStringCellValue();
             }
             else {
-                tl_12m =""+(int)tl_12mcell.getNumericCellValue();
+                tl_12m =""+tl_12mcell.getRawValue();
                 
             }
             
@@ -582,20 +583,20 @@ while(i<=18){
         
         
         
-        if(np_3m.length()>4  || np_3m.equals("N/A") ||  np_3m.equals("NA")){np_3m="0";}
-        if(def_3m.length()>4 || def_3m.equals("N/A") ||  def_3m.equals("NA")){def_3m="0";}
-        if(tl_3m.length()>4 || tl_3m.equals("N/A") ||  tl_3m.equals("NA")){tl_3m="0";}
-        if(np_6m.length()>4 || np_6m.equals("N/A") ||  np_6m.equals("NA")){np_6m="0";}
-        if(def_6m.length()>4 || def_6m.equals("N/A") ||  def_6m.equals("NA")){def_6m="0";}
-        if(tl_6m.length()>4 || tl_6m.equals("N/A") ||  tl_6m.equals("NA")){tl_6m="0";}
-        if(tl_6m.length()>4 || tl_6m.equals("N/A") ||  tl_6m.equals("NA")){tl_6m="0";}
-        if(np_9m.length()>4 || np_9m.equals("N/A") ||  np_9m.equals("NA")){np_9m="0";}
-        if(tl_9m.length()>4 || tl_9m.equals("N/A") ||  tl_9m.equals("NA")){tl_9m="0";}
-        if(def_9m.length()>4 || def_9m.equals("N/A") ||  def_9m.equals("NA")){def_9m="0";}
-        if(tl_9m.length()>4 || tl_9m.equals("N/A") ||  tl_9m.equals("NA")){tl_9m="0";}
-        if(np_12m.length()>4 || np_12m.equals("N/A") ||  np_12m.equals("NA")){np_12m="0";}
-        if(def_12m.length()>4 || def_12m.equals("N/A") ||  def_12m.equals("NA")){def_12m="0";}
-        if(tl_12m.length()>4 || tl_12m.equals("N/A") ||  tl_12m.equals("NA")){tl_12m="0";}
+        if(np_3m.length()>=4  || np_3m.equals("N/A") ||  np_3m.equals("NA")){np_3m="0";}
+        if(def_3m.length()>=4 || def_3m.equals("N/A") ||  def_3m.equals("NA")){def_3m="0";}
+        if(tl_3m.length()>=4 || tl_3m.equals("N/A") ||  tl_3m.equals("NA")){tl_3m="0";}
+        if(np_6m.length()>=4 || np_6m.equals("N/A") ||  np_6m.equals("NA")){np_6m="0";}
+        if(def_6m.length()>=4 || def_6m.equals("N/A") ||  def_6m.equals("NA")){def_6m="0";}
+        if(tl_6m.length()>=4 || tl_6m.equals("N/A") ||  tl_6m.equals("NA")){tl_6m="0";}
+        if(tl_6m.length()>=4 || tl_6m.equals("N/A") ||  tl_6m.equals("NA")){tl_6m="0";}
+        if(np_9m.length()>=4 || np_9m.equals("N/A") ||  np_9m.equals("NA")){np_9m="0";}
+        if(tl_9m.length()>=4 || tl_9m.equals("N/A") ||  tl_9m.equals("NA")){tl_9m="0";}
+        if(def_9m.length()>=4 || def_9m.equals("N/A") ||  def_9m.equals("NA")){def_9m="0";}
+        if(tl_9m.length()>=4 || tl_9m.equals("N/A") ||  tl_9m.equals("NA")){tl_9m="0";}
+        if(np_12m.length()>=4 || np_12m.equals("N/A") ||  np_12m.equals("NA")){np_12m="0";}
+        if(def_12m.length()>=4 || def_12m.equals("N/A") ||  def_12m.equals("NA")){def_12m="0";}
+        if(tl_12m.length()>=4 || tl_12m.equals("N/A") ||  tl_12m.equals("NA")){tl_12m="0";}
         
         
         
@@ -786,10 +787,10 @@ missingFacility+="facility  : "+facilityName+" mfl code : "+mflcode+" not in sys
           
          String allpath = getServletContext().getRealPath("/dbase.txt");
          String mydrive = allpath.substring(0, 1);
-         String outputpath=mydrive+":\\APHIAPLUS\\COHORT\\Defaulter_UploadResults\\response_"+fileName.replace(".xlsx", "")+".xlsx";
+         String outputpath=mydrive+":\\HSDSA\\COHORT\\Defaulter_UploadResults\\response_"+fileName.replace(".xlsx", "")+".xlsx";
              OSValidator ov= new OSValidator();
          
-         if(ov.isUnix()){  outputpath="APHIAPLUS/COHORT/Defaulter_UploadResults/response_"+fileName.replace(".xlsx", "")+".xlsx";  }
+         if(ov.isUnix()){  outputpath="HSDSA/COHORT/Defaulter_UploadResults/response_"+fileName.replace(".xlsx", "")+".xlsx";  }
          
         // new File(outputpath).mkdirs(); 
          

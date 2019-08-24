@@ -9,11 +9,14 @@ package reports;
 import General.IdGenerator;
 import db.dbConn;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -27,35 +30,135 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFFont;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.openxmlformats.schemas.spreadsheetml.x2006.main.CTTable;
+import static reports.pnsreports.isNumeric;
+import static scripts.OSValidator.isUnix;
+import scripts.copytemplates;
 
 /**
  *
  * @author EKaunda
  */
-public class ACA_MCA_Rawdata extends HttpServlet {
+public class surge_tracker extends HttpServlet {
 
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException {
+            throws ServletException, IOException, SQLException, InvalidFormatException {
         response.setContentType("text/html;charset=UTF-8");
         //PrintWriter out = response.getWriter();
 
+        
+         IdGenerator IG = new IdGenerator();
+        String createdOn = IG.CreatedOn();
+        
+        
+        
+        
+        
+        
+        
+        
+        
         /* TODO output your page here. You may use following sample code. */
 //______________________________________________________________________________________
 //                       CREATE THE WORKSHEETS          
 //______________________________________________________________________________________  
-        HSSFWorkbook wb = new HSSFWorkbook();
+        
 
-        HSSFFont font = wb.createFont();
+
+
+String allpath = getServletContext().getRealPath("/surgetracker.xlsx");
+
+XSSFWorkbook wb1;
+ 
+String pathtodelete=null;
+
+Date da= new Date();
+String dat2 = da.toString().replace(" ", "_");
+
+dat2 = dat2.toString().replace(":", "_");
+
+String mydrive = allpath.substring(0, 1);
+
+String np=mydrive+":\\HSDSA\\PNS\\MACROS\\";
+
+String filepath="Surge_Tracker"+dat2+".xlsx";
+
+
+if(isUnix()){
+    np="/HSDSA/PNS/MACROS/";
+}
+
+
+ new File(np).mkdirs();
+
+ np+=filepath;
+ 
+//check if file exists
+String sourcepath = getServletContext().getRealPath("/surgetracker.xlsx");
+
+File f = new File(np);
+if(!f.exists()&& !f.isFile() ) {
+    /* do something */
+    
+    copytemplates ct= new copytemplates();
+    System.out.println("Copying macros..");
+    ct.transfermacros(sourcepath,np);
+    
+}
+else
+    //copy the file alone  
+{
+    
+    copytemplates ct= new copytemplates();
+//copy the agebased file only
+ct.copymacros(sourcepath,np);
+
+}
+
+            System.out.println("Copying done..");
+
+
+File allpathfile= new File(np);
+
+OPCPackage pkg = OPCPackage.open(allpathfile);
+
+pathtodelete=np;
+
+
+//wb = new XSSFWorkbook( OPCPackage.open(allpath) );
+wb1 = new XSSFWorkbook(pkg);
+
+
+//SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 100);
+
+
+
+
+
+XSSFWorkbook wb = wb1;
+
+
+
+
+        XSSFFont font = wb.createFont();
         font.setFontHeightInPoints((short) 18);
         font.setFontName("Cambria");
         font.setColor((short) 0000);
         CellStyle style = wb.createCellStyle();
         style.setFont(font);
         style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-        HSSFFont font2 = wb.createFont();
+        XSSFFont font2 = wb.createFont();
         font2.setFontName("Cambria");
         font2.setColor((short) 0000);
         CellStyle style2 = wb.createCellStyle();
@@ -66,14 +169,14 @@ public class ACA_MCA_Rawdata extends HttpServlet {
         style2.setBorderRight(HSSFCellStyle.BORDER_THIN);
         style2.setAlignment(HSSFCellStyle.ALIGN_LEFT);
 
-        HSSFCellStyle stborder = wb.createCellStyle();
+        XSSFCellStyle stborder = wb.createCellStyle();
         stborder.setBorderTop(HSSFCellStyle.BORDER_THIN);
         stborder.setBorderBottom(HSSFCellStyle.BORDER_THIN);
         stborder.setBorderLeft(HSSFCellStyle.BORDER_THIN);
         stborder.setBorderRight(HSSFCellStyle.BORDER_THIN);
         stborder.setAlignment(HSSFCellStyle.ALIGN_CENTER);
 
-        HSSFCellStyle stylex = wb.createCellStyle();
+        XSSFCellStyle stylex = wb.createCellStyle();
         stylex.setFillForegroundColor(HSSFColor.GREY_25_PERCENT.index);
         stylex.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
         stylex.setBorderTop(HSSFCellStyle.BORDER_THIN);
@@ -82,7 +185,7 @@ public class ACA_MCA_Rawdata extends HttpServlet {
         stylex.setBorderRight(HSSFCellStyle.BORDER_THIN);
         stylex.setAlignment(HSSFCellStyle.ALIGN_LEFT);
 
-        HSSFCellStyle stylesum = wb.createCellStyle();
+        XSSFCellStyle stylesum = wb.createCellStyle();
         stylesum.setFillForegroundColor(HSSFColor.GREY_25_PERCENT.index);
         stylesum.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
         stylesum.setBorderTop(HSSFCellStyle.BORDER_THIN);
@@ -91,7 +194,7 @@ public class ACA_MCA_Rawdata extends HttpServlet {
         stylesum.setBorderRight(HSSFCellStyle.BORDER_THIN);
         stylesum.setAlignment(HSSFCellStyle.ALIGN_CENTER);
 
-        HSSFFont fontx = wb.createFont();
+        XSSFFont fontx = wb.createFont();
         fontx.setColor(HSSFColor.BLACK.index);
         fontx.setFontName("Cambria");
         stylex.setFont(fontx);
@@ -100,22 +203,19 @@ public class ACA_MCA_Rawdata extends HttpServlet {
         stylesum.setFont(fontx);
         stylesum.setWrapText(true);
 
-        HSSFSheet acashet = wb.createSheet("ACA raw Data");
-        HSSFSheet mcashet = wb.createSheet("MCA raw Data");
-        
-        HSSFSheet Sheetnames[]={acashet,mcashet};
+        XSSFSheet shet = wb.getSheet("Raw data tracker");
 
         String year="";
        IdGenerator dats= new IdGenerator();
         
-        String startdate="2018-04-16";
-        String enddate="2018-04-21";
-        String subcounty="";
+        String startdate="2019-05-13";
+        String enddate=IG.toDay();
+      
         String county="";
         if(request.getParameter("startdate")!=null)
         {
         
-            startdate=request.getParameter("startdate");
+        startdate=request.getParameter("startdate");
         
         }
         if(request.getParameter("enddate")!=null)
@@ -125,65 +225,135 @@ public class ACA_MCA_Rawdata extends HttpServlet {
         
         }
         
-        
-        
-        startdate=startdate.replace("-", "").substring(0,6);
-        enddate=enddate.replace("-", "").substring(0,6);
-        
-        
 //        //subcounty
 //        if(request.getParameter("rpt_subcounty")!=null)
 //        {
 //            subcounty=request.getParameter("rpt_subcounty");
 //        }
 //        //county
-//        if(request.getParameter("rpt_county")!=null)
-//        {
-//         county=request.getParameter("rpt_county");
-//        }
+        if(request.getParameter("county")!=null)
+        {
+         county=request.getParameter("county");
+        }
         
         dbConn conn = new dbConn();
+        
         //========Query 1=================
         
-        String orgunits="1=1 ";
+        String orgunits="  ( daily_surge_tracker.`Date` between  '"+startdate+"' and '"+enddate+"' )  ";
         
-        if(!county.equals("")){
-        orgunits+=" and county.CountyID like '"+county+"' ";
+        
+        
+        if(!county.trim().equals(""))
+        {
+        orgunits+=" and  County in ('"+county+"') ";
         }
-        if(!subcounty.equals("") ){
+        
+        
+       
+     
+        String subcounty="(";
+        String subcountyar[]=null;
+        
+       subcountyar=request.getParameter("subcounty").split(","); 
+       
+       if(request.getParameter("subcounty")!=null)
+       {
+           if(!request.getParameter("subcounty").equals("")){
+       
+       for(int a=0;a<subcountyar.length;a++)
+       {
+       
+           if(a==subcountyar.length-1)
+           {
+               
+            subcounty+="'"+subcountyar[a]+"')";  
             
-         orgunits+=" and district.DistrictID like '"+subcounty+"' ";
+           }
+     else {
+               
+       subcounty+="'"+subcountyar[a]+"',"; 
+       
+          }
+           
+           
+       }
+           System.out.println(" array length "+subcountyar.length);
+       }
+       }
+        
+        if(!subcounty.equals("(") ){
+            
+         orgunits+=" and `Sub-county` in "+subcounty+" ";
         
         }
         
-        //for(int sheetno=0;sheetno < wb.getNumberOfSheets();sheetno++){
-        for(HSSFSheet shet:Sheetnames){
         
-        HSSFRow rw0=shet.createRow(1);
-        HSSFCell cell = rw0.createCell(0);
-                    cell.setCellValue(shet.getSheetName()+" for Period "+startdate+" and "+enddate);
-                    cell.setCellStyle(style);
+     
+        
+        //_______________________________________________________________________________________________
+        
+        
+        String mfl="(";
+        String facilityar[]=null;
+        
+       facilityar=request.getParameter("facility").split(","); 
+       
+       if(request.getParameter("facility")!=null)
+       {
+           if(!request.getParameter("facility").equals("")){
+       
+       for(int a=0;a<facilityar.length;a++)
+       {
+       
+           if(a==facilityar.length-1)
+           {
+               
+            mfl+="'"+facilityar[a]+"')";  
+            
+           }
+     else {
+               
+       mfl+="'"+facilityar[a]+"',"; 
+       
+          }
+           
+           
+       }
+           System.out.println(" facility array length "+facilityar.length);
+       
+       }}
+        
+        
+        if(!mfl.equals("(") )
+        {
+            
+         orgunits+=" and `mflcode` in "+mfl+" ";
+        
+        }
+        
+        
+        
+        //_______________________________________________________________________________________________
+        
+        
+        
+        
+        
+        XSSFRow rw0=shet.createRow(1);
+        XSSFCell cell = rw0.createCell(0);
+        cell.setCellValue("Surge Tracker for Period "+startdate+"  to "+enddate+"");
+        cell.setCellStyle(style);
         shet.addMergedRegion(new CellRangeAddress(1, 1, 0,10));
                     
                 int count1  = 3;
         
-              //shet.getSheetName();
-              
-                String storedprocedure="";
-                if(shet.getSheetName().equals("ACA raw Data")){
-                
-                storedprocedure="rpt_ACA";
-                }
-                else { 
-                
-                 storedprocedure="rpt_MCA";
-                }
+       
         
         //========Query two====Facility Details==============
         
-        String qry = "call "+storedprocedure+" ('"+startdate+"','"+enddate+"')";
-
-         System.out.println(qry);
+        String qry = "SELECT * FROM aphiaplus_moi.daily_surge_tracker where "+orgunits+" ;";
+        System.out.println(qry);
         conn.rs = conn.st.executeQuery(qry);
         
          ResultSetMetaData metaData = conn.rs.getMetaData();
@@ -191,39 +361,42 @@ public class ACA_MCA_Rawdata extends HttpServlet {
 
          metaData = conn.rs.getMetaData();
          columnCount = metaData.getColumnCount();
-        int count = count1;
-        ArrayList mycolumns = new ArrayList();
+         int count = count1;
+         ArrayList mycolumns = new ArrayList();
 
-        while (conn.rs.next()) {
+         while (conn.rs.next()) {
 
-            if (count == (count1)) {
+         if (count == (count1)) {
 //header rows
-                HSSFRow rw = shet.createRow(count);
-rw.setHeightInPoints(26);
-                for (int i = 1; i <= columnCount; i++) {
-
+         XSSFRow rw = shet.getRow(count);
+//rw.setHeightInPoints(26);
+                for (int i = 1; i <= columnCount; i++) 
+                {
+//skip header
                     mycolumns.add(metaData.getColumnLabel(i));
-                    HSSFCell cell0 = rw.createCell(i - 1);
-                    cell0.setCellValue(metaData.getColumnLabel(i));
-                    cell0.setCellStyle(stylex);
+//                    XSSFCell cell0 = rw.getCell(i - 1);
+//                    cell0.setCellValue(metaData.getColumnLabel(i));
+//                    cell0.setCellStyle(stylex);
 
                     //create row header
                 }//end of for loop
                 count++;
             }//end of if
             //data rows     
-            HSSFRow rw = shet.createRow(count);
+            XSSFRow rw = shet.createRow(count);
 
-            for (int a = 0; a < columnCount; a++) {
+            for (int a = 0; a < columnCount; a++) 
+            {
                 //System.out.print(mycolumns.get(a) + ":" + conn.rs.getString("" + mycolumns.get(a)));
 
-                HSSFCell cell0 = rw.createCell(a);
-                 if(isNumeric(conn.rs.getString("" + mycolumns.get(a)))){
+                XSSFCell cell0 = rw.createCell(a);
+                 if(isNumeric(conn.rs.getString("" + mycolumns.get(a))))
+                 {
                // if(1==1){
                 
                      cell0.setCellValue(conn.rs.getInt(mycolumns.get(a).toString()));
                     
-                   }
+                 }
                 else 
                 {
                      cell0.setCellValue(conn.rs.getString("" + mycolumns.get(a)));
@@ -242,20 +415,36 @@ rw.setHeightInPoints(26);
         
         
         //Autofreeze  || Autofilter  || Remove Gridlines ||  
-        
-      if(count1<count-1){
-        shet.setAutoFilter(new CellRangeAddress(count1, count - 1, 0, columnCount-1));
-        }
+     if(count!=count1)   {
+       // shet.setAutoFilter(new CellRangeAddress(count1, count - 1, 0, columnCount-1));
 
         //System.out.println("1,"+rowpos+",0,"+colposcopy);
-        for (int i = 0; i <= columnCount; i++) {
-            shet.autoSizeColumn(i);
+        for (int i = 0; i <= columnCount; i++) 
+        {
+          //  shet.autoSizeColumn(i);
         }
 
-        shet.setDisplayGridlines(false);
-        shet.createFreezePane(5, 4);
-
+      //  shet.setDisplayGridlines(false);
+      //  shet.createFreezePane(6, 4);
     }
+     
+     
+     
+   if(1==1){
+     XSSFSheet sheet= wb.getSheet("Raw data tracker");
+        // tell your xssfsheet where its content begins and where it ends
+((XSSFSheet)shet).getCTWorksheet().getDimension().setRef("A4:I" + (shet.getLastRowNum() + 1));
+
+CTTable ctTable = ((XSSFSheet)shet).getTables().get(0).getCTTable();
+
+ctTable.setRef("A4:I" + (shet.getLastRowNum() + 1)); // adjust reference as needed
+
+
+        
+          }
+     
+     
+     
         
         if(conn.rs!=null){conn.rs.close();}
         if(conn.rs1!=null){conn.rs1.close();}
@@ -264,10 +453,9 @@ rw.setHeightInPoints(26);
         if(conn.connect!=null){conn.connect.close();}
         
         
-        IdGenerator IG = new IdGenerator();
-        String createdOn = IG.CreatedOn();
+       
 
-        System.out.println("" + "ACA_MCA_rpt_from_" + createdOn.trim() + ".xls");
+        System.out.println("" + "PNS_reports_Gen_" + createdOn.trim() + ".xls");
 
         ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
         wb.write(outByteStream);
@@ -275,7 +463,7 @@ rw.setHeightInPoints(26);
         response.setContentType("application/ms-excel");
         response.setContentLength(outArray.length);
         response.setHeader("Expires:", "0"); // eliminates browser caching
-        response.setHeader("Content-Disposition", "attachment; filename=" + "ACA_MCA_rpt_from_"+startdate+"_to_"+enddate+"_gen_" + createdOn.trim() + ".xls");
+        response.setHeader("Content-Disposition", "attachment; filename=" + "Surge Tracker_"+startdate+"_to_"+enddate+"_gen_" + createdOn.trim() + ".xlsx");
          response.setHeader("Set-Cookie","fileDownload=true; path=/");
         OutputStream outStream = response.getOutputStream();
         outStream.write(outArray);
@@ -290,6 +478,8 @@ rw.setHeightInPoints(26);
             processRequest(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(rawdata.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvalidFormatException ex) {
+            Logger.getLogger(surge_tracker.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -300,6 +490,8 @@ rw.setHeightInPoints(26);
             processRequest(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(rawdata.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvalidFormatException ex) {
+            Logger.getLogger(surge_tracker.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -308,9 +500,4 @@ rw.setHeightInPoints(26);
         return "Short description";
     }// </editor-fold>
 
-    
-      public boolean isNumeric(String s) {  
-    return s != null && s.matches("[-+]?\\d*\\.?\\d+");  
-}
-    
 }

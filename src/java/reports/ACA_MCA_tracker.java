@@ -245,7 +245,9 @@ rw.setHeightInPoints(26);
         
         //Autofreeze  || Autofilter  || Remove Gridlines ||  
         
+       if(count1<count-1){
         shet.setAutoFilter(new CellRangeAddress(count1, count - 1, 0, columnCount-1));
+        }
 
         //System.out.println("1,"+rowpos+",0,"+colposcopy);
         for (int i = 0; i <= columnCount; i++) {

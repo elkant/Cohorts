@@ -133,14 +133,14 @@ yearmonth	201610
      if (!fileSaveDir.exists()) {
          fileSaveDir.mkdirs();
      }
-     System.out.println("Upload File Directory="+fileSaveDir.getAbsolutePath());
+    // System.out.println("Upload File Directory="+fileSaveDir.getAbsolutePath());
      for (Part part : request.getParts()) {
          
          ArrayList deletesheets = new ArrayList(); 
          
          fileName = getFileName(part);
          part.write(uploadFilePath + File.separator + fileName);
-         System.out.println("file name is  :  "+fileName);
+        // System.out.println("file name is  :  "+fileName);
          if(!fileName.endsWith(".xlsx")){
          nextpage="importstf.jsp";
          session.setAttribute("uploadedstf", "<font color=\"red\">Failed to load the excel file. Please choose a .xlsx excel file .</font>");
@@ -155,7 +155,7 @@ yearmonth	201610
                  
                  full_path=fileSaveDir.getAbsolutePath()+"/"+fileName;
                  
-                 System.out.println("the saved file directory is  :  "+full_path);
+               //  System.out.println("the saved file directory is  :  "+full_path);
 // GET DATA FROM THE EXCEL AND AND OUTPUT IT ON THE CONSOLE..................................
          
 //         FileInputStream fileInputStream = new FileInputStream(full_path);
@@ -321,6 +321,7 @@ else {
 
 
 mflcode=mflcode.replace("*Mfl Code: ", "");
+mflcode=mflcode.replace(" ", "");
 
 
 
@@ -368,7 +369,7 @@ while(i<=20){
             }
             else {
                 
-                adult_3m =""+(int)adult_3mcell.getNumericCellValue();
+                adult_3m =""+adult_3mcell.getRawValue();
             }
             
             if(adult_3m.trim().equals("")){adult_3m="";}
@@ -387,7 +388,7 @@ while(i<=20){
             }
             
             else {
-                ayp_3m =""+(int)ayp_3mcell.getNumericCellValue();
+                ayp_3m =""+ayp_3mcell.getRawValue();
             }
             
             if(ayp_3m.trim().equals("")){ayp_3m="";}
@@ -405,7 +406,7 @@ while(i<=20){
             }
             else {
                 
-                tl_3m =""+(int)tl_3mcell.getNumericCellValue();
+                tl_3m =""+tl_3mcell.getRawValue();
             }
             
             
@@ -423,7 +424,7 @@ while(i<=20){
                 adult_6m =adult_6mcell.getStringCellValue();
             }
             else {
-                adult_6m =""+(int)adult_6mcell.getNumericCellValue();
+                adult_6m =""+adult_6mcell.getRawValue();
             }
             if(adult_6m.trim().equals("")){adult_6m="";}
             
@@ -440,7 +441,7 @@ while(i<=20){
             }
             else {
                 
-                ayp_6m =""+(int)ayp_6mcell.getNumericCellValue();
+                ayp_6m =""+ayp_6mcell.getRawValue();
                 
             }
             
@@ -458,7 +459,7 @@ while(i<=20){
                 tl_6m =tl_6mcell.getStringCellValue();
             }
             else {
-                tl_6m =""+(int)tl_6mcell.getNumericCellValue();
+                tl_6m =""+tl_6mcell.getRawValue();
                 
             }
             if(tl_6m.trim().equals("")){tl_6m="";}
@@ -475,7 +476,7 @@ while(i<=20){
                 adult_9m =adult_9mcell.getStringCellValue();
             }
             else {
-                adult_9m =""+(int)adult_9mcell.getNumericCellValue();
+                adult_9m =""+adult_9mcell.getRawValue();
                 
             }
             
@@ -493,7 +494,7 @@ while(i<=20){
             }
             else {
                 
-                ayp_9m =""+(int)ayp_9mcell.getNumericCellValue();
+                ayp_9m =""+ayp_9mcell.getRawValue();
                 
             }
             
@@ -512,7 +513,7 @@ while(i<=20){
             
             else {
                 
-                tl_9m =""+(int)tl_9mcell.getNumericCellValue();
+                tl_9m =""+tl_9mcell.getRawValue();
                 
             }
             
@@ -533,7 +534,7 @@ while(i<=20){
             }
             else {
                 
-                adult_12m =""+(int)adult_12mcell.getNumericCellValue();
+                adult_12m =""+adult_12mcell.getRawValue();
             }
             
             
@@ -549,7 +550,7 @@ while(i<=20){
                 ayp_12m =ayp_12mcell.getStringCellValue();
             }
             else {
-                ayp_12m =""+(int)ayp_12mcell.getNumericCellValue();
+                ayp_12m =""+ayp_12mcell.getRawValue();
                 
             }
             
@@ -565,7 +566,7 @@ while(i<=20){
                 tl_12m =tl_12mcell.getStringCellValue();
             }
             else {
-                tl_12m =""+(int)tl_12mcell.getNumericCellValue();
+                tl_12m =""+tl_12mcell.getRawValue();
                 
             }
             
@@ -583,18 +584,18 @@ while(i<=20){
         yearmonth=reportingyear+""+reportingmonth;
         
         
-        if(adult_3m.length()>4){adult_3m="0";}
-        if(ayp_3m.length()>4){ayp_3m="0";}
-        if(tl_3m.length()>4){tl_3m="0";}
-        if(adult_6m.length()>4){adult_6m="0";}
-        if(ayp_6m.length()>4){ayp_6m="0";}
-        if(tl_6m.length()>4){tl_6m="0";}
-        if(adult_9m.length()>4){adult_9m="0";}
-        if(ayp_9m.length()>4){ayp_9m="0";}
-        if(tl_9m.length()>4){tl_9m="0";}
-        if(adult_12m.length()>4){adult_12m="0";}
-        if(ayp_12m.length()>4){ayp_12m="0";}
-        if(tl_12m.length()>4){tl_12m="0";}
+        if(adult_3m.length()>=4){adult_3m="0";}
+        if(ayp_3m.length()>=4){ayp_3m="0";}
+        if(tl_3m.length()>=4){tl_3m="0";}
+        if(adult_6m.length()>=4){adult_6m="0";}
+        if(ayp_6m.length()>=4){ayp_6m="0";}
+        if(tl_6m.length()>=4){tl_6m="0";}
+        if(adult_9m.length()>=4){adult_9m="0";}
+        if(ayp_9m.length()>=4){ayp_9m="0";}
+        if(tl_9m.length()>=4){tl_9m="0";}
+        if(adult_12m.length()>=4){adult_12m="0";}
+        if(ayp_12m.length()>=4){ayp_12m="0";}
+        if(tl_12m.length()>=4){tl_12m="0";}
         
         
         
@@ -782,10 +783,10 @@ missingFacility+="facility  : "+facilityName+" mfl code : "+mflcode+" not in sys
           
          String allpath = getServletContext().getRealPath("/dbase.txt");
          String mydrive = allpath.substring(0, 1);
-         String outputpath=mydrive+":\\APHIAPLUS\\COHORT\\Stf_UploadResults\\response_"+fileName.replace(".xlsx", "")+".xlsx";
+         String outputpath=mydrive+":\\HSDSA\\COHORT\\Stf_UploadResults\\response_"+fileName.replace(".xlsx", "")+".xlsx";
              OSValidator ov= new OSValidator();
          
-         if(ov.isUnix()){  outputpath="APHIAPLUS/COHORT/Stf_UploadResults/response_"+fileName.replace(".xlsx", "")+".xlsx";  }
+         if(ov.isUnix()){  outputpath="HSDSA/COHORT/Stf_UploadResults/response_"+fileName.replace(".xlsx", "")+".xlsx";  }
          
         // new File(outputpath).mkdirs(); 
          

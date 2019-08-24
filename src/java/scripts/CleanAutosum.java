@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dashboards;
+package scripts;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,40 +16,18 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author EKaunda
  */
-public class toDashboards extends HttpServlet {
+public class CleanAutosum extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            pullHTS hts= new pullHTS();
-            String startyearmonth="201710";
-            String endyearmonth="201809";
-//            
-//            
-     hts.hts_pns(startyearmonth, endyearmonth, "");
-
-
- pullACA aca= new pullACA();
-            //String startyearmonth="201710";
-            //String endyearmonth="201809";
             
-            
-     aca.aca_dashboards(startyearmonth, endyearmonth, "");
-
-     
-     
             out.println("</html>");
+            
+            String getdata="select * from ";
         }
     }
 

@@ -16,33 +16,27 @@
 <!-- BEGIN HEAD -->
 <head>
    <meta charset="utf-8" />
-   <title>Generate PNS Data  </title>
+   <title>Upload ART daily Data  </title>
    <link rel="shortcut icon" href="images/logo.png"/>
    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
    <meta content="" name="description" />
    <meta content="" name="author" />
    <link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-   <link href="assets/css/metro.css" rel="stylesheet" />
+   
    <link href="assets/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
    <link href="assets/bootstrap-fileupload/bootstrap-fileupload.css" rel="stylesheet" />
    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
    <link href="assets/css/style.css" rel="stylesheet" />
    <link href="assets/css/style_responsive.css" rel="stylesheet" />
    <link href="assets/css/style_default.css" rel="stylesheet" id="style_color" />
-   <link rel="stylesheet" type="text/css" href="assets/gritter/css/jquery.gritter.css" />
-   <link rel="stylesheet" type="text/css" href="assets/chosen-bootstrap/chosen/chosen.css" />
-   <link rel="stylesheet" type="text/css" href="assets/jquery-tags-input/jquery.tagsinput.css" />
-   <link rel="stylesheet" type="text/css" href="assets/clockface/css/clockface.css" />
-   <link rel="stylesheet" type="text/css" href="assets/bootstrap-wysihtml5/bootstrap-wysihtml5.css" />
-   <link rel="stylesheet" type="text/css" href="assets/bootstrap-datepicker/css/datepicker1.css" />
-   <link rel="stylesheet" type="text/css" href="assets/bootstrap-timepicker/compiled/timepicker.css" />
-   <link rel="stylesheet" type="text/css" href="assets/bootstrap-colorpicker/css/colorpicker.css" />
-   <link rel="stylesheet" href="assets/bootstrap-toggle-buttons/static/stylesheets/bootstrap-toggle-buttons.css" />
+  
+   <link rel="stylesheet" type="text/css" href="assets/bootstrap-datepicker/css/datepicker.css" />
+  
    <link rel="stylesheet" href="assets/data-tables/DT_bootstrap.css" />
-   <link rel="stylesheet" type="text/css" href="assets/bootstrap-daterangepicker/daterangepicker.css" />
-   <link rel="stylesheet" type="text/css" href="assets/uniform/css/uniform.default.css" />
-<link rel="stylesheet" href="select2/css/select2.css">
-<link rel="stylesheet" href="css/animate.css">
+   
+   
+
+
 
 
                 
@@ -70,7 +64,7 @@
       <div class="navbar-inner">
          <div class="container-fluid">
             <!-- BEGIN LOGO -->
-            <h1 style="text-align:center;font-size: 50px;color:white;padding-bottom:16px ;font-weight: bolder;">PNS  Data</h1><br/>
+            <h1 style="text-align:center;font-size: 50px;color:white;padding-bottom:16px ;font-weight: bolder;">ART Daily Form</h1><br/>
             
             <!-- END LOGO -->
             <!-- BEGIN RESPONSIVE MENU TOGGLER -->
@@ -128,8 +122,8 @@
                   
                   <ul class="breadcrumb">
                      <li style="width: 900px;">
-                        <i class="icon-home"></i>
-                        <a href="#" style="margin-left:40%;">Generate PNS Cohort excel file.</a> 
+                        <i class="icon-upload"></i>
+                        <a href="#" style="margin-left:40%;">Upload ART daily Data.</a> 
                         <!--<span class="icon-angle-right"></span>-->
                      </li>
            
@@ -143,31 +137,36 @@
                   <!-- BEGIN SAMPLE FORM PORTLET-->   
                   <div class="portlet box blue">
                      <div class="portlet-title">
-                        <h4><i class="icon-reorder"></i></h4>
+                        <h4><i class="icon-reorder"></i> Ensure that the ART excel template name ends with <b>.xlsx</b> and that all sheets with data have MFLCode</h4>
                        
                      </div>
                      <div class="portlet-body form">
                         <!-- BEGIN FORM-->
-                        <form action="importpns" method="post" enctype="multipart/form-data" class="form-horizontal" >
+                        <form action="importder" method="post" enctype="multipart/form-data" class="form-horizontal" >
                        
                             
                             <div class="control-group">
-                              <label class="control-label">Week Start date:<font color='red'><b>*</b></font></label>
+                              <label class="control-label"><b>Select Date</b><font color='red'><b>*</b></font></label>
                               <div class="controls">
-                                  <input required type="text" title="this is the date that the week started" value="2019-05-13" class="form-control input-lg tarehe" name="weekstart" autocomplete="off" id="weekstart">
+                                  <input readonly required type="text" title="This is the date the data is being uploaded" value="<%if (session.getAttribute("weekstart") != null) {out.println(session.getAttribute("weekstart")); }%>" class="form-control input-lg tarehe" name="weekstart" autocomplete="off" id="weekstart">
+                              </div>
+                           </div>
+                            
+                            
+                           <div class="control-group" style="display:none;">
+                              <label class="control-label"><b>Week End date:</b> <br/><i>(Auto filled)</i>:<font color='red'><b>*</b></font></label>
+                              <div class="controls">
+                                  <input readonly  required type="text" title="this is the date that the week ended" value="<%if (session.getAttribute("weekend") != null) {out.println(session.getAttribute("weekend")); }%>" class="form-control input-lg" name="weekend" id="weekend" autocomplete="off">
                               </div>
                            </div>
                             
                             
                              <div class="control-group">
-                              <label class="control-label">Week End date:<font color='red'><b>*</b></font></label>
+                              <label class="control-label"><b>Select Excel file(s) To Upload</b><font color='red'><b>*</b></font><br/><i>(Allows Multiple files)</i></label>
                               <div class="controls">
-                                  <input required type="text" title="this is the date that the week ended" value="<%if (session.getAttribute("weekend") != null) {out.println(session.getAttribute("weekend")); }%>" class="form-control input-lg tarehe" name="weekend" id="weekend" autocomplete="off">
+                                  <input accept=".xlsx" required type="file" name="file_name" multiple="true" id="upload" value="" class="textbox" required>  
                               </div>
                            </div>
-                            
-                            
-                            
                           
                            
                         <br><br><br><br>
@@ -177,14 +176,19 @@
                          
                           
                         <table style="width: 100%;">
-                           <tr>
-                              
+                           <tr><td class="col-xs-2">
+                            <div class="form-actions">
+                              <button class='btn btn-success btn-large' type="submit" class="btn blue">Upload File(s)</button>
+
+                           </div>
+                                   </td>
                                    
                                    <td class="col-xs-10">
                            <div class="form-actions">
-                            
+                             
+                         
                               
-  <label id="generaterpt" class="btn green" onclick="getReport();">Generate report</label>
+  <!--<label id="generaterpt" class="btn green" onclick="getReport();">Generate report</label>-->
                           
 
                          
@@ -194,7 +198,7 @@
                          </table>
                         <img src='images/ajax_loader.gif' alt='loading' style="display:none; margin-left:30% ;" class='loading'/>
                                         
-                        <div class="form-actions" id="matokeo">
+                        <div style="font-size:16px;" class="form-actions" id="matokeo">
                         <div class="form-actions">
                             
                         </div>
@@ -237,38 +241,24 @@
    <!-- Load javascripts at bottom, this will reduce page load time -->
    
 <script src="assets/js/jquery-1.8.3.min.js"></script>
-   
 
-<script type="text/javascript" src="js/bootstrap-notify.js"></script>
 
  <script type="text/javascript" src="js/jquery.fileDownload.js"></script>
       
-   
-   <script type="text/javascript" src="assets/ckeditor/ckeditor.js"></script>  
-   <script src="assets/breakpoints/breakpoints.js"></script>       
+      
    <script src="assets/bootstrap/js/bootstrap.min.js"></script>   
-   <script type="text/javascript" src="assets/bootstrap-fileupload/bootstrap-fileupload.js"></script>
-   <script src="assets/js/jquery.blockui.js"></script>
-   <script src="assets/js/jquery.cookie.js"></script>
+  
    <!-- ie8 fixes -->
    <!--[if lt IE 9]>
    <script src="assets/js/excanvas.js"></script>
    <script src="assets/js/respond.js"></script>
    <![endif]-->
-   <script type="text/javascript" src="assets/chosen-bootstrap/chosen/chosen.jquery.min.js"></script>
-   <script type="text/javascript" src="assets/uniform/jquery.uniform.min.js"></script>
-   <script type="text/javascript" src="assets/bootstrap-wysihtml5/wysihtml5-0.3.0.js"></script> 
-   <script type="text/javascript" src="assets/bootstrap-wysihtml5/bootstrap-wysihtml5.js"></script>
-   <script type="text/javascript" src="assets/jquery-tags-input/jquery.tagsinput.min.js"></script>
-   <script type="text/javascript" src="assets/bootstrap-toggle-buttons/static/js/jquery.toggle.buttons.js"></script>
+  
+
    <script type="text/javascript" src="assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-   <script type="text/javascript" src="assets/clockface/js/clockface.js"></script>
-   <script type="text/javascript" src="assets/bootstrap-daterangepicker/date.js"></script>
-   <script type="text/javascript" src="assets/bootstrap-daterangepicker/daterangepicker.js"></script> 
-   <script type="text/javascript" src="assets/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>  
-   <script type="text/javascript" src="assets/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
+  
    <script src="assets/js/app.js"></script>  
-   <script src="select2/js/select2.js"></script>
+
   
      
 
@@ -278,15 +268,35 @@
 
 <script>
       
-   
-  
       
+      function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+    return [year, month, day].join('-');
+}
+      
+   function addDays(date, days) {
+  var result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return formatDate(result);
+}
+  
+//      daysOfWeekDisabled: "0,1,2,3,4,6",
       $(".tarehe").datepicker({
+    startDate: "2019-05-13",
+    endDate: "now()",
     clearBtn: true,
-    format: "yyyy-mm-dd",
-    endDate: "now()"
+    format: "yyyy-mm-dd"
 }).on('changeDate', function(ev){
     $(this).datepicker('hide');
+    var mk=$("#weekstart").val();
+//    var mk=addDays($("#weekstart").val(),6);
+    //alert(mk);
+    $("#weekend").val(mk);
 });
       
       

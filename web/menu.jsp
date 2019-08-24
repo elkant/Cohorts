@@ -108,7 +108,7 @@
                  <li ><a href="pnsreport.jsp"><i class="icon-plus"></i>PNS reports</a></li>
                  <li ><a href="aca_mca_reports.jsp"><i class="icon-edit"></i>ACA/MCA Reports</a></li>
                  <li ><a href="stf_newdefaulter_reports.jsp"><i class="icon-plus"></i>STF/New Defaulter Reports</a></li>
-                 
+                  <li ><a href='surgereports.jsp'><i class='icon-list'></i>Surge Reports and Tracker</a></li>
                 
                  <%}%>
                </ul>
@@ -125,12 +125,14 @@
                </a>
             </li>
             
-         <%  } else {
+         <%  } 
+else {
 
-  out.println("<li ><a href='importpns.jsp'><i class='icon-plus'></i>PNS Data Upload</a></li>");
-  out.println("<li ><a href='pnsreport.jsp'><i class='icon-list'></i>PNS reports</a></li>");
-   
-   } %>
+  out.println("<li ><a href='importpns.jsp'><i class='icon-plus'></i>Daily PNS Data Upload</a></li>");
+  out.println("<li ><a href='importder.jsp'><i class='icon-plus'></i>Daily ART Data Upload</a></li>");
+//  out.println("<li ><a href='pnsreport.jsp'><i class='icon-list'></i>PNS Reports</a></li>");
+  out.println("<li ><a href='surgereports.jsp'><i class='icon-list'></i>Surge Reports and Tracker</a></li>");
+     } %>
             
          </ul>
       

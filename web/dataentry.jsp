@@ -148,7 +148,7 @@
                     <div class="panel panel-default">
                        
                         <div class="panel-body" style="width:100%;">
-                            <form class="form form-vertical" onsubmit="return validatedata()" action="multisave" method="post" id="weeklydataform">
+                            <form class="form form-vertical" onsubmit="return validatedata();" action="multisave" method="post" id="weeklydataform">
                                 <table class='table table-striped table-bordered'  style=" width:100%" >
                                     
                                 <tr><td class="col-xs-6">
@@ -216,8 +216,11 @@
                                                 
                                                 Calendar cal= Calendar.getInstance();
                                                 int curyear=cal.get(Calendar.YEAR);
+                                                 int curmn=cal.get(Calendar.MONTH)+1;
                                                 
-                                            for(int a=curyear-1;a<=curyear;a++)
+                                                if(curmn>=10){curyear=curyear+1;}
+                                                
+                                            for(int a=2017;a<=curyear;a++)
                                             {
                                                
                                                 
@@ -778,7 +781,7 @@ return userdb.put(doc); //continue from here
  
 });
 	}
-     showuser('aphiaplus_pca','','');
+    // showuser('aphiaplus_pca','','');
    function loaduser(){
    //alert("save called");   
    var user=$("#username").val();   

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dashboards;
+package reports;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author EKaunda
  */
-public class toDashboards extends HttpServlet {
+public class PositiveClientsNotLinked extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,23 +32,14 @@ public class toDashboards extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            pullHTS hts= new pullHTS();
-            String startyearmonth="201710";
-            String endyearmonth="201809";
-//            
-//            
-     hts.hts_pns(startyearmonth, endyearmonth, "");
-
-
- pullACA aca= new pullACA();
-            //String startyearmonth="201710";
-            //String endyearmonth="201809";
-            
-            
-     aca.aca_dashboards(startyearmonth, endyearmonth, "");
-
-     
-     
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet PositiveClientsNotLinked</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet PositiveClientsNotLinked at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
             out.println("</html>");
         }
     }

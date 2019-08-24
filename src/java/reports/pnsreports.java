@@ -215,13 +215,9 @@ XSSFSheet monthlysheet = wb.createSheet("PNS Monthly Data");
 
 
 
-
-
-
-
-
 XSSFSheet Sheetnames[]={rawsheet,monthlysheet};
 String viewnames[]={"rpt_pns_raw","rpt_pns_raw_monthly"};
+
 
 String year="";
        IdGenerator dats= new IdGenerator();
@@ -289,14 +285,16 @@ for(XSSFSheet shet:Sheetnames){
     cell=rw0.createCell(0);
     }
     
-    if(!(shet.getSheetName().equals("PNS raw Data"))){ 
+    if(!(shet.getSheetName().equals("PNS raw Data")))
+    { 
     cell.setCellValue(shet.getSheetName()+" from date "+startdate+"  to "+enddate);
     cell.setCellStyle(style);
     shet.addMergedRegion(new CellRangeAddress(1, 1, 0,10));
     }
-    else {
-    
+    else 
+    {
      cell.setCellValue(shet.getSheetName()+" from "+startdate+"  to "+enddate);
+     
     }
     
     int count1  = 3;
@@ -328,18 +326,21 @@ for(XSSFSheet shet:Sheetnames){
         if (count == (count1)) {
 //header rows
 XSSFRow rw = null;
- if(!(shet.getSheetName().equals("PNS raw Data")  )){ 
+ if(!(shet.getSheetName().equals("PNS raw Data")  ))
+ { 
  rw = shet.createRow(count);
  rw.setHeightInPoints(26);
  }
- else {
+ else 
+ {
   rw = shet.getRow(count);
  }
 
 
 //dont reate headers for the dailydata by counsellor since its a table
 
-for (int i = 1; i <= columnCount; i++) {
+for (int i = 1; i <= columnCount; i++) 
+{
     
     mycolumns.add(metaData.getColumnLabel(i));
     XSSFCell cell0 = null;
@@ -398,7 +399,8 @@ for (int i = 1; i <= columnCount; i++) {
                 
                 
                 
-                if(conn.rs.getString(""+mycolumns.get(a)).length()>3 && conn.rs.getString(""+mycolumns.get(a)).contains(".")){
+                if(conn.rs.getString(""+mycolumns.get(a)).length()>3 && conn.rs.getString(""+mycolumns.get(a)).contains("."))
+                {
                     System.out.println("Number:"+conn.rs.getString(""+mycolumns.get(a)));
                     
 
@@ -406,7 +408,8 @@ for (int i = 1; i <= columnCount; i++) {
                     stylec.setDataFormat(wb.createDataFormat().getFormat("0%"));
                     cell0.setCellStyle(stylec);
                 }
-                else {
+                else 
+                {
                     cell0.setCellValue(conn.rs.getInt(mycolumns.get(a).toString()));
                     cell0.setCellStyle(style2);
                 }
@@ -415,12 +418,9 @@ for (int i = 1; i <= columnCount; i++) {
             else
             {
                 //cell0.setCellValue(conn.rs.getString("" + mycolumns.get(a)));
-                
                 cell0.setCellValue(conn.rs.getString("" + mycolumns.get(a)));
                 cell0.setCellStyle(style2);
             }
-            
-            
             
         }
         
@@ -432,11 +432,15 @@ for (int i = 1; i <= columnCount; i++) {
     if(!shet.getSheetName().equals("PNS raw Data")){
     //Autofreeze  || Autofilter  || Remove Gridlines ||
      System.out.println("shet.setAutoFilter(new CellRangeAddress("+count1+", "+(count - 1)+", 0, "+(columnCount-1));
-    shet.setAutoFilter(new CellRangeAddress(count1, count - 1, 0, columnCount-1));
+   if(count1<count-1)
+        {
+        shet.setAutoFilter(new CellRangeAddress(count1, count - 1, 0, columnCount-1));
+        }
        
     
     //System.out.println("1,"+rowpos+",0,"+colposcopy);
-    for (int i = 0; i <= columnCount; i++) {
+    for (int i = 0; i <= columnCount; i++) 
+    {
         shet.autoSizeColumn(i);
     }
     

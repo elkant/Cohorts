@@ -64,7 +64,7 @@
       <div class="navbar-inner">
          <div class="container-fluid">
             <!-- BEGIN LOGO -->
-            <h1 style="text-align:center;font-size: 50px;color:white;padding-bottom:16px ;font-weight: bolder;">PNS Data Upload Module</h1><br/>
+            <h1 style="text-align:center;font-size: 50px;color:white;padding-bottom:16px ;font-weight: bolder;">PNS Daily Data Upload Module</h1><br/>
             
             <!-- END LOGO -->
             <!-- BEGIN RESPONSIVE MENU TOGGLER -->
@@ -89,6 +89,9 @@
        <%@include file="menu.jsp" %>
          <!-- END SIDEBAR MENU -->
       </div>
+         
+         
+         
       <!-- END SIDEBAR -->
       <!-- BEGIN PAGE -->  
       <div class="page-content">
@@ -112,7 +115,7 @@
                
                   <!-- END BEGIN STYLE CUSTOMIZER -->   
                   <h3 class="page-title" style="text-align: center;">
-                    
+                    <a class='btn-warning btn' href="pns/PNS_Daily_Template_20190514_V_4.xlsx" style="margin-left:40%;">Download PNS Daily Template</a> 
 <!--                    Internal System-->
                   </h3>
                   
@@ -123,7 +126,7 @@
                   <ul class="breadcrumb">
                      <li style="width: 900px;">
                         <i class="icon-upload"></i>
-                        <a href="#" style="margin-left:40%;">Upload PNS Data.</a> 
+                        
                         <!--<span class="icon-angle-right"></span>-->
                      </li>
            
@@ -137,23 +140,23 @@
                   <!-- BEGIN SAMPLE FORM PORTLET-->   
                   <div class="portlet box blue">
                      <div class="portlet-title">
-                        <h4><i class="icon-reorder"></i> Ensure that the PNS excel template name ends with <b>.xlsx</b> and that all sheets with data have MFLCode</h4>
+                        <h4><i class="icon-reorder"></i> This module accepts uploading of Daily data from 13th May 2019 onwards. For Previous weekly uploads ending on 3rd May 2019, Click <a class='btn btn-warning' href='importpns_weekly.jsp'>here</a> </h4>
                        
                      </div>
                      <div class="portlet-body form">
                         <!-- BEGIN FORM-->
-                        <form action="importpns" method="post" enctype="multipart/form-data" class="form-horizontal" >
+                        <form action="importpnsv3" method="post" enctype="multipart/form-data" class="form-horizontal" >
                        
                             
                             <div class="control-group">
-                              <label class="control-label"><b>Week Start date:</b><font color='red'><b>*</b></font></label>
+                              <label class="control-label"><b>Date:</b><font color='red'><b>*</b></font></label>
                               <div class="controls">
-                                  <input readonly required type="text" title="this is the date that the week started" value="<%if (session.getAttribute("weekstart") != null) {out.println(session.getAttribute("weekstart")); }%>" class="form-control input-lg tarehe" name="weekstart" autocomplete="off" id="weekstart">
+                                  <input readonly required type="text" title="This is the date the data is being uploaded" value="<%if (session.getAttribute("weekstart") != null) {out.println(session.getAttribute("weekstart")); }%>" class="form-control input-lg tarehe" name="weekstart" autocomplete="off" id="weekstart">
                               </div>
                            </div>
                             
                             
-                             <div class="control-group">
+                           <div class="control-group" style="display:none;">
                               <label class="control-label"><b>Week End date:</b> <br/><i>(Auto filled)</i>:<font color='red'><b>*</b></font></label>
                               <div class="controls">
                                   <input readonly  required type="text" title="this is the date that the week ended" value="<%if (session.getAttribute("weekend") != null) {out.println(session.getAttribute("weekend")); }%>" class="form-control input-lg" name="weekend" id="weekend" autocomplete="off">
@@ -162,7 +165,7 @@
                             
                             
                              <div class="control-group">
-                              <label class="control-label"><b>Select Excel file</b><font color='red'><b>*</b></font><br/><i>(Allows Multiple files)</i></label>
+                              <label class="control-label"><b>Select Excel file(s) To Upload</b><font color='red'><b>*</b></font><br/><i>(Allows Multiple files)</i></label>
                               <div class="controls">
                                   <input accept=".xlsx" required type="file" name="file_name" multiple="true" id="upload" value="" class="textbox" required>  
                               </div>
@@ -195,6 +198,7 @@
                            </div>
                                    </td>
                             </tr> 
+                          
                          </table>
                         <img src='images/ajax_loader.gif' alt='loading' style="display:none; margin-left:30% ;" class='loading'/>
                                         
@@ -231,7 +235,7 @@
                     int year = cal.get(Calendar.YEAR);       
 %>
      <% dbConn conn= new dbConn(); %>  
-     <h4 class="portlet-title" style="text-align: center;color:black;"> &copy; HSDSA | USAID <%=year%>. Host Name :<b><i> <%=conn.dbsetup[0]%></i></b> &nbsp;   Database Name :<i> <%=conn.dbsetup[1]%></i></h4>
+     <h4 class="portlet-title" style="text-align: center;color:black;"> &copy; HSDSA | USAID <%=year%>. <b><i> </i></b> &nbsp;   <i> </i></h4>
       <div class="span pull-right">
          <span class="go-top"><i class="icon-angle-up"></i></span>
       </div>
@@ -285,15 +289,16 @@
   return formatDate(result);
 }
   
-      
+//      daysOfWeekDisabled: "0,1,2,3,4,6",
       $(".tarehe").datepicker({
-    daysOfWeekDisabled: "0,1,2,3,4,6",
+    startDate: "2019-05-13",
     endDate: "now()",
     clearBtn: true,
     format: "yyyy-mm-dd"
 }).on('changeDate', function(ev){
     $(this).datepicker('hide');
-    var mk=addDays($("#weekstart").val(),6);
+    var mk=$("#weekstart").val();
+//    var mk=addDays($("#weekstart").val(),6);
     //alert(mk);
     $("#weekend").val(mk);
 });
@@ -359,7 +364,7 @@ function getReport(){
                                 <script type="text/javascript"> 
                     
                     
-$("#matokeo").html("<%=session.getAttribute("uploadedpns")%>");
+$("#matokeo").html('<%=session.getAttribute("uploadedpns")%>');
                          
       $.notify(
       {

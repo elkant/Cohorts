@@ -30,6 +30,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.util.CellRangeAddress;
+import static reports.pnsreports.isNumeric;
 
 /**
  *
@@ -197,16 +198,17 @@ rw.setHeightInPoints(26);
                 //System.out.print(mycolumns.get(a) + ":" + conn.rs.getString("" + mycolumns.get(a)));
 
                 HSSFCell cell0 = rw.createCell(a);
-                 if((a<=2) || (a==5) || (a==4)||  (a==5)){
+                 if(isNumeric(conn.rs.getString("" + mycolumns.get(a)))){
                // if(1==1){
                 
+                     cell0.setCellValue(conn.rs.getInt(mycolumns.get(a).toString()));
                     
-                     cell0.setCellValue(conn.rs.getString("" + mycolumns.get(a)));
                    }
                 else 
                 {
+                     cell0.setCellValue(conn.rs.getString("" + mycolumns.get(a)));
                     //cell0.setCellValue(conn.rs.getString("" + mycolumns.get(a)));
-                    cell0.setCellValue(conn.rs.getInt(mycolumns.get(a).toString()));
+                   
                 }
             
                 cell0.setCellStyle(style2);

@@ -3,10 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dashboards;
+package surge;
 
+import db.dbConn;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,40 +20,63 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author EKaunda
  */
-public class toDashboards extends HttpServlet {
+public class getsubcounty extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            pullHTS hts= new pullHTS();
-            String startyearmonth="201710";
-            String endyearmonth="201809";
-//            
-//            
-     hts.hts_pns(startyearmonth, endyearmonth, "");
+           response.setContentType("text/html;charset=UTF-8");
+    
+
+    
+    String county_id,current_districts;
+    
+     county_id=request.getParameter("county");
+ 
+    //   System.out.println(" County:"+ county_name); 
+       current_districts="";
+       
+       String districts="Select `Sub-county` from aphiaplus_moi.surge_sites where County='"+county_id+"' group by `Sub-county`";
+       
+       dbConn conn=new dbConn();
+       
+       conn.rs=conn.st.executeQuery(districts);
+       
+       current_districts="";
+       
+       while(conn.rs.next()){
 
 
- pullACA aca= new pullACA();
-            //String startyearmonth="201710";
-            //String endyearmonth="201809";
-            
-            
-     aca.aca_dashboards(startyearmonth, endyearmonth, "");
+current_districts=current_districts+"<option value=\""+conn.rs.getString(1)+"\">"+conn.rs.getString(1)+"</option>";
 
-     
-     
-            out.println("</html>");
+
+
+
+
+       }
+    
+    
+
+    
+    
+    
+    
+    
+    try {
+        out.println(current_districts);
+       
+    } finally {   
+          if(conn.connect!=null){ conn.connect.close();}
+               if(conn.rs!=null){ conn.rs.close();}
+               if(conn.st!=null){ conn.st.close();}
+        out.close();
+    }
+          
+        } catch (SQLException ex) {
+            Logger.getLogger(getsubcounty.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

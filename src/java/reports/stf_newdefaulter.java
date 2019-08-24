@@ -32,6 +32,7 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import static reports.pnsreports.isNumeric;
 
 /**
  *
@@ -221,16 +222,17 @@ rw.setHeightInPoints(26);
                 //System.out.print(mycolumns.get(a) + ":" + conn.rs.getString("" + mycolumns.get(a)));
 
                 XSSFCell cell0 = rw.createCell(a);
-                 if((a<=2) ||  (a==4)){
+                 if(isNumeric(conn.rs.getString("" + mycolumns.get(a)))){
                // if(1==1){
                 
+                     cell0.setCellValue(conn.rs.getInt(mycolumns.get(a).toString()));
                     
-                     cell0.setCellValue(conn.rs.getString("" + mycolumns.get(a)));
                    }
                 else 
                 {
+                     cell0.setCellValue(conn.rs.getString("" + mycolumns.get(a)));
                     //cell0.setCellValue(conn.rs.getString("" + mycolumns.get(a)));
-                    cell0.setCellValue(conn.rs.getInt(mycolumns.get(a).toString()));
+                   
                 }
             
                 cell0.setCellStyle(style2);
@@ -245,7 +247,9 @@ rw.setHeightInPoints(26);
         
         //Autofreeze  || Autofilter  || Remove Gridlines ||  
         
+       if(count1<count-1){
         shet.setAutoFilter(new CellRangeAddress(count1, count - 1, 0, columnCount-1));
+        }
 
         //System.out.println("1,"+rowpos+",0,"+colposcopy);
         for (int i = 0; i <= columnCount; i++) {

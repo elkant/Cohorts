@@ -120,6 +120,66 @@
         <servlet-name>pullACA</servlet-name>
         <servlet-class>dashboards.pullACA</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>importpnsv2</servlet-name>
+        <servlet-class>imports.importpnsv2</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CleanAutosum</servlet-name>
+        <servlet-class>scripts.CleanAutosum</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>importpnsv3</servlet-name>
+        <servlet-class>imports.importpnsv3</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>importder</servlet-name>
+        <servlet-class>imports.importder</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>importderv2</servlet-name>
+        <servlet-class>imports.importderv2</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>surge_tracker</servlet-name>
+        <servlet-class>reports.surge_tracker</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>getsubcounty</servlet-name>
+        <servlet-class>surge.getsubcounty</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>getfacility</servlet-name>
+        <servlet-class>surge.getfacility</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>getfacilityzote</servlet-name>
+        <servlet-class>surge.getfacilityzote</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>surge_USAID_Report</servlet-name>
+        <servlet-class>reports.surge_USAID_Report</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SurgeRawData</servlet-name>
+        <servlet-class>reports.SurgeRawData</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>importderv3</servlet-name>
+        <servlet-class>imports.importderv3</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PositiveClientsNotLinked</servlet-name>
+        <servlet-class>reports.PositiveClientsNotLinked</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>htsclientraw</servlet-name>
+        <servlet-class>reports.htsclientraw</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>loadder</servlet-name>
+        <servlet-class>surge.loadder</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loadcohort</servlet-name>
         <url-pattern>/loadcohort</url-pattern>
@@ -239,6 +299,66 @@
     <servlet-mapping>
         <servlet-name>pullACA</servlet-name>
         <url-pattern>/pullACA</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>importpnsv2</servlet-name>
+        <url-pattern>/importpnsv2</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CleanAutosum</servlet-name>
+        <url-pattern>/CleanAutosum</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>importpnsv3</servlet-name>
+        <url-pattern>/importpnsv3</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>importder</servlet-name>
+        <url-pattern>/importder</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>importderv2</servlet-name>
+        <url-pattern>/importderv2</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>surge_tracker</servlet-name>
+        <url-pattern>/surge_tracker</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getsubcounty</servlet-name>
+        <url-pattern>/getsubcounty</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getfacility</servlet-name>
+        <url-pattern>/getfacility</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getfacilityzote</servlet-name>
+        <url-pattern>/getfacilityzote</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>surge_USAID_Report</servlet-name>
+        <url-pattern>/surge_USAID_Report</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SurgeRawData</servlet-name>
+        <url-pattern>/SurgeRawData</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>importderv3</servlet-name>
+        <url-pattern>/importderv3</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PositiveClientsNotLinked</servlet-name>
+        <url-pattern>/PositiveClientsNotLinked</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>htsclientraw</servlet-name>
+        <url-pattern>/htsclientraw</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>loadder</servlet-name>
+        <url-pattern>/loadder</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

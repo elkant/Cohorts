@@ -16,7 +16,7 @@
 <!-- BEGIN HEAD -->
 <head>
    <meta charset="utf-8" />
-   <title>Generate PNS Data  </title>
+   <title>Afya Nyota Surge Reports </title>
    <link rel="shortcut icon" href="images/logo.png"/>
    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
    <meta content="" name="description" />
@@ -41,8 +41,9 @@
    <link rel="stylesheet" href="assets/data-tables/DT_bootstrap.css" />
    <link rel="stylesheet" type="text/css" href="assets/bootstrap-daterangepicker/daterangepicker.css" />
    <link rel="stylesheet" type="text/css" href="assets/uniform/css/uniform.default.css" />
-<link rel="stylesheet" href="select2/css/select2.css">
+   <link rel="stylesheet" href="css/select2.min.css">
 <link rel="stylesheet" href="css/animate.css">
+
 
 
                 
@@ -65,12 +66,12 @@
 <!-- BEGIN BODY -->
 <body class="fixed-top">
    <!-- BEGIN HEADER -->
-   <div class="header navbar navbar-inverse navbar-fixed-top">
+   <div >
       <!-- BEGIN TOP NAVIGATION BAR -->
-      <div class="navbar-inner">
-         <div class="container-fluid">
+      <div >
+         <div >
             <!-- BEGIN LOGO -->
-            <h1 style="text-align:center;font-size: 50px;color:white;padding-bottom:16px ;font-weight: bolder;">PNS  Data</h1><br/>
+            
             
             <!-- END LOGO -->
             <!-- BEGIN RESPONSIVE MENU TOGGLER -->
@@ -129,7 +130,7 @@
                   <ul class="breadcrumb">
                      <li style="width: 900px;">
                         <i class="icon-home"></i>
-                        <a href="#" style="margin-left:40%;">Generate PNS Cohort excel file.</a> 
+                        <a href="#" style="margin-left:40%;">Generate Tracker excel file.</a> 
                         <!--<span class="icon-angle-right"></span>-->
                      </li>
            
@@ -143,44 +144,188 @@
                   <!-- BEGIN SAMPLE FORM PORTLET-->   
                   <div class="portlet box blue">
                      <div class="portlet-title">
-                        <h4><i class="icon-reorder"></i></h4>
                        
+                       <h3 style="text-align: center;"><i class="icon-bar-chart"></i> Surge Reports/Tracker</h3>
                      </div>
                      <div class="portlet-body form">
                         <!-- BEGIN FORM-->
-                        <form action="importpns" method="post" enctype="multipart/form-data" class="form-horizontal" >
+                        <form action="surge_tracker" method="post" enctype="multipart/form-data" class="form-horizontal" />
                        
-                            
+                             <table>
+
+                                 
+                                  <tr class="col-xs-8">
+     
+            <td class="col-xs-4">
+                                <div class="control-group">
+                                  
+                                    <div class="controls">
+                                        <label><b>Select Report</b><font color="green"></font></label> 
+                                        
+                                        </div>
+                                        </div>
+                                        </td>
+                                
+                                <td class="col-xs-4">
+                                <div class="control-group">
+                                   
+                                    <div class="controls">
+                                      <select   name='report' id='report' >
+                                      <option value='SurgeRawData'>1. All data Reports</option>
+                                      <option value='surge_tracker'>2. Reporting Tracker</option>
+                                      
+                                      <option value='htsclientraw'>3. HTS Client Level Raw </option>
+                                      <!--<option value='PositiveClientsNotLinked'>4. Positive Clients Not Linked linked</option>-->
+                                             
+                                      </select>
+                                    </div>
+                                </div>
+                                        </td>
+                                
+    </tr>
+                                 
+                                 
+                                 <tr class="col-xs-8">
+                                 <td class="col-xs-4">
                             <div class="control-group">
-                              <label class="control-label">Week Start date:<font color='red'><b>*</b></font></label>
+                                   
                               <div class="controls">
-                                  <input required type="text" title="this is the date that the week started" value="2019-05-13" class="form-control input-lg tarehe" name="weekstart" autocomplete="off" id="weekstart">
+                              <label ><b>Start date:</b><font color='red'><b>*</b></font></label>
+                              </div>
+                              </div>
+                              </td>
+                              <td class="col-xs-4">
+                              <div class="controls">
+                                  <input required type="text" title="this is the date that the week started" value="2019-05-12" class="form-control input-lg tarehe" name="weekstart" autocomplete="off" id="weekstart">
+                              </div>
+                           </td>
+                           </tr>
+                            <tr class="col-xs-8">
+                      <td class="col-xs-4">
+                            <div class="control-group">
+                                   
+                             <div class="controls">
+                              <label ><b>End date:</b><font color='red'><b>*</b></font></label>
+                              
+                              </div> </div>
+                      </td>
+                      <td class="col-xs-4">
+                              <div class="controls">
+                                  <input required type="text" value='' title="this is the date that the week ended" value="<%if (session.getAttribute("weekend") != null) {out.println(session.getAttribute("weekend")); }%>" class="form-control input-lg tarehe" name="weekend" id="weekend" autocomplete="off">
                               </div>
                            </div>
-                            
-                            
-                             <div class="control-group">
-                              <label class="control-label">Week End date:<font color='red'><b>*</b></font></label>
-                              <div class="controls">
-                                  <input required type="text" title="this is the date that the week ended" value="<%if (session.getAttribute("weekend") != null) {out.println(session.getAttribute("weekend")); }%>" class="form-control input-lg tarehe" name="weekend" id="weekend" autocomplete="off">
-                              </div>
-                           </div>
-                            
-                            
+                              </td>
+                            </tr>
+                           
+ <tr class="col-xs-8">
+     <td class="col-xs-4">
+                                <div class="control-group">
+                                   
+                                    <div class="controls">
+                                        <label><b>Select County</b><font color="green"><i><br/> (Optional)</i></font> </label>
+                                        
+                                        </div>
+                                        </div>
+</td>
+                                       
+
+
+
+<td class="col-xs-4">
+                                <div class="control-group">
+                                   
+                                    <div class="controls">
+                                        <select onchange='patasubcounty()' name='county' id='county' >
+                                             <option value="">optional</option>
+                                             <option value="Baringo">Baringo</option>
+                                             <option value="Kajiado">Kajiado</option>
+                                             <option value="Laikipia">Laikipia</option>
+                                             <option value="Nakuru">Nakuru</option>
+                                             <option value="Narok">Narok</option>                                           
+                                             <option value="Samburu">Samburu</option>                                           
+                                             <option value="Turkana">Turkana</option> 
+                                  
+                                  </select>
+                                        
+                                    </div>
+                                </div>
+                                        </td>
+
+
+
+                                
+                                         
+                                        
+</tr>
+
+           
+ <tr class="col-xs-8">
+     
+            <td class="col-xs-4">
+                                <div class="control-group">
+                                  
+                                    <div class="controls">
+                                        <label><b>Select Sub-county</b><font color="green"><i><br/> (Optional)</i></font></label> 
+                                        
+                                        </div>
+                                        </div>
+                                        </td>
+                                
+                                <td class="col-xs-4">
+                                <div class="control-group">
+                                   
+                                    <div class="controls">
+                                      <select multiple='true' onchange='patafacility();' name='subcounty' id='subcounty' >
+                                      
+                                             
+                                      </select>
+                                    </div>
+                                </div>
+                                        </td>
+                                
+    </tr>
+    
+               
+ <tr class="col-xs-8">
+     
+            <td class="col-xs-4">
+                                <div class="control-group">
+                                  
+                                    <div class="controls">
+                                        <label><b>Select Facility</b><font color="green"> <br/><i>Optional </i></font></label> 
+                                        
+                                        </div>
+                                        </div>
+                                        </td>
+                                
+                                <td class="col-xs-4">
+                                <div class="control-group">
+                                   
+                                    <div class="controls">
+                                      <select multiple='true' name='facility' id='facility' >
+                                      <option value="">Optional</option>
+                                             
+                                      </select>
+                                    </div>
+                                </div>
+                                        </td>
+                                
+    </tr>
+                               
                             
                           
                            
-                        <br><br><br><br>
+                  
 
 
-
+</table>
                          
                           
                         <table style="width: 100%;">
                            <tr>
                               
                                    
-                                   <td class="col-xs-10">
+                                   <td class="col-xs-8">
                            <div class="form-actions">
                             
                               
@@ -227,7 +372,7 @@
                     int year = cal.get(Calendar.YEAR);       
 %>
      <% dbConn conn= new dbConn(); %>  
-     <h4 class="portlet-title" style="text-align: center;color:black;"> &copy; HSDSA | USAID <%=year%>. Host Name :<b><i> <%=conn.dbsetup[0]%></i></b> &nbsp;   Database Name :<i> <%=conn.dbsetup[1]%></i></h4>
+     <h4 class="portlet-title" style="text-align: center;color:black;"> &copy; Afya Nyota Ya Bonde | USAID <%=year%>.<b><i> </i></b> &nbsp;   </i></h4>
       <div class="span pull-right">
          <span class="go-top"><i class="icon-angle-up"></i></span>
       </div>
@@ -237,38 +382,23 @@
    <!-- Load javascripts at bottom, this will reduce page load time -->
    
 <script src="assets/js/jquery-1.8.3.min.js"></script>
-   
-
-<script type="text/javascript" src="js/bootstrap-notify.js"></script>
-
+ 
  <script type="text/javascript" src="js/jquery.fileDownload.js"></script>
       
    
-   <script type="text/javascript" src="assets/ckeditor/ckeditor.js"></script>  
-   <script src="assets/breakpoints/breakpoints.js"></script>       
+     
    <script src="assets/bootstrap/js/bootstrap.min.js"></script>   
-   <script type="text/javascript" src="assets/bootstrap-fileupload/bootstrap-fileupload.js"></script>
-   <script src="assets/js/jquery.blockui.js"></script>
-   <script src="assets/js/jquery.cookie.js"></script>
+  
    <!-- ie8 fixes -->
    <!--[if lt IE 9]>
    <script src="assets/js/excanvas.js"></script>
    <script src="assets/js/respond.js"></script>
    <![endif]-->
-   <script type="text/javascript" src="assets/chosen-bootstrap/chosen/chosen.jquery.min.js"></script>
-   <script type="text/javascript" src="assets/uniform/jquery.uniform.min.js"></script>
-   <script type="text/javascript" src="assets/bootstrap-wysihtml5/wysihtml5-0.3.0.js"></script> 
-   <script type="text/javascript" src="assets/bootstrap-wysihtml5/bootstrap-wysihtml5.js"></script>
-   <script type="text/javascript" src="assets/jquery-tags-input/jquery.tagsinput.min.js"></script>
-   <script type="text/javascript" src="assets/bootstrap-toggle-buttons/static/js/jquery.toggle.buttons.js"></script>
+  
    <script type="text/javascript" src="assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-   <script type="text/javascript" src="assets/clockface/js/clockface.js"></script>
-   <script type="text/javascript" src="assets/bootstrap-daterangepicker/date.js"></script>
-   <script type="text/javascript" src="assets/bootstrap-daterangepicker/daterangepicker.js"></script> 
-   <script type="text/javascript" src="assets/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>  
-   <script type="text/javascript" src="assets/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
+   
    <script src="assets/js/app.js"></script>  
-   <script src="select2/js/select2.js"></script>
+   <script src="js/select2.min.js"></script>
   
      
 
@@ -297,6 +427,7 @@ function getReport(){
     
     var exelstart=$("#weekstart").val();
     var exelend=$("#weekend").val();
+   
   
         
         if (exelstart==='')
@@ -306,16 +437,16 @@ function getReport(){
    $("#startdaterpt").focus();    
      }    
    //end date
-      else if (exelend==='')
-     {
-         
+        else if (exelend==='')
+     {         
      alert('Select report ending date');
-   $("#enddaterpt").focus();    
+   $("#startdaterpt").focus();    
      } 
      
-      else  if(Date.parse(exelstart) > Date.parse(exelend)){
+      else  if(Date.parse(exelstart) > Date.parse(exelend))
+                {
                     alert(" Report Start date cannot be greater than end date.");   
-                    $("#enddaterpt").focus();  
+                    $("#weekstart").focus();  
                 }
                 else {
                     //call the report generation page
@@ -330,18 +461,107 @@ function getReport(){
 
   function downloadrpt(startdate,enddate){
       
+      var url=$("#report").val();
+      
+       var county=$("#county").val();
+    var subcounty=$("#subcounty").val();
+    var facility=$("#facility").val();
+      
+      
                 $('.loading').show();
                 $('#generaterpt').hide();
+                
+                
+                if(county===null){county="";}
+                if(subcounty===null){subcounty="";}
+                if(facility===null){facility="";}
+                
                
                 //?startdate=" + startdate + "&enddate=" + enddate + "&cbos=" + cbos
              
-                var ur="pnsreports?startdate=" + startdate + "&enddate=" + enddate;
- console.log(ur);
+                var ur=url+"?startdate=" + startdate + "&enddate=" + enddate+"&county="+county+"&subcounty="+subcounty+"&facility="+facility;
+                console.log(ur);
                 $.fileDownload(ur).done(function () { $('.loading').hide(); $('#generaterpt').show(); $('#generaterpt').html("<i class='glyphicon glyphicon-ok'></i> Report Generated"); }).fail(function () { alert('Report generation failed, kindly try again!'); $('.loading').hide(); $('#generaterpt').show(); });
  
                 //$('.loading').hide();
             }
 
+
+ function patasubcounty(){
+           
+           
+           
+        
+        var county=document.getElementById("county").value;
+        $.ajax({
+            url:'getsubcounty?county='+county,
+            type:'post',
+            dataType:'html',
+            success:function (data)
+            {
+                $("#subcounty").html(data.replace("<option value=''>Select sub-county</option>",""));
+                var select = document.getElementById('subcounty');
+                    select.size = select.length;
+                
+              //  App.init();   
+            }
+            
+            
+        });
+      
+    }
+
+      
+      
+      
+    
+ function patafacility(){
+           
+           
+           
+        
+        var subcounty=document.getElementById("subcounty").value;
+        $.ajax({
+            url:'getfacility?subcounty='+subcounty,
+            type:'post',
+            dataType:'html',
+            success:function (data)
+            {
+                $("#facility").html(data.replace("<option value=''>Select facility</option>",""));
+                var select = document.getElementById('facility');
+                    select.size = select.length;
+             $('#facility').select2();  
+            }
+            
+            
+        });
+      
+    }  
+    
+    
+    function patafacilitieszote()
+    {
+        
+       
+        $.ajax({
+            url:'getfacilityzote',
+            type:'post',
+            dataType:'html',
+            success:function (data)
+            {
+                $("#facility").html(data.replace("<option value=''>Select facility</option>",""));
+                var select = document.getElementById('facility');
+                    select.size = select.length;
+             $('#facility').select2();  
+            }
+            
+            
+        });
+      
+    }
+    
+      patafacilitieszote();
+      
       
    </script>
 
@@ -414,6 +634,15 @@ $("#matokeo").html('<%=session.getAttribute("uploadedpns")%>');
        }
        
             ); 
+    
+    
+    
+    
+    
+    
+    
+   
+    
     
                     
                 </script>

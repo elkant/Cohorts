@@ -16,7 +16,7 @@
 <!-- BEGIN HEAD -->
 <head>
    <meta charset="utf-8" />
-   <title>Generate PNS Data  </title>
+   <title>USAID surge output</title>
    <link rel="shortcut icon" href="images/logo.png"/>
    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
    <meta content="" name="description" />
@@ -70,7 +70,7 @@
       <div class="navbar-inner">
          <div class="container-fluid">
             <!-- BEGIN LOGO -->
-            <h1 style="text-align:center;font-size: 50px;color:white;padding-bottom:16px ;font-weight: bolder;">PNS  Data</h1><br/>
+            <h1 style="text-align:center;font-size: 50px;color:white;padding-bottom:16px ;font-weight: bolder;">Surge Report</h1><br/>
             
             <!-- END LOGO -->
             <!-- BEGIN RESPONSIVE MENU TOGGLER -->
@@ -121,17 +121,13 @@
                     
 <!--                    Internal System-->
                   </h3>
-                  
-                  
-                  
-                  
-                  
+         
                   <ul class="breadcrumb">
-                     <li style="width: 900px;">
+                        <li style="width: 900px;">
                         <i class="icon-home"></i>
-                        <a href="#" style="margin-left:40%;">Generate PNS Cohort excel file.</a> 
+                        <a href="#" style="margin-left:40%;">Generate Surge Output in USAID Template per week.</a> 
                         <!--<span class="icon-angle-right"></span>-->
-                     </li>
+                        </li>
            
                   </ul>
                </div>
@@ -148,24 +144,59 @@
                      </div>
                      <div class="portlet-body form">
                         <!-- BEGIN FORM-->
-                        <form action="importpns" method="post" enctype="multipart/form-data" class="form-horizontal" >
+                        <form action="surgereport" method="post" enctype="multipart/form-data" class="form-horizontal" >
                        
                             
-                            <div class="control-group">
-                              <label class="control-label">Week Start date:<font color='red'><b>*</b></font></label>
-                              <div class="controls">
-                                  <input required type="text" title="this is the date that the week started" value="2019-05-13" class="form-control input-lg tarehe" name="weekstart" autocomplete="off" id="weekstart">
-                              </div>
-                           </div>
+     <table>                                                 
+ <tr class="col-xs-8">
+     <td class="col-xs-4">
+                                <div class="control-group">
+                                   
+                                    <div class="controls">
+                                        <label><b>Select Reporting Week:</b><font color="green"></font> </label>
+                                        
+                                        </div>
+                                        </div>
+</td>
+                                       
+
+
+
+<td class="col-xs-4">
+                                <div class="control-group">
+                                   
+                                    <div class="controls">
+                            <select onchange='setstartdate();' name='week' id='week' style="width:100%;" >
+                                            <option value="">Select Reporting Week</option>
+                                         <% 
+                           String sel="select * from aphiaplus_moi.surge_weeks where active=1";
+                           dbConn conn= new dbConn();
+                       
+                           conn.rs=conn.st.executeQuery(sel);
+                           
+                            while(conn.rs.next())
+                            {
                             
+                            out.println("<option value='"+conn.rs.getString("Startdate")+"_"+conn.rs.getString("Enddate")+"_"+conn.rs.getString("weekno")+"'>"+" week "+conn.rs.getString("weekno")+" ("+conn.rs.getString("Startdate")+" to "+conn.rs.getString("Enddate")+")</option>");
                             
-                             <div class="control-group">
-                              <label class="control-label">Week End date:<font color='red'><b>*</b></font></label>
-                              <div class="controls">
-                                  <input required type="text" title="this is the date that the week ended" value="<%if (session.getAttribute("weekend") != null) {out.println(session.getAttribute("weekend")); }%>" class="form-control input-lg tarehe" name="weekend" id="weekend" autocomplete="off">
-                              </div>
-                           </div>
+                            }
+
+                                         %>   
+                                                                               
+                                  </select>
+                                        
+                                    </div>
+                                </div>
+                                        </td>
+
+
+
+                                
+                                         
+                                        
+</tr>
                             
+   </table>                         
                             
                             
                           
@@ -226,7 +257,7 @@
               Calendar cal = Calendar.getInstance();
                     int year = cal.get(Calendar.YEAR);       
 %>
-     <% dbConn conn= new dbConn(); %>  
+     
      <h4 class="portlet-title" style="text-align: center;color:black;"> &copy; HSDSA | USAID <%=year%>. Host Name :<b><i> <%=conn.dbsetup[0]%></i></b> &nbsp;   Database Name :<i> <%=conn.dbsetup[1]%></i></h4>
       <div class="span pull-right">
          <span class="go-top"><i class="icon-angle-up"></i></span>
@@ -295,31 +326,20 @@
 function getReport(){
     
     
-    var exelstart=$("#weekstart").val();
-    var exelend=$("#weekend").val();
-  
+    var exelstart=$("#week").val();
+   
         
         if (exelstart==='')
      {
          
-     alert('Select report begining date');
+     alert('Select report week');
    $("#startdaterpt").focus();    
      }    
    //end date
-      else if (exelend==='')
-     {
-         
-     alert('Select report ending date');
-   $("#enddaterpt").focus();    
-     } 
-     
-      else  if(Date.parse(exelstart) > Date.parse(exelend)){
-                    alert(" Report Start date cannot be greater than end date.");   
-                    $("#enddaterpt").focus();  
-                }
+   
                 else {
                     //call the report generation page
-                 downloadrpt(exelstart,exelend) ;  
+                 downloadrpt(exelstart) ;  
                     
                 }
         
@@ -328,14 +348,14 @@ function getReport(){
 
 
 
-  function downloadrpt(startdate,enddate){
+  function downloadrpt(startdate){
       
                 $('.loading').show();
                 $('#generaterpt').hide();
                
                 //?startdate=" + startdate + "&enddate=" + enddate + "&cbos=" + cbos
              
-                var ur="pnsreports?startdate=" + startdate + "&enddate=" + enddate;
+                var ur="surge_USAID_Report?week=" + startdate;
  console.log(ur);
                 $.fileDownload(ur).done(function () { $('.loading').hide(); $('#generaterpt').show(); $('#generaterpt').html("<i class='glyphicon glyphicon-ok'></i> Report Generated"); }).fail(function () { alert('Report generation failed, kindly try again!'); $('.loading').hide(); $('#generaterpt').show(); });
  
@@ -345,35 +365,7 @@ function getReport(){
       
    </script>
 
-                  
- <%if (session.getAttribute("uploadedpns") != null) { %>
-                                <script type="text/javascript"> 
-                    
-                    
-$("#matokeo").html('<%=session.getAttribute("uploadedpns")%>');
-                         
-      $.notify(
-      {
-  message:'<%=session.getAttribute("uploadedpns")%>'},
-      {
-	icon_type: 'image'
-      }, 
-      {
-	offset: {
-		x: 600,
-		y: 300
-	}
-       }
-       
-            ); 
-                    
-                </script>
-                
-                <%
-                //session.removeAttribute("uploadedart");
-                            }
 
-                        %>
 
 
 
