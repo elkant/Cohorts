@@ -301,7 +301,7 @@ if(cellfacil.getCellType()==0){
 else if(cellfacil.getCellType()==1){
     facilityName =cellfacil.getStringCellValue();
 }
-
+System.out.println("\n\nART Upload for:: "+facilityName+" \n Date:: "+weekstart+"  \n File name:: "+fileName);
 
 //-----------mfl-----------------------
 XSSFCell cellmfl = worksheet.getRow(4).getCell((short) 2);
@@ -961,7 +961,7 @@ if(checker==0){
     //System.out.println("** Inserting data ");
     //id	SubPartnerID 	Mflcode	samplecode	collectiondate	testingdate	validation	enrollment	treatment_init_date	enroll_cccno	other_reasons	year	quarter
     
-    String inserter="INSERT INTO "+dbname+" (id, date, delivery_point, year, month, indicator_id, mflcode, value, f14, m14, f24, m24, f25, m25, datekey,  datefromfile, submitted_by, Designation,der_1f, der_1m, der_4f, der_4m, der_9f, der_9m, der_14f, der_14m, der_19f, der_19m, der_24f, der_24m, der_29f, der_29m, der_34f, der_34m, der_39f, der_39m, der_44f, der_44m, der_49f, der_49m, der_50f, der_50m) "
+    String inserter="Replace INTO "+dbname+" (id, date, delivery_point, year, month, indicator_id, mflcode, value, f14, m14, f24, m24, f25, m25, datekey,  datefromfile, submitted_by, Designation,der_1f, der_1m, der_4f, der_4m, der_9f, der_9m, der_14f, der_14m, der_19f, der_19m, der_24f, der_24m, der_29f, der_29m, der_34f, der_34m, der_39f, der_39m, der_44f, der_44m, der_49f, der_49m, der_50f, der_50m) "
             + "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     conn.pst=conn.connect.prepareStatement(inserter);
     conn.pst.setString(1,id);
@@ -1014,7 +1014,7 @@ conn.pst.setString(42,der_50m);
     
     //conn.pst.setString(38,versionno);
     
-   //  System.out.println(""+conn.pst);
+    //System.out.println(""+conn.pst);
     
     conn.pst.executeUpdate();
    
@@ -1084,7 +1084,7 @@ conn.pst.setString(41,der_50m);
     
     conn.pst.setString(42,id);
     
-  //  System.out.println(""+conn.pst);
+   //System.out.println(""+conn.pst);
 
 conn.pst.executeUpdate();
 

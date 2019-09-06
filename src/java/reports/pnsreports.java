@@ -34,7 +34,11 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.openxml4j.opc.OPCPackage;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.FormulaEvaluator;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
@@ -83,7 +87,8 @@ String np=mydrive+":\\HSDSA\\PNS\\MACROS\\";
 String filepath="PNS_REPORT"+dat2+".xlsx";
 
 
-if(isUnix()){
+if(isUnix())
+{
     np="/HSDSA/PNS/MACROS/";
 }
 
@@ -132,27 +137,25 @@ wb1 = new XSSFWorkbook(pkg);
 
 
 
-
-
-XSSFWorkbook wb = wb1;
-
+//XSSFWorkbook wb = wb1;
 
 
 
 
 
 
+SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 1000);
 
 
 
-XSSFFont font = wb.createFont();
+Font font = wb.createFont();
 font.setFontHeightInPoints((short) 18);
 font.setFontName("Cambria");
 font.setColor((short) 0000);
 CellStyle style = wb.createCellStyle();
 style.setFont(font);
 style.setAlignment(XSSFCellStyle.ALIGN_CENTER);
-XSSFFont font2 = wb.createFont();
+Font font2 = wb.createFont();
 font2.setFontName("Cambria");
 font2.setColor((short) 0000);
 
@@ -175,14 +178,14 @@ stylec.setBorderRight(XSSFCellStyle.BORDER_THIN);
 stylec.setAlignment(XSSFCellStyle.ALIGN_LEFT);
 
 
-XSSFCellStyle stborder = wb.createCellStyle();
+CellStyle stborder = wb.createCellStyle();
 stborder.setBorderTop(XSSFCellStyle.BORDER_THIN);
 stborder.setBorderBottom(XSSFCellStyle.BORDER_THIN);
 stborder.setBorderLeft(XSSFCellStyle.BORDER_THIN);
 stborder.setBorderRight(XSSFCellStyle.BORDER_THIN);
 stborder.setAlignment(XSSFCellStyle.ALIGN_CENTER);
 
-XSSFCellStyle stylex = wb.createCellStyle();
+CellStyle stylex = wb.createCellStyle();
 stylex.setFillForegroundColor(HSSFColor.GREY_25_PERCENT.index);
 stylex.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
 stylex.setBorderTop(XSSFCellStyle.BORDER_THIN);
@@ -191,7 +194,7 @@ stylex.setBorderLeft(XSSFCellStyle.BORDER_THIN);
 stylex.setBorderRight(XSSFCellStyle.BORDER_THIN);
 stylex.setAlignment(XSSFCellStyle.ALIGN_LEFT);
 
-XSSFCellStyle stylesum = wb.createCellStyle();
+CellStyle stylesum = wb.createCellStyle();
 stylesum.setFillForegroundColor(HSSFColor.GREY_25_PERCENT.index);
 stylesum.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
 stylesum.setBorderTop(XSSFCellStyle.BORDER_THIN);
@@ -200,7 +203,7 @@ stylesum.setBorderLeft(XSSFCellStyle.BORDER_THIN);
 stylesum.setBorderRight(XSSFCellStyle.BORDER_THIN);
 stylesum.setAlignment(XSSFCellStyle.ALIGN_CENTER);
 
-XSSFFont fontx = wb.createFont();
+Font fontx = wb.createFont();
 fontx.setColor(HSSFColor.BLACK.index);
 fontx.setFontName("Cambria");
 stylex.setFont(fontx);
@@ -209,13 +212,13 @@ stylex.setWrapText(true);
 stylesum.setFont(fontx);
 stylesum.setWrapText(true);
 
-XSSFSheet rawsheet = wb.getSheet("PNS Raw Data");
-XSSFSheet monthlysheet = wb.createSheet("PNS Monthly Data");
+Sheet rawsheet = wb.getSheet("PNS Raw Data");
+Sheet monthlysheet = wb.createSheet("PNS Monthly Data");
 
 
 
 
-XSSFSheet Sheetnames[]={rawsheet,monthlysheet};
+Sheet Sheetnames[]={rawsheet,monthlysheet};
 String viewnames[]={"rpt_pns_raw","rpt_pns_raw_monthly"};
 
 
@@ -272,10 +275,10 @@ String orgunits="1=1 ";
 
 //for(int sheetno=0;sheetno < wb.getNumberOfSheets();sheetno++){
 int cn=0;
-for(XSSFSheet shet:Sheetnames){
+for(Sheet shet:Sheetnames){
     
-    XSSFRow rw0=null;
-    XSSFCell cell = null;
+    Row rw0=null;
+    Cell cell = null;
     if( shet.getSheetName().equals("PNS raw Data") ){ 
         rw0=shet.getRow(1); 
         cell=rw0.getCell(0);
@@ -325,7 +328,7 @@ for(XSSFSheet shet:Sheetnames){
         
         if (count == (count1)) {
 //header rows
-XSSFRow rw = null;
+Row rw = null;
  if(!(shet.getSheetName().equals("PNS raw Data")  ))
  { 
  rw = shet.createRow(count);
@@ -343,7 +346,7 @@ for (int i = 1; i <= columnCount; i++)
 {
     
     mycolumns.add(metaData.getColumnLabel(i));
-    XSSFCell cell0 = null;
+    Cell cell0 = null;
     if(!(shet.getSheetName().equals("PNS raw Data"))){
     cell0 = rw.createCell(i - 1);
     cell0.setCellValue(metaData.getColumnLabel(i));
@@ -369,7 +372,7 @@ for (int i = 1; i <= columnCount; i++)
 
         }//end of headers
         //data rows
-        XSSFRow rw = null;
+        Row rw = null;
         
        // if(!(shet.getSheetName().equals("PNS raw Data"))){
         if(1==1){
@@ -383,7 +386,7 @@ for (int i = 1; i <= columnCount; i++)
         for (int a = 0; a < columnCount; a++) {
             //System.out.print(mycolumns.get(a) + ":" + conn.rs.getString("" + mycolumns.get(a)));
             
-            XSSFCell cell0 = null;
+            Cell cell0 = null;
             
             //if(!(shet.getSheetName().equals("PNS raw Data")  )){
             if(1==1){
@@ -451,8 +454,10 @@ for (int i = 1; i <= columnCount; i++)
 
 
 
+
+
         if(1==1){
-     XSSFSheet sheet= wb.getSheet("PNS raw Data");
+     XSSFSheet sheet= wb.getXSSFWorkbook().getSheet("PNS raw Data");
         // tell your xssfsheet where its content begins and where it ends
 ((XSSFSheet)rawsheet).getCTWorksheet().getDimension().setRef("A4:AD" + (rawsheet.getLastRowNum() + 1));
 
@@ -466,7 +471,7 @@ ctTable.setRef("A4:AD" + (rawsheet.getLastRowNum() + 1)); // adjust reference as
 
 
 
- XSSFFormulaEvaluator.evaluateAllFormulaCells(wb);  
+ //FormulaEvaluator.evaluateAllFormulaCells(wb);  
 
 if(conn.rs!=null){conn.rs.close();}
 if(conn.rs1!=null){conn.rs1.close();}

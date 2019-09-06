@@ -238,8 +238,6 @@ SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 1000);
         orgunits+=" and  County in ('"+county+"') ";
         }
         
-        
-       
      
         String subcounty="(";
         String subcountyar[]=null;

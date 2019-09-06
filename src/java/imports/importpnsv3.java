@@ -382,7 +382,9 @@ if(cellfacil.getCellType()==0){
 else if(cellfacil.getCellType()==1){
     facilityName =cellfacil.getStringCellValue();
 }
-
+if(row==3){
+System.out.println("\n\nPNS Upload for:: "+facilityName+" \nDate:: "+weekend+"\n Filename::" +fileName+"\n");
+}
 
 //-----------mfl-----------------------
 XSSFCell cellmfl = worksheet.getRow(row).getCell((short) 3);
