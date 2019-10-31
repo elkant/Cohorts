@@ -52,7 +52,7 @@ String error;
         
       id=request.getParameter("id").trim();
       
-    System.out.println("col : "+columnName+" value : "+value+" id "+id+" cohort "+cohort);
+   // System.out.println("col : "+columnName+" value : "+value+" id "+id+" cohort "+cohort);
 
 
 //    year="";
@@ -87,7 +87,7 @@ String updateqr="update "+tablename+" set indicator=?,"+columnName+"=?,mflcode=?
 
 
 String checker="select id from "+tablename+" where id='"+id+"'";     
-        System.out.println(""+checker);
+       // System.out.println(""+checker);
 conn.rs=conn.st_1.executeQuery(checker);
 
 if(conn.rs.next()){

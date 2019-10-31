@@ -62,7 +62,7 @@ String error;
         
         
         
-            System.out.println("mflcode is:"+mflcode);
+            //System.out.println("mflcode is:"+mflcode);
         
       
         if(ct.equalsIgnoreCase("art")){tablename="art_cohort";} 
@@ -220,7 +220,7 @@ System.out.println("error : "+error);
         
         
         String checker="select id from "+tablename+" where id='"+id+"'";     
-        System.out.println(""+checker);
+       // System.out.println(""+checker);
         conn.rs=conn.st_1.executeQuery(checker);
         
         if(conn.rs.next()){

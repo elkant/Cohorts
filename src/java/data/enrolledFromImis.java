@@ -66,7 +66,7 @@ public class enrolledFromImis extends HttpServlet {
           
          id=year+"_"+newmn+"_"+subpartnerID;//*******************************
           
-            System.out.println("ID is  "+id);
+           // System.out.println("ID is  "+id);
             
             String sql="";
             //out.println("</html>");
@@ -90,7 +90,7 @@ public class enrolledFromImis extends HttpServlet {
             
             sql+=" from internal_system.moh731 where id='"+id+"'";
             
-                System.out.println(""+sql);
+               // System.out.println(""+sql);
             conn.rs=conn.st0.executeQuery(sql);
             
             if (conn.rs.next()){

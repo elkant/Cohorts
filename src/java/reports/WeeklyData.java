@@ -9,11 +9,13 @@ package reports;
 import General.IdGenerator;
 import db.dbConn;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -22,42 +24,91 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.openxml4j.opc.OPCPackage;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFFont;
-import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.openxmlformats.schemas.spreadsheetml.x2006.main.CTTable;
 import static reports.pnsreports.isNumeric;
+import static scripts.OSValidator.isUnix;
+import scripts.copytemplates;
 
 /**
  *
  * @author EKaunda
  */
-public class surge_USAID_Report extends HttpServlet {
+public class WeeklyData extends HttpServlet {
 
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException {
+            throws ServletException, IOException, SQLException, InvalidFormatException {
         response.setContentType("text/html;charset=UTF-8");
         //PrintWriter out = response.getWriter();
 
+        
+         IdGenerator IG = new IdGenerator();
+        String createdOn = IG.CreatedOn();
+        
+     
+        
         /* TODO output your page here. You may use following sample code. */
 //______________________________________________________________________________________
 //                       CREATE THE WORKSHEETS          
 //______________________________________________________________________________________  
-        XSSFWorkbook wb = new XSSFWorkbook();
+        
 
-        XSSFFont font = wb.createFont();
+
+
+String allpath = getServletContext().getRealPath("/surgedetailed.xlsx");
+
+XSSFWorkbook wb1;
+ 
+String pathtodelete=null;
+
+Date da= new Date();
+String dat2 = da.toString().replace(" ", "_");
+
+dat2 = dat2.toString().replace(":", "_");
+
+String mydrive = allpath.substring(0, 1);
+
+
+
+String filepath="Surge_Detailed_"+dat2+".xlsx";
+
+
+
+
+
+ 
+//check if file exists
+String sourcepath = getServletContext().getRealPath("/surgedetailed.xlsx");
+
+
+
+//wb = new XSSFWorkbook( OPCPackage.open(allpath) );
+
+
+//XSSFWorkbook wb = wb1;
+
+
+SXSSFWorkbook wb = new SXSSFWorkbook(1000);
+
+        Font font =  wb.createFont();
         font.setFontHeightInPoints((short) 18);
         font.setFontName("Cambria");
         font.setColor((short) 0000);
         CellStyle style = wb.createCellStyle();
         style.setFont(font);
         style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-        XSSFFont font2 = wb.createFont();
+        XSSFFont font2 = (XSSFFont) wb.createFont();
         font2.setFontName("Cambria");
         font2.setColor((short) 0000);
         CellStyle style2 = wb.createCellStyle();
@@ -68,14 +119,14 @@ public class surge_USAID_Report extends HttpServlet {
         style2.setBorderRight(HSSFCellStyle.BORDER_THIN);
         style2.setAlignment(HSSFCellStyle.ALIGN_LEFT);
 
-        XSSFCellStyle stborder = wb.createCellStyle();
+        CellStyle stborder = wb.createCellStyle();
         stborder.setBorderTop(HSSFCellStyle.BORDER_THIN);
         stborder.setBorderBottom(HSSFCellStyle.BORDER_THIN);
         stborder.setBorderLeft(HSSFCellStyle.BORDER_THIN);
         stborder.setBorderRight(HSSFCellStyle.BORDER_THIN);
         stborder.setAlignment(HSSFCellStyle.ALIGN_CENTER);
 
-        XSSFCellStyle stylex = wb.createCellStyle();
+        CellStyle stylex = wb.createCellStyle();
         stylex.setFillForegroundColor(HSSFColor.GREY_25_PERCENT.index);
         stylex.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
         stylex.setBorderTop(HSSFCellStyle.BORDER_THIN);
@@ -84,7 +135,7 @@ public class surge_USAID_Report extends HttpServlet {
         stylex.setBorderRight(HSSFCellStyle.BORDER_THIN);
         stylex.setAlignment(HSSFCellStyle.ALIGN_LEFT);
 
-        XSSFCellStyle stylesum = wb.createCellStyle();
+        CellStyle stylesum = wb.createCellStyle();
         stylesum.setFillForegroundColor(HSSFColor.GREY_25_PERCENT.index);
         stylesum.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
         stylesum.setBorderTop(HSSFCellStyle.BORDER_THIN);
@@ -93,7 +144,7 @@ public class surge_USAID_Report extends HttpServlet {
         stylesum.setBorderRight(HSSFCellStyle.BORDER_THIN);
         stylesum.setAlignment(HSSFCellStyle.ALIGN_CENTER);
 
-        XSSFFont fontx = wb.createFont();
+        Font fontx = wb.createFont();
         fontx.setColor(HSSFColor.BLACK.index);
         fontx.setFontName("Cambria");
         stylex.setFont(fontx);
@@ -102,41 +153,27 @@ public class surge_USAID_Report extends HttpServlet {
         stylesum.setFont(fontx);
         stylesum.setWrapText(true);
 
-        XSSFSheet shet = wb.createSheet("Afya_Nyota_surge");
+        Sheet shet = wb.createSheet("DATA");
 
         String year="";
        IdGenerator dats= new IdGenerator();
         
         String startdate="2019-05-13";
-        String enddate=dats.toDay();
-        String subcounty="";
+        String enddate=IG.toDay();
+      
         String county="";
-        String weeknumber="";
-        String weekstring="";
-       
         if(request.getParameter("startdate")!=null)
         {
         
-            startdate=request.getParameter("startdate");
+        startdate=request.getParameter("startdate");
         
         }
         if(request.getParameter("enddate")!=null)
         {
-        enddate=request.getParameter("enddate");
+        
+            enddate=request.getParameter("enddate");
+        
         }
-        
-        
-         if(request.getParameter("week")!=null)
-        {
-        weekstring=request.getParameter("week");
-        }
-         String weekstringarr[]=weekstring.split("_");
-         
-         startdate=weekstringarr[0];
-         enddate=weekstringarr[1];
-         weeknumber=weekstringarr[2];
-         
-        
         
 //        //subcounty
 //        if(request.getParameter("rpt_subcounty")!=null)
@@ -144,38 +181,127 @@ public class surge_USAID_Report extends HttpServlet {
 //            subcounty=request.getParameter("rpt_subcounty");
 //        }
 //        //county
-//        if(request.getParameter("rpt_county")!=null)
-//        {
-//         county=request.getParameter("rpt_county");
-//        }
+        if(request.getParameter("county")!=null)
+        {
+         county=request.getParameter("county");
+        }
         
         dbConn conn = new dbConn();
+        
         //========Query 1=================
         
+        String orgunits="  ( surge_overall_fine_weekly.`Date` between  '"+startdate+"' and '"+enddate+"' )  ";
+        
+        
+        
+        if(!county.trim().equals(""))
+        {
+        orgunits+=" and  County in ('"+county+"') ";
+        }
+        
+     
+        String subcounty="(";
+        String subcountyar[]=null;
+        
+       subcountyar=request.getParameter("subcounty").split(","); 
        
+       if(request.getParameter("subcounty")!=null)
+       {
+           if(!request.getParameter("subcounty").equals("")){
+       
+       for(int a=0;a<subcountyar.length;a++)
+       {
+       
+           if(a==subcountyar.length-1)
+           {
+               
+            subcounty+="'"+subcountyar[a]+"')";  
+            
+           }
+     else {
+               
+       subcounty+="'"+subcountyar[a]+"',"; 
+       
+          }
+           
+           
+       }
+           System.out.println(" array length "+subcountyar.length);
+       }
+       }
+        
+        if(!subcounty.equals("(") ){
+            
+         orgunits+=" and `Sub-county` in "+subcounty+" ";
+        
+        }
         
         
-       // XSSFRow rw0=shet.createRow(1);
-        //XSSFCell cell = rw0.createCell(0);
-                    //cell.setCellValue("Surge Data for Week "+weeknumber+" ("+startdate+" and "+enddate+")");
-                    //cell.setCellStyle(style);
-        //shet.addMergedRegion(new CellRangeAddress(1, 1, 0,10));
-                    
-                int count1  = 0;
+     
+        
+        //_______________________________________________________________________________________________
+        
+        
+        String mfl="(";
+        String facilityar[]=null;
+        
+       facilityar=request.getParameter("facility").split(","); 
+       
+       if(request.getParameter("facility")!=null)
+       {
+           if(!request.getParameter("facility").equals("")){
+       
+       for(int a=0;a<facilityar.length;a++)
+       {
+       
+           if(a==facilityar.length-1)
+           {
+               
+            mfl+="'"+facilityar[a]+"')";  
+            
+           }
+     else {
+               
+       mfl+="'"+facilityar[a]+"',"; 
+       
+          }
+           
+           
+       }
+           System.out.println(" facility array length "+facilityar.length);
+       
+       }}
+        
+        
+        if(!mfl.equals("(") )
+        {
+            
+         orgunits+=" and `mflcode` in "+mfl+" ";
+        
+        }
+        
+        
+        
+        //_______________________________________________________________________________________________
+        
+        
+        
+        
+//        
+//        XSSFRow rw0=shet.createRow(1);
+//        XSSFCell cell = rw0.createCell(0);
+//        cell.setCellValue("Surge Tracker for Period "+startdate+"  to "+enddate+"");
+//        cell.setCellStyle(style);
+//        shet.addMergedRegion(new CellRangeAddress(1, 1, 0,10));
+//                    
+                int count1  = 1;
         
        
         
         //========Query two====Facility Details==============
         
-        String storedprocedurename="surge_usaid_template_92sites";
-        
-        if(new Integer(weeknumber)<=42 && new Integer(enddate.replace("-",""))<=20190720){ storedprocedurename="surge_usaid_template_60sites";}
-        else if(new Integer(weeknumber)>42 && new Integer(weeknumber)<=52 && new Integer(enddate.replace("-",""))<=20190930){ storedprocedurename="surge_usaid_template_92sites";}
-        else {storedprocedurename="surge_usaid_template_74sites";}
-        
-        String qry = "call aphiaplus_moi."+storedprocedurename+"('"+startdate+"','"+enddate+"','"+weeknumber+"')";
-
-         System.out.println(qry);
+        String qry = "SELECT * FROM aphiaplus_moi.surge_overall_fine_weekly where "+orgunits+" ;";
+        System.out.println(qry);
         conn.rs = conn.st.executeQuery(qry);
         
          ResultSetMetaData metaData = conn.rs.getMetaData();
@@ -183,19 +309,20 @@ public class surge_USAID_Report extends HttpServlet {
 
          metaData = conn.rs.getMetaData();
          columnCount = metaData.getColumnCount();
-        int count = count1;
-        ArrayList mycolumns = new ArrayList();
+         int count = count1;
+         ArrayList mycolumns = new ArrayList();
 
-        while (conn.rs.next()) {
+         while (conn.rs.next()) {
 
-            if (count == (count1)) {
+         if (count == (count1)) {
 //header rows
-                XSSFRow rw = shet.createRow(count);
-rw.setHeightInPoints(26);
-                for (int i = 1; i <= columnCount; i++) {
-
+         Row rw = shet.createRow(count);
+//rw.setHeightInPoints(26);
+                for (int i = 1; i <= columnCount; i++) 
+                {
+//skip header
                     mycolumns.add(metaData.getColumnLabel(i));
-                    XSSFCell cell0 = rw.createCell(i - 1);
+                    Cell cell0 = rw.createCell(i - 1);
                     cell0.setCellValue(metaData.getColumnLabel(i));
                     cell0.setCellStyle(stylex);
 
@@ -204,20 +331,24 @@ rw.setHeightInPoints(26);
                 count++;
             }//end of if
             //data rows     
-            XSSFRow rw = shet.createRow(count);
+            Row rw = shet.createRow(count);
 
-            for (int a = 0; a < columnCount; a++) {
+            for (int a = 0; a < columnCount; a++) 
+            {
                 //System.out.print(mycolumns.get(a) + ":" + conn.rs.getString("" + mycolumns.get(a)));
 
-                XSSFCell cell0 = rw.createCell(a);
-                 if(isNumeric(conn.rs.getString("" + mycolumns.get(a)))){
+                Cell cell0 = rw.createCell(a);
+                 if(isNumeric(conn.rs.getString("" + mycolumns.get(a))))
+                 {
                // if(1==1){
                 
                      cell0.setCellValue(conn.rs.getInt(mycolumns.get(a).toString()));
                     
-                   }
+                 }
                 else 
                 {
+                    //System.out.println(mycolumns.get(a)+" Last option"+conn.rs.getString("" + mycolumns.get(a)));
+//                    System.out.println( mycolumns.get(a)+" --Last option"+conn.rs.getString("" + mycolumns.get(a)));
                      cell0.setCellValue(conn.rs.getString("" + mycolumns.get(a)));
                     //cell0.setCellValue(conn.rs.getString("" + mycolumns.get(a)));
                    
@@ -234,15 +365,37 @@ rw.setHeightInPoints(26);
         
         
         //Autofreeze  || Autofilter  || Remove Gridlines ||  
-        
-        shet.setAutoFilter(new CellRangeAddress(count1, count - 1, 0, columnCount-1));
+     if(count!=count1)   {
+       // shet.setAutoFilter(new CellRangeAddress(count1, count - 1, 0, columnCount-1));
+
         //System.out.println("1,"+rowpos+",0,"+colposcopy);
-        for (int i = 0; i <= columnCount; i++) {
-            shet.autoSizeColumn(i);
+        for (int i = 0; i <= columnCount; i++) 
+        {
+          //  shet.autoSizeColumn(i);
         }
-        
-        shet.setDisplayGridlines(false);
-        shet.createFreezePane(6, 0);
+
+      //  shet.setDisplayGridlines(false);
+      //  shet.createFreezePane(6, 4);
+    }
+     
+     
+     
+   if(1==2)
+   {
+     XSSFSheet shet2= wb.getXSSFWorkbook().getSheet("DATA");
+        // tell your xssfsheet where its content begins and where it ends
+((XSSFSheet)shet2).getCTWorksheet().getDimension().setRef("A1:AO" + (shet.getLastRowNum() + 1));
+
+CTTable ctTable = ((XSSFSheet)shet2).getTables().get(0).getCTTable();
+
+ctTable.setRef("A1:AO" + (shet.getLastRowNum() + 1)); // adjust reference as needed
+
+    }
+     
+  
+    
+     
+     
         
         if(conn.rs!=null){conn.rs.close();}
         if(conn.rs1!=null){conn.rs1.close();}
@@ -251,10 +404,9 @@ rw.setHeightInPoints(26);
         if(conn.connect!=null){conn.connect.close();}
         
         
-        IdGenerator IG = new IdGenerator();
-        String createdOn = IG.CreatedOn();
+       
 
-        System.out.println("" + "PNS_reports_Gen_" + createdOn.trim() + ".xlsx");
+        System.out.println("" + "Weekly Surgedetailed_reports_Gen_" + createdOn.trim() + ".xls");
 
         ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
         wb.write(outByteStream);
@@ -262,8 +414,8 @@ rw.setHeightInPoints(26);
         response.setContentType("application/ms-excel");
         response.setContentLength(outArray.length);
         response.setHeader("Expires:", "0"); // eliminates browser caching
-        response.setHeader("Content-Disposition", "attachment; filename=" + "AfyaNyota_Surge_rpt_for_Week_"+weeknumber+"_"+startdate+"_to_"+enddate+"__gen_" + createdOn.trim() + ".xlsx");
-         response.setHeader("Set-Cookie","fileDownload=true; path=/");
+        response.setHeader("Content-Disposition", "attachment; filename=" + "Surge_Data_for_"+startdate+"_to_"+enddate+"_gen_" + createdOn.trim() + ".xlsx");
+        response.setHeader("Set-Cookie","fileDownload=true; path=/");
         OutputStream outStream = response.getOutputStream();
         outStream.write(outArray);
         outStream.flush();
@@ -277,6 +429,8 @@ rw.setHeightInPoints(26);
             processRequest(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(rawdata.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvalidFormatException ex) {
+            Logger.getLogger(surge_tracker.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -287,6 +441,8 @@ rw.setHeightInPoints(26);
             processRequest(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(rawdata.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvalidFormatException ex) {
+            Logger.getLogger(surge_tracker.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

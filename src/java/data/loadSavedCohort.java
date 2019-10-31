@@ -92,7 +92,7 @@ public class loadSavedCohort extends HttpServlet {
             
             
             conn.rs=conn.st0.executeQuery(sql);
-                System.out.println(""+sql);
+                //System.out.println(""+sql);
             
             while (conn.rs.next()){
                 
@@ -103,21 +103,21 @@ public class loadSavedCohort extends HttpServlet {
         jo.put("val1", 0);
         jo.put("val2", 0);
         jo.put("val3", 0);
-        System.out.println("Indicator "+conn.rs.getInt(2)+" no LTFU");
+       // System.out.println("Indicator "+conn.rs.getInt(2)+" no LTFU");
              }
               //no values for vl done and suppressed Np 3m
              else if(ct.equalsIgnoreCase("pmtct") && cm.equalsIgnoreCase("3m") && (conn.rs.getString(2).equals("10")|| conn.rs.getString(2).equals("11") ) ){
         jo.put("val1",  conn.rs.getString(3));
         jo.put("val2", 0);
         jo.put("val3", conn.rs.getString(5));
-        System.out.println("Indicator "+conn.rs.getString(2)+" if 2------");
+       // System.out.println("Indicator "+conn.rs.getString(2)+" if 2------");
              }
              //no values for vl done and suppressed
              else if(  cm.equals("9m") && (conn.rs.getString(2).equals("10")|| conn.rs.getString(2).equals("11") ) ){
         jo.put("val1", 0);
         jo.put("val2", 0);
         jo.put("val3", 0);
-        System.out.println("Indicator "+conn.rs.getString(2)+" if 3------");
+       // System.out.println("Indicator "+conn.rs.getString(2)+" if 3------");
              }
              else {
         jo.put("val1", conn.rs.getString(3));

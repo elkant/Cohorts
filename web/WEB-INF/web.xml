@@ -180,6 +180,14 @@
         <servlet-name>loadder</servlet-name>
         <servlet-class>surge.loadder</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>WeeklyData</servlet-name>
+        <servlet-class>reports.WeeklyData</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>missingReports</servlet-name>
+        <servlet-class>reports.missingReports</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loadcohort</servlet-name>
         <url-pattern>/loadcohort</url-pattern>
@@ -359,6 +367,14 @@
     <servlet-mapping>
         <servlet-name>loadder</servlet-name>
         <url-pattern>/loadder</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>WeeklyData</servlet-name>
+        <url-pattern>/WeeklyData</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>missingReports</servlet-name>
+        <url-pattern>/missingReports</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -175,6 +175,7 @@
                                       <option value='surge_tracker'>2. Reporting Tracker</option>
                                       
                                       <option value='htsclientraw'>3. HTS Client Level Raw </option>
+                                      <option value='WeeklyData'>4. Data file only</option>
                                       <!--<option value='PositiveClientsNotLinked'>4. Positive Clients Not Linked linked</option>-->
                                              
                                       </select>
@@ -196,7 +197,7 @@
                               </td>
                               <td class="col-xs-4">
                               <div class="controls">
-                                  <input required type="text" title="this is the date that the week started" value="2019-05-12" class="form-control input-lg tarehe" name="weekstart" autocomplete="off" id="weekstart">
+                                  <input required type="text" title="this is the date that the week started" value="2019-10-01" class="form-control input-lg tarehe" name="weekstart" autocomplete="off" id="weekstart">
                               </div>
                            </td>
                            </tr>

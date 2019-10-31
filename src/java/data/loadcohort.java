@@ -142,7 +142,7 @@ public class loadcohort extends HttpServlet {
            mflcode=hosi[0];
         }
        
-        System.out.println("Received"+yearstring+monthstring);
+       // System.out.println("Received"+yearstring+monthstring);
         
         String startmonth="";
         
@@ -166,7 +166,7 @@ public class loadcohort extends HttpServlet {
      month48="<b>"+getpreviousmonth(new Integer(yearstring),new Integer(monthstring), -48)+"</b>";
      month60="<b>"+getpreviousmonth(new Integer(yearstring),new Integer(monthstring), -60)+"</b>";
      
-       System.out.println("Testiii  sent "+yearstring+""+monthstring+" received back "+month3);    
+      // System.out.println("Testiii  sent "+yearstring+""+monthstring+" received back "+month3);    
       
       }
       
@@ -231,7 +231,7 @@ public class loadcohort extends HttpServlet {
           
            pmtctformulas_ar.add("sumofindicators(\"kp_"+basicmonthar[c]+"m-"+b+"@np_"+basicmonthar[c]+"m-"+b+"\",\"tl_"+basicmonthar[c]+"m-"+b+"\");");
            
-           System.out.println("sumofindicators(\"kp_"+basicmonthar[c]+"m-"+b+"@np_"+basicmonthar[c]+"m-"+b+"\",\"tl_"+basicmonthar[c]+"m-"+b+"\");");
+         //  System.out.println("sumofindicators(\"kp_"+basicmonthar[c]+"m-"+b+"@np_"+basicmonthar[c]+"m-"+b+"\",\"tl_"+basicmonthar[c]+"m-"+b+"\");");
               // System.out.println("sumofindicators(\"kp_"+dur+"m-"+b+"@np_"+dur+"m-"+b+"\",\"tl_"+dur+"m-"+b+"\");");
          
           }}
@@ -251,7 +251,7 @@ public class loadcohort extends HttpServlet {
            for(int a=0;a<3;a++){
           
            artformulas_ar.add("sumofindicators(\"child_"+basicmonthar[c]+"m-"+b+"@adult_"+basicmonthar[c]+"m-"+b+"\",\"tl_"+basicmonthar[c]+"m-"+b+"\");");
-             System.out.println("sumofindicators(\"child_"+basicmonthar[c]+"m-"+b+"@adult_"+basicmonthar[c]+"m-"+b+"\",\"tl_"+basicmonthar[c]+"m-"+b+"\");");
+            // System.out.println("sumofindicators(\"child_"+basicmonthar[c]+"m-"+b+"@adult_"+basicmonthar[c]+"m-"+b+"\",\"tl_"+basicmonthar[c]+"m-"+b+"\");");
               
           }}
          
@@ -266,7 +266,7 @@ public class loadcohort extends HttpServlet {
             
             String primarydata="select indicator,indicators_id from indicators where cohort='"+cohort+"'"; 
         
-            System.out.println("_"+primarydata);
+           // System.out.println("_"+primarydata);
             conn.rs=conn.st.executeQuery(primarydata);
             
             String indicators="";
@@ -369,7 +369,7 @@ public class loadcohort extends HttpServlet {
 Calendar c = Calendar.getInstance(); 
 c.setTime(new Date(currentyear-1900,currentmonth,1)); 
 c.add(Calendar.MONTH, deductvalue);
-            System.out.println(c.get(Calendar.YEAR)+"-"+(c.get(Calendar.MONTH)+1));
+           // System.out.println(c.get(Calendar.YEAR)+"-"+(c.get(Calendar.MONTH)+1));
 
        int mwezi= (c.get(Calendar.MONTH)+1);
        if (mwezi<10){
