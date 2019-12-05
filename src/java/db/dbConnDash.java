@@ -166,7 +166,7 @@ public  Connection conn = null;
             Logger.getLogger(dbConn.class.getName()).log(Level.SEVERE, null, ex);
 
 
-            System.out.println("MY VALUE:" + issetdbcalled_file_exists);
+           // System.out.println("MY VALUE:" + issetdbcalled_file_exists);
 
             if (issetdbcalled_file_exists%2 == 0) {
             
@@ -176,7 +176,7 @@ public  Connection conn = null;
             issetdbcalled_file_exists++;
             }
 
-            System.out.println("MY VALUE:" + issetdbcalled_file_exists);
+            //System.out.println("MY VALUE:" + issetdbcalled_file_exists);
 
 
             System.out.println("ERROR:      FILE NOT FOUND");

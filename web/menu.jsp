@@ -89,6 +89,7 @@
                  <li ><a href="importpmtct.jsp"><i class="icon-plus"></i>Upload MCA</a></li>
                  <li ><a href="importstf.jsp"><i class="icon-lock"></i>Upload STF Defaulters</a></li>                  
                  <li ><a href="importdefaulter.jsp"><i class="icon-hospital"></i>Upload New Defaulter</a></li>
+                 <li ><a href='MissingReports.jsp'><i class='icon-stop'></i>Surge Missing Reports</a></li>
                 
                  <%}%>
                </ul>
@@ -109,6 +110,7 @@
                  <li ><a href="aca_mca_reports.jsp"><i class="icon-edit"></i>ACA/MCA Reports</a></li>
                  <li ><a href="stf_newdefaulter_reports.jsp"><i class="icon-plus"></i>STF/New Defaulter Reports</a></li>
                   <li ><a href='surgereports.jsp'><i class='icon-list'></i>Surge Reports and Tracker</a></li>
+                  <li ><a href='MissingReports.jsp'><i class='icon-stop'></i>View Missing Reports</a></li>
                 
                  <%}%>
                </ul>
@@ -132,6 +134,7 @@ else {
   out.println("<li ><a href='importder.jsp'><i class='icon-plus'></i>Daily ART Data Upload</a></li>");
 //  out.println("<li ><a href='pnsreport.jsp'><i class='icon-list'></i>PNS Reports</a></li>");
   out.println("<li ><a href='surgereports.jsp'><i class='icon-list'></i>Surge Reports and Tracker</a></li>");
+  out.println("<li ><a href='MissingReports.jsp'><i class='icon-stop'></i>View Missing Reports</a></li>");
      } %>
             
          </ul>

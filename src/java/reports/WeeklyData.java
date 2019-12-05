@@ -190,7 +190,7 @@ SXSSFWorkbook wb = new SXSSFWorkbook(1000);
         
         //========Query 1=================
         
-        String orgunits="  ( surge_overall_fine_weekly.`Date` between  '"+startdate+"' and '"+enddate+"' )  ";
+        String orgunits="  ( surge_overall_fine.`Reporting Date` between  '"+startdate+"' and '"+enddate+"' )  ";
         
         
         
@@ -300,7 +300,7 @@ SXSSFWorkbook wb = new SXSSFWorkbook(1000);
         
         //========Query two====Facility Details==============
         
-        String qry = "SELECT * FROM aphiaplus_moi.surge_overall_fine_weekly where "+orgunits+" ;";
+        String qry = "SELECT * FROM aphiaplus_moi.surge_overall_fine where "+orgunits+" ;";
         System.out.println(qry);
         conn.rs = conn.st.executeQuery(qry);
         
@@ -340,15 +340,12 @@ SXSSFWorkbook wb = new SXSSFWorkbook(1000);
                 Cell cell0 = rw.createCell(a);
                  if(isNumeric(conn.rs.getString("" + mycolumns.get(a))))
                  {
-               // if(1==1){
-                
-                     cell0.setCellValue(conn.rs.getInt(mycolumns.get(a).toString()));
-                    
+                cell0.setCellValue(conn.rs.getInt(mycolumns.get(a).toString()));
                  }
                 else 
                 {
-                    //System.out.println(mycolumns.get(a)+" Last option"+conn.rs.getString("" + mycolumns.get(a)));
-//                    System.out.println( mycolumns.get(a)+" --Last option"+conn.rs.getString("" + mycolumns.get(a)));
+                  // System.out.println(mycolumns.get(a)+" Last option"+conn.rs.getString("" + mycolumns.get(a)));
+                  // System.out.println( mycolumns.get(a)+" --Last option"+conn.rs.getString("" + mycolumns.get(a)));
                      cell0.setCellValue(conn.rs.getString("" + mycolumns.get(a)));
                     //cell0.setCellValue(conn.rs.getString("" + mycolumns.get(a)));
                    

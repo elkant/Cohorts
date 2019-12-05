@@ -48,9 +48,6 @@ public final class dbConn {
              connect = null;
 
 
-
-
-
             //if the saved host name is less than 2 letters long, then thats not a genuine host name
 
             URL location = dbConn.class.getProtectionDomain().getCodeSource().getLocation();
@@ -68,7 +65,7 @@ public final class dbConn {
 }
                     else{
                     connect = DriverManager.getConnection("jdbc:mysql://" + dbsetup[0] + "/" + dbsetup[1], dbsetup[2],dbsetup[3]);
-                        System.out.println("jdbc:mysql://"+dbsetup[0] + "/" + dbsetup[1]+","+ dbsetup[2]+","+dbsetup[3]);
+                        //System.out.println("jdbc:mysql://"+dbsetup[0] + "/" + dbsetup[1]+","+ dbsetup[2]+","+dbsetup[3]);
                     
                     }
 
@@ -184,7 +181,7 @@ public final class dbConn {
             Logger.getLogger(dbConn.class.getName()).log(Level.SEVERE, null, ex);
 
 
-            System.out.println("MY VALUE:" + issetdbcalled_file_exists);
+           // System.out.println("MY VALUE:" + issetdbcalled_file_exists);
 
             if (issetdbcalled_file_exists%2 == 0) {
                 calldbjsp();
@@ -194,10 +191,10 @@ public final class dbConn {
             issetdbcalled_file_exists++;
             }
 
-            System.out.println("MY VALUE:" + issetdbcalled_file_exists);
+           // System.out.println("MY VALUE:" + issetdbcalled_file_exists);
 
 
-            System.out.println("ERROR:      FILE NOT FOUND");
+            //System.out.println("ERROR:      FILE NOT FOUND");
             worked = false;
 
         }

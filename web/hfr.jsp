@@ -4,6 +4,13 @@
     Author     : Emmanuel E
 --%>
 
+<%@page import="ajax.getIndicators"%>
+<%@page import="java.util.logging.Logger"%>
+<%@page import="java.util.logging.Level"%>
+<%@page import="java.sql.SQLException"%>
+<%@page import="org.json.JSONArray"%>
+<%@page import="db.dbConn"%>
+<%@page import="ajax.getReportingDates"%>
 <%@page import="java.util.Calendar"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
@@ -15,14 +22,14 @@
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
-		<title>MCA/ACA</title>
+		<title>HFR</title>
 		<meta name="generator" content="Bootply" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
                   <link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
 		<link href="css/bootstrap.css" rel="stylesheet">
                 <link href="css/bootstrap-datepicker.min.css" rel="stylesheet">
                     <link rel="stylesheet" href="css/select2.min.css">
-                    <link rel="shortcut icon" href="images/logo.png">
+                    <link rel="shortcut icon" href="hfrlogo.png">
                     <!--<link data-jsfiddle="common" rel="stylesheet" media="screen" href="css/handsontable.css">-->
 <!--  <link data-jsfiddle="common" rel="stylesheet" media="screen" href="dist/pikaday/pikaday.css">-->
                   
@@ -111,9 +118,9 @@ input:focus {
     
     <div class="row">
          <label class="col-sm-2"></label>
-        <a class='btn btn-success col-sm-3' style="text-align: center;" href='https://hsdsacluster2.fhi360.org'>Dashboards Home</a>
+        <a class='btn btn-success col-sm-3' style="text-align: center;" href='https://hsdsacluster2.fhi360.org'>Logout</a>
         <label class="col-sm-2"></label>
-          <a class='btn btn-success col-sm-3' style="text-align: center;" href='aca_mca_reports.jsp'>Generate Reports</a>
+          <!--<a class='btn btn-success col-sm-3' style="text-align: center;" href='aca_mca_reports.jsp'>Generate Reports</a>-->
            <label class="col-sm-2"></label>
     </div>
     <div class="row">
@@ -124,7 +131,7 @@ input:focus {
             
             
           
-          <h5 style="text-align: center;color:blue;">MATERNAL/ART COHORT ANALYSIS SYSTEM [Ver 1.0.0]</h5>
+          <h5 style="text-align: center;color:blue;"><b>AfyaNyota HFR Reporting Template</b></h5>
 
             <div class="row">
                 <!-- center left-->
@@ -180,14 +187,14 @@ input:focus {
                     <div class="panel panel-default">
                        
                         <div class="panel-body" style="width:100%;">
-                            <form class="form form-vertical" onsubmit="return validatedata();" action="multisave" method="post" id="weeklydataform">
+                            <form class="form form-vertical"  action="#" method="post" id="weeklydataform">
                                 <table class='table table-striped table-bordered'  style=" width:100%" >
                                     
                                 <tr><td class="col-xs-6">
                                 <div class="control-group">
                                    
                                     <div class="controls">
-                                        <label><font color="red"><b>*</b></font> Cohort Type </label>
+                                        <label><font color="red"><b>*</b></font>Sites Category</label>
                                         
                                         </div>
                                         </div>
@@ -197,7 +204,7 @@ input:focus {
                                 <div class="control-group">
                                   
                                     <div class="controls">
-                                        <label><font color="red"><b>*</b></font> Reporting year </label> 
+                                        <label><font color="red"><b>*</b></font> Reporting Date </label> 
                                         
                                         </div>
                                         </div>
@@ -212,27 +219,11 @@ input:focus {
                                 <div class="control-group">
                                  
                                    <div class="controls">
-                                       <select  onchange='createdynamicinputs();getFacilitiesJson();load731();loadcohorts();hiddenelements();cohortmonths();isdisplayindicators();' required="true"  name="cohortttype" id="cohortttype" class="form-control" >
+                              <select  onchange='createdynamicinputs();isdisplayindicators();' required="true"  name="sitestype" id="sitestype" class="form-control" >
                                            
-                                           <% if(session.getAttribute("ct")!=null){
-                                               if(session.getAttribute("ct").equals("art")){
-                                           out.println("<option selected value='art'>ACA</option>");
-                                           out.println("<option value='pmtct'>MCA</option>");
-                                               }
-                                               else if(session.getAttribute("ct").equals("pmtct")){
-                                           out.println("<option  value='art'>ACA</option>");
-                                           out.println("<option selected value='pmtct'>MCA</option>");
-                                               }
-                                          
-                                            
+                                            <option value="non_surge_sites">Non Surge Sites</option>
+                                            <option title="submitted through daily art, pns and " disabled value="surge_sites">Surge Sites</option>
                                            
-                                           
-                                           } else{%>
-                                           
-                                            <option value="art">ACA</option>
-                                            <option value="pmtct">MCA</option>
-                                            
-                                            <%}%>
                                         </select>
                                     
                                 </div>
@@ -242,46 +233,22 @@ input:focus {
                                <div class="control-group">
                                     
                                     <div class="controls">
-                                       <select required="true" onclick="getmonth();cohortmonths();load731();loadcohorts();isdisplayindicators();"   name="year" id="year" class="form-control" >
-                                            <option value=''>Select Year</option>
-                                              <%
-                                                
-                                                Calendar cal= Calendar.getInstance();
-                                                int curyear=cal.get(Calendar.YEAR);
-                                                 int curmn=cal.get(Calendar.MONTH)+1;
-                                                
-                                                if(curmn>=10){curyear=curyear+1;}
-                                                
-                                            for(int a=2017;a<=curyear;a++)
-                                            {
-                                               
-                                                
-                                                if(session.getAttribute("yr")!=null){
-                                                  
-                                                if(new Integer(session.getAttribute("yr").toString())==a){
-                                                 System.out.println(" Mwaaka ni "+session.getAttribute("yr")+" vs "+a);  
-                                                 out.println("<option selected value='"+a+"'>"+a+"</option>");
-                                                }
-                                                else {
-                                                 out.println("<option value='"+a+"'>"+a+"</option>");
-                                                }
-                                                
-                                                                                     }
-                                                else {
-                                                
-                                             out.println("<option value='"+a+"'>"+a+"</option>");
-                                             
-                                                }
-                                                %>
-                                            
-                                            
-                                            <%
-                                              }
-                                            
-                                            %>
-                                            
-                                            
-                                           
+                                       <select required="true" onclick="isdisplayindicators();"   name="reportingdate" id="reportingdate" class="form-control" >
+                                           <%
+                                               getReportingDates gd = new getReportingDates();
+                                               dbConn conn = new dbConn();
+
+                                               try {
+                                                   JSONArray ja = gd.getRepDates(conn, "2019-09-30");
+
+                                                   out.println(gd.toHtmlDates(ja));
+
+                                               } catch (SQLException ex) {
+                                                   Logger.getLogger(getReportingDates.class.getName()).log(Level.SEVERE, null, ex);
+                                               }
+
+                                           %>
+                                          
                                         </select>
                                         <input type="hidden"  name ="rowid" id="rowid"  />
                                     </div>
@@ -290,69 +257,9 @@ input:focus {
                                 </tr>
                                 
                                  
-                                <tr><td class="col-xs-6">
-                                <div class="control-group">
-                                   
-                                    <div class="controls">
-                                        <label><font color="red"><b>*</b></font> Reporting Month </label>
+                               
                                         
-                                        </div>
-                                        </div>
-                                        </td>
-                                        
-                                       <td class="col-xs-6">
-                                <div class="control-group">
-                                  
-                                    <div class="controls">
-                                        <label><font color="red"><b>*</b></font> Select Cohort </label> 
-                                        
-                                        </div>
-                                        </div>
-                                        </td>
-                                         
-                                        
-                                        </tr>
-                                        
-                                <tr><td class="col-xs-12">
-                                <div class="control-group">
-                                   
-                                    <div class="controls">
-                                       <select required="true"    name="month" id="month" onchange="cohortmonths();load731();loadcohorts();isdisplayindicators();" class="form-control" >
-                                            <option>Select Month</option>
-                                            <option value="01">January</option>
-                                            <option value="02">February</option>
-                                            <option value="03">March</option>
-                                            <option value="04">April</option>
-                                            <option value="05">May</option>
-                                            <option value="06">June</option>
-                                            <option value="07">July</option>
-                                            <option value="08">August</option>
-                                            <option value="09">September</option>
-                                            <option value="10">October</option>
-                                            <option value="11">November</option>
-                                            <option value="12">December</option>
-                                           
-                                        </select>
-                                        
-                                    </div>
-                                </div>
-                                        </td>
-                                
-                                <td class="col-xs-12">
-                                <div class="control-group">
-                                   
-                                    <div class="controls">
-                                       <select required="true" onchange="load731();loadcohorts();hiddenelements();isdisplayindicators();"  name="cohortmonth" id="cohortmonth" class="form-control" >
-                                            <option value=''>Select reporting year and month</option>
-                                            
-                                           
-                                        </select>
-                                      
-                                    </div>
-                                </div>
-                                        </td>
-                                
-                                </tr>
+                            
                                 
                                 
                                 
@@ -362,7 +269,7 @@ input:focus {
                                   <div class="control-group">
                                     <label> <font color="red"><b>*</b></font>  Facility Name:</label>
                                     <div class="controls">
-                                        <select required="true"  onchange="load731();loadcohorts();isdisplayindicators();"   name="facilityname" id="facilityname" class="form-control" >
+                                        <select required="true"  onchange="isdisplayindicators();"   name="facilityname" id="facilityname" class="form-control" >
                                             <option>Select Facility Name</option>
                                            
                                         </select>
@@ -380,7 +287,7 @@ input:focus {
                                  <tr ><td class='col-xs-12' colspan='3'>
                                  <div class='control-group'>
                                      
-                                     
+                                    
                                     
                                     
                                     
@@ -395,7 +302,7 @@ input:focus {
                                         <div class="alert-info">Note: Please enter all the required data.</div>
                                    <br/>
                                     <div class="controls">
-                                        <input type="submit" onmouseover="validatefacility();"  id='savebutton' value="SAVE"  style="margin-left: 0%;" class="btn-lg btn-success active">
+                                        <input type="submit" onmouseover="validatedata();"  id='savebutton' value="SAVE"  style="margin-left: 0%;" class="btn-lg btn-success active">
                                             
                                      </div>
                                      <div class="controls">
@@ -653,11 +560,11 @@ input:focus {
 
  function getFacilitiesJson(){
        
-       var ct=$("#cohortttype").val();
+       var ct=$("#sitestype").val();
        
        
               $.ajax({
-                         url:'loadfacility?ct='+ct,                            
+                         url:'getsurgeSites?ct='+ct,                            
                     type:'post',  
                     dataType: 'html',  
                     success: function(data) {
@@ -1011,7 +918,7 @@ cohort:cohort,
     var allcommentsarray=[];
     var allprogressbar_hiddentext_array=[];
      
-function createdynamicinputs(){
+function createJsondynamicinputs(){
     
     
      $(document).ready(function(){
@@ -1023,7 +930,7 @@ function createdynamicinputs(){
              var row1="";
              var row2="";
              var count=1;
-             var currentcohort=$("#cohortttype").val().toUpperCase();
+             var currentcohort="HFR";
              for(a=0;a< result.length; a++){
                  
                  if(result[a].category===currentcohort){
@@ -1101,7 +1008,7 @@ function createdynamicinputs(){
     
 }
 
-createdynamicinputs();
+//createdynamicinputs();
 
 
 function getmonth(){
@@ -1110,16 +1017,16 @@ function getmonth(){
      
           var year=$("#year").val();
          
-        $.ajax({
-                         url:'loadmonth?yr='+year,                            
-                    type:'post',  
-                    dataType: 'html',  
-                    success: function(mwezi) {
-                        
-                      $("#month").html(mwezi); 
-                   cohortmonths();
-                    }
-                });
+//        $.ajax({
+//                         url:'loadmonth?yr='+year,                            
+//                    type:'post',  
+//                    dataType: 'html',  
+//                    success: function(mwezi) {
+//                        
+//                      $("#month").html(mwezi); 
+//                   cohortmonths();
+//                    }
+//                });
          
          
        
@@ -1215,47 +1122,78 @@ function settargets(facilitymfl){
 
 
 function validatedata(){
-    //receive all the fields from the weekly data from
- 
-    var returnval=true;  
-   //No facility name should have an underscore since its a special key
-   var valtl=$("#9_tl").val();
-   var vltl=$("#10_tl").val();
-   var vlsup=$("#11_tl").val();
+
+//___indicators to pull___
+
+var organisationunitid="";
+var eddate="";
+var stdate="";
+var daterange="";
+var hosi="";
+var facility_mfl_code="";
+var ward="";
+
+facility_mfl_code=$("#facilityname").val();
+organisationunitid=$("#facilityname").find(":selected").data('datimid');
+hosi=$("#facilityname").find(":selected").data('facil');
+ward=$("#facilityname").find(":selected").data('ward');
+eddate=$("#reportingdate").val();
+stdate=$("#reportingdate").find(':selected').data('sdate');
+
+daterange=stdate+" to "+eddate;
+
+
+//console.log("datimid:"+organisationunitid+"\n edate:"+eddate+"\n stdate:"+stdate+"\n daterange:"+daterange+"\n hospital:"+hosi+"\n mflcode"+facility_mfl_code+"\n ward"+ward);
+//<option data-sdate="2019-09-24" data-edate="2019-09-30" data-wk="20" value="2019-09-30">2019-09-24 to 2019-09-30 (Week 20) </option>
+
+//this should happen in a loop
+
+$.ajax({
+                    url:'getIndicators',                            
+                    type:'post',  
+                    dataType: 'json',  
+                    success: function(data) {
+                        
+                       console.log(data); 
+                   
+                    }
+                });
+
+
+var indicator="";
+var bl15_Male="";
+var bl15_Female="";
+var ab15_Male="";
+var ab15_Female="";
+
+
+
+
+//_____predetermined______
+//reporting_freq
+//operatingunit
+//fundingagency
+//partner
+//mechanismid
+
+//_____calculated/extractable__
+//fy
+//ward
+//county
+//sub-county
   
-  var ct=$("#cohortttype").val();
-     if(valtl.indexOf("-")>=0){
-         
-        alert("Ensure that  Defaulters + LTFU + Dead + Stopped + Alive and Active = Total Net Cohort");
-             $("#9_tl").focus();
-             $("#9_tl").css('background-color','red');
-             $("#9_tl").css('color','white');
-             
-          returnval=false;
-      }
-      
-       else if(parseInt(vlsup)>parseInt(vltl)){
-         
-        alert("Ensure that Total Viral Suppressed is less than or equal to Total Viral Load Collected ");
-             $("#11_tl").focus();
-             $("#11_tl").css('background-color','red');
-             $("#11_tl").css('color','white');
-             
-          returnval=false;
-      }
-     
-       else {
-           
-           $("#9_tl").css('background-color','#eee');
-             $("#9_tl").css('color','#555');
-             
-           $("#11_tl").css('background-color','#ffffff');
-             $("#11_tl").css('color','black');
-      returnval=true;
-//setTimeout(delayedrefresh,2000);
- // delayedrefresh
-       }
-     return returnval;  
+        
+        
+// ____id_____
+
+//mflcode_date_indicatorid
+    
+}
+
+
+function saveData(){
+    
+    
     
 }
 
@@ -1264,7 +1202,7 @@ function validatefacility(){
     
     var returnval=true;
     
-         var facil=$("#facilityname").val();  
+    var facil=$("#facilityname").val();  
          
         
          
@@ -1272,10 +1210,7 @@ function validatefacility(){
      {         
   
    alert('Select facility');
-   //$("#facilityname select:first").focus();
    
-  // $("#facilityname").css('border-color','red');
-    //$("select:first").focus();
      $("#facilityname").focus();   
     returnval=false;
      }
@@ -1337,11 +1272,6 @@ var dbdata="";
 function selectsearchdata()
 {
     
-    
-    
-    //rread from weekly data db
-    
-
   
     
   weeklydatadb.allDocs({include_docs: true, ascending: true}).then( function(doc) { 
@@ -2549,7 +2479,7 @@ $("#reportsform").submit(function(e){
 $('form').on('focus', 'input[type=number]', function (e) {
   $(this).on('mousewheel.disableScroll', function (e) {
     e.preventDefault();
-  })
+  });
 });
 $('form').on('blur', 'input[type=number]', function (e) {
   $(this).off('mousewheel.disableScroll');
@@ -2653,7 +2583,7 @@ $('form').on('blur', 'input[type=number]', function (e) {
                     }
                 });
     }
-cohortmonths();
+//cohortmonths();
 
 
 function load731(){
@@ -3110,16 +3040,31 @@ function hiddenelements(){
 
 function isdisplayindicators()
 { 
-    var yr=$("#year").val();
-    var mn=$("#month").val();
-    var cm=$("#cohortmonth").val();
-    var fc=$("#facilityname").val();
-    
-    if( yr!='' && mn!='' && cm!='' && fc!='' && fc!='Select Facility')
+    var dt=$("#reportingdate").val();
+   
+    var fc=$("#facilityname").val().trim();
+//    console.log("_"+fc+"vs"+dt);
+    if( dt!=='' && fc!=='Select Facility'&& fc!=='')
     {        
     // display facility name
     $("#dynamicindicators").show();    
-        
+     
+            
+            //now load the data
+          $.ajax({
+                    url:'getIndicators?dt='+dt+"&fc="+fc,                            
+                    type:'post',  
+                    dataType: 'html',  
+                    success: function(data) 
+                    {
+                        
+                   $("#dynamicindicators").html(data); 
+                        
+                        
+                    }});    
+           
+            
+            
     }
     else 
     {

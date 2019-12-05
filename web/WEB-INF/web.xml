@@ -188,6 +188,18 @@
         <servlet-name>missingReports</servlet-name>
         <servlet-class>reports.missingReports</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>getsurgeSites</servlet-name>
+        <servlet-class>ajax.getsurgeSites</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>getReportingDates</servlet-name>
+        <servlet-class>ajax.getReportingDates</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>getIndicators</servlet-name>
+        <servlet-class>ajax.getIndicators</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loadcohort</servlet-name>
         <url-pattern>/loadcohort</url-pattern>
@@ -375,6 +387,18 @@
     <servlet-mapping>
         <servlet-name>missingReports</servlet-name>
         <url-pattern>/missingReports</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getsurgeSites</servlet-name>
+        <url-pattern>/getsurgeSites</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getReportingDates</servlet-name>
+        <url-pattern>/getReportingDates</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getIndicators</servlet-name>
+        <url-pattern>/getIndicators</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

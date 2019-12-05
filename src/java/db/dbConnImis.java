@@ -110,7 +110,7 @@ public  Connection conn = null;
 
         } catch (Exception ex) {
             Logger.getLogger(dbConnImis.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("ERROR WHILE CONNECTING TO DATABASE. CHECK YOUR CONNECTION CREDENTIALS SETTINGS in dbConn.java");
+            System.out.println("ERROR WHILE CONNECTING TO DATABASE. CHECK YOUR CONNECTION CREDENTIALS SETTINGS in dbConn.java"+ ex);
             //error in dbase configuration 
             //call the jsp page that does configuration
 
@@ -167,7 +167,7 @@ public  Connection conn = null;
             Logger.getLogger(dbConnImis.class.getName()).log(Level.SEVERE, null, ex);
 
 
-            System.out.println("MY VALUE:" + issetdbcalled_file_exists);
+            //System.out.println("MY VALUE:" + issetdbcalled_file_exists);
 
             if (issetdbcalled_file_exists%2 == 0) {
             
@@ -177,10 +177,10 @@ public  Connection conn = null;
             issetdbcalled_file_exists++;
             }
 
-            System.out.println("MY VALUE:" + issetdbcalled_file_exists);
+            //System.out.println("MY VALUE:" + issetdbcalled_file_exists);
 
 
-            System.out.println("ERROR:      FILE NOT FOUND");
+            //System.out.println("ERROR:      FILE NOT FOUND");
             worked = false;
 
         }

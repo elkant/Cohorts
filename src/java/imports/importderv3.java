@@ -156,7 +156,7 @@ String f24="";
 String m24="";
 String f25="";
 String m25="";
-String total="";
+String total="0";
 
 String der_1f = "";
 String der_1m = "";
@@ -896,8 +896,10 @@ m25=""+(new Integer(der_29m)+new Integer(der_34m)+new Integer(der_39m)+new Integ
     {
        // System.out.println("Number Format Exception"+e);
     }
-
+if(!total.equals("")){
 if(new Integer(total)>0){ hasdata="yes"; }
+}
+
 
 
 

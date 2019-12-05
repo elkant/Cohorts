@@ -72,7 +72,7 @@
             <img src="assets/img/menu-toggler.png" alt="" />
             </a>          
                       
-            <ul class="nav pull-right">
+            <ul style='background-color:white ;' class="nav pull-right">
           
             </ul>
             <!-- END TOP NAVIGATION MENU --> 
@@ -124,7 +124,7 @@
                   
                   
                   <ul class="breadcrumb">
-                     <li style="width: 900px;">
+                     <li >
                         <i class="icon-upload"></i>
                         
                         <!--<span class="icon-angle-right"></span>-->

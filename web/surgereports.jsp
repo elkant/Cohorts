@@ -112,29 +112,36 @@
          <!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
          <!-- BEGIN PAGE CONTAINER-->
          <div class="container-fluid">
-            <!-- BEGIN PAGE HEADER-->   
+<!--             BEGIN PAGE HEADER 
+            
+                              <ul class='btn btn-success' >
+                     <li >
+                        
+                        <label class='btn btn-primary btn-sm btn-rounded'><i class="icon-home"></i><a  href='MissingReports.jsp'>Access Web Missing Reports</a></label>
+                        <span class="icon-angle-right"></span>
+                     </li>
+           
+                  </ul>-->
+            
             <div class="row-fluid">
                <div class="span12">
                   <!-- BEGIN STYLE CUSTOMIZER -->
                
                   <!-- END BEGIN STYLE CUSTOMIZER -->   
-                  <h3 class="page-title" style="text-align: center;">
-                    
-<!--                    Internal System-->
-                  </h3>
-                  
-                  
-                  
-                  
-                  
-                  <ul class="breadcrumb">
-                     <li style="width: 900px;">
-                        <i class="icon-home"></i>
-                        <a href="#" style="margin-left:40%;">Generate Tracker excel file.</a> 
+                  <!--                  <ul class='btn btn-success' >
+                     <li >
+                        -->
+                        <label style='background-color:#66ff66;' class='btn btn-primary btn-sm btn-rounded'><i class="icon-home"></i><a  href='MissingReports.jsp'>Access Web Missing Reports</a></label>
                         <!--<span class="icon-angle-right"></span>-->
-                     </li>
+<!--                     </li>
            
-                  </ul>
+                  </ul>-->
+                  
+                  
+                  
+                  
+                  
+
                </div>
             </div>
             <!-- END PAGE HEADER-->
@@ -142,11 +149,11 @@
             <div class="row-fluid">
                <div class="span12">
                   <!-- BEGIN SAMPLE FORM PORTLET-->   
-                  <div class="portlet box blue">
+                  <div class="portlet box ">
                      <div class="portlet-title">
-                       
-                       <h3 style="text-align: center;"><i class="icon-bar-chart"></i> Surge Reports/Tracker</h3>
+                     <h3 style="text-align: center;color:blue;"><i class="icon-bar-chart"></i> Surge Reports/Tracker</h3>
                      </div>
+                      
                      <div class="portlet-body form">
                         <!-- BEGIN FORM-->
                         <form action="surge_tracker" method="post" enctype="multipart/form-data" class="form-horizontal" />
@@ -172,7 +179,7 @@
                                     <div class="controls">
                                       <select   name='report' id='report' >
                                       <option value='SurgeRawData'>1. All data Reports</option>
-                                      <option value='surge_tracker'>2. Reporting Tracker</option>
+                                      <option value='surge_tracker'>2. Excel Reporting Tracker</option>
                                       
                                       <option value='htsclientraw'>3. HTS Client Level Raw </option>
                                       <option value='WeeklyData'>4. Data file only</option>
@@ -242,9 +249,9 @@
                                              <option value="Kajiado">Kajiado</option>
                                              <option value="Laikipia">Laikipia</option>
                                              <option value="Nakuru">Nakuru</option>
-                                             <option value="Narok">Narok</option>                                           
+                                             <!--<option value="Narok">Narok</option>-->                                           
                                              <option value="Samburu">Samburu</option>                                           
-                                             <option value="Turkana">Turkana</option> 
+                                             <!--<option value="Turkana">Turkana</option>--> 
                                   
                                   </select>
                                         
