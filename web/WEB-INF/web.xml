@@ -190,15 +190,75 @@
     </servlet>
     <servlet>
         <servlet-name>getsurgeSites</servlet-name>
-        <servlet-class>ajax.getsurgeSites</servlet-class>
+        <servlet-class>hfr.getsurgeSites</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>getReportingDates</servlet-name>
-        <servlet-class>ajax.getReportingDates</servlet-class>
+        <servlet-class>hfr.getReportingDates</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>getIndicators</servlet-name>
-        <servlet-class>ajax.getIndicators</servlet-class>
+        <servlet-class>hfr.getIndicators</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>savehfr</servlet-name>
+        <servlet-class>hfr.savehfr</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>idGenerator</servlet-name>
+        <servlet-class>hfr.idGenerator</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>hfrreport</servlet-name>
+        <servlet-class>reports.hfrreport</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>nonsurge_tracker</servlet-name>
+        <servlet-class>reports.nonsurge_tracker</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>importderv4</servlet-name>
+        <servlet-class>imports.importderv4</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>checkstatus</servlet-name>
+        <servlet-class>imports.checkstatus</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>importcovid</servlet-name>
+        <servlet-class>imports.importcovid</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>htsrriplainexcel</servlet-name>
+        <servlet-class>reports.htsrriplainexcel</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>importderv5</servlet-name>
+        <servlet-class>imports.importderv5</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>hts_self_reports</servlet-name>
+        <servlet-class>reports.hts_self_reports</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>getKPIndicators</servlet-name>
+        <servlet-class>KP.getKPIndicators</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>allSitesTrackerViaSurge</servlet-name>
+        <servlet-class>reports.allSitesTrackerViaSurge</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>getDics</servlet-name>
+        <servlet-class>KP.getDics</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>saveKpdaily</servlet-name>
+        <servlet-class>KP.saveKpdaily</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>kp_login</servlet-name>
+        <servlet-class>KP.kp_login</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>loadcohort</servlet-name>
@@ -399,6 +459,66 @@
     <servlet-mapping>
         <servlet-name>getIndicators</servlet-name>
         <url-pattern>/getIndicators</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>savehfr</servlet-name>
+        <url-pattern>/savehfr</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>idGenerator</servlet-name>
+        <url-pattern>/idGenerator</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>hfrreport</servlet-name>
+        <url-pattern>/hfrreport</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>nonsurge_tracker</servlet-name>
+        <url-pattern>/nonsurge_tracker</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>importderv4</servlet-name>
+        <url-pattern>/importderv4</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>checkstatus</servlet-name>
+        <url-pattern>/checkstatus</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>importcovid</servlet-name>
+        <url-pattern>/importcovid</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>htsrriplainexcel</servlet-name>
+        <url-pattern>/htsrriplainexcel</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>importderv5</servlet-name>
+        <url-pattern>/importderv5</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>hts_self_reports</servlet-name>
+        <url-pattern>/hts_self_reports</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getKPIndicators</servlet-name>
+        <url-pattern>/getKPIndicators</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>allSitesTrackerViaSurge</servlet-name>
+        <url-pattern>/allSitesTrackerViaSurge</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getDics</servlet-name>
+        <url-pattern>/getDics</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>saveKpdaily</servlet-name>
+        <url-pattern>/saveKpdaily</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>kp_login</servlet-name>
+        <url-pattern>/kp_login</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

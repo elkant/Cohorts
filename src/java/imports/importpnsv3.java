@@ -550,7 +550,9 @@ XSSFCell pns_1fcell = rowi.getCell((short) 11);
 if(pns_1f.trim().equals("")){pns_1f="0";}
 if(pns_1f.contains("-")){hasnegatives++;}
 
+//we dont expect any under1
 
+pns_1f="0";
 
 //_____________________________1m___________________
 
@@ -572,6 +574,9 @@ XSSFCell pns_1mcell = rowi.getCell((short) 12);
 if(pns_1m.trim().equals("")){pns_1m="0";}
 if(pns_1m.contains("-")){hasnegatives++;}
 
+//we dont expect any under1 testing
+
+pns_1m="0";
 
 //_____________________________4f___________________
 

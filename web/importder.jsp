@@ -1,22 +1,13 @@
-<%-- 
-    Document   : loadTBExcel
-    Created on : Jul 27, 2015, 2:41:29 PM
-    Author     : Maureen
---%>
-
-
-
 
 <%@page import="db.dbConn"%>
 <%@page import="java.util.Calendar"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-
 <!-- BEGIN HEAD -->
 <head>
    <meta charset="utf-8" />
-   <title>Upload ART daily Data v2</title>
+   <title>Upload ART daily</title>
    <link rel="shortcut icon" href="images/logo.png"/>
    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
    <meta content="" name="description" />
@@ -34,8 +25,8 @@
   
    <link rel="stylesheet" href="assets/data-tables/DT_bootstrap.css" />
    
-   
-
+     <link rel="stylesheet" href="css/progress_bar.css">
+<link rel="stylesheet" href="css/animate.css">
 
 
 
@@ -112,7 +103,7 @@
                
                   <!-- END BEGIN STYLE CUSTOMIZER -->   
                   <h3 class="page-title" style="text-align: center;">
-                    
+                    <a class='btn-warning btn' href="pns/ART_Daily_Form_v5_2020_12_09.xlsx" style="margin-left:40%;">Download ART Daily Template</a> 
 <!--                    Internal System-->
                   </h3>
                  
@@ -120,7 +111,7 @@
                   <ul class="breadcrumb">
                      <li style="width: 900px;">
                         <i class="icon-upload"></i>
-                        <a href="#" style="margin-left:40%;">Upload ART daily Data v3 (3rd Jun 2019).</a> 
+                        <a href="#" style="margin-left:40%;">Upload ART daily Data v5 (09 Dec 2020).</a> 
                         <!--<span class="icon-angle-right"></span>-->
                      </li>
            
@@ -139,8 +130,13 @@
                      </div>
                      <div class="portlet-body form">
                         <!-- BEGIN FORM-->
-                        <form action="importderv3" method="post" enctype="multipart/form-data" class="form-horizontal" >
+                        <form action="importderv5" method="post" enctype="multipart/form-data" class="form-horizontal" >
                        
+                             <div  class="portlet-body form" id="progress_area" hidden="true">
+                     <div class="progress"  style="height: 35px;">
+                         <div class="progress-bar progress-bar-striped active" id="progess" role="progressbar" style="width: 0%;  padding-top: 10px; font-weight: 900;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>   
+                  </div> 
                             
                             <div class="control-group">
                               <label class="control-label"><b>Select Date</b><font color='red'><b>*</b></font></label>
@@ -163,7 +159,7 @@
                               <div class="controls">
                                   <input accept=".xlsx" required type="file" name="file_name" multiple="true" id="upload" value="" class="textbox" required>  
                               </div>
-                           </div>
+                             </div>
                           
                            
                         <br><br><br><br>
@@ -175,7 +171,7 @@
                         <table style="width: 100%;">
                            <tr><td class="col-xs-2">
                             <div class="form-actions">
-                              <button class='btn btn-success btn-large' type="submit" class="btn blue">Upload File(s)</button>
+                              <button id="uploadbutton" class='btn btn-success btn-large' type="submit" class="btn blue">Upload File(s)</button>
 
                            </div>
                                    </td>
@@ -434,6 +430,91 @@ $("#matokeo").html('<%=session.getAttribute("uploadedpns")%>');
      
 
   
+<script > 
+     $(document).ready(function(){
+        $("#progress_area").hide();
+        $("#upload_area").show();
+         
+    $("form").submit(function(){
+        $("#progress_area").show();
+        $("#upload_area").hide();
+        $("#uploadbutton").hide();
+//        alert("data submitted");
+     setInterval(function() {
+      load_records();
+      }, 100);  
+    });
+     });
+     
+     function load_records(){
+         
+         
+             $.ajax({
+        url:'checkstatus?load_type=dailyart',
+        type:"post",
+        dataType:"json",
+        success:function(response){
+//            alert("called");
+var per_value = response.count;
+var message = "["+per_value+"%] Complete "+response.message+" Records Uploaded";
+
+    $("#progess").html(message);
+    $("#progess").css({'width':per_value+"%"}); 
+
+    if(per_value<30){
+     $("#progess").addClass('progress-bar-danger');  
+     $("#progess").removeClass('progress-bar-success'); 
+    }
+    if(per_value>=30 && per_value<60){
+     $("#progess").addClass('progress-bar-warning');   
+     $("#progess").removeClass('progress-bar-danger');   
+    }
+    if(per_value>=60 && per_value<80){
+     $("#progess").addClass('progress-bar-info'); 
+     $("#progess").removeClass('progress-bar-warning');   
+     $("#progess").removeClass('progress-bar-danger');  
+    }
+    if(per_value>=90){
+     $("#progess").addClass('progress-bar-success'); 
+     $("#progess").removeClass('progress-bar-info'); 
+     $("#progess").removeClass('progress-bar-warning');   
+     $("#progess").removeClass('progress-bar-danger');  
+    }
+    if(per_value=100){
+     $("#progess").addClass('progress-bar-default'); 
+     $("#progess").removeClass('progress-bar-success'); 
+     $("#progess").removeClass('progress-bar-info'); 
+     $("#progess").removeClass('progress-bar-warning');   
+     $("#progess").removeClass('progress-bar-danger');  
+    }
+    $("#status").html(response);
+        }, 
+        error: function(jqXHR, textStatus, errorThrown) {
+       //error in loading upload status
+       $("#status").html(errorThrown);
+            }
+  });
+     }
+</script>
+   
+ <%if (session.getAttribute("uploadedart") != null) { %>
+   <script type="text/javascript"> 
+                    
+       
+  $("#matokeo").html('<%=session.getAttribute("uploadedart")%>');
+      
+                    
+                </script>
+                
+                <%
+//                session.removeAttribute("uploadedart");
+                            }
+
+                        %>
+     
+
+   <script>
+   </script>
    
    <!-- END JAVASCRIPTS -->   
 </body>

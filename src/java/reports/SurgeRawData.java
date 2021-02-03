@@ -429,12 +429,7 @@ CTTable ctTable = ((XSSFSheet)shet2).getTables().get(0).getCTTable();
 ctTable.setRef("A1:AN" + (shet.getLastRowNum() + 1)); // adjust reference as needed
 
 }
-     
-  
     
-     
-     
-        
         if(conn.rs!=null){conn.rs.close();}
         if(conn.rs1!=null){conn.rs1.close();}
         if(conn.st!=null){conn.st.close();}
@@ -442,8 +437,6 @@ ctTable.setRef("A1:AN" + (shet.getLastRowNum() + 1)); // adjust reference as nee
         if(conn.connect!=null){conn.connect.close();}
         
         
-       
-
         System.out.println("" + "Surgedetailed_reports_Gen_" + createdOn.trim() + ".xls");
 
         ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
@@ -458,6 +451,11 @@ ctTable.setRef("A1:AN" + (shet.getLastRowNum() + 1)); // adjust reference as nee
         outStream.write(outArray);
         outStream.flush();
 
+        
+        
+        
+        
+        
     }
 
     @Override

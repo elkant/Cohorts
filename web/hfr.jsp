@@ -4,13 +4,13 @@
     Author     : Emmanuel E
 --%>
 
-<%@page import="ajax.getIndicators"%>
+<%@page import="hfr.getIndicators"%>
 <%@page import="java.util.logging.Logger"%>
 <%@page import="java.util.logging.Level"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="org.json.JSONArray"%>
 <%@page import="db.dbConn"%>
-<%@page import="ajax.getReportingDates"%>
+<%@page import="hfr.getReportingDates"%>
 <%@page import="java.util.Calendar"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
@@ -25,12 +25,12 @@
 		<title>HFR</title>
 		<meta name="generator" content="Bootply" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-                  <link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
+                <link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
 		<link href="css/bootstrap.css" rel="stylesheet">
                 <link href="css/bootstrap-datepicker.min.css" rel="stylesheet">
-                    <link rel="stylesheet" href="css/select2.min.css">
-                    <link rel="shortcut icon" href="hfrlogo.png">
-                    <!--<link data-jsfiddle="common" rel="stylesheet" media="screen" href="css/handsontable.css">-->
+                <link rel="stylesheet" href="css/select2.min.css">
+                <link rel="shortcut icon" href="hfrlogo.png">
+                <!--<link data-jsfiddle="common" rel="stylesheet" media="screen" href="css/handsontable.css">-->
 <!--  <link data-jsfiddle="common" rel="stylesheet" media="screen" href="dist/pikaday/pikaday.css">-->
                   
 		<!--[if lt IE 9]>
@@ -96,7 +96,7 @@ input:focus {
                 </li>
           
                 
-                 <li><a title="Add Widget" id="adduserbutton" data-toggle="modal" href="#userdetails"><i class="glyphicon glyphicon-user"></i><span id="usernamelabel"> Add Username</span></a></li>
+                 <!--<li><a title="Add Widget" id="adduserbutton" data-toggle="modal" href="#userdetails"><i class="glyphicon glyphicon-user"></i><span id="usernamelabel"> Add Username</span></a></li>-->
                  <!--<li><a title="Add Widget" data-toggle="modal" style="display:none;" id="exportdataanchor2" href="#addWidgetModal"><i class="glyphicon glyphicon-cloud-upload"></i> Export Data</a></li>-->
                  <li>
                   <a  title="Help" data-toggle="modal" href="#help">
@@ -131,7 +131,7 @@ input:focus {
             
             
           
-          <h5 style="text-align: center;color:blue;"><b>AfyaNyota HFR Reporting Template</b></h5>
+          <h5 style="text-align: center;color:blue;"><b>Afya Nyota HFR Reporting Module</b></h5>
 
             <div class="row">
                 <!-- center left-->
@@ -141,7 +141,7 @@ input:focus {
                   
 
                     <div class="btn-group btn-group-justified">
-                        <a href="#" id='refreshpage' class="btn btn-danger col-sm-3">
+                        <a href="#" id='refreshpage' class="btn btn-danger col-sm-4">
                             <i class="glyphicon glyphicon-refresh"></i>
                             <br> Refresh
                         </a>
@@ -159,10 +159,15 @@ input:focus {
                             <i class="glyphicon glyphicon-cog"></i>
                             <br> Settings
                         </a>-->
-                        <a class="btn btn-danger col-sm-3" title="Help" data-toggle="modal" href="#help">
+                        <a class="btn btn-info col-sm-4" title="Help" data-toggle="modal" href="#help">
                             <i class="glyphicon glyphicon-question-sign"></i>
                             <br> Help
                         </a>
+                        <a class="btn btn-success col-sm-4" title="Reports"  href="hfrreports.jsp">
+                            <i class="glyphicon glyphicon-question-sign"></i>
+                            <br> Reports
+                        </a>
+                        
                     </div>
 
                     <hr>
@@ -204,7 +209,7 @@ input:focus {
                                 <div class="control-group">
                                   
                                     <div class="controls">
-                                        <label><font color="red"><b>*</b></font> Reporting Date </label> 
+                                        <label><font color="red"><b>*</b></font> Reporting Week </label> 
                                         
                                         </div>
                                         </div>
@@ -239,7 +244,7 @@ input:focus {
                                                dbConn conn = new dbConn();
 
                                                try {
-                                                   JSONArray ja = gd.getRepDates(conn, "2019-09-30");
+                                                   JSONArray ja = gd.getRepDates(conn, "2019-12-23");
 
                                                    out.println(gd.toHtmlDates(ja));
 
@@ -299,10 +304,10 @@ input:focus {
                                 <table class="table table-striped table-bordered">
                                        <tr><td colspan="3" class="col-xs-12">               
                                 <div class="control-group col-xs-12">
-                                        <div class="alert-info">Note: Please enter all the required data.</div>
+                                        <div id='fedback' class="alert-info">Note: Please enter all the required data.</div>
                                    <br/>
                                     <div class="controls">
-                                        <input type="submit" onmouseover="validatedata();"  id='savebutton' value="SAVE"  style="margin-left: 0%;" class="btn-lg btn-success active">
+                                        <input type="input" onClick="validatedata();"  id='savebutton' value="SAVE"  style="margin-left: 0%;" class="btn-lg btn-success active">
                                             
                                      </div>
                                      <div class="controls">
@@ -393,7 +398,7 @@ input:focus {
 
 <!-- /Main -->
 
-<footer class="text-center"> &copy; AphiaPlus USAID </footer>
+<footer class="text-center"> &copy; Afya Nyota Ya Bonde | USAID </footer>
 
 <div class="modal" id="addWidgetModal">
     <div class="modal-dialog">
@@ -482,29 +487,26 @@ input:focus {
                 <h4 class="modal-title">Help</h4>
             </div>
             <div class="modal-body">
-                <p>This  application is created for aiding users in collecting data for the MCA/ART Cohort Analysis. One is expected to enter data per facility.</p>
+                <p>This  application is created for aiding users in collecting data for Weekly High Frequency Reporting.</p>
                 <h3>Indicators</h3>
                 <p>The specific indicators that one should enter data for are;</p>
                 <ul>
 
 
-<li>A. Enrolled into cohort	</li>														
-<li>B. Transfers In(T.I)		</li>													
-<li>C. Transfers Out(T.O)		</li>													
-<li>D. Net Cohort(A+B-C)		</li>													
-<li>E. Defaulters			</li>												
-<li>F. Lost to follow up (LTFU)		</li>													
-<li>G. Reported Dead			</li>												
-<li>H. Stopped				</li>											
-<li>I. Alive and Active on Treatment</li>															
-<li>J. Viral Load Collected		</li>													
-<li>K. Virally suppressed (VL<1000)</li>
+<li>HTS TST- No Tested for HIV	</li>														
+<li>HTS TST POS		</li>													
+<li>TX LINK</li>													
+<li>TX NEW</li>													
+<li>TX BTC</li>												
+<li>PREP NEW</li>													
+<li>VMMC CIRC</li>												
+
 
 
 
                 </ul>
              <h3> Facilities</h3>
-                 <p> The selected cohort type(MCA/ART) determines the list of facilities availed for choosing </p>
+                 <p> You are only able to report data for non - surge / Non priority site</p>
               </div>
             <div class="modal-footer">
                 <a href="#" data-dismiss="modal" class="btn">Close</a>
@@ -1111,9 +1113,72 @@ function sumofindicators(sourceindicators,destinationindicator){
 
 //=========================================set targets================================
 
-function settargets(facilitymfl){
- //not in use for now      
+function runvalidation(){
+    
+    var retv=true;
+    
+    //hts tsts > HTS Pos
+    
+    //HTS Pos > HTS Link
+    
+    //HTS_TST
+    //HTS_TST_POS
+    //TX_LINK
+    
+       var validationsid=["HTS_TST@HTS_TST_POS","HTS_TST_POS@TX_LINK"];
+ 
+       var agedis=["bl15_Male","bl15_Female","ab15_Male","ab15_Female"];
+       var agedis_detailed=["< 15 Male","< 15 Female","15 + Male","15 + Female"];
+    
+    for( var b=0;b<validationsid.length;b++){
+    for( var a=0;a<agedis.length;a++)
+    {
+        
+    var indicab=validationsid[b].split("@");
+        
+      
+        
+    var elem_a=$("#"+indicab[0]+"_"+agedis[a]).val();  
+    var elem_b=$("#"+indicab[1]+"_"+agedis[a]).val();  
+     console.log("#"+indicab[0]+"_"+agedis[a]+" is "+elem_a);
+     console.log("#"+indicab[1]+"_"+agedis[a]+" is "+elem_b);
+    
+    
+    if(elem_a===""){elem_a=0;}
+    if(elem_b===""){elem_b=0;}
+            
+            if(elem_a!=="" && elem_b!==""){
+                
+                elem_a=parseInt(elem_a);
+                elem_b=parseInt(elem_b);
+                
+                if(elem_b>elem_a) {
+                    retv=false;
+                    
+                    alert(" Data for "+indicab[1]+" "+agedis_detailed[a]+" cannot be more than "+indicab[0]+" "+agedis_detailed[a]);
+                    $("#"+indicab[0]+"_"+agedis[a]).css('background-color','red');
+                    $("#"+indicab[1]+"_"+agedis[a]).css('background-color','red');
+                    break;
+                                  }
+                                 
+                
+                
+                                  }
+                                            
+    }
+    
+     if(retv===false)
+                                  {
+                                      
+                                  break;    
+                                      
+                                  }
 }
+    
+ return retv;   
+}
+    
+
 
 
 
@@ -1122,6 +1187,8 @@ function settargets(facilitymfl){
 
 
 function validatedata(){
+    
+
 
 //___indicators to pull___
 
@@ -1135,8 +1202,8 @@ var ward="";
 
 facility_mfl_code=$("#facilityname").val();
 organisationunitid=$("#facilityname").find(":selected").data('datimid');
-hosi=$("#facilityname").find(":selected").data('facil');
-ward=$("#facilityname").find(":selected").data('ward');
+hosi=$("#facilityname").find(":selected").data("facil");
+ward=$("#facilityname").find(":selected").data("ward");
 eddate=$("#reportingdate").val();
 stdate=$("#reportingdate").find(':selected').data('sdate');
 
@@ -1148,51 +1215,122 @@ daterange=stdate+" to "+eddate;
 
 //this should happen in a loop
 
+
+if(facility_mfl_code==='' || facility_mfl_code==='Select facility' ){
+    
+  alert("enter facility name");  
+    
+}
+
+
+else if(eddate===''  ){
+    
+   alert("enter date range");  
+    
+}
+
+ else if(runvalidation()===false)
+    {
+        
+        
+        
+        
+    }
+    
+    else {
+    
+
+
+
 $.ajax({
                     url:'getIndicators',                            
                     type:'post',  
                     dataType: 'json',  
-                    success: function(data) {
+                    success: function(data){
                         
-                       console.log(data); 
+                       for(a=0;a<data.length;a++){
+              var isend=false;             
+                          
+var indicatorid=data[a].id;
+var bl15_Male=$("#"+indicatorid+"_bl15_Male").val();
+var bl15_Female=$("#"+indicatorid+"_bl15_Female").val();
+var ab15_Male=$("#"+indicatorid+"_ab15_Male").val();
+var ab15_Female=$("#"+indicatorid+"_ab15_Female").val();  
+
+var identifier=facility_mfl_code+"_"+eddate+"_"+indicatorid;
+        
+        
+      
+
+        
+           //save the data
+           
+           var saveddata={
+               id:identifier,
+               organisationunitid:organisationunitid,
+               ward:ward,
+               date:eddate,
+               daterange:daterange,
+               facility:""+hosi,
+               facility_mfl_code:facility_mfl_code,
+               indicator:indicatorid,
+               bl15_Male:bl15_Male,
+               bl15_Female:bl15_Female,
+               ab15_Male:ab15_Male,
+               ab15_Female:ab15_Female,
+               reporting_freq:'weekly',
+               operatingunit:'kenya',
+               fundingagency:'USAID',
+               partner:'Afya Nyota Ya Bonde',
+               mechanismid:'18495'
+               
+           };
+           
+           
+           
+           
+           if(a===parseInt(data.length)-1){
+               isend=true;
+               
+           }
+           
+           exportData(saveddata,isend);
+                           
+                       } 
                    
                     }
                 });
 
 
-var indicator="";
-var bl15_Male="";
-var bl15_Female="";
-var ab15_Male="";
-var ab15_Female="";
+
+}
 
 
 
 
-//_____predetermined______
-//reporting_freq
-//operatingunit
-//fundingagency
-//partner
-//mechanismid
 
-//_____calculated/extractable__
-//fy
-//ward
-//county
-//sub-county
-  
-        
-        
-// ____id_____
-
-//mflcode_date_indicatorid
     
 }
 
 
-function saveData(){
+function exportData( data, isend){
     
+    
+    $.ajax({
+                    url:'savehfr',                            
+                    type:'post',  
+                    dataType: 'html',
+                    data:data ,
+                    success: function(dat) {
+                       if(isend){
+                           
+                           console.log("Data saved Succesfully!");
+                           $("#fedback").html("<font color='green'><h3>Data saved Succesfully!</h3></f>");
+                           
+                       } 
+                        
+                    }
+                });
     
     
 }

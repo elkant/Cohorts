@@ -463,7 +463,7 @@ ctTable.setRef("A4:I" + (shet.getLastRowNum() + 1)); // adjust reference as need
         response.setContentType("application/ms-excel");
         response.setContentLength(outArray.length);
         response.setHeader("Expires:", "0"); // eliminates browser caching
-        response.setHeader("Content-Disposition", "attachment; filename=" + "Surge Tracker_"+startdate+"_to_"+enddate+"_gen_" + createdOn.trim() + ".xlsx");
+        response.setHeader("Content-Disposition", "attachment; filename=" + "Surge_Tracker_"+startdate+"_to_"+enddate+"_gen_" + createdOn.trim() + ".xlsx");
          response.setHeader("Set-Cookie","fileDownload=true; path=/");
         OutputStream outStream = response.getOutputStream();
         outStream.write(outArray);

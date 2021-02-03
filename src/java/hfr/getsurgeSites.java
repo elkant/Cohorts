@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ajax;
+package hfr;
 
 import db.dbConn;
 import java.io.IOException;
@@ -24,7 +24,7 @@ public class getsurgeSites extends HttpServlet {
 
    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
@@ -33,6 +33,7 @@ public class getsurgeSites extends HttpServlet {
           String category="";
          
           category = request.getParameter("ct");
+          
           
           
             try {
@@ -45,6 +46,13 @@ public class getsurgeSites extends HttpServlet {
                 
             }
           
+            if(conn.rs!=null){conn.rs.close();}
+        if(conn.rs1!=null){conn.rs1.close();}
+        if(conn.st!=null){conn.st.close();}
+        if(conn.st1!=null){conn.st1.close();}
+        if(conn.connect!=null){conn.connect.close();}
+            
+            
         }
     }
 
@@ -52,14 +60,22 @@ public class getsurgeSites extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(getsurgeSites.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(getsurgeSites.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -77,7 +93,7 @@ public class getsurgeSites extends HttpServlet {
     String sites="<option value=''>Select facility</option>";
     String where=getSitewhere(category);
       
-    String getdata=" select SubPartnerNom as facility, CentreSanteId as mflcode,datimid ,datimward as ward,datimname  from internal_system.subpartnera where "+where+" order by SubPartnerNom ";
+    String getdata=" select SubPartnerNom as facility, CentreSanteId as mflcode,datimid ,datimward as ward,datimname  from internal_system.subpartnera where active=1 and "+where+" order by SubPartnerNom ";
     
     conn.rs=conn.st.executeQuery(getdata);
     
@@ -100,7 +116,7 @@ public class getsurgeSites extends HttpServlet {
 //datimid 
 //datimname
        
-     sites+="<option data-mfl='"+mfl+"' data-ward='"+ward+"' data-facil='"+facil+"' data-datimid='"+datimid+"' value='"+mfl+"'>"+facil+"</option>";   
+     sites+="<option data-mfl='"+mfl+"' data-ward=\""+ward+"\" data-facil=\""+facil+"\" data-datimid='"+datimid+"' value='"+mfl+"'>"+facil+"</option>";   
      //_____________________________   
      
     }

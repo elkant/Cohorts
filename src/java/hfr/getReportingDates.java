@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ajax;
+package hfr;
 
 import db.dbConn;
 import java.io.IOException;
@@ -79,9 +79,13 @@ public class getReportingDates extends HttpServlet {
         
         JSONArray ja= new JSONArray();
         
+    idGenerator ig= new idGenerator();
     
-    
-     String gd="select * from pews.reportingdates where date>='"+startdate+"'";   
+    String leo=ig.toDay();
+        
+     String gd="select * from pews.reportingdates where date>='"+startdate+"' and date <='"+leo+"' order by date desc";   
+     System.out.println("QRY "+gd);
+     
    conn.rs=conn.st.executeQuery(gd);
    
    while(conn.rs.next()){

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ajax;
+package KP;
 
 import db.dbConn;
 import java.io.IOException;
@@ -29,7 +29,7 @@ import org.json.JSONObject;
  *
  * @author EKaunda
  */
-public class getIndicators extends HttpServlet {
+public class getKPIndicators extends HttpServlet {
 
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -55,9 +55,17 @@ public class getIndicators extends HttpServlet {
            }
            else {
            //return indicators
-           out.println(toJson(pullIndicators(conn)));
+           ResultSet r=pullIndicators(conn);
+           
+           out.println(toJson(r));
           
            }
+           
+        if(conn.rs!=null){conn.rs.close();}
+        if(conn.rs1!=null){conn.rs1.close();}
+        if(conn.st!=null){conn.st.close();}
+        if(conn.st1!=null){conn.st1.close();}
+        if(conn.connect!=null){conn.connect.close();}
         }
     }
 
@@ -76,7 +84,7 @@ public class getIndicators extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(getIndicators.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(getKPIndicators.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -94,7 +102,7 @@ public class getIndicators extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(getIndicators.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(getKPIndicators.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -109,23 +117,24 @@ public class getIndicators extends HttpServlet {
     }// </editor-fold>
 
 public String getHtmlTable(dbConn conn, String reportingdate, String facility) throws SQLException{
-String indicators="<thead><tr><th>Indicator</th><th>Age_(Yrs)</th><th>Male</th><th>Female</th></tr></thead><tbody>";
+String indicators="<thead><tr><th>Indicator</th><th>FSW</th><th>MSM</th></tr></thead><tbody>";
 
     
 
  JSONObject jo= getData(conn, reportingdate, facility);
-    System.out.println("__"+jo.toString());
+    
 int count=1;
-while(pullIndicators(conn).next()){
+ResultSet r=pullIndicators(conn);
+
+while(r.next()){
    
+//  System.out.println("__"+jo.toString());  
+    String indic=r.getString("indicatorname");
+    String id=r.getString("id");
     
-    String indic=conn.rs.getString("indicatorname");
-    String id=conn.rs.getString("id");
+    String msm="";
+    String fsw="";
     
-    String bl15m="";
-    String bl15f="";
-    String ab15m="";
-    String ab15f="";
      try{ 
     //if length is greater than 0
     if(!jo.get("length").toString().equals("0")){
@@ -134,11 +143,10 @@ while(pullIndicators(conn).next()){
    if(jo.get(id)!=null){
         
        JSONObject joage=(JSONObject) jo.get(id);
-        
-         bl15m=joage.get("bl15_Male").toString();
-         bl15f=joage.get("bl15_Female").toString();
-         ab15m=joage.get("ab15_Male").toString();
-         ab15f=joage.get("ab15_Female").toString();
+         fsw=joage.get("fsw").toString();
+         msm=joage.get("msm").toString();
+         
+         
    }
         
     
@@ -147,16 +155,30 @@ while(pullIndicators(conn).next()){
         catch(NoSuchElementException ex){
         
         }
+     
+     String readonly_msm="";
+     String readonly_fsw="";
+     
+     
+//     if(id.contains("VMMC")){
+//       fsw="readonly='true' style='background-color:#bcc6cc;'  tabindex='-1'";
+//       readonly_b15_f="readonly='true' style='background-color:#bcc6cc;' tabindex='-1'";
+//     }
+//     else  if(id.contains("PMTCT")){
+//       readonly_ab15_m="readonly='true' style='background-color:#bcc6cc;'  tabindex='-1'";
+//       readonly_b15_m="readonly='true' style='background-color:#bcc6cc;' tabindex='-1'";
+//     }
+     
+     String inputb15_F="<input "+readonly_fsw+" value='"+fsw+"'  onkeypress='return numbers(event);' placeholder='fsw'  type='tel' maxlength='4' min='0' max='9999' name='"+id+"_fsw' id='"+id+"_fsw' class='form-control inputs'>"; 
+     
+     String inputb15_M="<input "+readonly_msm+" value='"+msm+"'  onkeypress='return numbers(event);' placeholder='msm'  type='tel' maxlength='4' min='0' max='9999' name='"+id+"_msm' id='"+id+"_msm' class='form-control inputs'>"; 
+     
     
 indicators+="<tr>"
-        + "<td style='vertical-align: middle;' rowspan='2'> <span class='badge'>"+count+"  </span><b> "+indic+"</b></td><td style='background-color:#bcc6cc;'><b>< 15 Yrs</b></td>"
-        + "<td><input value='"+bl15m+"'  onkeypress='return numbers(event);' placeholder='male < 15 yrs'  type='tel' maxlength='4' min='0' max='9999' name='"+id+"_bl15_Male' id='"+id+"_bl15_Male' class='form-control inputs'></td>"
-        + "<td><input value='"+bl15f+"'  onkeypress='return numbers(event);' placeholder='female < 15 yrs'  type='tel' maxlength='4' min='0' max='9999' name='"+id+"_bl15_Female' id='"+id+"_bl15_Female' class='form-control inputs'></td>"
-        + "</tr>"
-        + "<tr>"
-        + "<td><b>15 + Yrs</b></td>"
-        + "<td><input value='"+ab15m+"'  onkeypress='return numbers(event);' placeholder='male 15 yrs +'  type='tel' maxlength='4' min='0' max='9999' name='"+id+"_ab15_Male' id='"+id+"_ab15_Male' class='form-control inputs'></td>"
-        + "<td><input value='"+ab15f+"'  onkeypress='return numbers(event);' placeholder='female' type='tel' maxlength='4' min='0' max='9999' name='"+id+"_ab15_Female' id='"+id+"_ab15_Female' class='form-control inputs'></td>"
+        + "<td style='vertical-align: middle;' rowspan='1'> <span class='badge'>"+count+"  </span><b> "+indic+"</b></td>"
+        
+        + "<td>"+inputb15_F+"</td>"
+        + "<td>"+inputb15_M+"</td>"
         + "</tr>";
         
 
@@ -176,25 +198,22 @@ public JSONObject getData( dbConn conn, String reportingdate, String facilitymfl
 
 int hasdata=0;
 
-String getdata=" select * from pews.hfr_table_20 where date='"+reportingdate+"' and facility_mfl_code ='"+facilitymfl+"'";
+String getdata=" select * from aphiaplus_moi.kp_daily where date='"+reportingdate+"' and dic ='"+facilitymfl+"'";
+  
 
 conn.rs1=conn.st1.executeQuery(getdata);
-
-   JSONObject lengthobject= new JSONObject();
+JSONObject lengthobject= new JSONObject();
 JSONObject hm= new JSONObject();
-        while (conn.rs1.next()) 
-        {
- 
- JSONObject hm2= new JSONObject();
+while (conn.rs1.next()) 
+{
+JSONObject hm2= new JSONObject();
 hasdata++;
-  //we want something like this {"HTS_TST":{"bl15_Male":0,"bl15_Female":1,"ab15_Male":2,"ab15_Female":1}}
-hm2.put("bl15_Male", conn.rs1.getString("bl15_Male"));
-hm2.put("bl15_Female", conn.rs1.getString("bl15_Female"));
-hm2.put("ab15_Male", conn.rs1.getString("ab15_Male"));
-hm2.put("ab15_Female", conn.rs1.getString("ab15_Female"));
- hm.put(conn.rs1.getString("indicator"), hm2);
+//we want something like this {"HTS_TST":{"bl15_Male":0,"bl15_Female":1,"ab15_Male":2,"ab15_Female":1}}
+hm2.put("fsw", conn.rs1.getString("fsw"));
+hm2.put("msm", conn.rs1.getString("msm"));
+hm.put(conn.rs1.getString("indicator"), hm2);
 //ja.put(hm);
-      }
+}
         hm.put("length", hasdata);
         //lengthobject.put("length", hasdata);
         
@@ -208,9 +227,9 @@ return hm;
 
 
 
-public ResultSet pullIndicators(dbConn conn) throws SQLException{
+public ResultSet pullIndicators(dbConn conn) throws SQLException {
 
-String qry="select * from pews.indicators where active='1' order by orodha asc";
+String qry="select * from aphiaplus_moi.kp_indicators_daily where active='1' order by orodha asc";
 
 
 conn.rs=conn.st.executeQuery(qry);
@@ -221,31 +240,34 @@ return conn.rs;
 }
 
 
-public JSONObject toJson(ResultSet res) throws SQLException{
+public JSONArray toJson(ResultSet res) throws SQLException{
 
-JSONObject jo2 = new JSONObject();
+    
+    
+JSONArray jo2 = new JSONArray();
 int count=0;
 
 while(res.next())
 {
     
 JSONObject jo = new JSONObject(); 
+
 String id="";
-String indicator="";
+String indicator_code="";
 String active="";
 String indicatorname="";
 String orodha="";
 
     id =res.getString("id");
-    indicator =res.getString("indicator");
+    indicator_code =res.getString("indicator_code");
     indicatorname =res.getString("indicatorname");
     orodha =res.getString("orodha");
 
     jo.put("id",id);
-    jo.put("indicator",indicator);
+    jo.put("indicator_code",indicator_code);
     jo.put("indicatorname",indicatorname);
     jo.put("orodha",orodha);
-    jo2.put(count+"",jo);
+    jo2.put(jo);
     
     count++;
     

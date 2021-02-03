@@ -181,9 +181,11 @@
                                       <option value='SurgeRawData'>1. All data Reports</option>
                                       <option value='surge_tracker'>2. Excel Reporting Tracker</option>
                                       
-                                      <option value='htsclientraw'>3. HTS Client Level Raw </option>
+                                      <option value='htsclientraw'>3. HTS Client Level Raw-Pivoted </option>
                                       <option value='WeeklyData'>4. Data file only</option>
-                                      <!--<option value='PositiveClientsNotLinked'>4. Positive Clients Not Linked linked</option>-->
+                                      <option value='htsrriplainexcel'>5.HTS Client Level Raw-Plain file</option>
+                                      <option value='allSitesTrackerViaSurge'>6.All Sites Tracker(Daily Reporting)</option>
+                                      <!--<option value='hts_self_reports'>6.HTS Self</option>-->
                                              
                                       </select>
                                     </div>
@@ -204,7 +206,7 @@
                               </td>
                               <td class="col-xs-4">
                               <div class="controls">
-                                  <input required type="text" title="this is the date that the week started" value="2019-10-01" class="form-control input-lg tarehe" name="weekstart" autocomplete="off" id="weekstart">
+                                  <input data-date-end-date="0d" required type="text" title="this is the date that the week started" value="2020-10-01" class="form-control input-lg tarehe" name="weekstart" autocomplete="off" id="weekstart">
                               </div>
                            </td>
                            </tr>
@@ -219,7 +221,7 @@
                       </td>
                       <td class="col-xs-4">
                               <div class="controls">
-                                  <input required type="text" value='' title="this is the date that the week ended" value="<%if (session.getAttribute("weekend") != null) {out.println(session.getAttribute("weekend")); }%>" class="form-control input-lg tarehe" name="weekend" id="weekend" autocomplete="off">
+                                  <input data-date-end-date="0d" required type="text" value='' title="this is the date that the week ended" value="<%if (session.getAttribute("weekend") != null) {out.println(session.getAttribute("weekend")); }%>" class="form-control input-lg tarehe" name="weekend" id="weekend" autocomplete="off">
                               </div>
                            </div>
                               </td>
@@ -470,6 +472,10 @@ function getReport(){
   function downloadrpt(startdate,enddate){
       
       var url=$("#report").val();
+     
+   $('#formId').attr('action', 'page2');
+
+      
       
        var county=$("#county").val();
     var subcounty=$("#subcounty").val();
