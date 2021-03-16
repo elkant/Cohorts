@@ -66,9 +66,10 @@ String id=conn.rs.getString("id");
             
             out.println("</html>");
             if(conn.rs!=null){conn.rs.close();}
-            if(conn.st!=null){conn.st.close();}
             if(conn.rs1!=null){conn.rs1.close();}
+            if(conn.st!=null){conn.st.close();}            
             if(conn.st2!=null){conn.st2.close();}
+            if(conn.st1!=null){conn.st1.close();}
             if(conn.connect!=null){conn.connect.close();}
         }
     }

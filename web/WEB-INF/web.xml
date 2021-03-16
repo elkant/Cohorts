@@ -260,6 +260,14 @@
         <servlet-name>kp_login</servlet-name>
         <servlet-class>KP.kp_login</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>getWards</servlet-name>
+        <servlet-class>KP.getWards</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>allSitesDataViaSurge</servlet-name>
+        <servlet-class>reports.allSitesDataViaSurge</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loadcohort</servlet-name>
         <url-pattern>/loadcohort</url-pattern>
@@ -519,6 +527,14 @@
     <servlet-mapping>
         <servlet-name>kp_login</servlet-name>
         <url-pattern>/kp_login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getWards</servlet-name>
+        <url-pattern>/getWards</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>allSitesDataViaSurge</servlet-name>
+        <url-pattern>/allSitesDataViaSurge</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
