@@ -15,7 +15,6 @@ import java.io.OutputStream;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,12 +22,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFFont;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.openxml4j.opc.OPCPackage;
@@ -255,11 +249,12 @@ XSSFWorkbook wb = wb1;
         String subcounty="(";
         String subcountyar[]=null;
         
-       subcountyar=request.getParameter("subcounty").split(","); 
+       subcountyar=request.getParameterValues("subcounty"); 
        
-       if(request.getParameter("subcounty")!=null)
+       if(request.getParameterValues("subcounty")!=null)
        {
-           if(!request.getParameter("subcounty").equals("")){
+           if(request.getParameterValues("subcounty").length!=0){
+		   
        
        for(int a=0;a<subcountyar.length;a++)
        {
@@ -297,11 +292,11 @@ XSSFWorkbook wb = wb1;
         String mfl="(";
         String facilityar[]=null;
         
-       facilityar=request.getParameter("facility").split(","); 
+       facilityar=request.getParameterValues("facility"); 
        
-       if(request.getParameter("facility")!=null)
+       if(request.getParameterValues("facility")!=null)
        {
-           if(!request.getParameter("facility").equals("")){
+           if(request.getParameterValues("facility").length!=0){
        
        for(int a=0;a<facilityar.length;a++)
        {

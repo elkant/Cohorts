@@ -190,7 +190,7 @@ SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 1000);
         
         //========Query 1=================
         
-        String orgunits="  ( vw_surge_hts.`Date Tested` between  '"+startdate+"' and '"+enddate+"' )  ";
+        String orgunits="  ( vw_allsites_hts_v2.`Date Tested` between  '"+startdate+"' and '"+enddate+"' )  ";
         
         
         
@@ -205,11 +205,11 @@ SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 1000);
         String subcounty="(";
         String subcountyar[]=null;
         
-       subcountyar=request.getParameter("subcounty").split(","); 
+       subcountyar=request.getParameterValues("subcounty"); 
        
-       if(request.getParameter("subcounty")!=null)
+       if(request.getParameterValues("subcounty")!=null)
        {
-           if(!request.getParameter("subcounty").equals("")){
+           if(request.getParameterValues("subcounty").length!=0){
        
        for(int a=0;a<subcountyar.length;a++)
        {
@@ -247,11 +247,13 @@ SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 1000);
         String mfl="(";
         String facilityar[]=null;
         
-       facilityar=request.getParameter("facility").split(","); 
        
-       if(request.getParameter("facility")!=null)
+		   facilityar=request.getParameterValues("facility"); 
+       
+       if(request.getParameterValues("facility")!=null)
        {
-           if(!request.getParameter("facility").equals("")){
+           if(request.getParameterValues("facility").length!=0){
+               
        
        for(int a=0;a<facilityar.length;a++)
        {
@@ -302,7 +304,7 @@ SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 1000);
         
         //========Query two====Facility Details==============
         
-        String qry = "select ID, County, `Sub-county`, Ward, `Facility Name`, Counsellor, `Register No.`, `Patient Serial no`, `Date Tested`, Age, Gender, modality, `Test Result`,  Case when Linked='Yes' then 'Linked' when Linked='No' then 'Not Linked' else '' end as 'Linked', Cccno, Linked site, `Other Facility linked`, `Reason Not Linked`, `Reason for death`, `Other Reason for death`, `Reason for declining`, `Other reason for declining`, timestamp, lastsynced, mflcode, datestartedart, Agebracket, `Overall Modality`, `Date Linked`,`Started ON ART`,`Reason Not Started ON ART`,`Facility started on ART`,`Other Facility started on ART`,`Reason For Declining ART`,`Other Reason For Declining ART`,`Reason For death before started on Treatment`, `Other Reason For death before started on Treatment` ,DataType from aphiaplus_moi.vw_surge_hts where "+orgunits+" ;";
+        String qry = "select ID, County, `Sub-county`, ifnull(Ward,'') as Ward , `Facility Name`, Counsellor, `Register No.`, `Patient Serial no`, `Date Tested`, Age, Gender, modality, `Test Result`,  Case when Linked='Yes' then 'Linked' when Linked='No' then 'Not Linked' else '' end as 'Linked', Cccno, Linked site, `Other Facility linked`, `Reason Not Linked`, `Reason for death`, `Other Reason for death`, `Reason for declining`, `Other reason for declining`, timestamp, lastsynced, mflcode, datestartedart, Agebracket, `Overall Modality`, `Date Linked`,`Started ON ART`,`Reason Not Started ON ART`,`Facility started on ART`,`Other Facility started on ART`,`Reason For Declining ART`,`Other Reason For Declining ART`,`Reason For death before started on Treatment`, `Other Reason For death before started on Treatment` ,DataType from aphiaplus_moi.vw_allsites_hts_v2 where "+orgunits+" ;";
        
         System.out.println("query ni "+qry);
        
@@ -325,7 +327,7 @@ SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 1000);
                 for (int i = 1; i <= columnCount; i++) 
                 {
 //skip header
-                    System.out.println("Column number "+i);
+                   // System.out.println("Column number "+i);
                     mycolumns.add(metaData.getColumnLabel(i));
                     Cell cell0 = rw.createCell(i - 1);
                     cell0.setCellValue(metaData.getColumnLabel(i));

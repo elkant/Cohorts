@@ -44,7 +44,7 @@ import scripts.copytemplates;
  *
  * @author EKaunda
  */
-public class SurgeRawData extends HttpServlet {
+public class allSitesDataViaSurge extends HttpServlet {
 
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -66,79 +66,31 @@ public class SurgeRawData extends HttpServlet {
 
 
 
-String allpath = getServletContext().getRealPath("/surgedetailed.xlsx");
+
 
 XSSFWorkbook wb1;
  
 String pathtodelete=null;
 
 Date da= new Date();
+
 String dat2 = da.toString().replace(" ", "_");
 
 dat2 = dat2.toString().replace(":", "_");
 
-String mydrive = allpath.substring(0, 1);
-
-String np=mydrive+":\\HSDSA\\PNS\\MACROS\\";
-
-String filepath="Surge_Detailed_"+dat2+".xlsx";
 
 
-if(isUnix()){
-    np="/HSDSA/PNS/MACROS/";
-}
+String filepath="allSites_Detailed_"+dat2+".xlsx";
 
-
- new File(np).mkdirs();
-
- np+=filepath;
- 
-//check if file exists
-String sourcepath = getServletContext().getRealPath("/surgedetailed.xlsx");
-
-File f = new File(np);
-if(!f.exists()&& !f.isFile() ) {
-    /* do something */
-    
-    copytemplates ct= new copytemplates();
-    System.out.println("Copying macros..");
-    ct.transfermacros(sourcepath,np);
-    
-}
-else
-    //copy the file alone  
-{
-    
-    copytemplates ct= new copytemplates();
-//copy the agebased file only
-ct.copymacros(sourcepath,np);
-
-}
-
-            System.out.println("Copying done..");
-
-
-File allpathfile= new File(np);
-
-OPCPackage pkg = OPCPackage.open(allpathfile);
-
-pathtodelete=np;
 
 
 //wb = new XSSFWorkbook( OPCPackage.open(allpath) );
-wb1 = new XSSFWorkbook(pkg);
-
-
-
-
-
-
 
 
 //XSSFWorkbook wb = wb1;
 
 
-SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 1000);
+SXSSFWorkbook wb = new SXSSFWorkbook(1000);
 
         Font font =  wb.createFont();
         font.setFontHeightInPoints((short) 18);
@@ -192,7 +144,7 @@ SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 1000);
         stylesum.setFont(fontx);
         stylesum.setWrapText(true);
 
-        Sheet shet = wb.getSheet("DATA");
+        Sheet shet = wb.createSheet("DATA");
 
         String year="";
        IdGenerator dats= new IdGenerator();
@@ -229,7 +181,7 @@ SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 1000);
         
         //========Query 1=================
         
-        String orgunits="  ( surge_overall_fine.`Date` between  '"+startdate+"' and '"+enddate+"' )  ";
+        String orgunits="  ( allsites_overall_fine.`Reporting Date` between  '"+startdate+"' and '"+enddate+"' )  ";
         
         
         
@@ -269,7 +221,8 @@ SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 1000);
        }
        }
         
-        if(!subcounty.equals("(") ){
+        if(!subcounty.equals("(") )
+        {
             
          orgunits+=" and `Sub-county` in "+subcounty+" ";
         
@@ -284,7 +237,7 @@ SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 1000);
         String mfl="(";
         String facilityar[]=null;
         
-      facilityar=request.getParameterValues("facility"); 
+       facilityar=request.getParameterValues("facility"); 
        
        if(request.getParameterValues("facility")!=null)
        {
@@ -339,7 +292,7 @@ SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 1000);
         
         //========Query two====Facility Details==============
         
-        String qry = "SELECT * FROM aphiaplus_moi.surge_overall_fine where "+orgunits+" ;";
+        String qry = "SELECT * FROM aphiaplus_moi.allsites_overall_fine where "+orgunits+" ;";
         System.out.println(qry);
         conn.rs = conn.st.executeQuery(qry);
         
@@ -355,15 +308,15 @@ SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 1000);
 
          if (count == (count1)) {
 //header rows
-         Row rw = shet.getRow(count);
+         Row rw = shet.createRow(count);
 //rw.setHeightInPoints(26);
                 for (int i = 1; i <= columnCount; i++) 
                 {
 //skip header
                     mycolumns.add(metaData.getColumnLabel(i));
-//                    XSSFCell cell0 = rw.getCell(i - 1);
-//                    cell0.setCellValue(metaData.getColumnLabel(i));
-//                    cell0.setCellStyle(stylex);
+                    Cell cell0 = rw.createCell(i - 1);
+                    cell0.setCellValue(metaData.getColumnLabel(i));
+                    cell0.setCellStyle(stylex);
 
                     //create row header
                 }//end of for loop
@@ -379,15 +332,12 @@ SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 1000);
                 Cell cell0 = rw.createCell(a);
                  if(isNumeric(conn.rs.getString("" + mycolumns.get(a))))
                  {
-               // if(1==1){
-                
-                     cell0.setCellValue(conn.rs.getInt(mycolumns.get(a).toString()));
-                    
+                cell0.setCellValue(conn.rs.getInt(mycolumns.get(a).toString()));
                  }
                 else 
                 {
-                    //System.out.println(mycolumns.get(a)+" Last option"+conn.rs.getString("" + mycolumns.get(a)));
-//                    System.out.println( mycolumns.get(a)+" --Last option"+conn.rs.getString("" + mycolumns.get(a)));
+                  // System.out.println(mycolumns.get(a)+" Last option"+conn.rs.getString("" + mycolumns.get(a)));
+                   //System.out.println( mycolumns.get(a)+" --Last option"+conn.rs.getString("" + mycolumns.get(a)));
                      cell0.setCellValue(conn.rs.getString("" + mycolumns.get(a)));
                     //cell0.setCellValue(conn.rs.getString("" + mycolumns.get(a)));
                    
@@ -417,19 +367,9 @@ SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 1000);
       //  shet.createFreezePane(6, 4);
     }
      
-     
-     
-   if(1==1){
-     XSSFSheet shet2= wb.getXSSFWorkbook().getSheet("DATA");
-        // tell your xssfsheet where its content begins and where it ends
-((XSSFSheet)shet2).getCTWorksheet().getDimension().setRef("A1:AN" + (shet.getLastRowNum() + 1));
-
-CTTable ctTable = ((XSSFSheet)shet2).getTables().get(0).getCTTable();
-
-ctTable.setRef("A1:AN" + (shet.getLastRowNum() + 1)); // adjust reference as needed
-
-}
     
+     
+        
         if(conn.rs!=null){conn.rs.close();}
         if(conn.rs1!=null){conn.rs1.close();}
         if(conn.st!=null){conn.st.close();}
@@ -437,7 +377,9 @@ ctTable.setRef("A1:AN" + (shet.getLastRowNum() + 1)); // adjust reference as nee
         if(conn.connect!=null){conn.connect.close();}
         
         
-        System.out.println("" + "Surgedetailed_reports_Gen_" + createdOn.trim() + ".xls");
+       
+
+        System.out.println("" + "surge_allsites_Surgedetailed_reports_Gen_" + createdOn.trim() + ".xlsx");
 
         ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
         wb.write(outByteStream);
@@ -445,17 +387,12 @@ ctTable.setRef("A1:AN" + (shet.getLastRowNum() + 1)); // adjust reference as nee
         response.setContentType("application/ms-excel");
         response.setContentLength(outArray.length);
         response.setHeader("Expires:", "0"); // eliminates browser caching
-        response.setHeader("Content-Disposition", "attachment; filename=" + "Surge_Data_for_"+startdate+"_to_"+enddate+"_gen_" + createdOn.trim() + ".xlsx");
-         response.setHeader("Set-Cookie","fileDownload=true; path=/");
+        response.setHeader("Content-Disposition", "attachment; filename=" + "AllSites_Data_for_"+startdate+"_to_"+enddate+"_gen_" + createdOn.trim() + ".xlsx");
+        response.setHeader("Set-Cookie","fileDownload=true; path=/");
         OutputStream outStream = response.getOutputStream();
         outStream.write(outArray);
         outStream.flush();
 
-        
-        
-        
-        
-        
     }
 
     @Override

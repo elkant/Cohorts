@@ -105,9 +105,10 @@ current_districts=current_districts+"<option value=\""+conn.rs.getString(2)+"\">
         out.println(current_districts);
        
     } finally {   
-          if(conn.connect!=null){ conn.connect.close();}
+         
                if(conn.rs!=null){ conn.rs.close();}
                if(conn.st!=null){ conn.st.close();}
+                if(conn.connect!=null){ conn.connect.close();}
         out.close();
     }
           

@@ -203,11 +203,12 @@ SXSSFWorkbook wb = new SXSSFWorkbook(1000);
         String subcounty="(";
         String subcountyar[]=null;
         
-       subcountyar=request.getParameter("subcounty").split(","); 
+       subcountyar=request.getParameterValues("subcounty"); 
        
-       if(request.getParameter("subcounty")!=null)
+       if(request.getParameterValues("subcounty")!=null)
        {
-           if(!request.getParameter("subcounty").equals("")){
+           if(request.getParameterValues("subcounty").length!=0){
+		   
        
        for(int a=0;a<subcountyar.length;a++)
        {
@@ -245,11 +246,11 @@ SXSSFWorkbook wb = new SXSSFWorkbook(1000);
         String mfl="(";
         String facilityar[]=null;
         
-       facilityar=request.getParameter("facility").split(","); 
+       facilityar=request.getParameterValues("facility"); 
        
-       if(request.getParameter("facility")!=null)
+       if(request.getParameterValues("facility")!=null)
        {
-           if(!request.getParameter("facility").equals("")){
+           if(request.getParameterValues("facility").length!=0){
        
        for(int a=0;a<facilityar.length;a++)
        {
