@@ -254,7 +254,7 @@ input:focus {
                                 
                                 
                                   <tr>
-                                      <td class="col-xs-6" colspan="2">
+                                      <td class="col-xs-12" colspan="2">
                                 
                                   <div class="control-group">
                                     <label> <font color="red"><b>*</b></font>  DIC Name:</label>
@@ -266,18 +266,7 @@ input:focus {
                                     </div>
                                 </div>
                                       </td>
-                                      <td class="col-xs-6" colspan="2">
-                                
-                                  <div class="control-group">
-                                    <label> <font color="red"><b>*</b></font>  Ward Name:</label>
-                                    <div class="controls">
-                                        <select required="true"  onchange="isdisplayindicators();"   name="ward" id="ward" class="form-control" >
-                                            <option>Select DIC Name</option>
-                                           
-                                        </select>
-                                    </div>
-                                </div>
-                                      </td>
+                                     
                                   </tr>
                                         
                                    
@@ -543,7 +532,7 @@ input:focus {
                     
                     
                          $('.dates').datepicker({
-                             todayHighlight: true, daysOfWeekDisabled: "0,6",clearBtn: true, autoclose: true,format: "yyyy-mm-dd",
+                             todayHighlight:true,clearBtn:true,autoclose:true,format: "yyyy-mm-dd"
      });
                  </script>
 
@@ -3211,7 +3200,7 @@ $('#dataentry').on('keydown', 'input, select, textarea', function(e) {
       , focusable
       , next
       ;
-    if (e.keyCode == 13) {
+    if (e.keyCode === 13) {
         focusable = form.find('input,a,select,button,textarea').filter(':visible');
         next = focusable.eq(focusable.index(this)+1);
         if (next.length) {

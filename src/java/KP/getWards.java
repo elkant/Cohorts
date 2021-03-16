@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author EKaunda
  */
-public class getDics extends HttpServlet {
+public class getWards extends HttpServlet {
 
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -30,23 +30,23 @@ public class getDics extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
            response.setContentType("text/html;charset=UTF-8");
     
-String dics="<option data-ward_name='' data-ward_id='' data-supported_kp='' value=''>select dic</option>";
+String dics="<option data-ward_name='' data-ward_id='' data-supported_kp='' value=''>select ward</option>";
     
-    String lip="";
+    String dic="";
     
-    if(request.getParameter("lip")!=null)
+    if(request.getParameter("dic")!=null)
     {    
-     lip=request.getParameter("lip");
+     dic=request.getParameter("dic");
      
     }
 
-       String getdics="Select * from internal_system.dic where `lip` in ('"+lip+"') ";
+       String getwards="Select * from internal_system.dic where `lip` in ('"+dic+"') ";
        
-            System.out.println(""+getdics);
+            System.out.println(""+getwards);
        
        dbConn conn=new dbConn();
        
-       conn.rs=conn.st.executeQuery(getdics);
+       conn.rs=conn.st.executeQuery(getwards);
        
   
        
@@ -63,10 +63,10 @@ dics+="<option data-ward_name='"+conn.rs.getString("ward_name")+"' data-ward_id=
         out.println(dics);
        
     } finally {   
-         
+          
                if(conn.rs!=null){ conn.rs.close();}
                if(conn.st!=null){ conn.st.close();}
-                if(conn.connect!=null){ conn.connect.close();}
+               if(conn.connect!=null){ conn.connect.close();}
         out.close();
     }
           

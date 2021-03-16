@@ -41,9 +41,11 @@ public class getKPIndicators extends HttpServlet {
             String dt="";
             
             String fc="";
+          
             
             if(request.getParameter("fc")!=null){fc=request.getParameter("fc");}
             if(request.getParameter("dt")!=null){dt=request.getParameter("dt");}
+            
             
             
             
@@ -195,10 +197,9 @@ public JSONObject getData( dbConn conn, String reportingdate, String facilitymfl
     JSONArray ja= new JSONArray();
     
 
-
 int hasdata=0;
 
-String getdata=" select * from aphiaplus_moi.kp_daily where date='"+reportingdate+"' and dic ='"+facilitymfl+"'";
+String getdata=" select * from aphiaplus_moi.kp_daily where date='"+reportingdate+"' and dic ='"+facilitymfl+"' ";
   
 
 conn.rs1=conn.st1.executeQuery(getdata);

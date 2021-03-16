@@ -81,9 +81,7 @@ String userAccess;
              session.setAttribute("login", status);
          }
          System.out.println("STATUS IS :  "+status);
-         if(conn.connect!=null){
- conn.connect.close();
-         }
+      
          
          if(conn.rs!=null){
          conn.rs.close();
@@ -91,6 +89,9 @@ String userAccess;
          
          if(conn.pst!=null){
          conn.pst.close();
+         }
+            if(conn.connect!=null){
+ conn.connect.close();
          }
          response.sendRedirect(nextPage);
     }
