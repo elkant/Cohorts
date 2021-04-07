@@ -80,4 +80,12 @@ String tableID=(db+""+full_date2).replace(".", "");
   public int currentYear(){
       return year;
   }
+  
+  
+  public int CurrentYearMonth(){
+  
+  return new Integer(currentYear()+""+CurrentMonth());
+  
+  }
+  
 }

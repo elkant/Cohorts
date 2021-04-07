@@ -268,6 +268,34 @@
         <servlet-name>allSitesDataViaSurge</servlet-name>
         <servlet-class>reports.allSitesDataViaSurge</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>getKPForm</servlet-name>
+        <servlet-class>KP.getKPForm</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>getHtsSelfIndicators</servlet-name>
+        <servlet-class>hts_self.getHtsSelfIndicators</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>hs_getSection</servlet-name>
+        <servlet-class>hts_self.hs_getSection</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>getParameterData</servlet-name>
+        <servlet-class>hts_self.getParameterData</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>loadActiveSites</servlet-name>
+        <servlet-class>loaders.loadActiveSites</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>saveHtsSelfData</servlet-name>
+        <servlet-class>hts_self.saveHtsSelfData</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>htsself_login</servlet-name>
+        <servlet-class>hts_self.htsself_login</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loadcohort</servlet-name>
         <url-pattern>/loadcohort</url-pattern>
@@ -535,6 +563,34 @@
     <servlet-mapping>
         <servlet-name>allSitesDataViaSurge</servlet-name>
         <url-pattern>/allSitesDataViaSurge</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getKPForm</servlet-name>
+        <url-pattern>/getKPForm</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getHtsSelfIndicators</servlet-name>
+        <url-pattern>/getHtsSelfIndicators</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>hs_getSection</servlet-name>
+        <url-pattern>/hs_getSection</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getParameterData</servlet-name>
+        <url-pattern>/getParameterData</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>loadActiveSites</servlet-name>
+        <url-pattern>/loadActiveSites</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>saveHtsSelfData</servlet-name>
+        <url-pattern>/saveHtsSelfData</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>htsself_login</servlet-name>
+        <url-pattern>/htsself_login</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

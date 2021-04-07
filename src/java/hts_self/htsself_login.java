@@ -3,75 +3,50 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package KP;
+package hts_self;
 
-import db.dbConn;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author EKaunda
  */
-public class getDics extends HttpServlet {
+public class htsself_login extends HttpServlet {
 
+   HttpSession session;
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
+        session=request.getSession();
+        
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-           response.setContentType("text/html;charset=UTF-8");
-    
-String dics="";
-    
-    String lip="";
-    
-    if(request.getParameter("lip")!=null)
-    {    
-     lip=request.getParameter("lip");
-     
-    }
-
-       String getdics="Select * from internal_system.dic where `lip` in ('"+lip+"') ";
-       
-            System.out.println(""+getdics);
-       
-       dbConn conn=new dbConn();
-       
-       conn.rs=conn.st.executeQuery(getdics);
-       
-  
-       
-       while(conn.rs.next())
-       {
-
-dics+="<option data-ward_name='"+conn.rs.getString("ward_name")+"' data-ward_id='"+conn.rs.getString("ward_id")+"' data-supported_kp='"+conn.rs.getString("supported_kp")+"' value=\""+conn.rs.getString("dic_id")+"\">"+conn.rs.getString("dic_name")+"</option>";
-
-       }
-    
-    
-
-    try {
-        out.println(dics);
-       
-    } finally {   
-         
-               if(conn.rs!=null){ conn.rs.close();}
-               if(conn.st!=null){ conn.st.close();}
-                if(conn.connect!=null){ conn.connect.close();}
-        out.close();
-    }
-          
-        } catch (SQLException ex) {
-            Logger.getLogger(getDics.class.getName()).log(Level.SEVERE, null, ex);
+            
+            String pwd="";
+            String nextPage="htsself_index.jsp";
+            if(request.getParameter("codeaccess")!=null){
+            
+            pwd=request.getParameter("codeaccess");
+            }
+            
+            
+            if(pwd.equals("909090")){
+        nextPage="htsself_entry.jsp";
+                                    }
+            else {
+                session.setAttribute("htsself_login", "Access code incorect");
+            }
+            
+            
+           response.sendRedirect(nextPage);
         }
     }
 

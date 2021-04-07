@@ -1326,7 +1326,7 @@ function exportData( data, isend){
                            
                            console.log("Data saved Succesfully!");
                            $("#fedback").html("<font color='green'><h3>Data saved Succesfully!</h3></f>");
-                           
+                             setTimeout(refreshujumbe,2000);
                        } 
                         
                     }
@@ -1335,6 +1335,12 @@ function exportData( data, isend){
     
 }
 
+
+function refreshujumbe(){
+    
+  $("#fedback").html("");   
+    
+}
 
 function validatefacility(){
     
