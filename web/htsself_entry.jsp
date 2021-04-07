@@ -22,14 +22,14 @@
     <head>
         <meta http-equiv="content-type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">
-        <title>KP</title>
+        <title>HTS Self</title>
         <meta name="generator" content="Bootply" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
         <link href="css/bootstrap.css" rel="stylesheet">
         <link href="css/bootstrap-datepicker.min.css" rel="stylesheet">
         <link rel="stylesheet" href="css/select2.min.css">
-        <link rel="shortcut icon" href="Login_v6/images/kp.png">
+        <link rel="shortcut icon" href="images/htsself.png">
         <!--<link data-jsfiddle="common" rel="stylesheet" media="screen" href="css/handsontable.css">-->
         <!--  <link data-jsfiddle="common" rel="stylesheet" media="screen" href="dist/pikaday/pikaday.css">-->
 
@@ -76,7 +76,7 @@
         <div id="top-nav" class="navbar navbar-inverse navbar-static-top">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <button id="toolid" style="float:left;color:white; text-align: center;" class="navbar-toggle btn btn-default" >&nbsp; KeyPop Daily</button>
+                    <button id="toolid" style="float:left;color:white; text-align: center;" class="navbar-toggle btn btn-default" >&nbsp;Monthly HTS Self</button>
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -104,7 +104,7 @@
                                 <i class="glyphicon glyphicon-question-sign"></i>
                                 Help
                             </a></li>
-                        <li><a  class=''  href='kp_index.jsp'><i class='glyphicon glyphicon-log-out'></i> Log out</a></li>
+                        <li><a  class=''  href='htsself_index.jsp'><i class='glyphicon glyphicon-log-out'></i> Log out</a></li>
                     </ul>
                 </div>
 
@@ -115,7 +115,7 @@
         <!-- /Header -->
 
         <!-- Main -->
-        <div ng-app="kpapp" ng-controller="kpcont" class="container-fluid">
+        <div ng-app="htsselfapp" ng-controller="htsselfcont" class="container-fluid">
 
             <div class="row">
 
@@ -129,45 +129,14 @@
                         <!-- center left-->
                         <div class="col-md-12">
 
-
-
-
-                            <!--<div class="btn-group btn-group-justified">-->
-                            <!--                        <a href="#" id='refreshpage' class="btn btn-danger col-sm-4">
-                                                        <i class="glyphicon glyphicon-refresh"></i>
-                                                        <br> Refresh
-                                                    </a>-->
-
-
-
-                            <!--                            <a  class="btn btn-danger col-sm-3" id="exportdataanchor1" style="display:none;" title="Add Widget" data-toggle="modal" href="#addWidgetModal">
-                                                            <i class="glyphicon glyphicon-cloud-upload"></i>
-                                                            <br/>Export Data 
-                                                            <span id="unexportedno" style="color:yellow;">(0 site )</span>
-                                                        </a>
-                            -->
-
-                            <!--<a href="#" class="btn btn-primary col-sm-3">
-                                <i class="glyphicon glyphicon-cog"></i>
-                                <br> Settings
-                            </a>-->
-                            <!--                        <a class="btn btn-info col-sm-4" title="Help" data-toggle="modal" href="#help">
-                                                        <i class="glyphicon glyphicon-question-sign"></i>
-                                                        <br> Help
-                                                    </a>-->
-                            <!--                        <a class="btn btn-success col-sm-4" title="Reports"  href="hfrreports.jsp">
-                                                        <i class="glyphicon glyphicon-question-sign"></i>
-                                                        <br> Reports
-                                                    </a>-->
-
                             <!--</div>-->
 
 
                             <!--tabs-->
                             <div class="panel">
                                 <ul class="nav nav-tabs " id="myTab">
-                                    <li class="active newdata"><a href="#dataentry" id="newdatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-plus"></i> Daily Form</a></li>
-                                    <li ><a href="#monthlyform" id="monthlyformbtn" data-toggle="tab">  <i class="glyphicon glyphicon-download"></i>  Monthly Form</a></li>
+                                    <li class="active newdata"><a href="#dataentry" id="newdatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-plus"></i> Monthly Data</a></li>
+                                 
                                     <!--<li class="active editdata" style='display:none;' ><a href="#dataentry" id="newdatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-edit"></i> Edit Data</a></li>-->
                                     <li><a href="#reports"  style="display:none;" id="reportsbutton" data-toggle="tab"> <i class="glyphicon glyphicon-stats"></i> Report</a></li> 
                                     <!--<li><a href="#searchdata" data-toggle="tab"> <i class="glyphicon glyphicon-search"></i> Edit Data</a></li>--> 
@@ -188,7 +157,7 @@
                                                                 <div class="control-group">
 
                                                                     <div class="controls">
-                                                                        <label><required-option></required-option> LIP </label> 
+                                                                        <label><required-option></required-option>Section</label> 
 
                                                                     </div>
                                                                 </div>
@@ -197,7 +166,7 @@
                                                                 <div class="control-group">
 
                                                                     <div class="controls">
-                                                                        <label><required-option></required-option> Reporting Date </label> 
+                                                                        <label><required-option></required-option>Modality</label> 
 
                                                                     </div>
                                                                 </div>
@@ -213,16 +182,8 @@
                                                                 <div class="control-group">
 
                                                                     <div class="controls">
-                                                                        <select required="true"   onchange=""   name="lip" id="lip" class="form-control" >
-                                                                            <%
-
-                                                                                if (session.getAttribute("liplist") != null) {
-
-                                                                                    out.println(session.getAttribute("liplist").toString());
-                                                                                } else {
-                                                                                    out.println("<option value=''>login to select LIP</option>");
-                                                                                }
-                                                                            %>                                          
+                                                                        <select required="true"   onchange="getModalities();"   name="section" id="section" class="form-control" >
+                                                                                                                   
                                                                         </select>
                                                                     </div>
                                                                 </div>
@@ -233,8 +194,9 @@
                                                                 <div class="control-group">
 
                                                                     <div class="controls">
-                                                                        <input onchange="isdisplayindicators();" readonly data-date-end-date="0d" required type="text"  title="this is the reporting date"  class="form-control input-sm dates" name="reportingdate" id="reportingdate" autocomplete="off">
-                                                                        <input type="hidden"  name ="rowid" id="rowid"  />
+                                                                     <select required="true"   onchange="isdisplayindicators();"   name="modality" id="modality" class="form-control" >
+                                                                                                                   
+                                                                        </select>
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -244,24 +206,61 @@
 
 
 
+                      <!-------Data Management ---------->
 
-
-
+                      
+                      
                                                         <tr>
-                                                            <td class="col-xs-12" colspan="2">
 
+                                                            <td class="col-xs-6">
                                                                 <div class="control-group">
-                                                                    <label> <required-option></required-option>  DIC Name:</label>
-                                                                    <div class="controls">
-                                                                        <select required="true"  onchange="isdisplayindicators();"   name="dic" id="dic" class="form-control" >
-                                                                            <option>Select DIC Name</option>
 
+                                                                    <div class="controls">
+                                                                        <label><required-option></required-option>Period</label> 
+
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td class="col-xs-6">
+                                                                <div class="control-group">
+
+                                                                    <div class="controls">
+                                                                        <label><required-option></required-option>Facility</label> 
+
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+
+
+                                                        </tr>
+
+
+                                                        <tr >
+
+                                                            <td class="col-xs-6">
+                                                                <div class="control-group">
+
+                                                                    <div class="controls">
+                                                                        <select required="true"   onchange="isdisplayindicators();"   name="period" id="period" class="form-control" >
+                                                                                                                   
                                                                         </select>
                                                                     </div>
                                                                 </div>
                                                             </td>
 
+
+                                                            <td class="col-xs-6">
+                                                                <div class="control-group">
+
+                                                                    <div class="controls">
+                                                                     <select required="true"   onchange="isdisplayindicators();"   name="facility" id="facility" class="form-control" >
+                                                                                                                   
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
                                                         </tr>
+
 
 
 
@@ -311,53 +310,7 @@
                                         <!--Data entry code-->
 
                                     </div>
-                                    <div class="tab-pane well" id="monthlyform">
-                                        
-                                        <form action='getKPForm' method='post' class='form form-group'>
-
-                                        <h5 class='well' style="text-align:center ; background-color: #449d44; padding:4px;"> 
-                                            <b>Download Monthly Data Collection Form </b>
-                                        </h5>
-                                        <!--- Data export---->
-
-                                        <table>
-                                            <tr><td><b>Reporting Year:</b> <required-option></required-option> </td>
-                                                <td><select required ng-model='year' style='padding-bottom:5px ;' id="year" name="year" class="form-control">
-                                                        <option value=''>select year</option>
-                                                        <option ng-repeat="mia in miaka" value='{{mia}}'>{{mia}}</option>
-
-                                                    </select>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td><b>Reporting Month : <required-option></required-option></b> </td>
-                                                <td><select required id="months" name="months" class="form-control">
-                                                        <option value=''>select Month</option>
-
-                                                        <option ng-repeat="mie in months" value='{{mie.id}}'>{{mie.val+" "+ ( year - mie.yearoffset )}}</option>
-
-                                                    </select>
-                                                </td>
-                                            </tr>
-                                            
-                                            <tr>
-                                                <td><b>DIC Name: <required-option></required-option></b></td>
-                                                <td>
-                                                <select required  multiple="true" class='form-control'  id='dic_name' name='dic_name'>
-                                                <option value=''>Select DIC</option>
-                                                </select>
-                                                </td>
-                                            </tr>
-                                        
-                                            <tr>
-                                                <td></td>
-                                            <td><input type='submit' value='Download Form' class='btn btn-success'></td>
-                                            </tr>
-                                        </table>
-                                        
-                                        </form>
-                                    </div>
+                             
 
                                     <div class="tab-pane well" id="reports">
 
@@ -516,7 +469,7 @@
                         <h4 class="modal-title">Help</h4>
                     </div>
                     <div class="modal-body">
-                        <p>This  application is created for aiding Local Implementing partners in collecting daily KP data.</p>
+                        <p>This  application is created for aiding in collection of monthly data.</p>
                         <h3>Indicators</h3>
                         <p>The specific indicators that one should enter data for are;</p>
                         <ul>
@@ -539,7 +492,7 @@
 
                         </ul>
                         <h3> Organization Units</h3>
-                        <p> Submit data per dice </p>
+                        <p> Submit data per facility </p>
                     </div>
                     <div class="modal-footer">
                         <a href="#" data-dismiss="modal" class="btn">Close</a>
@@ -563,7 +516,7 @@
         <script src="js/pouchdb-4.0.1.js"></script>
         <script type="text/javascript" src="js/datatables.min.js"></script>
         <script type="text/javascript" src="js/angular.js"></script>
-        <script type="text/javascript" src="js/angularoptions.js"></script>
+        <script type="text/javascript" src="js/angularoptions_htsself.js"></script>
 
 
 
@@ -581,40 +534,150 @@
                                    });
 
 
-                                   function getDicsJson() {
-
-                                       var lip = $("#lip").val();
-
-                                      var dicoption="<option data-ward_name='' data-ward_id='' data-supported_kp='' value=''>select dic</option>";
-                                       $.ajax({
-                                           url: 'getDics?lip=' + lip,
-                                           type: 'post',
-                                           dataType: 'html',
-                                           success: function (data) {
-                                               $("#dic").html(dicoption+data);
-                                               $("#dic_name").html(data);
-                                               $(document).ready(function () {
-
-                                                   $('#dic').select2();
-
-                                               });
-
-
-                                           }});
-
-                                   }
-
-
-
-                                   getDicsJson();
-
+                              
+ function getFacilitiesJson(){
+       
+   
+       
+       
+              $.ajax({
+                         url:'loadActiveSites',                            
+                    type:'post',  
+                    dataType: 'html',  
+                    success: function(data) {
+                        
+                        
+                        
+                        $("#facility").html(data);
+                   $(document).ready(function() {
+          
+              $('#facility').select2(); 
+             
+                                 } ); 
+                        
+                        
+                    }});
+   
+   }
 
 
 
+                                   getFacilitiesJson();
+
+
+ function getSections(){
+       
+   
+       
+       
+              $.ajax({
+                         url:'getParameterData',                            
+                    type:'post',  
+                    dataType: 'json',  
+                    success: function(data) {                        
+                       
+        var dat=data.sections;
+        
+        console.log(dat[0].section);
+        var o="<option value=''>Select Option</option>";
+                        
+                        for(var a=0;a<dat.length;a++){
+                            
+                     
+                          o+="<option value='"+dat[a].sectio_id+"'>"+dat[a].sectio+"</option>";   
+                        }
+                        
+                   $("#section").html(o);
+                   $(document).ready(function() {
+                    $('#section').select2(); 
+             
+                                 } ); 
+                        
+                        
+                    }});
+   
+   }
+
+getSections();
 
 
 
 
+
+
+ function getModalities(){
+       
+   var sec=$("#section").val();
+       
+       
+              $.ajax({
+                         url:'getParameterData?mod='+sec+"&sec="+sec,                            
+                    type:'post',  
+                    dataType: 'json',  
+                    success: function(data) {                        
+                       
+        var dat=data.modalities;
+        
+      
+        var o="<option value=''>Select Option</option>";
+                        
+                        for(var a=0;a<dat.length;a++)
+                        {                           
+                     
+                          o+="<option value='"+dat[a].modality_id+"'>"+dat[a].modality+"</option>";   
+                        }
+                        
+                   $("#modality").html(o);
+                   $(document).ready(function() {
+                    $('#modality').select2(); 
+             
+                                 } ); 
+                        
+                        
+                    }});
+   
+   }
+   
+   
+   
+   
+   
+   
+ function getPeriod(){
+       
+   var sec=$("#section").val();
+       
+       
+              $.ajax({
+                         url:'getParameterData?per=yes',                            
+                    type:'post',  
+                    dataType: 'json',  
+                    success: function(data) {                        
+                       
+        var dat=data.periods;
+        
+      
+        var o="<option value=''>Select Seriod</option>";
+                        
+                        for(var a=0;a<dat.length;a++)
+                        {                           
+                     
+                          o+="<option value='"+dat[a].id+"'>"+dat[a].year+" "+dat[a].month+"</option>";   
+                        }
+                        
+                   $("#period").html(o);
+                   $(document).ready(function() {
+                    $('#period').select2(); 
+             
+                                 } ); 
+                        
+                        
+                    }});
+   
+   }
+   
+
+getPeriod();
 
 //=========================================Run validation================================
 
@@ -622,17 +685,25 @@
 
                                        var retv = true;
 
-                                       //hts tsts > HTS Pos
+//                                      As_Kits
+//NonAs_Kits
+//As_Res
+//NonAs_Res
+//As_Neg
+//NonAs_Neg
+//As_Pos
+//NonAs_Pos
+//As_Ref
+//NonAs_Ref
+//As_Con_Pos
+//NonAs_Con_Pos
+//As_Linked
+//NonAs_Linked
 
-                                       //HTS Pos > HTS Link
 
-                                       //HTS_TST
-                                       //HTS_TST_POS
-                                       //TX_LINK
+                                       var validationsid = ["As_Kits@As_Res", "NonAs_Kits@NonAs_Res", "As_Res@As_Neg","NonAs_Res@NonAs_Neg", "As_Res@As_Pos","NonAs_Res@NonAs_Pos", "As_Pos@As_Ref", "NonAs_Pos@NonAs_Ref", "As_Pos@As_Con_Pos", "NonAs_Pos@NonAs_Con_Pos", "As_Pos@As_Linked", "NonAs_Pos@NonAs_Linked"];
 
-                                       var validationsid = ["HTS_TST_INDEX@HTS_POS_INDEX", "HTS_TST_MOBILE@HTS_POS_MOBILE", "HTS_TST_VCT@HTS_POS_VCT", "HTS_TST_OTHER@HTS_POS_OTHER"];
-
-                                       var agedis = ["fsw", "msm"];
+                                       var agedis = ["total"];
                                        var agedis_detailed = ["Total"];
 
                                        for (var b = 0; b < validationsid.length; b++) {
@@ -701,33 +772,37 @@
 
 //___indicators to pull___
 
-                                       var organisationunitid = "";
-                                       var eddate = "";
-                                       var stdate = "";
-                                       var daterange = "";
-                                       var dic = "";
-
-                                       var ward = "";
-                                       var ward_name = "";
+                                       var facil = "";
+                                       var modid = "";
+                                       var ym = "";
+                                     
+                                     
 
 
 //dic=$("#dic").find(":selected").data('datimid');
-                                       dic = $("#dic").val();
-                                       ward = $("#dic").find(":selected").data("ward_id");
-                                       ward_name = $("#dic").find(":selected").data("ward_name");
-                                       eddate = $("#reportingdate").val();
+                                       facil = $("#facility").val();
+                                       modid = $("#modality").val();
+                                       ym = $("#period").val();
+                                     
 
 
 //this should happen in a loop
 
 
-                                       if (dic === '' || dic === 'Select dic') {
+                                       if (facil === '' || facil === 'Select facility') {
 
-                                           alert("enter DIC");
+                                           alert("enter Facility");
 
-                                       } else if (eddate === '') {
+                                       } 
+                                       
+        else if (modid === '') {
 
-                                           alert("enter reporting date");
+                                           alert("enter Reporting Modality");
+
+                                       }
+        else if (ym === '') {
+
+                                           alert("enter reporting period");
 
                                        } else if (runvalidation() === false)
                                        {
@@ -741,7 +816,7 @@
 
 
                                            $.ajax({
-                                               url: 'getKPIndicators',
+                                               url: 'getHtsSelfIndicators',
                                                type: 'post',
                                                dataType: 'json',
                                                success: function (data) {
@@ -750,22 +825,20 @@
                                                        var isend = false;
 
                                                        var indicatorid = data[a].id;
-                                                       var msm = $("#" + indicatorid + "_msm").val();
-                                                       var fsw = $("#" + indicatorid + "_fsw").val();
-
-                                                       var identifier = dic + "_" + eddate + "_" + indicatorid;
+                                                       var value = $("#" + indicatorid + "_total").val();
+                                                      
+                                                       var identifier = facil + "_" +ym + "_"+ modid + "_" + indicatorid;
 
 
                                                        //save the data
-
+                       
                                                        var saveddata = {
                                                            id: identifier,
-                                                           ward: ward,
-                                                           date: eddate,
-                                                           dic: "" + dic,
-                                                           indicator: indicatorid,
-                                                           fsw: fsw,
-                                                           msm: msm
+                                                           yearmonth: ym,
+                                                           facility: facil,                                                          
+                                                           indicatorid: indicatorid,
+                                                           value: value,
+                                                           modality: modid
 
                                                        };
 
@@ -774,7 +847,7 @@
 
                                                        if (a === parseInt(data.length) - 1) {
                                                            isend = true;
-
+                                                         
                                                        }
 
                                                        exportData(saveddata, isend);
@@ -800,7 +873,7 @@
 
 
                                        $.ajax({
-                                           url: 'saveKpdaily',
+                                           url: 'saveHtsSelfData',
                                            type: 'post',
                                            dataType: 'html',
                                            data: data,
@@ -809,8 +882,9 @@
 
                                                    console.log("Data saved Succesfully!");
                                                    $("#fedback").html("<font color='green'><h3>Data saved Succesfully!</h3></f>");
-                                           setTimeout(refreshujumbe,2000);
-                                  
+    
+                                         setTimeout(refreshujumbe,2000);
+    
                                                }
 
                                            }
@@ -821,6 +895,11 @@
 
 //call the function that displays the data
 
+function refreshujumbe(){
+    
+    $("#fedback").html("");
+    
+}
 
 //==================function to import data
 
@@ -829,11 +908,6 @@
                                    $(this).removeClass('btn-lg btn-default').addClass('btn btn-success');
 //});
 
-function refreshujumbe(){
-    
-  $("#fedback").html("");   
-    
-}
 
 
                                    function numbers(evt) {
@@ -884,49 +958,6 @@ function refreshujumbe(){
 
 
 
-                                   function showtoday() {
-
-
-
-                                       var currentdate = new Date();
-
-                                       var mn = "" + (currentdate.getMonth() + 1);
-                                       var dt = "" + currentdate.getDate();
-                                       var hr = "" + currentdate.getHours();
-                                       var min = "" + currentdate.getMinutes();
-                                       var sc = "" + currentdate.getSeconds();
-                                       if (mn.length === 1) {
-                                           mn = '0' + mn;
-                                       }
-                                       if (dt.length === 1) {
-                                           dt = '0' + dt;
-                                       }
-                                       if (hr.length === 1) {
-                                           hr = '0' + hr;
-                                       }
-                                       if (min.length === 1) {
-                                           min = '0' + min;
-                                       }
-                                       if (sc.length === 1) {
-                                           sc = '0' + sc;
-                                       }
-
-
-                                       var leo = "" + currentdate.getFullYear() + "-" + mn + "-" + dt;
-
-                                       $("#reportingdate").val(leo);
-
-                                       return leo;
-                                   }
-                                   showtoday();
-
-
-
-
-
-
-
-
 
                                    $('#dataentry').on('keydown', 'input, select, textarea', function (e) {
                                        var self = $(this)
@@ -948,11 +979,15 @@ function refreshujumbe(){
 
                                    function isdisplayindicators()
                                    {
-                                       var dt = $("#reportingdate").val();
-
-                                       var fc = $("#dic").val().trim();
+                                       
+                                     
+            
+       
+                                       var ym = $("#period").val().trim();
+                                       var mod = $("#modality").val().trim();
+                                       var fc = $("#facility").val().trim();
 //    console.log("_"+fc+"vs"+dt);
-                                       if (dt !== '' && fc !== 'Select dic' && fc !== '')
+                                       if (mod !== '' && ym !== '' && fc !== 'Select facility' && fc !== '')
                                        {
                                            // display facility name
                                            $("#dynamicindicators").show();
@@ -960,7 +995,7 @@ function refreshujumbe(){
 
                                            //now load the data
                                            $.ajax({
-                                               url: 'getKPIndicators?dt=' + dt + "&fc=" + fc,
+                                               url: 'getHtsSelfIndicators?ym=' + ym + "&fc=" + fc+"&mod="+mod,
                                                type: 'post',
                                                dataType: 'html',
                                                success: function (data)
