@@ -46,6 +46,13 @@ appl.directive("requiredOption", function() {
 });
 
 
+appl.directive("monthlyFormUpload", function() {
+  return {
+    template : `<font style='color:red;'>*</font>`
+  };
+});
+
+
 // Directive to show refresh, Data export button and Options for excel reports
 
 

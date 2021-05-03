@@ -26,6 +26,7 @@
         <meta name="generator" content="Bootply" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <link href="css/bootstrap.css" rel="stylesheet">
         <link href="css/bootstrap-datepicker.min.css" rel="stylesheet">
         <link rel="stylesheet" href="css/select2.min.css">
@@ -51,7 +52,10 @@
                 display: table;
                 table-layout: fixed;
             }
-
+            td {
+               padding:5px; 
+                
+            }
 
             @media screen and (min-width: 600px) and (max-width: 1199px)  {
                 #weeklydataform {
@@ -76,7 +80,7 @@
         <div id="top-nav" class="navbar navbar-inverse navbar-static-top">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <button id="toolid" style="float:left;color:white; text-align: center;" class="navbar-toggle btn btn-default" >&nbsp; KeyPop Daily</button>
+                    <button id="toolid" style="float:left;color:white; text-align: center;" class="navbar-toggle btn btn-default" >&nbsp; KeyPop Data</button>
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -132,42 +136,12 @@
 
 
 
-                            <!--<div class="btn-group btn-group-justified">-->
-                            <!--                        <a href="#" id='refreshpage' class="btn btn-danger col-sm-4">
-                                                        <i class="glyphicon glyphicon-refresh"></i>
-                                                        <br> Refresh
-                                                    </a>-->
-
-
-
-                            <!--                            <a  class="btn btn-danger col-sm-3" id="exportdataanchor1" style="display:none;" title="Add Widget" data-toggle="modal" href="#addWidgetModal">
-                                                            <i class="glyphicon glyphicon-cloud-upload"></i>
-                                                            <br/>Export Data 
-                                                            <span id="unexportedno" style="color:yellow;">(0 site )</span>
-                                                        </a>
-                            -->
-
-                            <!--<a href="#" class="btn btn-primary col-sm-3">
-                                <i class="glyphicon glyphicon-cog"></i>
-                                <br> Settings
-                            </a>-->
-                            <!--                        <a class="btn btn-info col-sm-4" title="Help" data-toggle="modal" href="#help">
-                                                        <i class="glyphicon glyphicon-question-sign"></i>
-                                                        <br> Help
-                                                    </a>-->
-                            <!--                        <a class="btn btn-success col-sm-4" title="Reports"  href="hfrreports.jsp">
-                                                        <i class="glyphicon glyphicon-question-sign"></i>
-                                                        <br> Reports
-                                                    </a>-->
-
-                            <!--</div>-->
-
-
                             <!--tabs-->
                             <div class="panel">
                                 <ul class="nav nav-tabs " id="myTab">
                                     <li class="active newdata"><a href="#dataentry" id="newdatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-plus"></i> Daily Form</a></li>
-                                    <li ><a href="#monthlyform" id="monthlyformbtn" data-toggle="tab">  <i class="glyphicon glyphicon-download"></i>  Monthly Form</a></li>
+                                    <li ><a href="#monthlyform" id="monthlyformbtn" data-toggle="tab">  <i class="glyphicon glyphicon-download"></i>  Download KP Form</a></li>
+                                    <li ><a href="#monthlyformupload" id="monthlyformuploadbtn" data-toggle="tab">  <i class="glyphicon glyphicon-Upload"></i> Upload KP Form</a></li>
                                     <!--<li class="active editdata" style='display:none;' ><a href="#dataentry" id="newdatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-edit"></i> Edit Data</a></li>-->
                                     <li><a href="#reports"  style="display:none;" id="reportsbutton" data-toggle="tab"> <i class="glyphicon glyphicon-stats"></i> Report</a></li> 
                                     <!--<li><a href="#searchdata" data-toggle="tab"> <i class="glyphicon glyphicon-search"></i> Edit Data</a></li>--> 
@@ -315,7 +289,7 @@
                                         
                                         <form action='getKPForm' method='post' class='form form-group'>
 
-                                        <h5 class='well' style="text-align:center ; background-color: #449d44; padding:4px;"> 
+                                        <h5 class='well well-lg' style="text-align:center ; background-color: #449d44; padding:4px;color:white;"> 
                                             <b>Download Monthly Data Collection Form </b>
                                         </h5>
                                         <!--- Data export---->
@@ -358,6 +332,37 @@
                                         
                                         </form>
                                     </div>
+                            <!-----------------Monthly Form Upload------------------->                                            
+                           <div class="tab-pane well" id="monthlyformupload">
+                           
+                             <form action="uploadMonthlyForm" id="formActions" method="post" enctype="multipart/form-data" class="form">
+                   
+                                 <hr>
+                           <div  class="control-group col-xs-12" >
+                              <label class="control-label col-xs-2">Select Form <required-option></required-option></label>
+                              <div class="controls col-xs-10">
+                                 <input onMouseOver='checksession();' accept=".xlsx" required type="file" name="file_name" multiple="true" id="upload" value="" class="textbox" required> 
+                              </div>
+                           </div> 
+                        
+                        
+                           <div  class="control-group col-xs-12" >
+                              <label class="control-label col-xs-6"></label>
+                              <div class="controls col-xs-6">
+                                  <button type="submit" id="run_upload" class="btn btn-success">Upload</button>
+                              </div>
+                           </div>
+                                 
+                          <br/> 
+                          <br/> 
+                      <hr/>      
+                           <div class="form-actions">
+                         
+<h5 id="ujumbe" style="color:green;margin-left: 0px;font-family: sans-serif;font"></h5>
+                           </div>
+                        </form> 
+                               
+                           </div>
 
                                     <div class="tab-pane well" id="reports">
 
@@ -516,7 +521,7 @@
                         <h4 class="modal-title">Help</h4>
                     </div>
                     <div class="modal-body">
-                        <p>This  application is created for aiding Local Implementing partners in collecting daily KP data.</p>
+                        <p>This  application is created for aiding Local Implementing partners in collecting daily and Monthly KP data.</p>
                         <h3>Indicators</h3>
                         <p>The specific indicators that one should enter data for are;</p>
                         <ul>
@@ -632,7 +637,7 @@
 
                                        var validationsid = ["HTS_TST_INDEX@HTS_POS_INDEX", "HTS_TST_MOBILE@HTS_POS_MOBILE", "HTS_TST_VCT@HTS_POS_VCT", "HTS_TST_OTHER@HTS_POS_OTHER"];
 
-                                       var agedis = ["fsw", "msm"];
+                                       var agedis = ["fsw","msm"];
                                        var agedis_detailed = ["Total"];
 
                                        for (var b = 0; b < validationsid.length; b++) {
@@ -986,5 +991,123 @@ function refreshujumbe(){
 
         </script>
 
+        
+   
+  
+   <script>
+  
+      
+   
+      
+      function checksession(){
+          
+                     $.ajax({
+url:'IsSessionActive',
+type:'post',
+dataType:'html',
+success:function (data){
+console.log(""+data);   
+
+if(data.trim()==='No Active session'){
+    //log user out
+  window.location='kp_index.jsp';  
+    
+}
+
+    
+       //document.getElementById("month").innerHTML=data;
+      // App.init();  
+        
+}
+
+
+});   
+          
+          
+          
+      }
+      
+   </script>
+   
+   
+<script > 
+     $(document).ready(function(){
+        $("#progress_area").hide();
+        $("#upload_area").show();
+         
+    $("form").submit(function(){
+        $("#progress_area").show();
+        $("#upload_area").hide();
+//        alert("data submitted");
+     setInterval(function() {
+      load_records();
+      }, 100);  
+    });
+     });
+      $("#ujumbe").html("Note:Ensure by the time of uploading, you have corrected all the displayed errors in the excel template.");
+     function load_records()
+     {
+             $.ajax({
+        url:'check_status?load_type=form1a',
+        type:"post",
+        dataType:"json",
+        success:function(response){
+//            alert("called");
+var per_value = response.count;
+var message = "["+per_value+"%] "+response.message+"";
+
+    $("#progess").html(message);
+    $("#progess").css({'width':per_value+"%"}); 
+
+    if(per_value<30){
+     $("#progess").addClass('progress-bar-danger');  
+     $("#progess").removeClass('progress-bar-success'); 
+    }
+    if(per_value>=30 && per_value<60){
+     $("#progess").addClass('progress-bar-warning');   
+     $("#progess").removeClass('progress-bar-danger');   
+    }
+    if(per_value>=60 && per_value<80){
+     $("#progess").addClass('progress-bar-info'); 
+     $("#progess").removeClass('progress-bar-warning');   
+     $("#progess").removeClass('progress-bar-danger');  
+    }
+    if(per_value>=90)
+    {
+     $("#progess").addClass('progress-bar-success'); 
+     $("#progess").removeClass('progress-bar-info'); 
+     $("#progess").removeClass('progress-bar-warning');   
+     $("#progess").removeClass('progress-bar-danger');  
+    }
+   
+    
+    if(response.refreshpage==='yes')
+    {
+      $("#upload_area").show(); 
+      $("#progress_area").hide();
+       
+      $("#ujumbe").html("<font color='red'>Form Completed with a Validation Error. Check the errors sheet on the Data Quality Download</font>");
+      $("#progess").html("Form Completed with a Validation Error. Check the errors sheet on the Data Quality Download");
+      $("#message").html("Form Upload Completed with a Validation Error. Check the errors sheet on the Data Quality Download");
+      $("#progess").css({'width':"99%"});
+      $("#progess").addClass('progress-bar-danger');  
+     //$("#progess").removeClass('progress-bar-success');        
+    }
+    
+    $("#status").html(response);
+    
+    
+        }, 
+        error: function(jqXHR, textStatus, errorThrown) {
+       //error in loading upload status
+       $("#status").html(errorThrown);
+            }
+  });
+     }
+</script>
+ 
+     
+        
+        
     </body>
 </html>

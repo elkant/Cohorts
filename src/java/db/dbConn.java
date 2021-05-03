@@ -58,13 +58,13 @@ public final class dbConn {
             if (getdbsettings(mydrive) == true) {
 
                 //String myfile=getServletContext().getRealPath("/dbsettings.txt");
-
+//verifyServerCertificate=false&useSSL=true&requireSSL=true
                 if (dbsetup[0] != null) {
 //connect = DriverManager.getConnection("jdbc:sqlserver://nkudat01:1433;databaseName=APHIAMAINDB_2014_NEWTOOLS;user=sa;password=Fhiimpact!;");
                     if(dbsetup[3]==null){connect = DriverManager.getConnection("jdbc:mysql://" + dbsetup[0] + "/" + dbsetup[1], dbsetup[2],"");
 }
                     else{
-                    connect = DriverManager.getConnection("jdbc:mysql://" + dbsetup[0] + "/" + dbsetup[1], dbsetup[2],dbsetup[3]);
+                    connect = DriverManager.getConnection("jdbc:mysql://" + dbsetup[0] + "/" + dbsetup[1], dbsetup[2],dbsetup[3]+"");
                         //System.out.println("jdbc:mysql://"+dbsetup[0] + "/" + dbsetup[1]+","+ dbsetup[2]+","+dbsetup[3]);
                     
                     }

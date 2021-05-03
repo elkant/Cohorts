@@ -296,6 +296,18 @@
         <servlet-name>htsself_login</servlet-name>
         <servlet-class>hts_self.htsself_login</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>uploadMonthlyForm</servlet-name>
+        <servlet-class>KP.uploadMonthlyForm</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>check_status</servlet-name>
+        <servlet-class>KP.check_status</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ValidateExcelSL</servlet-name>
+        <servlet-class>KP.ValidateExcelSL</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loadcohort</servlet-name>
         <url-pattern>/loadcohort</url-pattern>
@@ -591,6 +603,18 @@
     <servlet-mapping>
         <servlet-name>htsself_login</servlet-name>
         <url-pattern>/htsself_login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>uploadMonthlyForm</servlet-name>
+        <url-pattern>/uploadMonthlyForm</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>check_status</servlet-name>
+        <url-pattern>/check_status</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ValidateExcelSL</servlet-name>
+        <url-pattern>/ValidateExcelSL</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

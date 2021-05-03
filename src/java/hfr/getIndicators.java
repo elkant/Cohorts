@@ -239,7 +239,8 @@ return hm;
 
 
 
-public ResultSet pullIndicators(dbConn conn) throws SQLException{
+public ResultSet pullIndicators(dbConn conn) throws SQLException 
+{
 
 String qry="select * from pews.indicators where active='1' order by orodha asc";
 
