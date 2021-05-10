@@ -380,7 +380,7 @@
 
         <!-- /Main -->
 
-        <footer class="text-center"> &copy; Afya Nyota Ya Bonde | USAID </footer>
+        <footer class="text-center"> &copy; Usaid Tujenge Jamii | USAID </footer>
 
         <div class="modal" id="addWidgetModal">
             <div class="modal-dialog">

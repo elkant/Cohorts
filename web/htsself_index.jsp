@@ -75,7 +75,7 @@ int year= cal.get(Calendar.YEAR);
 				</form>
 			</div>
 		</div>
-<p align="center" style=" font-size: 18px;"> &copy  Afya Nyota Ya Bonde | USAID <%=year%></p>
+<p align="center" style=" font-size: 18px;"> &copy  Usaid Tujenge Jamii | USAID <%=year%></p>
 	</div>
 	
 

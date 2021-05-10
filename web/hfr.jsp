@@ -398,7 +398,7 @@ input:focus {
 
 <!-- /Main -->
 
-<footer class="text-center"> &copy; Afya Nyota Ya Bonde | USAID </footer>
+<footer class="text-center"> &copy; Usaid Tujenge Jamii | USAID </footer>
 
 <div class="modal" id="addWidgetModal">
     <div class="modal-dialog">
@@ -1281,7 +1281,7 @@ var identifier=facility_mfl_code+"_"+eddate+"_"+indicatorid;
                reporting_freq:'weekly',
                operatingunit:'kenya',
                fundingagency:'USAID',
-               partner:'Afya Nyota Ya Bonde',
+               partner:'Usaid Tujenge Jamii',
                mechanismid:'18495'
                
            };

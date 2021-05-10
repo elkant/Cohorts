@@ -357,7 +357,7 @@ public class ValidateExcelSL extends HttpServlet {
       
       String query = 
         "SELECT county.County AS County, district.DistrictNom AS SubCounty, subpartnera.SubPartnerNom AS HealthFacility, subpartnera.CentreSanteId AS MFLCode,\n" +
-        "substr('"+yearmonth+"',1,4) AS Year,monthname(str_to_date(substr('"+yearmonth+"',5,6),'%m')) as Month \n" +
+        "substr('"+yearmonth+"',1,4) AS Year,ifnull(monthname(str_to_date(substr('"+yearmonth+"',5,6),'%m')),'"+yearmonth+"') as Month \n" +
         "FROM subpartnera LEFT JOIN district ON subpartnera.DistrictID=district.DistrictID LEFT JOIN county ON district.CountyID=county.CountyID " +
         "WHERE SubPartnerID="+facilityID;
       conn.rs = conn.st.executeQuery(query);
