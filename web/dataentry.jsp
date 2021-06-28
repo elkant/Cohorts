@@ -486,7 +486,7 @@ input:focus {
 
 <!-- /Main -->
 
-<footer class="text-center"> &copy; AphiaPlus USAID </footer>
+<footer class="text-center"> &copy; USAID Tujenge Jamii </footer>
 
 <div class="modal" id="addWidgetModal">
     <div class="modal-dialog">

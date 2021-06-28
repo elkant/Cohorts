@@ -7,6 +7,7 @@
 
 
 
+<%@page import="General.IdGenerator2"%>
 <%@page import="db.dbConn"%>
 <%@page import="java.util.Calendar"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -178,8 +179,9 @@
                                    
                                     <div class="controls">
                                       <select   name='report' id='report' >
-                                      <option value='hfrreport'>1.HFR Reports (Surge and Non Surge)</option>
-                                 <option value='nonsurge_tracker'>2.Missing Reports Tracker</option>
+                                      <option value='hfrreport'>1.HFR Reports - Excel Version(Surge and Non Surge)</option>                                      
+                                      <option value='hfrreport_uploadble'>3.HFR Reports - Uploadable Version (Surge and Non Surge)</option>
+                                      <option value='nonsurge_tracker'>2.Missing Reports Tracker</option>
                                       
 <!--                                      <option value='htsclientraw'>3. HTS Client Level Raw </option>
                                       <option value='WeeklyData'>4. Data file only</option>-->
@@ -202,9 +204,11 @@
                               </div>
                               </div>
                               </td>
+                              
                               <td class="col-xs-4">
                               <div class="controls">
-                                  <input required type="text" title="this is the date that the week started" value="2020-01-20" class="form-control input-lg tarehe" name="weekstart" autocomplete="off" id="weekstart">
+                                     <% IdGenerator2 ig= new IdGenerator2(); %>
+                                     <input required type="text" title="this is the date that the week started" value="<%=ig.LastMonthStartDate()%>" class="form-control input-lg tarehe" name="weekstart" autocomplete="off" id="weekstart">
                               </div>
                            </td>
                            </tr>
@@ -219,7 +223,7 @@
                       </td>
                       <td class="col-xs-4">
                               <div class="controls">
-                                  <input required type="text" value='' title="this is the date that the week ended" value="<%if (session.getAttribute("weekend") != null) {out.println(session.getAttribute("weekend")); }%>" class="form-control input-lg tarehe" name="weekend" id="weekend" autocomplete="off">
+                                  <input required type="text"  title="this is the date that the week ended" value="<%=ig.LastMonthEndDate()%>" class="form-control input-lg tarehe" name="weekend" id="weekend" autocomplete="off">
                               </div>
                            </div>
                               </td>

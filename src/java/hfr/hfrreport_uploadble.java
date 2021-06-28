@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package reports;
+package hfr;
 
 
 import General.IdGenerator;
@@ -36,7 +36,7 @@ import static reports.pnsreports.isNumeric;
  *
  * @author EKaunda
  */
-public class hfrreport extends HttpServlet {
+public class hfrreport_uploadble extends HttpServlet {
 
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -149,7 +149,7 @@ public class hfrreport extends HttpServlet {
         
         //========Query two====Facility Details==============
         
-        String storedprocedurename=" call pews.getHFR('"+startdate+"','"+enddate+"');";
+        String storedprocedurename=" call pews.getHFR_uploadable('"+startdate+"','"+enddate+"');";
         
        
         
@@ -242,7 +242,7 @@ rw.setHeightInPoints(26);
         response.setContentType("application/ms-excel");
         response.setContentLength(outArray.length);
         response.setHeader("Expires:", "0"); // eliminates browser caching
-        response.setHeader("Content-Disposition", "attachment; filename=" + "UTJ_HFR_rpt_for_"+startdate+"_to_"+enddate+"_gen_" + createdOn.trim() + ".xlsx");
+        response.setHeader("Content-Disposition", "attachment; filename=" + "UTJ_HFR_rpt_for_"+startdate+"_to_"+enddate+"__gen_" + createdOn.trim() + ".xlsx");
          response.setHeader("Set-Cookie","fileDownload=true; path=/");
         OutputStream outStream = response.getOutputStream();
         outStream.write(outArray);
@@ -256,7 +256,7 @@ rw.setHeightInPoints(26);
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(rawdata.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(hfrreport_uploadble.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -266,7 +266,7 @@ rw.setHeightInPoints(26);
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(rawdata.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(hfrreport_uploadble.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

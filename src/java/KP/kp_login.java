@@ -43,7 +43,7 @@ String userAccess;
        m.update(pass.getBytes(), 0, pass.length());
        password = new BigInteger(1, m.digest()).toString(16);
         System.out.println("username : "+username+" password : "+password);  
-        String logger="SELECT userid,fname,mname,lname,level,lip FROM internal_system.kp_user WHERE username=? && password=?" ;
+        String logger="SELECT userid,fname,mname,lname,level,lip FROM internal_system.kp_user WHERE username=? && password=? and active=1" ;
         conn.pst=conn.connect.prepareStatement(logger);
         conn.pst.setString(1, username);
         conn.pst.setString(2, password);

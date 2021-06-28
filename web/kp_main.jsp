@@ -25,6 +25,7 @@
         <title>KP</title>
         <meta name="generator" content="Bootply" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+          <link rel="stylesheet" href="css/progress_bar.css">
         <link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <link href="css/bootstrap.css" rel="stylesheet">
@@ -70,7 +71,38 @@
                     margin-right:30%;
                 }
             }
-
+<style>
+#notify {
+  position: relative;
+  /*text-transform: uppercase;*/
+  letter-spacing: 2px;
+  font-weight: 900;
+  text-decoration: none;
+  color: red;
+  font-size: 23px;
+  display: inline-block;
+}
+    </style>
+    
+    <style>
+                    
+                    [data-notify="progressbar"] {
+	margin-bottom: 0px;
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	width: 100%;
+	height: 5px;
+}
+       div.scrollmenu {
+    overflow: auto;
+    white-space: nowrap;
+}  
+tr>td {
+  padding-bottom: 1em;
+  padding-right: 3em;
+}                  
+                
 
         </style>
 
@@ -139,16 +171,16 @@
                             <!--tabs-->
                             <div class="panel">
                                 <ul class="nav nav-tabs " id="myTab">
-                                    <li class="active newdata"><a href="#dataentry" id="newdatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-plus"></i> Daily Form</a></li>
+                                    <li class="newdata"><a href="#dataentry" id="newdatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-plus"></i> Daily Form</a></li>
                                     <li ><a href="#monthlyform" id="monthlyformbtn" data-toggle="tab">  <i class="glyphicon glyphicon-download"></i>  Download KP Form</a></li>
-                                    <li ><a href="#monthlyformupload" id="monthlyformuploadbtn" data-toggle="tab">  <i class="glyphicon glyphicon-Upload"></i> Upload KP Form</a></li>
+                                    <li class="active"><a href="#monthlyformupload" id="monthlyformuploadbtn" data-toggle="tab">  <i class="glyphicon glyphicon-Upload"></i> Upload KP Form</a></li>
                                     <!--<li class="active editdata" style='display:none;' ><a href="#dataentry" id="newdatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-edit"></i> Edit Data</a></li>-->
                                     <li><a href="#reports"  style="display:none;" id="reportsbutton" data-toggle="tab"> <i class="glyphicon glyphicon-stats"></i> Report</a></li> 
                                     <!--<li><a href="#searchdata" data-toggle="tab"> <i class="glyphicon glyphicon-search"></i> Edit Data</a></li>--> 
                                     <!-- <li><a href="#export" data-toggle="tab"> <i class="glyphicon glyphicon-cloud-upload"></i> Data Export</a></li>-->
                                 </ul>
                                 <div class="tab-content">
-                                    <div class="tab-pane active well col-md-12" id="dataentry">
+                                    <div class="tab-pane  well col-md-12" id="dataentry">
                                         <!--Data entry code-->
                                         <div class="panel panel-default">
 
@@ -333,9 +365,15 @@
                                         </form>
                                     </div>
                             <!-----------------Monthly Form Upload------------------->                                            
-                           <div class="tab-pane well" id="monthlyformupload">
-                           
-                             <form action="uploadMonthlyForm" id="formActions" method="post" enctype="multipart/form-data" class="form">
+                 <div class="tab-pane active well" id="monthlyformupload">
+                  <div  class="portlet-body form" id="progress_area" hidden="true">
+                     <div class="progress"  style="height: 50px;">
+                     <div class="progress-bar progress-bar-striped active" id="progess" role="progressbar" style="width: 0%;  padding-top: 5px; font-weight: 900;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                     </div>   
+                  </div>
+                          
+                     <div id="upload_area">
+                             <form action="uploadMonthlyForm" id="kpform" method="post" enctype="multipart/form-data" class="portlet-body form">
                    
                                  <hr>
                            <div  class="control-group col-xs-12" >
@@ -361,6 +399,38 @@
 <h5 id="ujumbe" style="color:green;margin-left: 0px;font-family: sans-serif;font"></h5>
                            </div>
                         </form> 
+                               </div>
+                                 <div id="table_output">
+                      <div>
+                          <div style="font-weight: bolder; color: red;" id="message">
+                              <% if(session.getAttribute("message")!=null){
+                              out.println(session.getAttribute("message").toString());
+                              session.removeAttribute("message");
+                              }%>
+                              </div>
+                          <% if(session.getAttribute("warnings")!=null){
+                              if(!session.getAttribute("warnings").toString().equals("")){%>
+                          <br>
+                          <div>
+                              <div style="text-align: center; font-size: 30px; font-family: bolder; text-decoration: underline;">Early Warning Indicators: Data Quality Issues</div>
+                      <div style="text-align: right;">
+                          <button id="generate_output" class="btn-info btn-sm" style="background: "><b>Convert to Excel(.xls)</b></button>
+                      </div>
+                      <table id="table_warning" class="table table-striped table-bordered table-advance table-hover">
+                          <thead> <tr> <th>County</th><th>Sub County</th><th>DIC</th><th>DIC Code</th><th>Calendar Year</th><th>Month</th><th>Year-Month</th><th>Program</th><th>Message</th><th>Age Group</th></tr></thead>
+                      <tbody id="warnings_details">
+               <%
+               out.println(session.getAttribute("warnings").toString());
+               session.removeAttribute("warnings");
+                   %>
+                    
+                      </tbody>
+                </table>
+               </div>
+                   <%}
+}%>
+                   </div>
+                  </div>
                                
                            </div>
 
@@ -1035,7 +1105,7 @@ if(data.trim()==='No Active session'){
         $("#progress_area").hide();
         $("#upload_area").show();
          
-    $("form").submit(function(){
+    $("#kpform").submit(function(){
         $("#progress_area").show();
         $("#upload_area").hide();
 //        alert("data submitted");
@@ -1048,7 +1118,7 @@ if(data.trim()==='No Active session'){
      function load_records()
      {
              $.ajax({
-        url:'check_status?load_type=form1a',
+        url:'check_status?load_type=kpform1a',
         type:"post",
         dataType:"json",
         success:function(response){

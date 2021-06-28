@@ -202,7 +202,7 @@ public String[] getOrgunits(String mfl, dbConn conn,String [] orgunitsarr) throw
 String orgcols=arraytostring(orgunitsarr);
     
     String qr="select "+orgcols+" from internal_system.orgunits_vw where mflcode='"+mfl+"'";
-    System.out.println("HFR "+qr);
+    //System.out.println("KP Daily "+qr);
     conn.rs1=conn.st1.executeQuery(qr);
     
    String [] orgunit_values= new String [orgunitsarr.length]; 
@@ -217,7 +217,7 @@ String orgcols=arraytostring(orgunitsarr);
                {
  orgunit_values[i-1]=conn.rs1.getString(i);
  
-                   System.out.println("   variables "+conn.rs1.getString(i));
+                  // System.out.println("   variables "+conn.rs1.getString(i));
  
                //create row header
                 }

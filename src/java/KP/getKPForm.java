@@ -214,7 +214,7 @@ if(smonth.equals(emonth)){  mwezi=emonth;  } else { mwezi=smonth+"_to_"+emonth; 
                 ct.transfermacros(sr, np);
                 //rem np is the destination file name  
 
-                System.out.println("Copying aca template..");
+                System.out.println("Copying kp template..");
 
             } 
             
@@ -275,7 +275,7 @@ if(smonth.equals(emonth)){  mwezi=emonth;  } else { mwezi=smonth+"_to_"+emonth; 
                     }
                     //System.out.println("no of sheets:"+wb.getNumberOfSheets());
                     XSSFSheet shet=wb.getSheetAt(1);
-                    //wb.setSheetName(a+1, monthName(monthar));
+                    wb.setSheetName(a+1, monthName(monthar));
                     
                     //in here, creata sheets    
                     XSSFRow rw = shet.getRow(0);
@@ -315,11 +315,11 @@ if(smonth.equals(emonth)){  mwezi=emonth;  } else { mwezi=smonth+"_to_"+emonth; 
                   
             if (OSValidator.isWindows()) 
             {
-            npt = mydrive + ":\\HSDSA\\InternalSystem\\F1a\\Templates\\KP_MONTHLY_" + dicname.replace(" ", "_")+"_"+year +"_"+mwezi+ ".xlsx";
+            npt = mydrive + ":\\HSDSA\\InternalSystem\\F1a\\Templates\\KP_MONTHLY_" + workbookidentifier.replace(" ", "_")+ ".xlsx";
             }
             else if (OSValidator.isUnix()) 
             {
-            npt = "/HSDSA/InternalSystem/F1a/Templates/ACA_MCA_" + dicname.replace(" ", "_")+"_"+year+"_"+mwezi+ ".xlsx";
+            npt = "/HSDSA/InternalSystem/F1a/Templates/KP_MONTHLY_" + workbookidentifier.replace(" ", "_")+ ".xlsx";
             }
                 
 

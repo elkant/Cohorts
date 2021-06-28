@@ -308,6 +308,18 @@
         <servlet-name>ValidateExcelSL</servlet-name>
         <servlet-class>KP.ValidateExcelSL</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>hfrreport_uploadble</servlet-name>
+        <servlet-class>hfr.hfrreport_uploadble</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>lockf1a</servlet-name>
+        <servlet-class>KP.lockf1a</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>IsSessionActive</servlet-name>
+        <servlet-class>KP.IsSessionActive</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loadcohort</servlet-name>
         <url-pattern>/loadcohort</url-pattern>
@@ -615,6 +627,18 @@
     <servlet-mapping>
         <servlet-name>ValidateExcelSL</servlet-name>
         <url-pattern>/ValidateExcelSL</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>hfrreport_uploadble</servlet-name>
+        <url-pattern>/hfrreport_uploadble</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>lockf1a</servlet-name>
+        <url-pattern>/lockf1a</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>IsSessionActive</servlet-name>
+        <url-pattern>/IsSessionActive</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

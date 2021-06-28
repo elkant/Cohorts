@@ -119,7 +119,7 @@ String[] org_unit_vl=getOrgunits(mfl,conn,orgunitsarr);
 
 for(int a=0;a<org_unit_vl.length;a++)
 {
-    System.out.println("__ updates 2"+org_unit_vl[a]);
+    //System.out.println("__ updates 2"+org_unit_vl[a]);
     
 conn.pst1.setString(rowcount,org_unit_vl[a]);
 
@@ -206,7 +206,7 @@ public String[] getOrgunits(String mfl, dbConn conn,String [] orgunitsarr) throw
 String orgcols=arraytostring(orgunitsarr);
     
     String qr="select "+orgcols+" from internal_system.orgunits_vw where mflcode='"+mfl+"'";
-    System.out.println("HFR "+qr);
+    //System.out.println("HFR "+qr);
     conn.rs1=conn.st1.executeQuery(qr);
     
    String [] orgunit_values= new String [orgunitsarr.length]; 
@@ -221,7 +221,7 @@ String orgcols=arraytostring(orgunitsarr);
                {
  orgunit_values[i-1]=conn.rs1.getString(i);
  
-                   System.out.println("   variables "+conn.rs1.getString(i));
+                  // System.out.println("   variables "+conn.rs1.getString(i));
  
                //create row header
                 }

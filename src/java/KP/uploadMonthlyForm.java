@@ -80,7 +80,7 @@ public class uploadMonthlyForm extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-             String fullname = " Unknown User",email="";
+             String fullname = "Unknown User",email="";
         
     
         Poirowname="poi_row_no";
@@ -117,7 +117,8 @@ public class uploadMonthlyForm extends HttpServlet {
             String lastexcelid="250";
             
             session = request.getSession();
-            if (session.getAttribute("userid") != null) {
+            if (session.getAttribute("userid") != null) 
+            {
                 user_id = session.getAttribute("userid").toString();
             }
             
@@ -159,12 +160,12 @@ public class uploadMonthlyForm extends HttpServlet {
              
              
        
-            String activeversion = "Form 1A  version 1.1.0";
+            String activeversion = "KP Form  version 1.1.0";
          
             
-            String dbname = "kp_temp";
+            String dbname = "internal_system.kp_temp";
             
-           session.setAttribute("kpform1a", "<b>Checking F1a Version</b>");
+           session.setAttribute("kpform1a", "<b>Checking Form Version</b>");
         session.setAttribute("kpform1a_count", 1);  
             
             HashMap<String,String> uploaderdetails=getUsers(conn, user_id); 
@@ -174,8 +175,9 @@ public class uploadMonthlyForm extends HttpServlet {
                     email =  uploaderdetails.get("email");
             
             //GET ALLOWED PERIOD AND FACILITIES
-            String getinfo = "SELECT IFNULL(periods,'') AS periods,IFNULL(mfl_codes,'') AS mfl_codes FROM fas_allowed_excel_uploads";
+            String getinfo = "SELECT IFNULL(periods,'') AS periods,IFNULL(mfl_codes,'') AS mfl_codes FROM internal_system.fas_allowed_excel_uploads";
             conn.rs = conn.st.executeQuery(getinfo);
+            
             if(conn.rs.next())
             {
               periods = conn.rs.getString("periods");
@@ -183,6 +185,7 @@ public class uploadMonthlyForm extends HttpServlet {
             }
              
             nextpage = "kp_main.jsp";
+            
             String excelfilename = "";
             
             String applicationPath = request.getServletContext().getRealPath("");
@@ -239,7 +242,7 @@ public class uploadMonthlyForm extends HttpServlet {
                         XSSFWorkbook workbook = new XSSFWorkbook(bfs);
                         int rowCount=245;
                         
-                        String rn="select count(id) from kp_indicators where is_active=1 and dataset='kp_monthly'";
+                        String rn="select count(id) from internal_system.kp_indicators where is_active=1 and dataset='kp_monthly'";
                         
                         conn.rs=conn.st.executeQuery(rn);
                         
@@ -373,7 +376,7 @@ String supported_services = " WHERE (is_active=1 ) && ("+Poirowname+" is not nul
 String support_column_name, support_column_value;
 int num_serv_supported = 0;
 // READ FACILITY SUPPORTED SERVICES
-String get_supported_service = "SELECT SubPartnerID, IFNULL(PMTCT,0) AS PMTCT,IFNULL(ART,0) AS ART,IFNULL(VMMC,0) AS VMMC,IFNULL(HTC,0) AS HTC,IFNULL(Gender,0) AS Gender,IFNULL(PNS,0) AS PNS, IFNULL(IPD,0) AS IPD FROM subpartnera WHERE CentresanteID='" + mflcode + "'";
+String get_supported_service = "SELECT dic_id as SubPartnerID, IFNULL(active,0) AS PMTCT,IFNULL(active,0) AS ART,IFNULL(active,0) AS VMMC,IFNULL(active,0) AS HTC,IFNULL(active,0) AS Gender,IFNULL(active,0) AS PNS, IFNULL(active,0) AS IPD FROM internal_system.dic WHERE dic_id='" + mflcode + "'";
 System.out.println("" + get_supported_service);
 conn.rs = conn.st.executeQuery(get_supported_service);
 ResultSetMetaData metaData = conn.rs.getMetaData();
@@ -413,7 +416,7 @@ String code = "";
 String indicator_name = "";
 int poirow = 0;
 ArrayList insertal=new ArrayList();
-String getsections = "SELECT id,database_name,code,"+Poirowname+",concat('Uploaded: ',main_indicator,' , ',indicator) as indicator FROM fas_indicators " + supported_services + " and dataset='form1a' order by order_no ";
+String getsections = "SELECT id,database_name,code,"+Poirowname+",concat('Uploaded: ',main_indicator,' , ',indicator) as indicator FROM internal_system.kp_indicators " + supported_services + " and dataset='kp_monthly' order by order_no ";
 
 System.out.println("__"+getsections);
 conn.rs2 = conn.st2.executeQuery(getsections);
@@ -487,7 +490,7 @@ while (conn.rs2.next()) {
         insert += " is_locked='0',user_id='" + user_id + "',user_pc='" + getComputerName() + "',destination_table='" + table + "'";
         
         //================================check if data for facility is locked========================================
-        String getindicator = "SELECT is_locked FROM check_locked  where is_locked = '1' and id like '" + yearmonth + "_" + subpartnerid + "%' limit 1 ";
+        String getindicator = "SELECT is_locked FROM internal_system.check_locked  where is_locked = '1' and id like '" + yearmonth + "_" + subpartnerid + "%' limit 1 ";
         // System.out.println(""+getindicator);
        
         //hasexcecuted variable checks if data for a specific yearmonth is locked on the original yearmonths 
@@ -635,8 +638,8 @@ while (conn.rs2.next()) {
     }
 }
 else{
-  uploadstatus+="The period you are uploading for has been Locked/Blocked i.e Period: "+yearmonth+" and mflcode: "+mflcode+"\n";
-  failed_reason+= "The period you are uploading for has been Locked/Blocked i.e <br><br>Period: "+yearmonth+" and mflcode: "+mflcode+"<br>";
+  uploadstatus+="The period you are uploading for has been Locked/Blocked i.e Period: "+yearmonth+" and diccode: "+mflcode+"\n";
+  failed_reason+= "The period you are uploading for has been Locked/Blocked i.e <br><br>Period: "+yearmonth+" and diccode: "+mflcode+"<br>";
 
   
                 
@@ -675,8 +678,8 @@ else{
 
   }//end of worksheets loop
                         
-        session.setAttribute("form1a", "<b>Data Saving complete</b>");
-        session.setAttribute("form1a_count", 100);  
+        session.setAttribute("kpform1a", "<b>Data Saving complete</b>");
+        session.setAttribute("kpform1a_count", 100);  
     
                         
                     } catch (SQLException ex) {
@@ -759,7 +762,7 @@ else{
       {
       totransferymf+="'"+yearm+"_"+facilid+"',";
       }
-       String tx = "Sucess: Uploaded excel for Facility "+getFacilityname(conn,facilid)+" " + yearm.substring(0, 4) + " , " + yearm.substring(4) + " \n ";
+       String tx = "Sucess: Uploaded excel for DIC "+getFacilityname(conn,facilid)+" " + yearm.substring(0, 4) + " , " + yearm.substring(4) + " \n ";
                    System.out.println(""+tx);
                 if (!uploadstatus.contains(tx)) 
                 {
@@ -775,7 +778,7 @@ else{
                   String yearm=((JSONObject)jarray.get(i)).get("yearmonth").toString();
                  String facilid=((JSONObject)jarray.get(i)).get("facility_id").toString();
                  
-                  String tx = "Failed: Failed Validation for Facility "+getFacilityname(conn,facilid)+" " + yearm.substring(0, 4) + " , " + yearm.substring(4) + " \n ";
+                  String tx = "Failed: Failed Validation for DIC "+getFacilityname(conn,facilid)+" " + yearm.substring(0, 4) + " , " + yearm.substring(4) + " \n ";
                                   System.out.println(""+tx);
                   if (!uploadstatus.contains(tx)) 
                 {
@@ -791,24 +794,24 @@ else{
        for(int q=1;q<=mailstosent;q++){
                 try {
                     session.setAttribute("form1a", "<b>sending F1a Copy to Server</b>");
-        session.setAttribute("form1a_count", 99); 
+        session.setAttribute("kpform1a_count", 99); 
                     //send to developers
-                    SendF1excel(maildetails.get("fac"+q), maildetails.get("st"+q) , maildetails.get("fp"+q), maildetails.get("fn"+q), maildetails.get("fulln"+q),"aphiabackup@gmail.com,DJuma@fhi360.org,MNderitu@fhi360.org,Ekaunda@fhi360.org","Admin");
+                    SendF1excel(maildetails.get("fac"+q), maildetails.get("st"+q) , maildetails.get("fp"+q), maildetails.get("fn"+q), maildetails.get("fulln"+q),"aphiabackup@gmail.com,DeJuma@deloitte.co.ke,MaNderitu@deloitte.co.ke,EMaingi@deloitte.co.ke,HNyongesa@fhi360.org","Admin");
                     
                     //send to user
                     if(!email.equals(""))
                         session.setAttribute("form1a", "<b>sending F1a Copy to System user</b>");
-        session.setAttribute("form1a_count", 99);
+        session.setAttribute("kpform1a_count", 99);
                     SendF1excel(maildetails.get("fac"+q), maildetails.get("st"+q) , maildetails.get("fp"+q), maildetails.get("fn"+q), maildetails.get("fulln"+q),email,maildetails.get("fulln"+q));
                    session.setAttribute("form1a", "<b>Completed upload process</b>");
-        session.setAttribute("form1a_count", 100); 
+        session.setAttribute("kpform1a_count", 100); 
                 } catch (MessagingException ex) {
                     Logger.getLogger(uploadMonthlyForm.class.getName()).log(Level.SEVERE, null, ex);
                 }
        }
             
-        session.removeAttribute("form1a");
-        session.removeAttribute("form1a_count");
+        session.removeAttribute("kpform1a");
+        session.removeAttribute("kpform1a_count");
             
             System.out.println("uploaded : "+no_uploads);
              
@@ -825,7 +828,7 @@ else{
           
           else if(no_uploads==0){
           session.setAttribute("warnings", "");
-          session.setAttribute("message", " <img src=\"images/failed.png\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b id=\"notify\">ERROR: "+failed_reason+"</b> ");
+          session.setAttribute("message", " <img style='height:70px;' src=\"images/failed.png\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b id=\"notify\">ERROR: "+failed_reason+"</b> ");
           response.sendRedirect("kp_main.jsp"); 
           }
           
@@ -833,7 +836,7 @@ else{
           session.removeAttribute("warnings");
           session.removeAttribute("message");
           
-          session.setAttribute("ref_form1a","yes");
+          session.setAttribute("ref_kpform1a","yes");
         
                         
             XSSFWorkbook wb1;
@@ -846,7 +849,7 @@ else{
     response.setContentLength(outArray.length);
     response.setHeader("Expires:", "0"); // eliminates browser caching
     response.setHeader("Set-Cookie:", "fileDownload=true; path=/"); // set cookie header
-    response.setHeader("Content-Disposition", "attachment; filename=Data_Quality_Errors.xlsx");
+    response.setHeader("Content-Disposition", "attachment; filename=KP_Data_Quality_Errors.xlsx");
     OutputStream outStream = response.getOutputStream();
     outStream.write(outArray);
     outStream.flush();
@@ -1005,7 +1008,7 @@ else{
 
         IdGenerator gn = new IdGenerator();
 
-        String textBody = "Hi "+username+",\nAttached is a Form 1A data upload for " + facility + " uploaded by " + uploadername + " on date " + gn.toDay() + " .\n"
+        String textBody = "Hi "+username+",\nAttached is a KP Form 1A data upload for " + facility + " uploaded by " + uploadername + " on date " + gn.toDay() + " .\n"
                 + "\n "+stat+" \n *******This is a system autogenerated message*****";
         toAddress = email;
         String host = "smtp.gmail.com";
@@ -1026,7 +1029,7 @@ else{
 
         message.setRecipients(Message.RecipientType.TO, toAddress);
 
-        message.setSubject(facility + " F1A data Upload by " + uploadername);
+        message.setSubject(facility + " KP F1A data Upload by " + uploadername);
 
         BodyPart messageBodyPart = new MimeBodyPart();
 
@@ -1067,7 +1070,7 @@ boolean retvalue=true;
         try {
             //sample yearmonth_subpartnerid   '201901_226','201902_226','201903_226'
             
-            String qry = "select * from kp_temp where concat(yearmonth,'_',facility_id) in (" + yearmonth_subpartnerid + ") group by destination_table";
+            String qry = "select * from internal_system.kp_temp where concat(yearmonth,'_',facility_id) in (" + yearmonth_subpartnerid + ") group by destination_table";
             conn.rs3 = conn.st3.executeQuery(qry);
             
             String destinationtable = "";
@@ -1109,14 +1112,14 @@ boolean retvalue=true;
 
 //delete the existing data first
 
-String deleteqry=" delete from "+destinationtable+" where concat(yearmonth,'_',facility_id) in (" + yearmonth_subpartnerid + ")";
+String deleteqry=" delete from internal_system."+destinationtable+" where concat(yearmonth,'_',facility_id) in (" + yearmonth_subpartnerid + ")";
 
                // System.out.println(" To delete column: "+deleteqry);
 
                 conn.st_1.executeUpdate(deleteqry);
                 
             String skipblanks=" and concat_ws(',',m_uk,f_uk,m_1,f_1,m_4,f_4,m_9,f_9,m_14,f_14,m_19,f_19,m_24,f_24,m_29,f_29,m_34,f_34,m_39,f_39,m_44,f_44,m_49,f_49,m_50,f_50,total) !='0' && concat_ws(',',m_uk,f_uk,m_1,f_1,m_4,f_4,m_9,f_9,m_14,f_14,m_19,f_19,m_24,f_24,m_29,f_29,m_34,f_34,m_39,f_39,m_44,f_44,m_49,f_49,m_50,f_50,total) !='' ";    
-replaceqry = "Replace  " + destinationtable + " select " + colstomigrate + " from kp_temp where destination_table='" + destinationtable + "' and concat(yearmonth,'_',facility_id) in (" + yearmonth_subpartnerid + ")  "+skipblanks+" ";
+replaceqry = "Replace  internal_system." + destinationtable + " select " + colstomigrate + " from internal_system.kp_temp where destination_table='" + destinationtable + "' and concat(yearmonth,'_',facility_id) in (" + yearmonth_subpartnerid + ")  "+skipblanks+" ";
 //System.out.println(""+replaceqry);
 conn.st_1.executeUpdate(replaceqry);
 count++;
@@ -1140,7 +1143,7 @@ boolean iscomplete=true;
             
             //delete the updated data
             //select * from kp_temp where concat(yearmonth,'_',facility_id) in ('201901_226','201901_377','201902_377','201902_226','201903_226')
-            String deleteqry = "delete from kp_temp where concat(yearmonth,'_',facility_id) in ("+yearmonth_subpartnerid+") ";
+            String deleteqry = "delete from internal_system.kp_temp where concat(yearmonth,'_',facility_id) in ("+yearmonth_subpartnerid+") ";
             conn.st_1.executeUpdate(deleteqry);
         } catch (SQLException ex) 
         {
@@ -1156,7 +1159,7 @@ boolean iscomplete=true;
                 
                 
                 // update the audit trails table with relevant information
-                String insert_audit_trails = "INSERT INTO fas_audit_trails (entry_id,table_name,fullname,facility,indicator,yearmonth,user_pc) VALUES(?,?,?,?,?,?,?)";
+                String insert_audit_trails = "INSERT INTO internal_system.fas_audit_trails (entry_id,table_name,fullname,facility,indicator,yearmonth,user_pc) VALUES(?,?,?,?,?,?,?)";
                 conn.pst = conn.connect.prepareStatement(insert_audit_trails);
                 conn.pst.setString(1, id);
                 conn.pst.setString(2, "kp_temp");
@@ -1172,10 +1175,10 @@ boolean iscomplete=true;
      
      }
      
-     public String getFacilityname(dbConn conn, String facilityid) throws SQLException{
+     public String getFacilityname(dbConn conn, String dicid) throws SQLException{
      String facility="unkown";
      
-     conn.rs_6=conn.st_6.executeQuery("select subpartnernom from subpartnera where subpartnerid='"+facilityid+"'");
+     conn.rs_6=conn.st_6.executeQuery("select dic_name from internal_system.dic where dic_id='"+dicid+"'");
      
      while(conn.rs_6.next())
      {
@@ -1197,7 +1200,7 @@ boolean iscomplete=true;
          String dpword="";
          
          
-     String getusername = "SELECT fname,lname,IFNULL(email,'aphiabackup@gmail.com') AS email , dhis2_uname, dhis2_pword FROM user WHERE userid='" + user_id + "'";
+     String getusername = "SELECT fname,lname,IFNULL(email,'aphiabackup@gmail.com') AS email , dhis2_uname, dhis2_pword FROM internal_system.kp_user WHERE userid='" + user_id + "'";
                 conn.rs1 = conn.st1.executeQuery(getusername);
                 if (conn.rs1.next())
                 {

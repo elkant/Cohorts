@@ -127,7 +127,7 @@ public class ValidateExcelSL extends HttpServlet {
     public boolean data_exist(String facil_id, String yearmonth) throws SQLException{
         boolean status= false;
         int validations_ni_ngapi=0;
-         String countRules="SELECT count(validation) FROM kp_validation WHERE active=1 AND source='excel'   ";
+         String countRules="SELECT count(validation) FROM internal_system.kp_validation WHERE active=1 AND source='excel'   ";
         
          conn.rs = conn.st.executeQuery(countRules);
      if(conn.rs.next()){
@@ -139,7 +139,7 @@ public class ValidateExcelSL extends HttpServlet {
      }
      
      
-     String count_recs = "SELECT COUNT(id) AS no_recs FROM "+table_name+" WHERE yearmonth="+yearmonth+" AND facility_id="+facil_id+"";
+     String count_recs = "SELECT COUNT(id) AS no_recs FROM internal_system."+table_name+" WHERE yearmonth="+yearmonth+" AND facility_id="+facil_id+"";
      conn.rs = conn.st.executeQuery(count_recs);
      if(conn.rs.next()){
          if(conn.rs.getInt(1)>0){
@@ -167,7 +167,7 @@ public class ValidateExcelSL extends HttpServlet {
         int error_counter=0,warnings_counter=0;
         String message_type="",message="";
         String lhs,rhs,sign,query="",final_query="";
-        String getRules="SELECT section_name,codes,validation,iscritical,message,fine_age,raw_query FROM fas_validation WHERE active=1 AND source='excel' order by section_name  ";
+        String getRules="SELECT section_name,codes,validation,iscritical,message,fine_age,raw_query FROM internal_system.kp_validation WHERE active=1 AND source='excel' order by section_name  ";
         //System.out.println("rules :"+getRules);
         conn.rs = conn.st.executeQuery(getRules);
         while(conn.rs.next()){
@@ -346,7 +346,7 @@ public class ValidateExcelSL extends HttpServlet {
             default:
                 break;
         }
-                       query+="FROM "+table_name+" ";
+                       query+="FROM internal_system."+table_name+" ";
                        
                        
                        return query;
@@ -356,10 +356,13 @@ public class ValidateExcelSL extends HttpServlet {
       JSONObject obj = new JSONObject();
       
       String query = 
-        "SELECT county.County AS County, district.DistrictNom AS SubCounty, subpartnera.SubPartnerNom AS HealthFacility, subpartnera.CentreSanteId AS MFLCode,\n" +
+        "SELECT county.County AS County, district.DistrictNom AS SubCounty, dic.dic_name AS HealthFacility, dic.dic_id AS MFLCode,\n" +
         "substr('"+yearmonth+"',1,4) AS Year,ifnull(monthname(str_to_date(substr('"+yearmonth+"',5,6),'%m')),'"+yearmonth+"') as Month \n" +
-        "FROM subpartnera LEFT JOIN district ON subpartnera.DistrictID=district.DistrictID LEFT JOIN county ON district.CountyID=county.CountyID " +
-        "WHERE SubPartnerID="+facilityID;
+        " FROM internal_system.dic \n" +
+"join internal_system.ward wd on wd.ward_id=dic.ward_id\n" +
+"join internal_system.district on wd.subcountyid=district.DistrictID\n" +
+"join internal_system.county on county.CountyID=district.CountyID " +
+        "WHERE dic_id="+facilityID;
       conn.rs = conn.st.executeQuery(query);
       ResultSetMetaData metaData = conn.rs.getMetaData();
       int column_count = metaData.getColumnCount(); //number of column
