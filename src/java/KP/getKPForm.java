@@ -492,33 +492,33 @@ outStream.flush();
     
     public String  monthName(String monthno){
         String mn="";
-    if(monthno.equals("1")){
+    if(monthno.equals("1") || monthno.equals("01")){
     mn="Jan";
     }
-    else if(monthno.equals("2")){
+    else if(monthno.equals("2")|| monthno.equals("02")){
     mn="Feb";
     }
-    else if(monthno.equals("3")){
+    else if(monthno.equals("3") ||monthno.equals("03") ){
     mn="Mar";
     }
-     else if(monthno.equals("4")){
+     else if(monthno.equals("4")|| monthno.equals("04")){
     mn="Apr";
     }   
-    else if(monthno.equals("5")){
+    else if(monthno.equals("5")||monthno.equals("05")){
     mn="May";
     }  
-else if(monthno.equals("6")){
+else if(monthno.equals("6")||monthno.equals("06")){
     mn="Jun";
     } 
     
-    else if(monthno.equals("7")){
+    else if(monthno.equals("7")||monthno.equals("07")){
     mn="Jul";
     } 
-     else if(monthno.equals("8")){
+     else if(monthno.equals("8")|| monthno.equals("08")){
     mn="Aug";
     } 
     
-    else if(monthno.equals("9")){
+    else if(monthno.equals("9")||monthno.equals("09")){
     mn="Sep";
     }
     else if(monthno.equals("10")){

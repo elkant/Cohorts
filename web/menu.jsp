@@ -130,6 +130,7 @@
          <%  } 
 else {
 
+  out.println("<li ><a style='color:green;' target='_blank' href='https://usaidtujengejamii.org:8443/htslive/livesummary.jsp'><b><i class='icon-list'></i>RRI Live Summary</b></a></li>");
   out.println("<li ><a href='importpns.jsp'><i class='icon-plus'></i>Daily PNS Data Upload</a></li>");
   out.println("<li ><a href='importder.jsp'><i class='icon-plus'></i>Daily ART Data Upload</a></li>");
   out.println("<li ><a href='importcovid.jsp'><i class='icon-plus'></i>Covid 19 Data Upload</a></li>");

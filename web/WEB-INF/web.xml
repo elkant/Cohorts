@@ -320,6 +320,18 @@
         <servlet-name>IsSessionActive</servlet-name>
         <servlet-class>KP.IsSessionActive</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>loadindicators</servlet-name>
+        <servlet-class>rri_gaps.loadindicators</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>saveGapsData</servlet-name>
+        <servlet-class>rri_gaps.saveGapsData</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>rri_gaps_login</servlet-name>
+        <servlet-class>rri_gaps.rri_gaps_login</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loadcohort</servlet-name>
         <url-pattern>/loadcohort</url-pattern>
@@ -639,6 +651,18 @@
     <servlet-mapping>
         <servlet-name>IsSessionActive</servlet-name>
         <url-pattern>/IsSessionActive</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>loadindicators</servlet-name>
+        <url-pattern>/loadindicators</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>saveGapsData</servlet-name>
+        <url-pattern>/saveGapsData</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>rri_gaps_login</servlet-name>
+        <url-pattern>/rri_gaps_login</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
