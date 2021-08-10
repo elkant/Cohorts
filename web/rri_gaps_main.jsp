@@ -256,7 +256,7 @@ input[readonly]{
                                                                 <div class="control-group">
 
                                                                     <div class="controls">
-                                                                        <select required="true"   onchange="isdisplayindicators();"   name="period" id="period" class="form-control" >
+                                                                        <select required="true"   onchange="getFacilitiesJson();isdisplayindicators();"   name="period" id="period" class="form-control" >
                                                                                                                    
                                                                         </select>
                                                                     </div>
@@ -477,6 +477,7 @@ input[readonly]{
                             <li>Index Testing contacts eligible for testing and not tested</li>
                             <li>CXCA_SCREEN Positive mothers not started or not treated</li>
                             <li>Accounting For Net Loss</li>
+                            <li>STFs</li>
                         </ul>
                         <h3> Organization Units</h3>
                         <p> Submit data per facility </p>
@@ -507,6 +508,7 @@ input[readonly]{
         <script type="text/javascript" src="js/angular.js"></script>
         <script type="text/javascript" src="js/angularoptions_htsself.js"></script>
         <script type="text/javascript" src="gaps/sum_values.js"></script>
+        <script type="text/javascript" src="gaps/validation.js"></script>
 
 
 
@@ -528,17 +530,15 @@ input[readonly]{
  function getFacilitiesJson(){
        
    
-       
+       var ym=$("#period").val();
        
               $.ajax({
-                         url:'loadActiveSites',                            
+                    url:'loadSitesWithGaps?ym='+ym,                            
                     type:'post',  
                     dataType: 'html',  
-                    success: function(data) {
-                        
-                        
-                        
-                        $("#facility").html(data);
+                    success: function(data)
+                    {
+                     $("#facility").html(data);
                    $(document).ready(function() {
           
               $('#facility').select2(); 
@@ -552,7 +552,7 @@ input[readonly]{
 
 
 
-                                   getFacilitiesJson();
+                                  
 
 
  function getSections(){
@@ -588,7 +588,7 @@ input[readonly]{
    
    }
 
-getSections();
+//getSections();
 
 
 
@@ -669,84 +669,6 @@ getSections();
 
 getPeriod();
 
-//=========================================Run validation================================
-
-                                   function runvalidation() {
-
-                                       var retv = true;
-
-//                                      As_Kits
-//NonAs_Kits
-//As_Res
-//NonAs_Res
-//As_Neg
-//NonAs_Neg
-//As_Pos
-//NonAs_Pos
-//As_Ref
-//NonAs_Ref
-//As_Con_Pos
-//NonAs_Con_Pos
-//As_Linked
-//NonAs_Linked
-
-
-                                       var validationsid = ["As_Kits@As_Res", "NonAs_Kits@NonAs_Res", "As_Res@As_Neg","NonAs_Res@NonAs_Neg", "As_Res@As_Pos","NonAs_Res@NonAs_Pos", "As_Pos@As_Ref", "NonAs_Pos@NonAs_Ref", "As_Pos@As_Con_Pos", "NonAs_Pos@NonAs_Con_Pos", "As_Pos@As_Linked", "NonAs_Pos@NonAs_Linked"];
-
-                                       var agedis = ["total"];
-                                       var agedis_detailed = ["Total"];
-
-                                       for (var b = 0; b < validationsid.length; b++) {
-                                           for (var a = 0; a < agedis.length; a++)
-                                           {
-
-                                               var indicab = validationsid[b].split("@");
-
-
-
-                                               var elem_a = $("#" + indicab[0] + "_" + agedis[a]).val();
-                                               var elem_b = $("#" + indicab[1] + "_" + agedis[a]).val();
-                                               console.log("#" + indicab[0] + "_" + agedis[a] + " is " + elem_a);
-                                               console.log("#" + indicab[1] + "_" + agedis[a] + " is " + elem_b);
-
-
-                                               if (elem_a === "") {
-                                                   elem_a = 0;
-                                               }
-                                               if (elem_b === "") {
-                                                   elem_b = 0;
-                                               }
-
-                                               if (elem_a !== "" && elem_b !== "") {
-
-                                                   elem_a = parseInt(elem_a);
-                                                   elem_b = parseInt(elem_b);
-
-                                                   if (elem_b > elem_a) {
-                                                       retv = false;
-
-                                                       alert(" Data for " + indicab[1] + " " + agedis_detailed[a] + " cannot be more than " + indicab[0] + " " + agedis_detailed[a]);
-                                                       $("#" + indicab[0] + "_" + agedis[a]).css('background-color', 'red');
-                                                       $("#" + indicab[1] + "_" + agedis[a]).css('background-color', 'red');
-                                                       break;
-                                                   }
-
-
-
-                                               }
-
-                                           }
-
-                                           if (retv === false)
-                                           {
-
-                                               break;
-
-                                           }
-                                       }
-
-                                       return retv;
-                                   }
 
 
 
@@ -819,7 +741,7 @@ getPeriod();
                                                          
                                                        }
 
-                                                       exportData(saveddata, isend, tablename);
+                                                       exportData(saveddata, isend, dbname, sci);
 
                                                    }
 
@@ -838,7 +760,7 @@ getPeriod();
                                    }
 
 
-                                   function exportData(data, isend, tbl) {
+                                   function exportData(data, isend, tbl,secid) {
 
 
                                        $.ajax({
@@ -850,8 +772,8 @@ getPeriod();
                                                if (isend) {
 
                                                    console.log("Data saved Succesfully!");
-                                                   $("#fedback").html("<font color='green'><h3>Data saved Succesfully!</h3></f>");
-    
+                                                   $("#msg"+secid).html("<font color='green'><b>Data saved Succesfully!!!</b></font>");
+                                              section_saved(secid);
                                          setTimeout(refreshujumbe,2000);
     
                                                }
@@ -864,9 +786,9 @@ getPeriod();
 
 //call the function that displays the data
 
-function refreshujumbe(){
+function refreshujumbe(eid){
     
-    $("#fedback").html("");
+    $(".feedback").html("");
     
 }
 
@@ -993,6 +915,8 @@ Date.prototype.getWeekNumber = function(){
   var yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
   return Math.ceil((((d - yearStart) / 86400000) + 1)/7)
 };
+
+
 
 
         </script>

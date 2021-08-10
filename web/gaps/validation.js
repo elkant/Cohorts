@@ -14,11 +14,11 @@ var breakloop=false;
 var appendstring="";
 
 
-function loadValidation(form_name,section_id) {
+function loadValidation(tblname,section_id) {
     breakloop = false;
 
     $.ajax({
-        url: 'loadValidation?sectionid=' + section_id,
+        url: 'loadValidation?scid='+section_id,
         type: 'post',
         dataType: 'json',
         success: function (data) {
@@ -31,7 +31,7 @@ var call_save=true;
 
                 for (var as = 0; as < data.length; as++)
                 {
-                    runvalidation(data[as].validation, data[as].message, data[as].iscritical, data[as].sectionid);
+                    runvalidation(data[as].validation, data[as].message, data[as].iscritical, data[as].section_name);
                     if (breakloop === true) {
                        call_save=false;
                         break;
@@ -55,7 +55,7 @@ var call_save=true;
 
 if(call_save){
     
-    save_data(form_name,section_id);
+    save_data(tblname,section_id);
     
 }
 
@@ -74,7 +74,7 @@ function runvalidation(valids, message, iscritical, sectionid)
     
       if(valids.indexOf("<=")>=0){   lessOrEqual(valids,message,iscritical,sectionid);  }
  else if(valids.indexOf(">=")>=0){   greaterOrEqual(valids,message,iscritical,sectionid);   }
- else if(valids.indexOf("=")>=0){   Equal(valids,message,iscritical,sectionid);  }
+ else if(valids.indexOf("!=")>=0){   notEqual(valids,message,iscritical,sectionid);  }
  else if(valids.indexOf("<")>=0){   less(valids,message,iscritical,sectionid);  }
  else if(valids.indexOf(">")>=0){   greater(valids,message,iscritical,sectionid);  }
 
@@ -130,11 +130,11 @@ function less(valids, message, iscritical, sectionid) {
 //            ag = agegender[1];
 //        }
 
-        if ((isNumber(val1) &&  val1 > 0) || ( isNumber(val2) && val2 > 0)) {
-            if (val1 >= val2) {
+        if ((isNumber(val1) ) || ( isNumber(val2) )) {
+            if (val1 < val2) {
                 if (iscritical === 'yes') {
                     
-                    $("#msg" + sectionid).html(" <img style='width:4%;' src='images/stop.png'/> <b>For " + ag + " years " + sx + " , " + message+"</b>");
+                    $("#msg" + sectionid).html(" <img style='width:4%;' src='images/stop.png'/> <b>" + message+"</b>");
                    // alert("For age disaggregation " + ag + " years " + sx + " , " + message);
                      savebutton_inactive(sectionid);
                      if (valarray[1].indexOf("+") === -1) {
@@ -150,7 +150,7 @@ function less(valids, message, iscritical, sectionid) {
                 } else {
 
                      // $("#msg" + sectionid).append("<b>For " + ag + " years " + sx + " , " + message + "</b><br/>");
-                        $(" <font color='red'><b> For " + ag + " years " + sx + " , " + message + "</b></font> <br/>").insertBefore("#msg" + sectionid);
+                        $(" <font color='red'><b>  " + message + "</b></font> <br/>").insertBefore("#msg" + sectionid);
 savebutton_active(sectionid);
                     yellowborder(columns[i], valarray[0],message);
                     yellowborder(columns[i], valarray[1],message);
@@ -225,11 +225,11 @@ function greater(valids, message, iscritical, sectionid) {
 //            ag = agegender[1];
 //        }
 
-        if ((isNumber(val1) &&  val1 > 0) || ( isNumber(val2) && val2 > 0)) {
-            if (val1 <= val2) {
+        if ((isNumber(val1)) || ( isNumber(val2) )) {
+            if (val1 > val2) {
                 if (iscritical === 'yes') {
                    
-                    $("#msg" + sectionid).html(" <img style='width:4%;' src='images/stop.png'/>  <b>For " + ag + " years " + sx + " , " + message+"</b>");
+                    $("#msg" + sectionid).html(" <img style='width:4%;' src='images/stop.png'/>  <b> " + message+"</b>");
                     //alert("For age disaggregation " + ag + " years " + sx + " , " + message);
                     savebutton_inactive(sectionid);
                    
@@ -246,7 +246,7 @@ function greater(valids, message, iscritical, sectionid) {
                 } else {
     savebutton_active(sectionid);
                       //$("#msg" + sectionid).append("<b>* For " + ag + " years " + sx + " , " + message + "</b><br/>");
-                      $("<label class='img'> <font color='red'><b> For " + ag + " years " + sx + " , " + message + "</b></font> </label>").insertBefore("#msg" + sectionid);
+                      $("<label class='img'> <font color='red'><b>  " + message + "</b></font> </label>").insertBefore("#msg" + sectionid);
                     yellowborder(columns[i], valarray[0],message);
                     yellowborder(columns[i], valarray[1],message);
 
@@ -283,8 +283,8 @@ function lessOrEqual(valids, message, iscritical, sectionid) {
 
     var val1, val2;
 
-    var columns = ["m_uk", "f_uk", "m_1", "f_1", "m_4", "f_4", "m_9", "f_9", "m_14", "f_14", "m_19", "f_19", "m_24", "f_24", "m_29", "f_29", "m_34", "f_34", "m_39", "f_39", "m_44", "f_44", "m_49", "f_49", "m_50", "f_50"];
- var agearray = ["unknown", "unknown", "<1", "<1", "1-4", "1-4", "5-9", "5-9", "10-14", "10-14", "15-19", "15-19", "20-24", "20-24", "25-29", "25-29", "30-34", "30-34", "35-39", "35-39", "40-44", "40-44", "45-49", "45-49", "50+", "50+"];
+    var columns = ["total"];
+    var agearray = ["total"];
 
 
 
@@ -298,7 +298,8 @@ function lessOrEqual(valids, message, iscritical, sectionid) {
 
 
 
-        //    alert(columns[i]+"_"+indicator_id);
+        console.log(valarray[0]+"<="+valarray[1]);
+            
         val1 = multisum(valarray[0], columns[i]);
         val2 = multisum(valarray[1], columns[i]);
         //m_uk
@@ -320,13 +321,15 @@ function lessOrEqual(valids, message, iscritical, sectionid) {
 //            ag = agegender[1];
 //        }
 
-        if ((isNumber(val1) &&  val1 > 0) || ( isNumber(val2) && val2 > 0)) {
-            if (val1 > val2) {
+        if ((isNumber(val1) ) || ( isNumber(val2) )) {
+            if (val1 <= val2) {
+                console.log(val1+"<="+val2);
+                
                 if (iscritical === 'yes') {
                     
                     
-                    $("#msg" + sectionid).html(" <img style='width:4%;' src='images/stop.png'/> <b>For " + ag + " years " + sx + " , " + message+"</b>");
-                   // alert("For age disaggregation " + ag + " years " + sx + " , " + message);
+                    $("#msg" + sectionid).html("<b> " + message+"</b>");
+                    console.log("For age disaggregation " + ag + " years " + sx + " , " + message);
                     
  if (valarray[1].indexOf("+") === -1) {
                         //$("#" + columns[i] + "_" + valarray[1]).focus();
@@ -341,7 +344,7 @@ function lessOrEqual(valids, message, iscritical, sectionid) {
                 } else {
 
                    // $("#msg" + sectionid).append("<b/>* For " + ag + " years " + sx + " , " + message + "</b><br/>");
-     $("<label class='img'> <font color='red'><b> For " + ag + " years " + sx + " , " + message + "</b></font> </label>").insertBefore("#msg" + sectionid);
+     $("<label class='img'> <font color='yellow'><b> " + message + "</b></font> </label>").insertBefore("#msg" + sectionid);
                     yellowborder(columns[i], valarray[0],message);
                     yellowborder(columns[i], valarray[1],message);
 savebutton_active(sectionid);
@@ -380,8 +383,8 @@ function greaterOrEqual(valids, message, iscritical, sectionid) {
 
     var val1, val2;
 
-    var columns = ["m_uk", "f_uk", "m_1", "f_1", "m_4", "f_4", "m_9", "f_9", "m_14", "f_14", "m_19", "f_19", "m_24", "f_24", "m_29", "f_29", "m_34", "f_34", "m_39", "f_39", "m_44", "f_44", "m_49", "f_49", "m_50", "f_50"];
-   var agearray = ["unknown", "unknown", "<1", "<1", "1-4", "1-4", "5-9", "5-9", "10-14", "10-14", "15-19", "15-19", "20-24", "20-24", "25-29", "25-29", "30-34", "30-34", "35-39", "35-39", "40-44", "40-44", "45-49", "45-49", "50+", "50+"];
+    var columns = ["total"];
+   var agearray = ["total"];
 
 
 
@@ -419,15 +422,15 @@ function greaterOrEqual(valids, message, iscritical, sectionid) {
 //            ag = agegender[1];
 //        }
 
-        if ((isNumber(val1) &&  val1 > 0) || ( isNumber(val2) && val2 > 0)) {
+        if ((isNumber(val1) ) || ( isNumber(val2) )) {
             
             
-            if (val1 < val2) {
+            if (val1 >= val2) {
                 console.log("val1:"+val1+" val2:"+val2);
                 
                 if (iscritical === 'yes') {
                  
-                    $("#msg" + sectionid).html(" <img style='width:4%;' src='images/stop.png'/>   <b>For " + ag + " years " + sx + " , " + message+"</b>");
+                    $("#msg" + sectionid).html(" <img style='width:4%;' src='images/stop.png'/>   " + message+"</b>");
                     //alert("For age disaggregation " + ag + " years " + sx + " , " + message);
                     savebutton_inactive(sectionid);
                      if (valarray[1].indexOf("+") === -1) {
@@ -445,7 +448,7 @@ function greaterOrEqual(valids, message, iscritical, sectionid) {
 
                 } else {
 
-appendstring+=" * <b> For " + ag + " years " + sx + " , " + message + "</b> <br/>";
+appendstring+=" * <b>  " + message + "</b> <br/>";
 
 
                      $("#msg" + sectionid).html(appendstring+"<br/>");
@@ -486,7 +489,7 @@ appendstring+=" * <b> For " + ag + " years " + sx + " , " + message + "</b> <br/
 } //end of greater or equal
 
 
-function Equal(valids, message, iscritical, sectionid) {
+function notEqual(valids, message, iscritical, sectionid) {
     //1>2
     //eg 1>2 means for all the age disagregations, indicator 1 should be greater than indicator 2
 
@@ -495,8 +498,8 @@ function Equal(valids, message, iscritical, sectionid) {
 
     var val1, val2;
 
-    var columns = ["m_uk", "f_uk", "m_1", "f_1", "m_4", "f_4", "m_9", "f_9", "m_14", "f_14", "m_19", "f_19", "m_24", "f_24", "m_29", "f_29", "m_34", "f_34", "m_39", "f_39", "m_44", "f_44", "m_49", "f_49", "m_50", "f_50"];
-    var agearray = ["unknown", "unknown", "<1", "<1", "1-4", "1-4", "5-9", "5-9", "10-14", "10-14", "15-19", "15-19", "20-24", "20-24", "25-29", "25-29", "30-34", "30-34", "35-39", "35-39", "40-44", "40-44", "45-49", "45-49", "50+", "50+"];
+    var columns = ["total"];
+    var agearray = ["total"];
 
 
 
@@ -506,7 +509,7 @@ function Equal(valids, message, iscritical, sectionid) {
     var num_elems = columns.length;
     for (var i = 0; i < num_elems; i++) {
 
-        var valarray = valids.split("=");
+        var valarray = valids.split("!=");
 
 
 
@@ -532,11 +535,11 @@ function Equal(valids, message, iscritical, sectionid) {
 //            ag = agegender[1];
 //        }
 
-        if ((isNumber(val1) &&  val1 > 0) || ( isNumber(val2) && val2 > 0)) {
+        if ((isNumber(val1) ) || ( isNumber(val2) )) {
             if ((val1 < val2) || (val1 > val2)) {
                 if (iscritical === 'yes') {
                     
-                    $("#msg" + sectionid).html("<img style='width:4%;' src='images/stop.png'/>  <b>For " + ag + " years " + sx + " , " + message+"</b>");
+                    $("#msg" + sectionid).html("<img style='width:4%;' src='images/stop.png'/>  <b> " + message+"</b>");
                     //alert("For age disaggregation " + ag + " years " + sx + " , " + message);
                     
                     if (valarray[1].indexOf("+") === -1) {
@@ -554,7 +557,7 @@ function Equal(valids, message, iscritical, sectionid) {
                 } else {
 
                     //$("#msg" + sectionid).append("<b> * For " + ag + " years " + sx + " , " + message + "</b><br/>");
-    $("<label class='img'> <font color='red'><b> For " + ag + " years " + sx + " , " + message + "</b></font> </label>").insertBefore("#msg" + sectionid);
+    $("<label class='img'> <font color='red'><b> " + message + "</b></font> </label>").insertBefore("#msg" + sectionid);
     savebutton_active(sectionid);
 
                 }
@@ -585,17 +588,27 @@ function multisum(vals, age) {
     var valsarr = vals.split("+");
 
     var totl = 0;
- console.log("length ya multisum"+valsarr.length);
+ 
     for (var v = 0; v < valsarr.length; v++)
     {
         if(document.getElementById(valsarr[v])!==null){
-         console.log("val sai ni "+valsarr[v]);
+        
         var val = document.getElementById(valsarr[v]).value;
         if (isNumber(val))
         {
 
             totl = totl + parseInt(val);
+             
         }
+        }
+        else {
+            if (isNumber(valsarr[v]))
+        {
+
+            totl = totl + parseInt(valsarr[v]);
+            console.log("value for "+valsarr[v]+" is "+valsarr[v]);
+        } 
+            
         }
     }
 
@@ -675,7 +688,8 @@ function savebutton_active(sectionid) {
         $("#validate_" + sectionid).html(saverpt);
         $("#validate_" + sectionid).addClass('btn blue');
         
-        
+        $("#validate_"+sectionid).show();
+            $("#msg"+sectionid).html("");
         //.btn.blue:hover, .btn.blue:focus, .btn.blue:active, .btn.blue.active,
         
   
@@ -688,5 +702,7 @@ function savebutton_inactive(sectionid) {
          $("#validate_"+sectionid).removeClass('blue');
          $("#validate_" + sectionid).css('background', '#ff0000');
          $("#validate_" + sectionid).css('color', '#ffffff');
+          $("#validate_"+sectionid).hide();
+            $("#msg"+sectionid).html("Validation Error!. Please correct to save entries");
   
 }

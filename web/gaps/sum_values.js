@@ -21,7 +21,8 @@ document.getElementById("total_"+indicator_id).value = total;
 //alert(total);
 }
 
-    function redbordercl(id){
+    function redbordercl(id)
+    {
      $("#"+id).css('background-color', '#ff0000');
      $("#"+id).css('border-color', '#ff0000');
      $("#"+id).css('color', '#ffffff');
@@ -46,7 +47,7 @@ document.getElementById("total_"+indicator_id).value = total;
     }
     
     function section_saved(section_id){
-      $("#section_"+section_id).css('background','green');
+      $("#section"+section_id).css('background','green');
       format_section(section_id);
     }
     
@@ -105,7 +106,7 @@ function buildAutocalculate(dataelements,savebtn)
 
 function autocalculate_and_return(sourceindicators)
 {
-    console.log(sourceindicators+" = source indicators");
+   // console.log(sourceindicators+" = source indicators");
     
 var agesets = ["total"];
 //    var indicator_id=document.getElementById("indic_pos_"+indic_pos).value;
@@ -141,7 +142,7 @@ if(sourcearrays[f].indexOf("-")>=0){
    //in array index 0, pick the value in the array and summ with 0, then onwards
    
   if(g===0){
-                        console.log(g+" value ya "+sourcearrays_neg[g]+" ni "+value);
+                       // console.log(g+" value ya "+sourcearrays_neg[g]+" ni "+value);
                     if(value!==''){
                         
   total = total+parseInt(value);
@@ -171,7 +172,7 @@ else {
     {
         
   total = total+parseInt(value); 
-  console.log(" sum of "+sourcearrays[f]+" is "+total);
+  //console.log(" sum of "+sourcearrays[f]+" is "+total);
   
     }
     
@@ -192,8 +193,8 @@ return total;
 
 
 function autocalculate(sourceindicators,destination_indicator,save_button){
-    console.log(sourceindicators+" = source indicators");
-    console.log(destination_indicator+" = destination indicators");
+  //  console.log(sourceindicators+" = source indicators");
+  //  console.log(destination_indicator+" = destination indicators");
 var agesets = ["total"];
 //    var indicator_id=document.getElementById("indic_pos_"+indic_pos).value;
 //    alert(indicator_id);
@@ -228,7 +229,7 @@ if(sourcearrays[f].indexOf("-")>=0){
    //in array index 0, pick the value in the array and summ with 0, then onwards
    
   if(g===0){
-                        console.log(g+" value ya "+sourcearrays_neg[g]+" ni "+value);
+                        //console.log(g+" value ya "+sourcearrays_neg[g]+" ni "+value);
                     if(value!==''){
                         
   total = total+parseInt(value);
@@ -258,7 +259,7 @@ else {
     {
         
   total = total+parseInt(value); 
-  console.log(" sum of "+sourcearrays[f]+" is "+total);
+  //console.log(" sum of "+sourcearrays[f]+" is "+total);
   
     }
     

@@ -21,7 +21,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author EKaunda
  */
-public class loadActiveSites extends HttpServlet {
+public class loadSitesWithGaps extends HttpServlet {
 
    HttpSession session;
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -32,12 +32,19 @@ public class loadActiveSites extends HttpServlet {
            
             session=request.getSession();
             
-          
+          String ym="";
             
-            
-            
-            String getfacils="select * from internal_system.subpartnera where active=1 ";
+          String additionalwhere="";
+          if(request.getParameter("ym")!=null)
+          {
+         ym= request.getParameter("ym");
          
+         additionalwhere=" and SubPartnerID in ( select distinct(facility_id) from internal_system.rri_gaps_baseline where yearmonth ='"+ym+"' ) ";
+          }
+            
+            
+            String getfacils="select * from internal_system.subpartnera where active=1  "+additionalwhere;
+            System.out.println(""+getfacils);
             dbConn conn= new dbConn();
             conn.rs=conn.st.executeQuery(getfacils);
             String facil="<option value=''>Select facility</option>";

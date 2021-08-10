@@ -332,6 +332,22 @@
         <servlet-name>rri_gaps_login</servlet-name>
         <servlet-class>rri_gaps.rri_gaps_login</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>loadValidation</servlet-name>
+        <servlet-class>rri_gaps.loadValidation</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>refresh_rri_baselines</servlet-name>
+        <servlet-class>rri_gaps.refresh_rri_baselines</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>loadSitesWithGaps</servlet-name>
+        <servlet-class>loaders.loadSitesWithGaps</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>importderv52</servlet-name>
+        <servlet-class>imports.importderv52</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loadcohort</servlet-name>
         <url-pattern>/loadcohort</url-pattern>
@@ -663,6 +679,22 @@
     <servlet-mapping>
         <servlet-name>rri_gaps_login</servlet-name>
         <url-pattern>/rri_gaps_login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>loadValidation</servlet-name>
+        <url-pattern>/loadValidation</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>refresh_rri_baselines</servlet-name>
+        <url-pattern>/refresh_rri_baselines</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>loadSitesWithGaps</servlet-name>
+        <url-pattern>/loadSitesWithGaps</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>importderv52</servlet-name>
+        <url-pattern>/importderv52</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

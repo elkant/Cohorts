@@ -189,12 +189,41 @@ clsp=r.getString("colspan");
 eos=r.getString("endofsection");
 scncode=r.getString("section_code");
 
+ String value="";
+ String prd="";
+    
+     try
+     { 
+    //if length is greater than 0
+    if(!jo.get("length").toString().equals("0")){
+      
+    //pull data by column
+   if(jo.get(id)!=null)
+   {
+        
+         JSONObject joage=(JSONObject) jo.get(id);
+         value=joage.get("value").toString();
+         prd=joage.get("period").toString();
+   }
+        
+    
+    }
+        }
+        catch(NoSuchElementException ex){
+        
+        }
+
+
 if(!scnid.equals(scnidcopy))
     {
         scnidcopy=scnid;
+        String showsection="style='display:none;'";
+        String hasdata="style='color:red;width:100%;text-align:left;'";
+        
+        if(!value.equals("")){showsection="";hasdata="style='display:none;'";}
         
     //create the card
-    indicators+= "<div class='card'>";
+    indicators+= "<h4 class='btn grey' "+hasdata+" id='hasdata'><i class='glyphicon glyphicon-close'></i><b>No Gaps to account under "+scn+"</b></h4><div "+showsection+" class='card'>";
     indicators+= "<div class='card-header' >"
     +"<h5 class='mb-0'>";
     indicators+="<button class='btn blue collapsed' id='section"+scnid+"' type='button' data-toggle='collapse' data-target='#collapse"+scnid+"' aria-expanded='false' aria-controls='collapse"+scnid+"' style='width:100%; text-align:left;background-color:#0394ff;font-weight: bolder;'>" +
@@ -235,28 +264,12 @@ if(!clsp.equals("0"))
 indicators+="<td rowspan='"+clsp+"'>"+lv1+"</td>";
 }
 
- String value="";
-    
-     try{ 
-    //if length is greater than 0
-    if(!jo.get("length").toString().equals("0")){
-      
-    //pull data by column
-   if(jo.get(id)!=null){
-        
-         JSONObject joage=(JSONObject) jo.get(id);
-         value=joage.get("value").toString();
-   }
-        
-    
-    }
-        }
-        catch(NoSuchElementException ex){
-        
-        }
+
+  String finalprd="";
   
+  if(!prd.equals("") && !prd.equals("null") ){finalprd="<br/><font color='orange'><b>["+prd+"]</b></font>";}
      
-indicators+="<td>"+ind+"</td>";
+indicators+="<td>"+ind+" "+finalprd+"</td>";
 
 
 
@@ -290,8 +303,8 @@ indicators+="</tr>";
  indicators+="</tbody></table><input type='hidden' name='num_indicators' id='num_indicators' value='"+count+"'>" +
 "<input type='hidden' name='table_name' id='table_name' value='"+dbn+"'>" +
 "<div class='form-actions' style='text-align:right;'>" +
-"<label id='msg"+scnid+"' style='text-align:left;color:red;'></label>" +
-"<button  type='button' class='btn blue' data-save_1='SAVE' onclick='save_data('"+dbn+"','"+scnid+"');' name='validate_"+scnid+"' id='validate_"+scnid+"' style=' font-size:14px; width:20%;'>Save "+scncode+"</button>" +
+"<label id='msg"+scnid+"' class='feedback' style='text-align:left;color:red;'></label>" +
+"<button  type='button' class='btn blue' data-save_1='SAVE' onclick=\"loadValidation('"+dbn+"','"+scnid+"');\" name='validate_"+scnid+"' id='validate_"+scnid+"' style=' font-size:14px; width:20%;'>Save "+scncode+"</button>" +
 "</div>" +
 "</form>" +
 "</fieldset>" +
@@ -324,7 +337,7 @@ public JSONObject getData( dbConn conn, HashMap par) throws SQLException {
 
 int hasdata=0;
 
-String getdata=" select * from internal_system.rri_gaps_data where yearmonth='"+par.get("yearmonth")+"' and facility_id='"+par.get("facility")+"' and indicator_id not in (1,10,13,16) "
+String getdata=" select * from internal_system.rri_gaps_data where yearmonth='"+par.get("yearmonth")+"' and facility_id='"+par.get("facility")+"' and indicator_id not in (1,10,13,16,40,41,42,43) "
         + " UNION ALL "
         + " select * from internal_system.rri_gaps_baseline where yearmonth='"+par.get("yearmonth")+"' and facility_id='"+par.get("facility")+"' ;";
   
@@ -342,6 +355,7 @@ JSONObject hm2= new JSONObject();
 hasdata++;
 //we want something like this {"KITS Assisted":{"value":0}}
 hm2.put("value", conn.rs1.getString("value"));
+hm2.put("period", conn.rs1.getString("period"));
 
 hm.put(conn.rs1.getString("indicator_id"), hm2);
 //ja.put(hm);
@@ -468,7 +482,7 @@ return jo2;
 
 
 public String buildSelectOptions(String opt, String val, String selected){
-
+   
     String optsarr[]=opt.split(",");
     String valsarr[]=val.split(",");
 
@@ -476,13 +490,13 @@ public String buildSelectOptions(String opt, String val, String selected){
     
     for(int a=0;a<optsarr.length;a++){
         String selectedval="";
-        
-        if(valsarr[1].equals(selected))
+        // System.out.println("selected ni:"+selected+": vs "+valsarr[a]);
+        if(valsarr[a].equals(selected))
         {
         selectedval="selected";
         }
         
-    fin+="<option "+selected+" value='"+valsarr[a]+"'>"+optsarr[a]+"</option>";
+    fin+="<option "+selectedval+" value='"+valsarr[a]+"'>"+optsarr[a]+"</option>";
     
     }
     
