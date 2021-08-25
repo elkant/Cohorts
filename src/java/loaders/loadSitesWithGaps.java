@@ -59,7 +59,7 @@ public class loadSitesWithGaps extends HttpServlet {
             
 
          
-facil+="<option selected value=\""+subpartnerid+"\">"+facilname+" - "+mflcode+"</option>";
+facil+="<option  value=\""+subpartnerid+"\">"+facilname+" - "+mflcode+"</option>";
 
    
 

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package rri_gaps;
+package stockverification;
 
 import db.dbConn;
 import java.io.IOException;
@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author EKaunda
  */
-public class saveGapsData extends HttpServlet {
+public class saveStockData extends HttpServlet {
 
   
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -31,20 +31,19 @@ public class saveGapsData extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
           
             dbConn conn = new dbConn();
-          String table="internal_system.rri_gaps_data";
+          String table=" internal_system.stocks_data ";
           
           String mfl="";
           
-          if(request.getParameter("facility_id")!=null){
-          mfl=request.getParameter("facility_id");
-          }
-          if(request.getParameter("tbl")!=null){
-            table="internal_system."+request.getParameter("tbl");
-          }
-           
- String[] dataelementsarr= {"id","yearmonth","facility_id","indicator_id","value","userid","week"}; 
- //String[] orgunitsarr= {"county","`sub-county`"}; 
           
+            
+ String[] dataelementsarr= {"id","facility","commodity","packsize","delnoteno","batchno","delnoteqty","qtyrec","daterec","contacts","expdate","cmts","docdate","contact_name","reportingdate"}; 
+ String[] orgunitsarr= {"county","`sub-county`"}; 
+  
+//
+//
+
+ 
  ArrayList al= new ArrayList();
  
             
@@ -78,13 +77,11 @@ insertqr_partb+="?";
 insertqr_parta+=")";
 insertqr_partb+=")";
 
-
-
 //append  
 
 String insertqry=insertqr_parta+insertqr_partb;
 
-            System.out.println(""+insertqry);
+            //System.out.println(""+insertqry);
 
     //conn.st_2.executeUpdate(updateqr);
     conn.pst1=conn.connect.prepareStatement(insertqry);   
@@ -111,8 +108,8 @@ rowcount++;
 
 
 }
-////get orgunit values in array
-//
+//get orgunit values in array
+
 //String[] org_unit_vl=getOrgunits(mfl,conn,orgunitsarr);
 //
 //for(int a=0;a<org_unit_vl.length;a++)
@@ -129,15 +126,16 @@ rowcount++;
 //______________________________________________________________________________________
 
 
-
+            System.out.println(""+conn.pst1);
 
 if(conn.pst1.executeUpdate()==1)
 {
-   out.println("RRI GAPS Saved succesfully ");
+   out.println("Stock Data Saved succesfully ");
 }
-else {
- out.println(" Data Not saved ");
-    
+else 
+{
+ out.println("Stock Data saved succesfully");
+
 }
   
 
@@ -166,7 +164,7 @@ else {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(saveGapsData.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(saveStockData.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -184,7 +182,7 @@ else {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(saveGapsData.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(saveStockData.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -204,7 +202,7 @@ public String[] getOrgunits(String mfl, dbConn conn,String [] orgunitsarr) throw
 String orgcols=arraytostring(orgunitsarr);
     
     String qr="select "+orgcols+" from internal_system.orgunits_vw where mflcode='"+mfl+"'";
-
+    //System.out.println("KP Daily "+qr);
     conn.rs1=conn.st1.executeQuery(qr);
     
    String [] orgunit_values= new String [orgunitsarr.length]; 

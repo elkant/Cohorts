@@ -262,7 +262,7 @@ XSSFWorkbook wb = wb1;
        if(request.getParameter("subcounty")!=null)
        {
            if(!request.getParameter("subcounty").equals("")){
-       
+       if(!subcountyar[0].equals("")){
        for(int a=0;a<subcountyar.length;a++)
        {
        
@@ -279,6 +279,7 @@ XSSFWorkbook wb = wb1;
           }
            
            
+       }
        }
            System.out.println(" array length "+subcountyar.length);
        }
@@ -304,7 +305,7 @@ XSSFWorkbook wb = wb1;
        if(request.getParameter("facility")!=null)
        {
            if(!request.getParameter("facility").equals("")){
-       
+        if(!facilityar[0].equals("")){
        for(int a=0;a<facilityar.length;a++)
        {
        
@@ -322,6 +323,7 @@ XSSFWorkbook wb = wb1;
            
            
        }
+           }
            System.out.println(" facility array length "+facilityar.length);
        
        }}

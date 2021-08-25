@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package reports;
+package stockverification;
 
 
 import General.IdGenerator;
@@ -32,14 +32,14 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import static reports.pnsreports.isNumeric;
+
 import static scripts.OSValidator.isUnix;
 
 /**
  *
  * @author EKaunda
  */
-public class htsrriplainexcel extends HttpServlet {
+public class commoditiesreported extends HttpServlet {
 
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -210,7 +210,7 @@ SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 1000);
        if(request.getParameterValues("subcounty")!=null)
        {
            if(request.getParameterValues("subcounty").length!=0){
-       if(!subcountyar[0].equals("")){
+       
        for(int a=0;a<subcountyar.length;a++)
        {
        
@@ -228,7 +228,6 @@ SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 1000);
            
            
        }
-           }
            System.out.println(" array length "+subcountyar.length);
        }
        }
@@ -255,7 +254,7 @@ SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 1000);
        {
            if(request.getParameterValues("facility").length!=0){
                
-       if(!facilityar[0].equals("")){
+       
        for(int a=0;a<facilityar.length;a++)
        {
        
@@ -272,7 +271,6 @@ SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 1000);
           }
            
            
-       }
        }
            System.out.println(" facility array length "+facilityar.length);
        
@@ -306,7 +304,7 @@ SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 1000);
         
         //========Query two====Facility Details==============
         
-        String qry = "select ID, County, `Sub-county`, ifnull(Ward,'') as Ward , `Facility Name`, Counsellor, `Register No.`, `Patient Serial no`, `Date Tested`, Age, Gender, modality, `Test Result`,  Case when Linked='Yes' then 'Linked' when Linked='No' then 'Not Linked' else '' end as 'Linked', Cccno, Linked site, `Other Facility linked`, `Reason Not Linked`, `Reason for death`, `Other Reason for death`, `Reason for declining`, `Other reason for declining`, timestamp, lastsynced, mflcode, datestartedart, Agebracket, `Overall Modality`, `Date Linked`,`Started ON ART`,`Reason Not Started ON ART`,`Facility started on ART`,`Other Facility started on ART`,`Reason For Declining ART`,`Other Reason For Declining ART`,`Reason For death before started on Treatment`, `Other Reason For death before started on Treatment` ,DataType from aphiaplus_moi.vw_allsites_hts_v2 where "+orgunits+" ;";
+        String qry = "call internal_system.sp_stocks_entered_data('"+startdate+"','"+enddate+"');";
        
         System.out.println("query ni "+qry);
        
@@ -347,7 +345,7 @@ SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 1000);
                // System.out.print(mycolumns.get(a) + ":" + conn.rs.getString("" + mycolumns.get(a)));
 
                 Cell cell0 = rw.createCell(a);
-                 if(isNumeric(conn.rs.getString("" + mycolumns.get(a))) && conn.rs.getString("" + mycolumns.get(a)).length()<=10 )
+                 if(isInt(conn.rs.getString("" + mycolumns.get(a))) && conn.rs.getString("" + mycolumns.get(a)).length()<=10 )
                  {
                // if(1==1){
                 
@@ -415,7 +413,7 @@ SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 1000);
         
        
 
-        System.out.println("" + "HTS_Rawdata_reports_Gen_" + createdOn.trim() + ".xls");
+        System.out.println("" + "Stock Receipt_reports_Gen_" + createdOn.trim() + ".xls");
 
         ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
         wb.write(outByteStream);
@@ -423,7 +421,7 @@ SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 1000);
         response.setContentType("application/ms-excel");
         response.setContentLength(outArray.length);
         response.setHeader("Expires:", "0"); // eliminates browser caching
-        response.setHeader("Content-Disposition", "attachment; filename=" + "HTS_SurgeData_for_"+startdate+"_to_"+enddate+"_gen_" + createdOn.trim() + ".xlsx");
+        response.setHeader("Content-Disposition", "attachment; filename=" + "Stock_Receipt_for_"+startdate+"_to_"+enddate+"_gen_" + createdOn.trim() + ".xlsx");
          response.setHeader("Set-Cookie","fileDownload=true; path=/");
         OutputStream outStream = response.getOutputStream();
         outStream.write(outArray);
@@ -437,21 +435,22 @@ SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 1000);
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(rawdata.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(commoditiesreported.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InvalidFormatException ex) {
-            Logger.getLogger(surge_tracker.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(commoditiesreported.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException 
+    {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(rawdata.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(commoditiesreported.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InvalidFormatException ex) {
-            Logger.getLogger(surge_tracker.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(commoditiesreported.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -459,5 +458,18 @@ SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 1000);
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+    
+    
+    public static boolean isInt(String str) {
+	
+  	try {
+      	@SuppressWarnings("unused")
+    	int x = Integer.parseInt(str);
+      	return true; //String is an Integer
+	} catch (NumberFormatException e) {
+    	return false; //String is not an Integer
+	}
+  	
+}
 
 }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package reports;
+package rri_gaps;
 
 
 import General.IdGenerator;
@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Font;
@@ -31,7 +32,9 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFFont;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.openxmlformats.schemas.spreadsheetml.x2006.main.CTTable;
 import static reports.pnsreports.isNumeric;
 import static scripts.OSValidator.isUnix;
 
@@ -39,7 +42,7 @@ import static scripts.OSValidator.isUnix;
  *
  * @author EKaunda
  */
-public class htsrriplainexcel extends HttpServlet {
+public class baselinereport extends HttpServlet {
 
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -61,7 +64,7 @@ public class htsrriplainexcel extends HttpServlet {
 
 
 
-String allpath = getServletContext().getRealPath("/htsraw.xlsx");
+String allpath = getServletContext().getRealPath("/baselines.xlsx");
 
 XSSFWorkbook wb1;
  
@@ -76,7 +79,7 @@ String mydrive = allpath.substring(0, 1);
 
 String np=mydrive+":\\HSDSA\\PNS\\MACROS\\";
 
-String filepath="Surge_Raw_"+dat2+".xlsx";
+String filepath="Sites_with_Service_Gaps_"+dat2+".xlsx";
 
 
 if(isUnix()){
@@ -86,8 +89,8 @@ if(isUnix()){
 
 
 
-//wb = new XSSFWorkbook( OPCPackage.open(allpath) );
-wb1 = new XSSFWorkbook();
+wb1 = new XSSFWorkbook( OPCPackage.open(allpath) );
+//wb1 = new XSSFWorkbook();
 
 
 
@@ -96,10 +99,10 @@ wb1 = new XSSFWorkbook();
 
 
 
-//XSSFWorkbook wb = wb1;
+XSSFWorkbook wb = wb1;
 
 
-SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 1000);
+//SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 1000);
 
         Font font =  wb.createFont();
         font.setFontHeightInPoints((short) 18);
@@ -153,12 +156,12 @@ SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 1000);
         stylesum.setFont(fontx);
         stylesum.setWrapText(true);
 
-        Sheet shet = wb.createSheet("Raw Data");
-
+        
+      XSSFSheet shet = wb.getSheet("rawdata");
         String year="";
        IdGenerator dats= new IdGenerator();
         
-        String startdate="2019-05-13";
+        String startdate="2021-06-01";
         String enddate=IG.toDay();
       
         String county="";
@@ -181,63 +184,18 @@ SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 1000);
 //            subcounty=request.getParameter("rpt_subcounty");
 //        }
 //        //county
-        if(request.getParameter("county")!=null)
-        {
-         county=request.getParameter("county");
-        }
-        
+//        if(request.getParameter("county")!=null)
+//        {
+//         county=request.getParameter("county");
+//        }
+//        
         dbConn conn = new dbConn();
         
         //========Query 1=================
-        
-        String orgunits="  ( vw_allsites_hts_v2.`Date Tested` between  '"+startdate+"' and '"+enddate+"' )  ";
-        
-        
-        
-        if(!county.trim().equals(""))
-        {
-        orgunits+=" and  County in ('"+county+"') ";
-        }
-        
-        
-       
+      
+
      
-        String subcounty="(";
-        String subcountyar[]=null;
-        
-       subcountyar=request.getParameterValues("subcounty"); 
        
-       if(request.getParameterValues("subcounty")!=null)
-       {
-           if(request.getParameterValues("subcounty").length!=0){
-       if(!subcountyar[0].equals("")){
-       for(int a=0;a<subcountyar.length;a++)
-       {
-       
-           if(a==subcountyar.length-1)
-           {
-               
-            subcounty+="'"+subcountyar[a]+"')";  
-            
-           }
-     else {
-               
-       subcounty+="'"+subcountyar[a]+"',"; 
-       
-          }
-           
-           
-       }
-           }
-           System.out.println(" array length "+subcountyar.length);
-       }
-       }
-        
-        if(!subcounty.equals("(") ){
-            
-         orgunits+=" and `Sub-county` in "+subcounty+" ";
-        
-        }
         
         
      
@@ -251,41 +209,9 @@ SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 1000);
        
 		   facilityar=request.getParameterValues("facility"); 
        
-       if(request.getParameterValues("facility")!=null)
-       {
-           if(request.getParameterValues("facility").length!=0){
-               
-       if(!facilityar[0].equals("")){
-       for(int a=0;a<facilityar.length;a++)
-       {
        
-           if(a==facilityar.length-1)
-           {
-               
-            mfl+="'"+facilityar[a]+"')";  
-            
-           }
-     else {
-               
-       mfl+="'"+facilityar[a]+"',"; 
+        
        
-          }
-           
-           
-       }
-       }
-           System.out.println(" facility array length "+facilityar.length);
-       
-       }}
-        
-        
-        if(!mfl.equals("(") )
-        {
-            
-         orgunits+=" and `mflcode` in "+mfl+" ";
-        
-        }
-        
         
         
         //_______________________________________________________________________________________________
@@ -306,7 +232,7 @@ SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 1000);
         
         //========Query two====Facility Details==============
         
-        String qry = "select ID, County, `Sub-county`, ifnull(Ward,'') as Ward , `Facility Name`, Counsellor, `Register No.`, `Patient Serial no`, `Date Tested`, Age, Gender, modality, `Test Result`,  Case when Linked='Yes' then 'Linked' when Linked='No' then 'Not Linked' else '' end as 'Linked', Cccno, Linked site, `Other Facility linked`, `Reason Not Linked`, `Reason for death`, `Other Reason for death`, `Reason for declining`, `Other reason for declining`, timestamp, lastsynced, mflcode, datestartedart, Agebracket, `Overall Modality`, `Date Linked`,`Started ON ART`,`Reason Not Started ON ART`,`Facility started on ART`,`Other Facility started on ART`,`Reason For Declining ART`,`Other Reason For Declining ART`,`Reason For death before started on Treatment`, `Other Reason For death before started on Treatment` ,DataType from aphiaplus_moi.vw_allsites_hts_v2 where "+orgunits+" ;";
+        String qry = "call internal_system.sp_rri_gaps_Baselines_Report('"+startdate+"', '"+enddate+"');";
        
         System.out.println("query ni "+qry);
        
@@ -331,9 +257,9 @@ SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 1000);
 //skip header
                    // System.out.println("Column number "+i);
                     mycolumns.add(metaData.getColumnLabel(i));
-                    Cell cell0 = rw.createCell(i - 1);
-                    cell0.setCellValue(metaData.getColumnLabel(i));
-                    cell0.setCellStyle(stylex);
+                    //Cell cell0 = rw.createCell(i - 1);
+                    //cell0.setCellValue(metaData.getColumnLabel(i));
+                    //cell0.setCellStyle(stylex);
 
                     //create row header
                 }//end of for loop
@@ -390,16 +316,18 @@ SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 1000);
      
      
      
-   if(1==2){
-   //  XSSFSheet shet2= wb.getXSSFWorkbook().getSheet("Raw Data");
+  if(1==1){
+     XSSFSheet sheet= wb.getSheet("rawdata");
         // tell your xssfsheet where its content begins and where it ends
-//((XSSFSheet)shet2).getCTWorksheet().getDimension().setRef("A1:AC" + (shet.getLastRowNum() + 1));
+((XSSFSheet)shet).getCTWorksheet().getDimension().setRef("A1:J" + (shet.getLastRowNum() + 1));
 
-//CTTable ctTable = ((XSSFSheet)shet2).getTables().get(0).getCTTable();
+CTTable ctTable = ((XSSFSheet)shet).getTables().get(0).getCTTable();
 
-//ctTable.setRef("A1:AC" + (shet.getLastRowNum() + 1)); // adjust reference as needed
+ctTable.setRef("A1:J" + (shet.getLastRowNum() + 1)); // adjust reference as needed
 
-         }
+
+        
+          }
      
   
     
@@ -415,7 +343,7 @@ SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 1000);
         
        
 
-        System.out.println("" + "HTS_Rawdata_reports_Gen_" + createdOn.trim() + ".xls");
+        System.out.println("" + "Sites_with_Gaps_reports_Gen_" + createdOn.trim() + ".xlsx");
 
         ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
         wb.write(outByteStream);
@@ -423,7 +351,7 @@ SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 1000);
         response.setContentType("application/ms-excel");
         response.setContentLength(outArray.length);
         response.setHeader("Expires:", "0"); // eliminates browser caching
-        response.setHeader("Content-Disposition", "attachment; filename=" + "HTS_SurgeData_for_"+startdate+"_to_"+enddate+"_gen_" + createdOn.trim() + ".xlsx");
+        response.setHeader("Content-Disposition", "attachment; filename=" + "Sites_with_Gaps_reports_btwn_"+startdate+"_to_"+enddate+"_gen_" + createdOn.trim() + ".xlsx");
          response.setHeader("Set-Cookie","fileDownload=true; path=/");
         OutputStream outStream = response.getOutputStream();
         outStream.write(outArray);
@@ -437,9 +365,9 @@ SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 1000);
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(rawdata.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(baselinereport.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InvalidFormatException ex) {
-            Logger.getLogger(surge_tracker.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(baselinereport.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -449,9 +377,9 @@ SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 1000);
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(rawdata.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(baselinereport.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InvalidFormatException ex) {
-            Logger.getLogger(surge_tracker.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(baselinereport.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

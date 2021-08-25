@@ -98,7 +98,7 @@ public class missingReports extends HttpServlet {
        if(request.getParameter("subcounty")!=null)
        {
            if(!request.getParameter("subcounty").equals("")){
-       
+       if(!subcountyar[0].equals("")){
        for(int a=0;a<subcountyar.length;a++)
        {
        
@@ -115,6 +115,7 @@ public class missingReports extends HttpServlet {
           }
            
            
+       }
        }
            System.out.println(" array length "+subcountyar.length);
        }
@@ -137,7 +138,7 @@ public class missingReports extends HttpServlet {
        if(request.getParameter("facility")!=null)
        {
            if(!request.getParameter("facility").equals("")){
-       
+       if(!facilityar[0].equals("")){
        for(int a=0;a<facilityar.length;a++)
        {
        
@@ -154,6 +155,7 @@ public class missingReports extends HttpServlet {
           }
            
            
+       }
        }
            System.out.println(" facility array length "+facilityar.length);
        

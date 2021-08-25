@@ -348,6 +348,38 @@
         <servlet-name>importderv52</servlet-name>
         <servlet-class>imports.importderv52</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>baselinereport</servlet-name>
+        <servlet-class>rri_gaps.baselinereport</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>gapsreported</servlet-name>
+        <servlet-class>rri_gaps.gapsreported</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>loadSavedData</servlet-name>
+        <servlet-class>stockverification.loadSavedData</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>loadComodities</servlet-name>
+        <servlet-class>stockverification.loadComodities</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>checkNoteDuplicates</servlet-name>
+        <servlet-class>stockverification.checkNoteDuplicates</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>saveStockData</servlet-name>
+        <servlet-class>stockverification.saveStockData</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>stocks_login</servlet-name>
+        <servlet-class>stockverification.stocks_login</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>commoditiesreported</servlet-name>
+        <servlet-class>stockverification.commoditiesreported</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loadcohort</servlet-name>
         <url-pattern>/loadcohort</url-pattern>
@@ -695,6 +727,38 @@
     <servlet-mapping>
         <servlet-name>importderv52</servlet-name>
         <url-pattern>/importderv52</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>baselinereport</servlet-name>
+        <url-pattern>/baselinereport</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>gapsreported</servlet-name>
+        <url-pattern>/gapsreported</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>loadSavedData</servlet-name>
+        <url-pattern>/loadSavedData</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>loadComodities</servlet-name>
+        <url-pattern>/loadComodities</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>checkNoteDuplicates</servlet-name>
+        <url-pattern>/checkNoteDuplicates</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>saveStockData</servlet-name>
+        <url-pattern>/saveStockData</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>stocks_login</servlet-name>
+        <url-pattern>/stocks_login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>commoditiesreported</servlet-name>
+        <url-pattern>/commoditiesreported</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -4,6 +4,7 @@
     Author     : Emmanuel E
 --%>
 
+<%@page import="General.IdGenerator2"%>
 <%@page import="hfr.getIndicators"%>
 <%@page import="java.util.logging.Logger"%>
 <%@page import="java.util.logging.Level"%>
@@ -199,7 +200,7 @@ input[readonly]{
                                     <li class="active newdata"><a href="#dataentry" id="newdatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-plus"></i>Accounting For Service Gaps</a></li>
                                  
                                     <!--<li class="active editdata" style='display:none;' ><a href="#dataentry" id="newdatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-edit"></i> Edit Data</a></li>-->
-                                    <li><a href="#reports"  style="display:none;" id="reportsbutton" data-toggle="tab"> <i class="glyphicon glyphicon-stats"></i> Report</a></li> 
+                                    <li><a href="#reports"  style="" id="reportsbutton" data-toggle="tab"> <i class="glyphicon glyphicon-stats"></i> Reports</a></li> 
                                     <!--<li><a href="#searchdata" data-toggle="tab"> <i class="glyphicon glyphicon-search"></i> Edit Data</a></li>--> 
                                     <!-- <li><a href="#export" data-toggle="tab"> <i class="glyphicon glyphicon-cloud-upload"></i> Data Export</a></li>-->
                                 </ul>
@@ -311,21 +312,96 @@ input[readonly]{
                              
 
                                     <div class="tab-pane well" id="reports">
-
+<form action="baselinereport" id="reportingForm">
 
                                         <!--Dashboard code-->
 
-
+   
+                                                    <% IdGenerator2 ig = new IdGenerator2();%>
+                                                  
 
 
                                         <div class="panel panel-default">
                                             <div class="panel-heading">
-                                                <h4>Dashboard</h4></div>
+                                                <h4>Reports Download</h4></div>
                                             <div class="panel-body">
                                                 <form id="reportsform">
                                                     <table class='table table-striped table-bordered' id="reportstable" >
 
-                                                    </table>
+                                        <tr >
+
+                                            <td class="col-xs-4">
+                                                <div class="control-group">
+
+                                                    <div class="controls">
+                                                        <label><b>Select Report</b><font color="green"></font></label> 
+
+                                                    </div>
+                                                </div>
+                                            </td>
+
+                                            <td >
+                                                <div class="control-group">
+
+                                                    <div class="controls">
+                                                        <select class="form-control input-sm" onchange="checkFormAction();"   name='report' id='report' >
+                                                            <option value='baselinereport'>1.Sites With Baselines</option>
+                                                            <option value='gapsreported'>2.Reported Data</option>
+                                                           
+                                                            <!--<option value='hts_self_reports'>6.HTS Self</option>-->
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </td>
+
+                                        </tr>
+
+
+                                        <tr >
+                                            <td class="col-xs-4">
+                                                <div class="control-group">
+
+                                                    <div class="controls">
+                                                        <label ><b>Start date:</b><font color='red'><b>*</b></font></label>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="col-xs-4">
+                                                <div class="controls">
+                                                    <input data-date-end-date="0d" required type="text" title="this is the date that the week started" value="<%=ig.LastMonthStartDate()%>" class="form-control input-sm dates" name="startdate" autocomplete="off" id="startdate">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr >
+                                            <td class="col-xs-4">
+                                                <div class="control-group">
+
+                                                    <div class="controls">
+                                                        <label ><b>End date:</b><font color='red'><b>*</b></font></label>
+
+                                                    </div> </div>
+                                            </td>
+                                            <td class="col-xs-4">
+                                                <div class="controls">
+                                                    <input data-date-end-date="0d" required type="text"  title="this is the date that the week ended" value="<%=ig.LastMonthEndDate()%>" class="form-control input-sm dates" name="enddate" id="enddate" autocomplete="off"/>
+                                                </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                       <tr >
+                                       <td colspan="2"> <div class="form-actions">
+
+
+                                                    <input type="submit" id="generaterpt" class="btn green" value="Generate report" />
+
+
+
+                                                </div>
+                                        </td>
+                                         </tr>                                           
+
+</table>
                                                 </form>
                                             </div>
                                             <!--/panel-body-->
@@ -336,7 +412,7 @@ input[readonly]{
 
                                         <!--Reports entry code-->
 
-
+</form>
                                     </div>
                                     <div class="tab-pane well" id="export">
 
@@ -916,7 +992,11 @@ Date.prototype.getWeekNumber = function(){
   return Math.ceil((((d - yearStart) / 86400000) + 1)/7)
 };
 
-
+function checkFormAction (){
+    
+  $('#reportingForm').attr('action', $("#report").val());  
+    
+}
 
 
         </script>

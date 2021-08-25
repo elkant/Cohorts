@@ -103,7 +103,7 @@
                
                   <!-- END BEGIN STYLE CUSTOMIZER -->   
                   <h3 class="page-title" style="text-align: center;">
-                    <a class='btn-warning btn' href="pns/ART_Daily_Form_v5_2020_12_09.xlsx" style="margin-left:40%;">Download ART Daily Template</a> 
+                    <a class='btn-warning btn' href="pns/ART_Daily_Form_v5_2021_08_06.xlsx" style="margin-left:40%;">Download ART Daily Template ( v 5.0.2)</a> 
 <!--                    Internal System-->
                   </h3>
                  
@@ -111,7 +111,7 @@
                   <ul class="breadcrumb">
                      <li style="width: 900px;">
                         <i class="icon-upload"></i>
-                        <a href="#" style="margin-left:40%;">Upload ART daily Data v5 (09 Dec 2020).</a> 
+                        <a href="#" style="margin-left:40%;">Upload ART daily Data v5 (06 Aug 2021).</a> 
                         <!--<span class="icon-angle-right"></span>-->
                      </li>
            
