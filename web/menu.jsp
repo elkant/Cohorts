@@ -84,6 +84,7 @@
                <ul class="sub">
     
      <%if(1==1){%> 
+                 <li ><a href='importDtriangulation.jsp'><i class='icon-plus'></i>Daily Data Triangulation</a></li>
                  <li ><a href="importpns.jsp"><i class="icon-plus"></i>Upload PNS</a></li>
                  <li ><a href="importart.jsp"><i class="icon-edit"></i>Upload ACA</a></li>
                  <li ><a href="importpmtct.jsp"><i class="icon-plus"></i>Upload MCA</a></li>
@@ -130,7 +131,8 @@
          <%  } 
 else {
 
-  out.println("<li ><a style='color:green;' target='_blank' href='https://usaidtujengejamii.org:8443/htslive/livesummary.jsp'><b><i class='icon-list'></i>RRI Live Summary</b></a></li>");
+  out.println("<li ><a  target='_blank' href='https://usaidtujengejamii.org:8443/htslive/livesummary.jsp'><i class='icon-list'></i>RRI Live Summary</a></li>");
+  out.println("<li ><a style='color:green;' href='importDtriangulation.jsp'><i class='icon-plus'></i><b>Daily Data Triangulation</b></a></li>");
   out.println("<li ><a href='importpns.jsp'><i class='icon-plus'></i>Daily PNS Data Upload</a></li>");
   out.println("<li ><a href='importder.jsp'><i class='icon-plus'></i>Daily ART Data Upload</a></li>");
   out.println("<li ><a href='importcovid.jsp'><i class='icon-plus'></i>Covid 19 Data Upload</a></li>");

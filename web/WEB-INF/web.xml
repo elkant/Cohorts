@@ -380,6 +380,18 @@
         <servlet-name>commoditiesreported</servlet-name>
         <servlet-class>stockverification.commoditiesreported</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>loadStockSites</servlet-name>
+        <servlet-class>stockverification.loadStockSites</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>kp_monthly_report</servlet-name>
+        <servlet-class>KP.kp_monthly_report</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>importdailyTriangulation</servlet-name>
+        <servlet-class>daily_data_triangulation.importdailyTriangulation</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loadcohort</servlet-name>
         <url-pattern>/loadcohort</url-pattern>
@@ -759,6 +771,18 @@
     <servlet-mapping>
         <servlet-name>commoditiesreported</servlet-name>
         <url-pattern>/commoditiesreported</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>loadStockSites</servlet-name>
+        <url-pattern>/loadStockSites</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>kp_monthly_report</servlet-name>
+        <url-pattern>/kp_monthly_report</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>importdailyTriangulation</servlet-name>
+        <url-pattern>/importdailyTriangulation</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

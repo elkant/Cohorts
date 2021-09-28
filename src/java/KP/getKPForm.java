@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -48,7 +49,17 @@ public class getKPForm extends HttpServlet {
         try {
             /* TODO output your page here. You may use following sample code. */
             
+            String non_art_Rows_arr[]={"1","2"};
             
+            HashMap<String, Integer[]> hm= new HashMap<String, Integer[] >();
+            
+            hm.put("prep", new Integer[]{43,56});
+            hm.put("hts", new Integer[]{63,115});
+            hm.put("art", new Integer[]{133,180});
+            
+            //Prep 43 to 56
+            //Testing 63 to 115
+            //ART 133 to 180
 //_______________________ Create excel templates _________________________________________
 
             XSSFWorkbook wb = null;
@@ -78,6 +89,9 @@ public class getKPForm extends HttpServlet {
             String subcountynamelist = "";
             String diccode = "";
             String todeletefiles="";
+            String artsite="";
+            String prepsite="";
+            String htssite="";
 
             
             String dicarr[] = null;
@@ -131,7 +145,7 @@ public class getKPForm extends HttpServlet {
             String getCount = " select count(*) as dics from internal_system.dic join internal_system.ward on ward.ward_id=dic.ward_id join ( internal_system.district join internal_system.county on county.countyid=district.countyid) on ward.subcountyid=district.DistrictID "
                     + " " + where + " ";
             
-            String fetchqry = " select county,districtnom as subcounty ,dic_name as Facility,dic_id as mflcode from internal_system.dic join internal_system.ward on ward.ward_id=dic.ward_id join ( internal_system.district join internal_system.county on county.countyid=district.countyid) on ward.subcountyid=district.DistrictID "
+            String fetchqry = " select county,districtnom as subcounty ,dic_name as Facility,dic_id as mflcode, ifnull(art,0) as art,ifnull(hts,0) as hts,ifnull(prep,0) as prep from internal_system.dic join internal_system.ward on ward.ward_id=dic.ward_id join ( internal_system.district join internal_system.county on county.countyid=district.countyid) on ward.subcountyid=district.DistrictID "
                     + " " + where + " ";
             System.out.println("" + fetchqry);
             dbConn conn = new dbConn();
@@ -156,10 +170,17 @@ public class getKPForm extends HttpServlet {
             
            while (conn.rs.next()) {
                 
+               
+               
+               
+               
                     county = conn.rs.getString("county");
                     dicname = conn.rs.getString("Facility");
                     subcountyname = conn.rs.getString("subcounty");
                     diccode = conn.rs.getString("mflcode");
+                    artsite = conn.rs.getString("art");
+                    htssite = conn.rs.getString("hts");
+                    prepsite = conn.rs.getString("prep");
                     if(!subcountynamelist.contains(subcountyname)){
                     subcountynamelist+=subcountyname+"_";
                     }
@@ -302,7 +323,56 @@ if(smonth.equals(emonth)){  mwezi=emonth;  } else { mwezi=smonth+"_to_"+emonth; 
                     XSSFCell yearcl= rw.getCell(26);
                     yearcl.setCellValue(mwaka);
                     
+                    //_____________Hide the unsupported sections
                     
+                    
+                    // Hide non Prep Sites
+                        if(prepsite.equals("0"))
+                        {
+                        int fstart=hm.get("prep")[0];
+                        int fend=hm.get("prep")[1];
+                        
+                        for(int ef=fstart;ef<=fend;ef++)
+                        {
+                        
+                       XSSFRow rwx = shet.getRow(ef);
+                       rwx.setZeroHeight(true);
+                        
+                        }
+                        
+                        }
+                        
+                         // Hide non HTS Sites
+                        if(htssite.equals("0"))
+                        {
+                        int fstart=hm.get("hts")[0];
+                        int fend=hm.get("hts")[1];
+                        
+                        for(int ef=fstart;ef<=fend;ef++)
+                        {
+                        
+                       XSSFRow rwx = shet.getRow(ef);
+                       rwx.setZeroHeight(true);
+                        
+                        }
+                        
+                        }
+                        
+                       // Hide non ART Sites
+                        if(artsite.equals("0"))
+                        {
+                        int fstart=hm.get("art")[0];
+                        int fend=hm.get("art")[1];
+                        
+                        for(int ef=fstart;ef<=fend;ef++)
+                        {
+                        
+                       XSSFRow rwx = shet.getRow(ef);
+                       rwx.setZeroHeight(true);
+                        
+                        }                        
+                        }
+                   
                     
 
                 }

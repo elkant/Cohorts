@@ -40,7 +40,7 @@ String dics="";
      
     }
 
-       String getdics="Select * from internal_system.dic where `lip` in ('"+lip+"') ";
+       String getdics="Select * from internal_system.dic where `lip` in ('"+lip+"') and active='1' ";
        
             System.out.println(""+getdics);
        

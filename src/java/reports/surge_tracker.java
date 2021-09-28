@@ -261,6 +261,9 @@ XSSFWorkbook wb = wb1;
        {
            if(request.getParameterValues("subcounty").length!=0){
        if(!subcountyar[0].equals("")){
+           
+           if(subcountyar[0].contains(",")){subcountyar=subcountyar[0].split(",");}
+           
        for(int a=0;a<subcountyar.length;a++)
        {
        
@@ -304,6 +307,7 @@ XSSFWorkbook wb = wb1;
        {
            if(request.getParameterValues("facility").length!=0){
         if(!facilityar[0].equals("")){
+             if(facilityar[0].contains(",")){facilityar=facilityar[0].split(",");}
        for(int a=0;a<facilityar.length;a++)
        {
        

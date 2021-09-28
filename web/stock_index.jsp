@@ -49,10 +49,10 @@
 		<div class="container-login100">
 			<div class="wrap-login100 p-t-3 p-b-20">
 				<form action='stocks_login' class="login100-form validate-form">
-					<h3 style="text-align: center;">UTJ Stocks Verification Module</h3>
+					<h3 style="text-align: center;">UTJ Stocks Verification -Meds Delivery</h3>
                                         <hr>
 					<span class="login100-form-avatar">
-                                            <img src="images/stocks.png" alt="welcome">
+                                            <img src="images/stocks_.png" alt="welcome">
 					</span>
 					
 

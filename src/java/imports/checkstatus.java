@@ -49,6 +49,14 @@ int pos=0;
              }
              }
          }
+        if(load_type.equalsIgnoreCase("dailytriangulation")){
+             if(session.getAttribute("dtpos")!=null){
+             message = session.getAttribute("dtpos").toString();
+             if(isNumeric(session.getAttribute("dtpos_count").toString())){
+             pos = Integer.parseInt(session.getAttribute("dtpos_count").toString());
+             }
+             }
+         }
        
          
          obj.put("count", pos);

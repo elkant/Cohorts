@@ -30,7 +30,7 @@
         <link href="css/bootstrap.css" rel="stylesheet">
         <link href="css/bootstrap-datepicker.min.css" rel="stylesheet">
         <link rel="stylesheet" href="css/select2.min.css">
-        <link rel="shortcut icon" href="images/stocks.png">
+        <link rel="shortcut icon" href="images/stocks_.png">
         <link href="assets/css/style.css" rel="stylesheet" />
         <!--<link data-jsfiddle="common" rel="stylesheet" media="screen" href="css/handsontable.css">-->
         <!--  <link data-jsfiddle="common" rel="stylesheet" media="screen" href="dist/pikaday/pikaday.css">-->
@@ -308,6 +308,61 @@ expdate
 cmts
 
 -->
+ 
+<!___________________________________________________Delivery Note Number______________________________________________________________________________________>
+
+                                                        <tr>
+
+                                                            <td class="col-xs-6">
+                                                                <div class="control-group">
+
+                                                                    <div class="controls">
+                                                                        <label><required-option></required-option>Delivery Note Number</label> 
+
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td class="col-xs-6">
+                                                                <div class="control-group">
+
+                                                                    <div class="controls">
+                                                                        
+                                                                    <input type="text" onblur="CheckDuplicateNoteNumber();" required="true"     name="delnoteno" id="delnoteno" class="form-control input-sm" >
+                                                                                                                   
+                                                                        
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+
+
+                                                        </tr>
+                                                        
+                          <!___________________________________________________Document date______________________________________________________________________________________>
+
+                                                        <tr>
+
+                                                            <td class="col-xs-6">
+                                                                <div class="control-group">
+
+                                                                    <div class="controls">
+                                                                        <label><required-option></required-option>Document Date</label> 
+
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td class="col-xs-6">
+                                                                <div class="control-group">
+
+                                                                    <div class="controls">
+                                                                        <input type="text" required="true" readonly data-date-end-date="0d"     name="docdate" id="docdate" class="form-control input-sm dates" >
+                                                                                                                   
+                                                                        
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+
+
+                                                        </tr>    
 
         <!___________________________________________________Commodity Description______________________________________________________________________________________>
 
@@ -367,35 +422,7 @@ cmts
 
                                                         </tr>                                                     
                                                         
- 
-<!___________________________________________________Delivery Note Number______________________________________________________________________________________>
 
-                                                        <tr>
-
-                                                            <td class="col-xs-6">
-                                                                <div class="control-group">
-
-                                                                    <div class="controls">
-                                                                        <label><required-option></required-option>Delivery Note Number</label> 
-
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                            <td class="col-xs-6">
-                                                                <div class="control-group">
-
-                                                                    <div class="controls">
-                                                                        
-                                                                    <input type="text" onblur="CheckDuplicateNoteNumber();" required="true"     name="delnoteno" id="delnoteno" class="form-control input-sm" >
-                                                                                                                   
-                                                                        
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-
-
-                                                        </tr>
-                                                        
  <!___________________________________________________Batch Number______________________________________________________________________________________>
 
                                                         <tr>
@@ -444,7 +471,7 @@ cmts
                                                                 <div class="control-group">
 
                                                                     <div class="controls">
-                                                                        <input type="text" required="true" onkeypress='return numbers(event);'     name="delnoteqty" id="delnoteqty" class="form-control input-sm" >
+                                                                        <input type="number" required="true" onkeypress='return numbers(event);'     name="delnoteqty" id="delnoteqty" class="form-control input-sm" >
                                                                                                                    
                                                                         
                                                                     </div>
@@ -471,7 +498,7 @@ cmts
                                                                 <div class="control-group">
 
                                                                     <div class="controls">
-                                                                        <input type="text" required="true" onkeypress='return numbers(event);'    name="qtyrec" id="qtyrec" class="form-control" >
+                                                                        <input type="number" required="true" onkeypress='return numbers(event);'    name="qtyrec" id="qtyrec" class="form-control" >
                                                                                                                    
                                                                         
                                                                     </div>
@@ -481,60 +508,9 @@ cmts
 
                                                         </tr>     
                                                         
-                                                         <!___________________________________________________Document date______________________________________________________________________________________>
-
-                                                        <tr>
-
-                                                            <td class="col-xs-6">
-                                                                <div class="control-group">
-
-                                                                    <div class="controls">
-                                                                        <label><required-option></required-option>Document Date</label> 
-
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                            <td class="col-xs-6">
-                                                                <div class="control-group">
-
-                                                                    <div class="controls">
-                                                                        <input type="text" required="true" readonly data-date-end-date="0d"     name="docdate" id="docdate" class="form-control input-sm dates" >
-                                                                                                                   
-                                                                        
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-
-
-                                                        </tr>    
+                               
                                                         
-                                                         <!___________________________________________________Date Received______________________________________________________________________________________>
-
-                                                        <tr>
-
-                                                            <td class="col-xs-6">
-                                                                <div class="control-group">
-
-                                                                    <div class="controls">
-                                                                        <label><required-option></required-option>Date received</label> 
-
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                            <td class="col-xs-6">
-                                                                <div class="control-group">
-
-                                                                    <div class="controls">
-                                                                        <input type="text" required="true" readonly data-date-end-date="0d"     name="daterec" id="daterec" class="form-control input-sm dates" >
-                                                                                                                   
-                                                                        
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-
-
-                                                        </tr>
-                                                        
+                                                       
                                                         
                                                     
                                                          <!___________________________________________________Expiry Date______________________________________________________________________________________>
@@ -564,6 +540,32 @@ cmts
 
                                                         </tr>
                                                   
+                                                          <!___________________________________________________Date Received______________________________________________________________________________________>
+
+                                                        <tr>
+
+                                                            <td class="col-xs-6">
+                                                                <div class="control-group">
+
+                                                                    <div class="controls">
+                                                                        <label><required-option></required-option>Date received</label> 
+
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td class="col-xs-6">
+                                                                <div class="control-group">
+
+                                                                    <div class="controls">
+                                                                        <input type="text" required="true" readonly data-date-end-date="0d"     name="daterec" id="daterec" class="form-control input-sm dates" >
+                                                                                                                   
+                                                                        
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+
+
+                                                        </tr>
                                                         
                                                         
                                                             <!___________________________________________________Entry by ______________________________________________________________________________________>
@@ -574,7 +576,7 @@ cmts
                                                                 <div class="control-group">
 
                                                                     <div class="controls">
-                                                                        <label><required-option></required-option>Entered by</label> 
+                                                                        <label><required-option></required-option>Received by</label> 
 
                                                                     </div>
                                                                 </div>
@@ -996,7 +998,7 @@ cmts
        var ym=$("#period").val();
        
               $.ajax({
-                    url:'loadActiveSites',                            
+                    url:'loadStockSites',                            
                     type:'post',  
                     dataType: 'html',  
                     success: function(data)

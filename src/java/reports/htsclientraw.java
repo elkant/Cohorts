@@ -343,7 +343,7 @@ SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 1000);
         
         //========Query two====Facility Details==============
         
-        String qry = "select ID, County, `Sub-county`,ifnull(Ward) as Ward ,`Facility Name`, Counsellor, `Register No.`, `Patient Serial no`, `Date Tested`, Age, Gender, modality, `Test Result`,  Case when Linked='Yes' then 'Linked' when Linked='No' then 'Not Linked' else '' end as 'Linked', Cccno, Linked site, `Other Facility linked`, `Reason Not Linked`, `Reason for death`, `Other Reason for death`, `Reason for declining`, `Other reason for declining`, timestamp, lastsynced, mflcode, datestartedart, Agebracket, `Overall Modality`, sto from aphiaplus_moi.vw_allsites_hts_v2 where "+orgunits+" ;";
+        String qry = "select ID, County, `Sub-county`,ifnull(Ward,'') as Ward ,`Facility Name`, Counsellor, `Register No.`, `Patient Serial no`, `Date Tested`, Age, Gender, modality, `Test Result`,  Case when Linked='Yes' then 'Linked' when Linked='No' then 'Not Linked' else '' end as 'Linked', Cccno, Linked site, `Other Facility linked`, `Reason Not Linked`, `Reason for death`, `Other Reason for death`, `Reason for declining`, `Other reason for declining`, timestamp, lastsynced, mflcode, datestartedart, Agebracket, `Overall Modality`, sto from aphiaplus_moi.vw_allsites_hts_v2 where "+orgunits+" ;";
         System.out.println(qry);
         conn.rs = conn.st.executeQuery(qry);
         
