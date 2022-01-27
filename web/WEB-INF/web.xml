@@ -392,6 +392,30 @@
         <servlet-name>importdailyTriangulation</servlet-name>
         <servlet-class>daily_data_triangulation.importdailyTriangulation</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>importderv6</servlet-name>
+        <servlet-class>imports.importderv6</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>importderv7</servlet-name>
+        <servlet-class>imports.importderv7</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>importderv71</servlet-name>
+        <servlet-class>imports.importderv71</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>screening</servlet-name>
+        <servlet-class>reports.screening</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ramcah_tracker</servlet-name>
+        <servlet-class>reports.ramcah_tracker</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>importderv8</servlet-name>
+        <servlet-class>imports.importderv8</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loadcohort</servlet-name>
         <url-pattern>/loadcohort</url-pattern>
@@ -783,6 +807,30 @@
     <servlet-mapping>
         <servlet-name>importdailyTriangulation</servlet-name>
         <url-pattern>/importdailyTriangulation</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>importderv6</servlet-name>
+        <url-pattern>/importderv6</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>importderv7</servlet-name>
+        <url-pattern>/importderv7</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>importderv71</servlet-name>
+        <url-pattern>/importderv71</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>screening</servlet-name>
+        <url-pattern>/screening</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ramcah_tracker</servlet-name>
+        <url-pattern>/ramcah_tracker</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>importderv8</servlet-name>
+        <url-pattern>/importderv8</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

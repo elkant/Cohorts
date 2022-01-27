@@ -10,7 +10,7 @@ package db;
  * @author GNyabuto
  */
 
-import com.mysql.jdbc.CallableStatement;
+import java.sql.CallableStatement;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.FileInputStream;

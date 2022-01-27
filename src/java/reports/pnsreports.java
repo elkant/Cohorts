@@ -432,7 +432,8 @@ for (int i = 1; i <= columnCount; i++)
     }
     
     
-    if(!shet.getSheetName().equals("PNS raw Data")){
+    if(!shet.getSheetName().equals("PNS raw Data"))
+    {
     //Autofreeze  || Autofilter  || Remove Gridlines ||
      System.out.println("shet.setAutoFilter(new CellRangeAddress("+count1+", "+(count - 1)+", 0, "+(columnCount-1));
    if(count1<count-1)
@@ -540,13 +541,16 @@ outStream.flush();
         return "Short description";
     }// </editor-fold>
 
-    public static boolean isNumeric(String strNum) {
+   public static boolean isNumeric(String strNum) {
+      
+    
     try {
-        double d = Double.parseDouble(strNum);
+        double d = Integer.parseInt(strNum);
     } catch (NumberFormatException | NullPointerException nfe) {
         return false;
     }
     return true;
+      
 }
     
 }

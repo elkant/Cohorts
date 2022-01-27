@@ -138,6 +138,7 @@ public class loadSavedData extends HttpServlet
             jo.put("facilityname", conn.rs.getString("SubPartnerNom"));
             jo.put("code", conn.rs.getString("sc.code"));  
             jo.put("reportingdate", conn.rs.getString("reportingdate"));  
+            jo.put("pipeline", conn.rs.getString("pipeline"));  
             
               ja.put(jo);
             
@@ -153,7 +154,7 @@ public class loadSavedData extends HttpServlet
 
         public JSONObject getEnteredStockData(dbConn conn) throws SQLException{
     
-    String qry=" select ifnull(reportingdate,'') as reportingdate, sd.id as id, sd.facility as facility, sa.SubPartnerNom as SubPartnerNom,batchno  , contacts , ifnull(contact_name,'Not indicated') as contact_name ,sc.code as code,sd.packsize as packsize, delnoteno, qtyrec from internal_system.stocks_data sd left join internal_system.stocks_commodities sc on sd.commodity= sc.id left join internal_system.subpartnera sa on sa.SubPartnerID = sd.facility   ";
+    String qry=" select ifnull(reportingdate,'') as reportingdate, sd.id as id, sd.facility as facility, sa.SubPartnerNom as SubPartnerNom,batchno  , contacts , ifnull(contact_name,'Not indicated') as contact_name ,sc.code as code,sd.packsize as packsize, delnoteno, qtyrec , pipeline from internal_system.stocks_data sd left join internal_system.stocks_commodities sc on sd.commodity= sc.id left join internal_system.subpartnera sa on sa.SubPartnerID = sd.facility   ";
             
             conn.rs= conn.st.executeQuery(qry);
             
@@ -173,6 +174,7 @@ public class loadSavedData extends HttpServlet
             jo.put("qtyrec", conn.rs.getString("qtyrec"));
             jo.put("batchno", conn.rs.getString("batchno"));
             jo.put("reportingdate", conn.rs.getString("reportingdate"));
+            jo.put("pipeline", conn.rs.getString("pipeline"));
          
             
             

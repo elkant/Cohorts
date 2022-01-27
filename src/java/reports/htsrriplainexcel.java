@@ -351,7 +351,7 @@ SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 1000);
                  {
                // if(1==1){
                 
-                     cell0.setCellValue(conn.rs.getInt(mycolumns.get(a).toString()));
+                   cell0.setCellValue(conn.rs.getDouble(mycolumns.get(a).toString().trim()));
                     
                  }
                 else 

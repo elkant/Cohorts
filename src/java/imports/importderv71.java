@@ -13,7 +13,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.security.GeneralSecurityException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Iterator;
@@ -27,9 +26,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.poifs.crypt.Decryptor;
-import org.apache.poi.poifs.crypt.EncryptionInfo;
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -48,7 +44,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  */
 
 
-  public class importderv52 extends HttpServlet {
+  public class importderv71 extends HttpServlet {
    
 
  
@@ -268,7 +264,7 @@ if(1==2){
 int totalsheets=workbook.getNumberOfSheets();
 DataFormatter formatter = new DataFormatter(); //creating formatter using the default locale
 int rowsngapi=1;
-int rowCount=89;
+int rowCount=116;
 for(int a=0;a<totalsheets;a++){
     
     XSSFSheet worksheet = workbook.getSheetAt(a);
@@ -349,7 +345,7 @@ else if(printingcell.getCellType()==1){
     printval =printingcell.getStringCellValue();
 }
 
-  if(printval.equals("ADF V 5.0.2")){ isprinting=true;  }   
+  if(printval.equals("ADF V 7.0.1")){ isprinting=true;  }   
      
       //__________________________version row________________
     
@@ -373,7 +369,7 @@ else if(printingcell.getCellType()==1){
     
     
     
-      XSSFCell celldesignation=worksheet.getRow(52).getCell((short)2);
+      XSSFCell celldesignation=worksheet.getRow(57).getCell((short)2);
 //    Designation =celldesignation.getStringCellValue(); 
     
     if(celldesignation.getCellType()==0){
@@ -422,11 +418,10 @@ else if(cellversion.getCellType()==1)
   
    
         
-    if(versionno.equals("ADF V 5.0.2") ){
-        
+    if(versionno.equals("ADF V 7.0.1") ){        
         
         //_________submitted by and Designation___________
-      XSSFCell cellsubmitter=worksheet.getRow(52).getCell((short)1);
+      XSSFCell cellsubmitter=worksheet.getRow(57).getCell((short)1);
     
     if(cellsubmitter.getCellType()==0)
     {
@@ -439,7 +434,7 @@ else if(cellsubmitter.getCellType()==1)
     }
     
         
-        while(row<=50){
+        while(row<=57){
             
             rowsngapi++;
         session.setAttribute("dailyartpos", "<b>"+rowsngapi+"/"+rowCount+"</b>");
@@ -455,7 +450,7 @@ else if(cellsubmitter.getCellType()==1)
                 }
                 
                 
-                if( row>=9 && row<=50 ) {
+                if( row>=9 && row<=57 ) {
                     
                     
 // _______________________________________________________________
@@ -481,7 +476,7 @@ else
 indicatorid =indiccell.getRawValue();
 }
 
-if(!"A,B,C,D,E,F,G,H".contains(indicatorid) && !(indicatorid.equals("17") && delivery_point.equals("2")))
+if(!"A,B,C,D,E,F,G,H,I,J".contains(indicatorid) && !(indicatorid.equals("17") && delivery_point.equals("2")))
  {
                 
     /*<1 */
@@ -1171,7 +1166,7 @@ missingFacility+="facility  : "+sheetname+" mfl code : "+mflcode+" not in system
 
     else {
         
-        sessionText="<h2><font color=\"red\">Note: Data was uploaded using Wrong Templete version. Click here to <a class=\"btn btn-success\" href=\"pns/ART_Daily_Form_v5_2021_08_06.xlsx\">download correct template</a></font><h2>";
+        sessionText="<h2><font color=\"red\">Note: Data was uploaded using Wrong Templete version. Click here to <a class=\"btn btn-success\" href=\"pns/ART_Daily_Form_v701_2021_10_12.xlsx\">download correct template</a></font><h2>";
         
          }
     
@@ -1179,12 +1174,12 @@ missingFacility+="facility  : "+sheetname+" mfl code : "+mflcode+" not in system
  
   else {
         
-        sessionText="<h2><font color=\"red\">Note: Data was uploaded using Wrong Templete version. Click here to <a class=\"btn btn-success\" href=\"pns/ART_Daily_Form_v5_2021_08_06.xlsx\">download template V 5.0.2</a></font><h2>";
+        sessionText="<h2><font color=\"red\">Note: Data was uploaded using Wrong Templete version. Click here to <a class=\"btn btn-success\" href=\"pns/ART_Daily_Form_v701_2021_10_12.xlsx\">download template V 7.0.1</a></font><h2>";
         
          }
 }
 }//end of worksheets loop
-rowsngapi=81;
+rowsngapi=112;
                } catch (InvalidFormatException ex) {
                    Logger.getLogger(importpns.class.getName()).log(Level.SEVERE, null, ex);
                }

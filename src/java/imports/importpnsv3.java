@@ -1264,9 +1264,11 @@ missingFacility+="facility  : "+sheetname+" mfl code : "+mflcode+" not in system
 
     else {
         
+        System.out.println("Veeersion ni_"+versionno+"_"+sheetname);
+        if("Other KP or NP contacts,Pmtct_contacts,STF_contacts,TB_contacts,Discordant_Couple".contains(sheetname)){
         sessionText="<h2><font color=\"red\">Note: Data was uploaded using Wrong Templete version. Click here to <a class=\"btn btn-success\" href=\"pns/PNS_Daily_Template_20190514_V_4.xlsx\">download correct template</a></font><h2>";
         
-        
+        }
     }
     
     }//end of skipping printable sheet

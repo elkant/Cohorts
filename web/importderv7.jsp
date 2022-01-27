@@ -103,7 +103,7 @@
                
                   <!-- END BEGIN STYLE CUSTOMIZER -->   
                   <h3 class="page-title" style="text-align: center;">
-                    <a class='btn-warning btn' href="pns/ART_Daily_Form_v701_2021_10_12.xlsx" style="margin-left:40%;">Download ART Daily Template ( v 7.0.1)</a> 
+                    <a class='btn-warning btn' href="pns/ART_Daily_Form_v7_2021_10_12.xlsx" style="margin-left:40%;">Download ART Daily Template ( v 7.0.0)</a> 
 <!--                    Internal System-->
                   </h3>
                  
@@ -130,7 +130,7 @@
                      </div>
                      <div class="portlet-body form">
                         <!-- BEGIN FORM-->
-                        <form action="importderv71" method="post" enctype="multipart/form-data" class="form-horizontal" >
+                        <form action="importderv7" method="post" enctype="multipart/form-data" class="form-horizontal" >
                        
                              <div  class="portlet-body form" id="progress_area" hidden="true">
                      <div class="progress"  style="height: 35px;">

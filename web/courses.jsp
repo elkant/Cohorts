@@ -188,7 +188,7 @@ input[readonly]{
                 <div class="col-sm-12">
 
                     <div class="row">
-                        <div style="text-align: center;" class=" well col-md-12">USAID Tujenge Jamii Stocks Receipt verification</div>
+                        <div style="text-align: center;" class=" well col-md-12">USAID Tujenge Jamii Courses Completion</div>
                         
                         <!-- center left-->
                         <div class="col-md-12">
@@ -622,35 +622,7 @@ cmts
 
                                                         </tr>
                                                         
-                                                        <!___________________________________________________Pipeline______________________________________________________________________________________>
-
-                                                        <tr>
-
-                                                            <td class="col-xs-6">
-                                                                <div class="control-group">
-
-                                                                    <div class="controls">
-                                                                        <label><required-option></required-option>Pipeline</label> 
-
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                            <td class="col-xs-6">
-                                                                <div class="control-group">
-
-                                                                    <div class="controls">
-                                                                        <select required="true" readonly   onchange=""   name="pipeline" id="pipeline" class="form-control" >
-                                                                           <option value="">select option</option>                                        
-                                                                           <option value="MEDS">MEDS</option>                                        
-                                                                           <option value="KEMSA">KEMSA</option>                                        
-                                                                        </select>                                          
-                                                                        
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-
-
-                                                        </tr>
+                                                        
                                                          <!___________________________________________________ Comments ______________________________________________________________________________________>
 
                                                         <tr>
@@ -1084,6 +1056,44 @@ cmts
 //getSections();
 
 
+ function getPeriod(){
+       
+   var sec=$("#section").val();
+       
+       
+              $.ajax({
+                         url:'getParameterData?per=yes',                            
+                    type:'post',  
+                    dataType: 'json',  
+                    success: function(data) {                        
+                       
+        var dat=data.periods;
+        
+      
+        var o="<option value=''>Select Seriod</option>";
+                        
+                        for(var a=0;a<dat.length;a++)
+                        {                           
+                     
+                          o+="<option value='"+dat[a].id+"'>"+dat[a].year+" "+dat[a].month+"</option>";   
+                        }
+                        
+                   $("#period").html(o);
+                   $(document).ready(function() {
+                    $('#period').select2(); 
+             
+                                 } ); 
+                        
+                        
+                    }});
+   
+   }
+   
+
+getPeriod();
+
+
+
 function CheckDuplicateNoteNumber(){
     var delno=$("#delnoteno").val();
     var com=$("#commodity").val();
@@ -1266,7 +1276,6 @@ $('#cmts').val(dat[0].cmts);
 $('#facility').val(dat[0].facility);
 $('#docdate').val(dat[0].docdate);
 $('#contact_name').val(dat[0].contact_name);
-$('#pipeline').val(dat[0].pipeline);
 
 
                  $("#facility").select2();  
@@ -1305,7 +1314,6 @@ var facility="";
 var docdate="";
 var contact_name="";
 var reportingdate="";
-var pipeline="";
 
 
 commodity=$('#commodity').val();
@@ -1322,7 +1330,6 @@ facility=$('#facility').val();
 docdate=$('#docdate').val();
 contact_name=$('#contact_name').val();
 reportingdate=$('#reportingdate').val();
-pipeline=$('#pipeline').val();
 
 if($("#id").val()!=='')
 {
@@ -1360,7 +1367,6 @@ cmts:cmts,
 facility:facility,
 contact_name:contact_name,
 reportingdate:reportingdate,
-pipeline:pipeline,
 docdate:docdate};
             
    $.ajax({url: 'saveStockData',

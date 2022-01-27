@@ -17,7 +17,7 @@
     <!-- BEGIN HEAD -->
     <head>
         <meta charset="utf-8" />
-        <title>Afya Nyota Surge Reports </title>
+        <title>Usaid Tujenge Jamii Surge Reports</title>
         <link rel="shortcut icon" href="images/logo.png"/>
         <meta content="width=device-width, initial-scale=1.0" name="viewport" />
         <meta content="" name="description" />
@@ -188,6 +188,8 @@
                                                             <option value='htsrriplainexcel'>5.HTS Client Level Raw-Plain file</option>
                                                             <option value='allSitesTrackerViaSurge'>6.All Sites Tracker(Daily Reporting)</option>
                                                             <option value='allSitesDataViaSurge'>7. Data File Only (All Sites)</option>
+                                                            <option value='screening'>8. HTS Screening</option>
+                                                            <option value='ramcah_tracker'>9. RMCAH Reporting Rates</option>
                                                             <!--<option value='hts_self_reports'>6.HTS Self</option>-->
 
                                                         </select>

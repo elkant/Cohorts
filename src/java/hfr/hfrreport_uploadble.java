@@ -30,7 +30,7 @@ import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import static reports.pnsreports.isNumeric;
+
 
 /**
  *
@@ -275,4 +275,15 @@ rw.setHeightInPoints(26);
         return "Short description";
     }// </editor-fold>
 
+       public static boolean isNumeric(String strNum) {
+      
+    
+    try {
+        double d = Double.parseDouble(strNum);
+    } catch (NumberFormatException | NullPointerException nfe) {
+        return false;
+    }
+    return true;
+      
+}
 }

@@ -36,7 +36,7 @@ import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openxmlformats.schemas.spreadsheetml.x2006.main.CTTable;
-import static reports.pnsreports.isNumeric;
+
 import static scripts.OSValidator.isUnix;
 import scripts.copytemplates;
 
@@ -429,4 +429,15 @@ SXSSFWorkbook wb = new SXSSFWorkbook(1000);
         return "Short description";
     }// </editor-fold>
 
+       public static boolean isNumeric(String strNum) {
+      
+    
+    try {
+        double d = Double.parseDouble(strNum);
+    } catch (NumberFormatException | NullPointerException nfe) {
+        return false;
+    }
+    return true;
+      
+}
 }

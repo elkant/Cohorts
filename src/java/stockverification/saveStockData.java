@@ -37,7 +37,7 @@ public class saveStockData extends HttpServlet {
           
           
             
- String[] dataelementsarr= {"id","facility","commodity","packsize","delnoteno","batchno","delnoteqty","qtyrec","daterec","contacts","expdate","cmts","docdate","contact_name","reportingdate"}; 
+ String[] dataelementsarr= {"id","facility","commodity","packsize","delnoteno","batchno","delnoteqty","qtyrec","daterec","contacts","expdate","cmts","docdate","contact_name","reportingdate","pipeline"}; 
  String[] orgunitsarr= {"county","`sub-county`"}; 
   
 //
