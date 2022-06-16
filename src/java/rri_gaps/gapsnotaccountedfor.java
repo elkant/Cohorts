@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package reports;
+package rri_gaps;
 
 
 import General.IdGenerator;
@@ -32,12 +32,15 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import static reports.pnsreports.isNumeric;
+
+import static scripts.OSValidator.isUnix;
 
 /**
  *
  * @author EKaunda
  */
-public class allSitesDataViaSurge extends HttpServlet {
+public class gapsnotaccountedfor extends HttpServlet {
 
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -59,31 +62,45 @@ public class allSitesDataViaSurge extends HttpServlet {
 
 
 
-
+String allpath = getServletContext().getRealPath("/htsraw.xlsx");
 
 XSSFWorkbook wb1;
  
 String pathtodelete=null;
 
 Date da= new Date();
-
 String dat2 = da.toString().replace(" ", "_");
 
 dat2 = dat2.toString().replace(":", "_");
 
+String mydrive = allpath.substring(0, 1);
+
+String np=mydrive+":\\HSDSA\\PNS\\MACROS\\";
+
+String filepath="Surge_Raw_"+dat2+".xlsx";
 
 
-String filepath="allSites_Detailed_"+dat2+".xlsx";
+if(isUnix()){
+    np="/HSDSA/PNS/MACROS/";
+}
+
 
 
 
 //wb = new XSSFWorkbook( OPCPackage.open(allpath) );
+wb1 = new XSSFWorkbook();
+
+
+
+
+
+
 
 
 //XSSFWorkbook wb = wb1;
 
 
-SXSSFWorkbook wb = new SXSSFWorkbook(1000);
+SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 1000);
 
         Font font =  wb.createFont();
         font.setFontHeightInPoints((short) 18);
@@ -137,7 +154,7 @@ SXSSFWorkbook wb = new SXSSFWorkbook(1000);
         stylesum.setFont(fontx);
         stylesum.setWrapText(true);
 
-        Sheet shet = wb.createSheet("DATA");
+        Sheet shet = wb.createSheet("Unaccounted For Patients");
 
         String year="";
        IdGenerator dats= new IdGenerator();
@@ -174,7 +191,7 @@ SXSSFWorkbook wb = new SXSSFWorkbook(1000);
         
         //========Query 1=================
         
-        String orgunits="  ( allsites_overall_fine.`Reporting Date` between  '"+startdate+"' and '"+enddate+"' )  ";
+        String orgunits="  ( vw_allsites_hts_v2.`Date Tested` between  '"+startdate+"' and '"+enddate+"' )  ";
         
         
         
@@ -183,6 +200,8 @@ SXSSFWorkbook wb = new SXSSFWorkbook(1000);
         orgunits+=" and  County in ('"+county+"') ";
         }
         
+        
+       
      
         String subcounty="(";
         String subcountyar[]=null;
@@ -192,8 +211,7 @@ SXSSFWorkbook wb = new SXSSFWorkbook(1000);
        if(request.getParameterValues("subcounty")!=null)
        {
            if(request.getParameterValues("subcounty").length!=0){
-       if(!subcountyar[0].equals("")){
-            if(subcountyar[0].contains(",")){subcountyar=subcountyar[0].split(",");}
+       
        for(int a=0;a<subcountyar.length;a++)
        {
        
@@ -211,13 +229,11 @@ SXSSFWorkbook wb = new SXSSFWorkbook(1000);
            
            
        }
-       }
            System.out.println(" array length "+subcountyar.length);
        }
        }
         
-        if(!subcounty.equals("(") )
-        {
+        if(!subcounty.equals("(") ){
             
          orgunits+=" and `Sub-county` in "+subcounty+" ";
         
@@ -232,14 +248,14 @@ SXSSFWorkbook wb = new SXSSFWorkbook(1000);
         String mfl="(";
         String facilityar[]=null;
         
-       facilityar=request.getParameterValues("facility"); 
+       
+		   facilityar=request.getParameterValues("facility"); 
        
        if(request.getParameterValues("facility")!=null)
        {
            if(request.getParameterValues("facility").length!=0){
                
-       if(!facilityar[0].equals("")){
-            if(facilityar[0].contains(",")){facilityar=facilityar[0].split(",");}
+       
        for(int a=0;a<facilityar.length;a++)
        {
        
@@ -257,7 +273,6 @@ SXSSFWorkbook wb = new SXSSFWorkbook(1000);
            
            
        }
-           }
            System.out.println(" facility array length "+facilityar.length);
        
        }}
@@ -284,21 +299,23 @@ SXSSFWorkbook wb = new SXSSFWorkbook(1000);
 //        cell.setCellStyle(style);
 //        shet.addMergedRegion(new CellRangeAddress(1, 1, 0,10));
 //                    
-                int count1  = 1;
+                int count1  =1;
         
        
         
         //========Query two====Facility Details==============
         
-        String qry = "SELECT * FROM aphiaplus_moi.allsites_overall_fine where "+orgunits+" ;";
-        System.out.println(qry);
+        String qry = "call internal_system.sp_rri_gaps_not_accounted_for_Report('"+startdate+"','"+enddate+"');";
+       
+        System.out.println("query ni "+qry);
+       
         conn.rs = conn.st.executeQuery(qry);
         
          ResultSetMetaData metaData = conn.rs.getMetaData();
         int columnCount = metaData.getColumnCount();
 
-         metaData = conn.rs.getMetaData();
-         columnCount = metaData.getColumnCount();
+     
+         
          int count = count1;
          ArrayList mycolumns = new ArrayList();
 
@@ -311,6 +328,7 @@ SXSSFWorkbook wb = new SXSSFWorkbook(1000);
                 for (int i = 1; i <= columnCount; i++) 
                 {
 //skip header
+                   // System.out.println("Column number "+i);
                     mycolumns.add(metaData.getColumnLabel(i));
                     Cell cell0 = rw.createCell(i - 1);
                     cell0.setCellValue(metaData.getColumnLabel(i));
@@ -328,15 +346,26 @@ SXSSFWorkbook wb = new SXSSFWorkbook(1000);
                // System.out.print(mycolumns.get(a) + ":" + conn.rs.getString("" + mycolumns.get(a)));
 
                 Cell cell0 = rw.createCell(a);
-                 if(isNumeric(conn.rs.getString("" + mycolumns.get(a))))
+                  if(isNumeric(conn.rs.getString("" + mycolumns.get(a))) && conn.rs.getString("" + mycolumns.get(a)).length()<=10 )
                  {
-                cell0.setCellValue(conn.rs.getInt(mycolumns.get(a).toString()));
+               // if(1==1){
+                
+                     cell0.setCellValue(conn.rs.getInt(mycolumns.get(a).toString()));
+                    
                  }
+                  
+                  else  if(isDouble(conn.rs.getString("" + mycolumns.get(a))) && conn.rs.getString("" + mycolumns.get(a)).length()<=10 )
+                 {
+               // if(1==1){
+                
+                     cell0.setCellValue(conn.rs.getDouble(mycolumns.get(a).toString()));
+                     
+                    }
                 else 
                 {
-                  // System.out.println(mycolumns.get(a)+" Last option"+conn.rs.getString("" + mycolumns.get(a)));
-                   //System.out.println( mycolumns.get(a)+" --Last option"+conn.rs.getString("" + mycolumns.get(a)));
-                     cell0.setCellValue(conn.rs.getString("" + mycolumns.get(a)));
+                    //System.out.println(mycolumns.get(a)+" Last option"+conn.rs.getString("" + mycolumns.get(a)));
+                    //System.out.println(mycolumns.get(a)+" --Last option"+conn.rs.getString("" + mycolumns.get(a)));
+                    cell0.setCellValue(conn.rs.getString(""+mycolumns.get(a)));
                     //cell0.setCellValue(conn.rs.getString("" + mycolumns.get(a)));
                    
                 }
@@ -352,20 +381,36 @@ SXSSFWorkbook wb = new SXSSFWorkbook(1000);
         
         
         //Autofreeze  || Autofilter  || Remove Gridlines ||  
-     if(count!=count1)   {
+     if(count!=count1)   
+     {
        // shet.setAutoFilter(new CellRangeAddress(count1, count - 1, 0, columnCount-1));
 
         //System.out.println("1,"+rowpos+",0,"+colposcopy);
         for (int i = 0; i <= columnCount; i++) 
         {
-          //  shet.autoSizeColumn(i);
+            shet.autoSizeColumn(i);
         }
 
-      //  shet.setDisplayGridlines(false);
-      //  shet.createFreezePane(6, 4);
+        shet.setDisplayGridlines(false);
+        shet.createFreezePane(6, 2);
     }
      
+     
+     
+   if(1==2){
+   //  XSSFSheet shet2= wb.getXSSFWorkbook().getSheet("Raw Data");
+        // tell your xssfsheet where its content begins and where it ends
+//((XSSFSheet)shet2).getCTWorksheet().getDimension().setRef("A1:AC" + (shet.getLastRowNum() + 1));
+
+//CTTable ctTable = ((XSSFSheet)shet2).getTables().get(0).getCTTable();
+
+//ctTable.setRef("A1:AC" + (shet.getLastRowNum() + 1)); // adjust reference as needed
+
+         }
+     
+  
     
+     
      
         
         if(conn.rs!=null){conn.rs.close();}
@@ -377,7 +422,7 @@ SXSSFWorkbook wb = new SXSSFWorkbook(1000);
         
        
 
-        System.out.println("" + "surge_allsites_Surgedetailed_reports_Gen_" + createdOn.trim() + ".xlsx");
+        System.out.println("" + "COT_Tracker_reports_Gen_" + createdOn.trim() + ".xls");
 
         ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
         wb.write(outByteStream);
@@ -385,8 +430,8 @@ SXSSFWorkbook wb = new SXSSFWorkbook(1000);
         response.setContentType("application/ms-excel");
         response.setContentLength(outArray.length);
         response.setHeader("Expires:", "0"); // eliminates browser caching
-        response.setHeader("Content-Disposition", "attachment; filename=" + "AllSites_Data_for_"+startdate+"_to_"+enddate+"_gen_" + createdOn.trim() + ".xlsx");
-        response.setHeader("Set-Cookie","fileDownload=true; path=/");
+        response.setHeader("Content-Disposition", "attachment; filename=" + "COT_Tracker_for_"+startdate+"_to_"+enddate+"_gen_" + createdOn.trim() + ".xlsx");
+         response.setHeader("Set-Cookie","fileDownload=true; path=/");
         OutputStream outStream = response.getOutputStream();
         outStream.write(outArray);
         outStream.flush();
@@ -399,21 +444,22 @@ SXSSFWorkbook wb = new SXSSFWorkbook(1000);
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(rawdata.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(gapsnotaccountedfor.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InvalidFormatException ex) {
-            Logger.getLogger(surge_tracker.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(gapsnotaccountedfor.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException 
+    {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(rawdata.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(gapsnotaccountedfor.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InvalidFormatException ex) {
-            Logger.getLogger(surge_tracker.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(gapsnotaccountedfor.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -421,16 +467,30 @@ SXSSFWorkbook wb = new SXSSFWorkbook(1000);
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
-       public static boolean isNumeric(String strNum) {
-      
     
-    try {
-        double d = Double.parseDouble(strNum);
-    } catch (NumberFormatException | NullPointerException nfe) {
-        return false;
-    }
-    return true;
-      
+    
+    public static boolean isInt(String str) {
+	
+  	try {
+      	@SuppressWarnings("unused")
+    	int x = Integer.parseInt(str);
+      	return true; //String is an Integer
+	} catch (NumberFormatException e) {
+    	return false; //String is not an Integer
+	}
+  	
 }
+    
+      public static boolean isDouble(String str) {
+	
+  	try {
+      	@SuppressWarnings("unused")
+    	double x = Double.parseDouble(str);
+      	return true; //String is an Integer
+	} catch (NumberFormatException e) {
+    	return false; //String is not an Integer
+	}
+  	
+}
+
 }

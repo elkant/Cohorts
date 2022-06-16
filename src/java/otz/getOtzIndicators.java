@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package KP;
+package otz;
 
 import db.dbConn;
 import java.io.IOException;
@@ -24,7 +24,7 @@ import org.json.JSONObject;
  *
  * @author EKaunda
  */
-public class getKPIndicators extends HttpServlet {
+public class getOtzIndicators extends HttpServlet {
 
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -36,11 +36,9 @@ public class getKPIndicators extends HttpServlet {
             String dt="";
             
             String fc="";
-          
             
             if(request.getParameter("fc")!=null){fc=request.getParameter("fc");}
             if(request.getParameter("dt")!=null){dt=request.getParameter("dt");}
-            
             
             
             
@@ -58,7 +56,7 @@ public class getKPIndicators extends HttpServlet {
           
            }
            
-        if(conn.rs!=null){conn.rs.close();}
+           if(conn.rs!=null){conn.rs.close();}
         if(conn.rs1!=null){conn.rs1.close();}
         if(conn.st!=null){conn.st.close();}
         if(conn.st1!=null){conn.st1.close();}
@@ -81,7 +79,7 @@ public class getKPIndicators extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(getKPIndicators.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(getOtzIndicators.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -99,7 +97,7 @@ public class getKPIndicators extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(getKPIndicators.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(getOtzIndicators.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -114,7 +112,7 @@ public class getKPIndicators extends HttpServlet {
     }// </editor-fold>
 
 public String getHtmlTable(dbConn conn, String reportingdate, String facility) throws SQLException{
-String indicators="<thead><tr><th>Section</th><th>Indicator</th><th>FSW</th><th>MSM</th></tr></thead><tbody>";
+String indicators="<thead><tr style='background-color:#9f9999;color:white;'><th>Section/Indicator</th><th>Code</th><th>10-19 M</th><th>10-19 F</th><th>Total</th></tr></thead><tbody>";
 
     
 
@@ -126,14 +124,16 @@ ResultSet r=pullIndicators(conn);
 while(r.next()){
    
 //  System.out.println("__"+jo.toString());  
-    String indic=r.getString("indicatorname");
-    String colsp=r.getString("section_colspan");
-    String sect=r.getString("section");
-   
-    String id=r.getString("id");
     
-    String msm="";
-    String fsw="";
+    String showsection=r.getString("showsection");
+    String section_name=r.getString("section_name");
+    String indic=r.getString("indicator");
+    String id=r.getString("id");
+    String indicator_code=r.getString("code");
+    
+    String bl19m="";
+    String bl19f="";
+    String ttl="";
     
      try{ 
     //if length is greater than 0
@@ -143,8 +143,10 @@ while(r.next()){
    if(jo.get(id)!=null){
         
        JSONObject joage=(JSONObject) jo.get(id);
-         fsw=joage.get("fsw").toString();
-         msm=joage.get("msm").toString();
+        
+         bl19m=joage.get("19m").toString();
+         bl19f=joage.get("19f").toString();
+         ttl=joage.get("ttl").toString();
          
    }
         
@@ -155,35 +157,36 @@ while(r.next()){
         
         }
      
-     String readonly_msm="";
-     String readonly_fsw="";
+     String readonly_b19_m="";
+     String readonly_b19_f="";
+     String readonly_ttl=" readonly='true' ";
      
+    String displaysection="";
+    
+    if(showsection.equals("1"))
+    {
+    displaysection="<tr style='background-color:#4b8df8;'><td ><b>"+section_name+"</b></td><td><b>Code</b></td><td><b>10-19 M</b></td><td><b>10-19 F</b></td><td><b>Total</b></td></tr>";
+    }
+    else {
+    displaysection="";
+    }
      
-//     if(id.contains("VMMC")){
-//       fsw="readonly='true' style='background-color:#bcc6cc;'  tabindex='-1'";
-//       readonly_b15_f="readonly='true' style='background-color:#bcc6cc;' tabindex='-1'";
-//     }
-//     else  if(id.contains("PMTCT")){
-//       readonly_ab15_m="readonly='true' style='background-color:#bcc6cc;'  tabindex='-1'";
-//       readonly_b15_m="readonly='true' style='background-color:#bcc6cc;' tabindex='-1'";
-//     }
-     
-     String inputb15_F="<input "+readonly_fsw+" value='"+fsw+"'  onkeypress='return numbers(event);' placeholder='fsw'  type='tel' maxlength='4' min='0' max='9999' name='"+id+"_fsw' id='"+id+"_fsw' class='form-control inputs'>"; 
-     
-     String inputb15_M="<input "+readonly_msm+" value='"+msm+"'  onkeypress='return numbers(event);' placeholder='msm'  type='tel' maxlength='4' min='0' max='9999' name='"+id+"_msm' id='"+id+"_msm' class='form-control inputs'>"; 
+     //Baseline Information	Code	Male 10-19yrs	Female 10-19yrs	Total
+
+     //sumofindicators(sourceindicators,destinationindicator)
+     String inputb19_M="<input "+readonly_b19_m+" value='"+bl19m+"' onkeyup='sumofindicators(\""+id+"_bl19_Male@"+id+"_bl19_Female\",\""+id+"_ttl\");'  onkeypress='return numbers(event); ' placeholder='< 19 Yr M'  type='tel' maxlength='4' min='0' max='9999' name='"+id+"_bl19_Male' id='"+id+"_bl19_Male' class='form-control inputs'>"; 
+     String inputb19_F="<input "+readonly_b19_f+" value='"+bl19f+"' onkeyup='sumofindicators(\""+id+"_bl19_Male@"+id+"_bl19_Female\",\""+id+"_ttl\");' onkeypress='return numbers(event);' placeholder='< 19 Yr F'  type='tel' maxlength='4' min='0' max='9999' name='"+id+"_bl19_Female' id='"+id+"_bl19_Female' class='form-control inputs'>"; 
+     String inputttl="<input "+readonly_ttl+" value='"+ttl+"' tabindex='-1'  onkeypress='return numbers(event);' placeholder='Total'  type='tel' maxlength='4' min='0' max='9999' name='"+id+"_ttl' id='"+id+"_ttl' class='form-control inputs'>"; 
      
     
-indicators+="<tr>";
-        if(!colsp.equals("0"))
-        {
-        
-        indicators+="<td style='vertical-align: middle;' rowspan='"+colsp+"'>"+sect+"</td>";
-        
-        };
-       indicators+="<td style='vertical-align: middle;' rowspan='1'> <span class='badge'>"+count+"  </span><b> "+indic+"</b></td>"
-        
-        + "<td>"+inputb15_F+"</td>"
-        + "<td>"+inputb15_M+"</td>"
+indicators+=""+displaysection
+        + "<tr>"
+        + "<td style='vertical-align: middle;' rowspan='1'> <span class='badge'>"+count+"  </span><b> "+indic+"</b></td>"
+        + "<td>"+indicator_code+"</td>"
+       
+        + "<td>"+inputb19_M+"</td>"
+        + "<td>"+inputb19_F+"</td>"
+        + "<td>"+inputttl+"</td>"
         + "</tr>";
         
 
@@ -200,24 +203,27 @@ public JSONObject getData( dbConn conn, String reportingdate, String facilitymfl
     JSONArray ja= new JSONArray();
     
 
+
 int hasdata=0;
 
-String getdata=" select * from aphiaplus_moi.kp_daily where date='"+reportingdate+"' and dic ='"+facilitymfl+"' ";
-  
+String getdata=" select * from internal_system.otz_data where yearmonth='"+reportingdate+"' and facility='"+facilitymfl+"'";
 
 conn.rs1=conn.st1.executeQuery(getdata);
-JSONObject lengthobject= new JSONObject();
+
+   JSONObject lengthobject= new JSONObject();
 JSONObject hm= new JSONObject();
-while (conn.rs1.next()) 
-{
-JSONObject hm2= new JSONObject();
+        while (conn.rs1.next()) 
+        {
+ 
+ JSONObject hm2= new JSONObject();
 hasdata++;
-//we want something like this {"HTS_TST":{"bl15_Male":0,"bl15_Female":1,"ab15_Male":2,"ab15_Female":1}}
-hm2.put("fsw", conn.rs1.getString("fsw"));
-hm2.put("msm", conn.rs1.getString("msm"));
-hm.put(conn.rs1.getString("indicator"), hm2);
+  //we want something like this {"HTS_TST":{"bl15_Male":0,"bl15_Female":1,"ab15_Male":2,"ab15_Female":1}}
+hm2.put("19m", conn.rs1.getString("_19m"));
+hm2.put("19f", conn.rs1.getString("_19f"));
+hm2.put("ttl", conn.rs1.getString("ttl"));
+ hm.put(conn.rs1.getString("indicatorid"), hm2);
 //ja.put(hm);
-}
+      }
         hm.put("length", hasdata);
         //lengthobject.put("length", hasdata);
         
@@ -231,9 +237,10 @@ return hm;
 
 
 
-public ResultSet pullIndicators(dbConn conn) throws SQLException {
+public ResultSet pullIndicators(dbConn conn) throws SQLException 
+{
 
-String qry="select * from aphiaplus_moi.kp_indicators_daily_v2 where active='1' order by orodha asc";
+String qry="select * from internal_system.otz_indicators where is_active='1' order by order_no asc";
 
 
 conn.rs=conn.st.executeQuery(qry);
@@ -255,30 +262,27 @@ while(res.next())
 {
     
 JSONObject jo = new JSONObject(); 
-
 String id="";
 String indicator_code="";
 String active="";
 String indicatorname="";
 String orodha="";
-String section="";
-String section_id="";
-String section_colspan="";
+String showsection="";
+String section_name="";
 
     id =res.getString("id");
-    indicator_code =res.getString("indicator_code");
-    indicatorname =res.getString("indicatorname");
-    section =res.getString("section");
-    section_id =res.getString("section_id");
-    section_colspan =res.getString("section_id");
+    indicator_code =res.getString("code");
+    indicatorname =res.getString("indicator");
+    orodha =res.getString("order_no");
+    showsection =res.getString("showsection");
+    section_name =res.getString("section_name");
 
     jo.put("id",id);
     jo.put("indicator_code",indicator_code);
     jo.put("indicatorname",indicatorname);
     jo.put("orodha",orodha);
-    jo.put("section",section);
-    jo.put("section_id",section_id);
-    jo.put("section_colspan",section_colspan);
+    jo.put("showsection",showsection);
+    jo.put("section_name",section_name);
     jo2.put(jo);
     
     count++;

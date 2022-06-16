@@ -44,7 +44,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  */
 
 
-  public class importderv71 extends HttpServlet {
+  public class importderv9 extends HttpServlet {
    
 
  
@@ -199,7 +199,7 @@ String mflcode="";
    
      dbConn conn = new dbConn();
      
-     nextpage="importderv71.jsp";
+     nextpage="importder.jsp";
      
      String applicationPath = request.getServletContext().getRealPath("");
      String uploadFilePath = applicationPath + File.separator + UPLOAD_DIR;
@@ -230,7 +230,7 @@ String mflcode="";
             part.write(uploadFilePath + File.separator + fileName);
             
               if(!fileName.endsWith(".xlsx")){
-         nextpage="importderv71.jsp";
+         nextpage="importder.jsp";
          sessionText="<font color=\"red\">Failed to load a .xls excel file. Please open the file, go to file> options > save as , then save as .xlsx </font>";
                                              }
             
@@ -240,7 +240,7 @@ String mflcode="";
      if(!fileName.endsWith(".xlsx"))
      {
        
-         nextpage="importderv71.jsp";
+         nextpage="importder.jsp";
      }
      else {
          
@@ -264,7 +264,7 @@ if(1==2){
 int totalsheets=workbook.getNumberOfSheets();
 DataFormatter formatter = new DataFormatter(); //creating formatter using the default locale
 int rowsngapi=1;
-int rowCount=116;
+int rowCount=204;
 for(int a=0;a<totalsheets;a++){
     
     XSSFSheet worksheet = workbook.getSheetAt(a);
@@ -345,7 +345,7 @@ else if(printingcell.getCellType()==1){
     printval =printingcell.getStringCellValue();
 }
 
-  if(printval.equals("ADF V 7.0.1")){ isprinting=true;  }   
+  if(printval.equals("ADF V 9.0.0")){ isprinting=true;  }   
      
       //__________________________version row________________
     
@@ -365,11 +365,12 @@ else if(printingcell.getCellType()==1){
     
          if(delivery_point.equals("CCC"))  { delivery_point="1";}
     else if(delivery_point.equals("PMTCT")){ delivery_point="2";}
+    else if(delivery_point.equals("NON_HIV")){ delivery_point="3";}
     
     
     
     
-      XSSFCell celldesignation=worksheet.getRow(57).getCell((short)2);
+      XSSFCell celldesignation=worksheet.getRow(71).getCell((short)2);
 //    Designation =celldesignation.getStringCellValue(); 
     
     if(celldesignation.getCellType()==0){
@@ -418,10 +419,10 @@ else if(cellversion.getCellType()==1)
   
    
         
-    if(versionno.equals("ADF V 7.0.1") ){        
+    if(versionno.equals("ADF V 9.0.0") ){        
         
         //_________submitted by and Designation___________
-      XSSFCell cellsubmitter=worksheet.getRow(57).getCell((short)1);
+      XSSFCell cellsubmitter=worksheet.getRow(71).getCell((short)1);
     
     if(cellsubmitter.getCellType()==0)
     {
@@ -434,7 +435,7 @@ else if(cellsubmitter.getCellType()==1)
     }
     
         
-        while(row<=57){
+        while(row<=69){
             
             rowsngapi++;
         session.setAttribute("dailyartpos", "<b>"+rowsngapi+"/"+rowCount+"</b>");
@@ -450,7 +451,8 @@ else if(cellsubmitter.getCellType()==1)
                 }
                 
                 
-                if( row>=9 && row<=57 ) {
+                if( row>=9 && row<=69 ) 
+                {
                     
                     
 // _______________________________________________________________
@@ -476,7 +478,7 @@ else
 indicatorid =indiccell.getRawValue();
 }
 
-if(!"A,B,C,D,E,F,G,H,I,J".contains(indicatorid) && !(indicatorid.equals("17") && delivery_point.equals("2")))
+if(!"A,B,C,D,E,F,G,H,I,J,K".contains(indicatorid) && !(indicatorid.equals("17") && delivery_point.equals("2")))
  {
                 
     /*<1 */
@@ -873,12 +875,36 @@ if(!"A,B,C,D,E,F,G,H,I,J".contains(indicatorid) && !(indicatorid.equals("17") &&
        der_50m=der_50m.replaceAll("[^\\d.]", ""); 
     if(der_50m.trim().equals(""))   { der_50m="0"; }      
   
-    
+  
  
     try
     {
 
-total=""+(new Integer(der_1f)+new Integer(der_1m)+new Integer(der_4f)+new Integer(der_4m)+new Integer(der_9f)+new Integer(der_9m)+new Integer(der_14f)+new Integer(der_14m)+new Integer(der_19f)+new Integer(der_19m)+new Integer(der_24f)+new Integer(der_24m)+new Integer(der_29f)+new Integer(der_29m)+new Integer(der_34f)+new Integer(der_34m)+new Integer(der_39f)+new Integer(der_39m)+new Integer(der_44f)+new Integer(der_44m)+new Integer(der_49f)+new Integer(der_49m)+new Integer(der_50f)+new Integer(der_50m));
+          if(indicatorid.equals("67"))
+    {
+        
+          XSSFCell totalcell  = rowi.getCell((short) 26);
+   switch (totalcell.getCellType())
+{
+   
+    case 1:
+        total =totalcell.getStringCellValue();
+        break;
+    default:
+     total =totalcell.getRawValue();
+     break;
+}
+       if(total==null){total="0";}
+       der_50f=der_50f.replaceAll("[^\\d.]", ""); 
+    if(total.trim().equals(""))   { total="0"; }  
+        
+  
+    }
+    else 
+    {          
+    total=""+(new Integer(der_1f)+new Integer(der_1m)+new Integer(der_4f)+new Integer(der_4m)+new Integer(der_9f)+new Integer(der_9m)+new Integer(der_14f)+new Integer(der_14m)+new Integer(der_19f)+new Integer(der_19m)+new Integer(der_24f)+new Integer(der_24m)+new Integer(der_29f)+new Integer(der_29m)+new Integer(der_34f)+new Integer(der_34m)+new Integer(der_39f)+new Integer(der_39m)+new Integer(der_44f)+new Integer(der_44m)+new Integer(der_49f)+new Integer(der_49m)+new Integer(der_50f)+new Integer(der_50m));
+    }
+        
 
 f14=""+(new Integer(der_1f)+new Integer(der_4f)+new Integer(der_9f)+new Integer(der_14f));
 m14=""+(new Integer(der_1m)+new Integer(der_4m)+new Integer(der_9m)+new Integer(der_14m));
@@ -1166,7 +1192,7 @@ missingFacility+="facility  : "+sheetname+" mfl code : "+mflcode+" not in system
 
     else {
         
-        sessionText="<h2><font color=\"red\">Note: Data was uploaded using Wrong Templete version. Click here to <a class=\"btn btn-success\" href=\"pns/ART_Daily_Form_v701_2021_10_12.xlsx\">download correct template</a></font><h2>";
+        sessionText="<h2><font color=\"red\">Note: Data was uploaded using Wrong Templete version. Click here to <a class=\"btn btn-success\" href=\"pns/ART_Daily_Form_v900_2022_05_30_.xlsx\">download correct template</a></font><h2>";
         
          }
     
@@ -1174,12 +1200,12 @@ missingFacility+="facility  : "+sheetname+" mfl code : "+mflcode+" not in system
  
   else {
         
-        sessionText="<h2><font color=\"red\">Note: Data was uploaded using Wrong Templete version. Click here to <a class=\"btn btn-success\" href=\"pns/ART_Daily_Form_v701_2021_10_12.xlsx\">download template V 7.0.1</a></font><h2>";
+        sessionText="<h2><font color=\"red\">Note: Data was uploaded using Wrong Templete version. Click here to <a class=\"btn btn-success\" href=\"pns/ART_Daily_Form_v900_2022_05_30_.xlsx\">download template V 9.0.0</a></font><h2>";
         
          }
 }
 }//end of worksheets loop
-rowsngapi=112;
+rowsngapi=204;
                } catch (InvalidFormatException ex) {
                    Logger.getLogger(importpns.class.getName()).log(Level.SEVERE, null, ex);
                }

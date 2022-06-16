@@ -223,7 +223,7 @@ if(!scnid.equals(scnidcopy))
         if(!value.equals("")){showsection="";hasdata="style='display:none;'";}
         
     //create the card
-    indicators+= "<h4 class='btn grey' "+hasdata+" id='hasdata'><i class='glyphicon glyphicon-close'></i><b>No Gaps to account under "+scn+"</b></h4><div "+showsection+" class='card'>";
+    indicators+= "<h4 class='btn grey' "+hasdata+" id='hasdata"+scnid+"'><i class='glyphicon glyphicon-close'></i><b>No Gaps to account under "+scn+"</b></h4><div "+showsection+" class='card'>";
     indicators+= "<div class='card-header' >"
     +"<h5 class='mb-0'>";
     indicators+="<button class='btn blue collapsed' id='section"+scnid+"' type='button' data-toggle='collapse' data-target='#collapse"+scnid+"' aria-expanded='false' aria-controls='collapse"+scnid+"' style='width:100%; text-align:left;background-color:#0394ff;font-weight: bolder;'>" +
@@ -233,7 +233,7 @@ if(!scnid.equals(scnidcopy))
 "</div>"
 + "<div id='collapse"+scnid+"' class='collapse' aria-labelledby='heading"+scnid+"' data-parent='#form1a_accordion'>" +
 "<div class='card-body'>" +
-"<div id='table' style='margin-right:0%'>" +
+"<div class='table' style='margin-right:0%'>" +
 "<fieldset class='formatter' style='margin:20px; color:black;'>" +
 "<legend class='formatter'>" +
 "<b style='text-align:center;color:#0394ff;'>"+scn+"</b>" +

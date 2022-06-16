@@ -61,15 +61,15 @@
 
             @media screen and (min-width: 600px) and (max-width: 1199px)  {
                 #weeklydataform {
-                    margin-left:20%;
-                    margin-right:20%;
+                    margin-left:10%;
+                    margin-right:10%;
                 }
             }
 
             @media screen and (min-width: 1200px) {
                 #weeklydataform {
-                    margin-left:30%;
-                    margin-right:30%;
+                    margin-left:20%;
+                    margin-right:20%;
                 }
             }
 

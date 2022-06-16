@@ -5,7 +5,7 @@
 --%>
 
 <%@page import="General.IdGenerator2"%>
-<%@page import="hfr.getIndicators"%>
+<%@page import="retention.ret_getIndicators"%>
 <%@page import="java.util.logging.Logger"%>
 <%@page import="java.util.logging.Level"%>
 <%@page import="java.sql.SQLException"%>
@@ -23,14 +23,14 @@
     <head>
         <meta http-equiv="content-type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">
-        <title>Service Gaps</title>
+        <title>Retention</title>
         <meta name="generator" content="Bootply" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
         <link href="css/bootstrap.css" rel="stylesheet">
         <link href="css/bootstrap-datepicker.min.css" rel="stylesheet">
         <link rel="stylesheet" href="css/select2.min.css">
-        <link rel="shortcut icon" href="images/rri.png">
+        <link rel="shortcut icon" href="images/retention.png">
         <link href="assets/css/style.css" rel="stylesheet" />
         <!--<link data-jsfiddle="common" rel="stylesheet" media="screen" href="css/handsontable.css">-->
         <!--  <link data-jsfiddle="common" rel="stylesheet" media="screen" href="dist/pikaday/pikaday.css">-->
@@ -58,15 +58,15 @@
 
             @media screen and (min-width: 600px) and (max-width: 1199px)  {
                 #weeklydataform {
-                    margin-left:20%;
-                    margin-right:20%;
+                    margin-left:10%;
+                    margin-right:10%;
                 }
             }
 
             @media screen and (min-width: 1200px) {
                 #weeklydataform {
-                    margin-left:20%;
-                    margin-right:20%;
+                    margin-left:10%;
+                    margin-right:10%;
                 }
             }
 
@@ -138,7 +138,7 @@ input[readonly]{
         <div id="top-nav" class="navbar navbar-inverse navbar-static-top">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <button id="toolid" style="float:left;color:white; text-align: center;" class="navbar-toggle btn btn-default" >&nbsp;Accounting for gaps and missed opportunities</button>
+                    <button id="toolid" style="float:left;color:white; text-align: center;" class="navbar-toggle btn btn-default" >&nbsp;Retention Audit Module</button>
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -166,7 +166,7 @@ input[readonly]{
                                 <i class="glyphicon glyphicon-question-sign"></i>
                                 Help
                             </a></li>
-                        <li><a  class=''  href='rri_gaps_index.jsp'><i class='glyphicon glyphicon-log-out'></i> Log out</a></li>
+                        <li><a  class=''  href='ret_index.jsp'><i class='glyphicon glyphicon-log-out'></i> Log out</a></li>
                     </ul>
                 </div>
 
@@ -197,7 +197,7 @@ input[readonly]{
                             <!--tabs-->
                             <div class="panel">
                                 <ul class="nav nav-tabs " id="myTab">
-                                    <li class="active newdata"><a href="#dataentry" id="newdatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-plus"></i>Accounting For Service Gaps</a></li>
+                                    <li class="active newdata"><a href="#dataentry" id="newdatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-plus"></i>Retention Audit Data</a></li>
                                  
                                     <!--<li class="active editdata" style='display:none;' ><a href="#dataentry" id="newdatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-edit"></i> Edit Data</a></li>-->
                                     <li><a href="#reports"  style="" id="reportsbutton" data-toggle="tab"> <i class="glyphicon glyphicon-stats"></i> Reports</a></li> 
@@ -232,7 +232,7 @@ input[readonly]{
                                                                 <div class="control-group">
 
                                                                     <div class="controls">
-                                                                        <label><required-option></required-option>Period</label> 
+                                                                        <label><required-option></required-option>Reporting Period</label> 
 
                                                                     </div>
                                                                 </div>
@@ -298,6 +298,27 @@ input[readonly]{
                                                   
 
                                                 </div>
+                                                    
+                                                     <table class="table table-striped table-bordered">
+                                                        <tr><td colspan="3" class="col-xs-12">               
+                                                                <div class="control-group col-xs-12">
+                                                                    <div id='fedback' class="alert-info">Note: Please enter all the required data.</div>
+                                                                    <br/>
+                                                                    <div class="controls">
+                                                                        <input readonly="true" type="input" onClick="validatedata();"  id='savebutton' value="SAVE"  style="margin-left: 0%;" class="btn-lg btn-success active">
+
+                                                                    </div>
+                                                                    <div class="controls">
+                                                                        <button type="submit" id='updatebutton' onclick="updateweeklydata();" style="margin-left: 0%;display:none;" class="btn-lg btn-info active">
+                                                                            UPDATE 
+                                                                        </button>
+                                                                    </div>
+
+
+                                                                </div>
+                                                            </td></tr>
+
+                                                    </table>
                                                    
                                                 </form>
                                             </div>
@@ -312,7 +333,7 @@ input[readonly]{
                              
 
                                     <div class="tab-pane well" id="reports">
-<form action="baselinereport" id="reportingForm">
+<form action="retreported" id="reportingForm">
 
                                         <!--Dashboard code-->
 
@@ -345,9 +366,7 @@ input[readonly]{
 
                                                     <div class="controls">
                                                         <select class="form-control input-sm" onchange="checkFormAction();"   name='report' id='report' >
-                                                            <option value='baselinereport'>1.Sites With Baselines</option>
-                                                            <option value='gapsreported'>2.Reported Data</option>
-                                                            <option value='gapsnotaccountedfor'>3.COT Tracker</option>
+                                                            <option value='retreported'>2.Reported Data</option>
                                                            
                                                             <!--<option value='hts_self_reports'>6.HTS Self</option>-->
 
@@ -584,8 +603,8 @@ input[readonly]{
         <script type="text/javascript" src="js/datatables.min.js"></script>
         <script type="text/javascript" src="js/angular.js"></script>
         <script type="text/javascript" src="js/angularoptions_htsself.js"></script>
-        <script type="text/javascript" src="gaps/sum_values.js"></script>
-        <script type="text/javascript" src="gaps/validation.js"></script>
+        <script type="text/javascript" src="ret/sum_values.js"></script>
+        <script type="text/javascript" src="ret/validation.js"></script>
 
 
 
@@ -607,10 +626,10 @@ input[readonly]{
  function getFacilitiesJson(){
        
    
-       var ym=$("#period").val();
+      
        
               $.ajax({
-                    url:'loadSitesWithGaps?ym='+ym,                            
+                    url:'loadActiveSites',                            
                     type:'post',  
                     dataType: 'html',  
                     success: function(data)
@@ -626,88 +645,6 @@ input[readonly]{
                     }});
    
    }
-
-
-
-                                  
-
-
- function getSections(){
-       
-   
-       
-       
-              $.ajax({
-                         url:'getParameterData',                            
-                    type:'post',  
-                    dataType: 'json',  
-                    success: function(data) {                        
-                       
-        var dat=data.sections;
-        
-        console.log(dat[0].section);
-        var o="<option value=''>Select Option</option>";
-                        
-                        for(var a=0;a<dat.length;a++){
-                            
-                     
-                          o+="<option value='"+dat[a].sectio_id+"'>"+dat[a].sectio+"</option>";   
-                        }
-                        
-                   $("#section").html(o);
-                   $(document).ready(function() {
-                    $('#section').select2(); 
-             
-                                 } ); 
-                        
-                        
-                    }});
-   
-   }
-
-//getSections();
-
-
-
-
-
-
- function getModalities(){
-       
-   var sec=$("#section").val();
-       
-       
-              $.ajax({
-                         url:'getParameterData?mod='+sec+"&sec="+sec,                            
-                    type:'post',  
-                    dataType: 'json',  
-                    success: function(data) {                        
-                       
-        var dat=data.modalities;
-        
-      
-        var o="<option value=''>Select Option</option>";
-                        
-                        for(var a=0;a<dat.length;a++)
-                        {                           
-                     
-                          o+="<option value='"+dat[a].modality_id+"'>"+dat[a].modality+"</option>";   
-                        }
-                        
-                   $("#modality").html(o);
-                   $(document).ready(function() {
-                    $('#modality').select2(); 
-             
-                                 } ); 
-                        
-                        
-                    }});
-   
-   }
-   
-   
-   
-   
    
    
  function getPeriod(){
@@ -749,99 +686,90 @@ getPeriod();
 
 
 
-
-
-
-
-
-
-                                   function save_data(dbname,sci) {
-
-
-
-//___indicators to pull___
-
-                                       var facil = "";
-                                     
-                                       var ym = "";
-                           facil = $("#facility").val();
-                                     
-                           ym = $("#period").val();
-                                     
-              if (facil === '' || facil === 'Select facility') {
-
-                                           alert("enter Facility");
-              } 
+                                   function save_data() {
                                        
+var facility_mfl_code="";
+var period="";
+
+facility_mfl_code=$("#facility").val();
+//organisationunitid=$("#facilityname").find(":selected").data('datimid');
+//hosi=$("#facilityname").find(":selected").data("facil");
+
+period=$("#period").val();        
+        
+        $.ajax({
+                    url:'ret_getIndicators',                            
+                    type:'post',  
+                    dataType: 'json',  
+                    success: function(data){
+                        
+                       for(a=0;a<data.length;a++){
+              var isend=false;             
+                          
+var indicatorid=data[a].id;
+var m9=$("#"+indicatorid+"_9m").val();
+var f9=$("#"+indicatorid+"_9f").val();
+var m14=$("#"+indicatorid+"_14m").val();
+var f14=$("#"+indicatorid+"_14f").val();
+var m19=$("#"+indicatorid+"_19m").val();
+var f19=$("#"+indicatorid+"_19f").val();
+var m24=$("#"+indicatorid+"_24m").val();
+var f24=$("#"+indicatorid+"_24f").val();
+var m25=$("#"+indicatorid+"_25m").val();
+var f25=$("#"+indicatorid+"_25f").val();
+var ttl=$("#"+indicatorid+"_ttl").val();
+ 
+
+var identifier=facility_mfl_code+"_"+period+"_"+indicatorid;
+        
+        
       
-        else if (ym === '') {
 
-                                           alert("enter reporting period");
+        
+           //save the data
+           
+           var saveddata={
+               id:identifier,
+               yearmonth:period,
+               facility:facility_mfl_code,
+               indicatorid:indicatorid,
+               _9m:m9,
+               _9f:f9,
+               _14m:m14,
+               _14f:f14,
+               _19m:m19,
+               _19f:f19,
+               _24m:m24,
+               _24f:f24,
+               _25m:m25,
+               _25f:f25,
+               ttl:ttl,
+              userid:''              
+           };
+           
+           
+           
+           
+           if(a===parseInt(data.length)-1){
+               isend=true;
+               
+           }
+           
+           exportData(saveddata,isend);
+                           
+                       } 
+                   
+                    }
+                });
 
-                                       } 
-                                       
-       // else if (runvalidation() === false) { } 
-                                       else {
-   $.ajax({
-                                               url: 'loadindicators?scid='+sci,
-                                               type: 'post',
-                                               dataType: 'json',
-                                               success: function (data) {
-
-                                                   for (a = 0; a < data.length; a++) {
-                                                       var isend = false;
-
-                                                       var indicatorid = data[a].id;
-                                                       var value = $("#" + indicatorid).val();
-                                                      
-                                                       var identifier = facil + "_" +ym + "_" + indicatorid;
-
-
-                                                       //save the data
-                       
-                                                       var saveddata = {
-                                                           id: identifier,
-                                                           yearmonth: ym,
-                                                           facility_id: facil,                                                          
-                                                           indicator_id: indicatorid,
-                                                           value: value,
-                                                           week:new Date().getWeekNumber(),
-                                                           userid:'909090'
-
-                                                       };
-
-
-
-
-                                                       if (a === parseInt(data.length) - 1) {
-                                                           isend = true;
-                                                         
-                                                       }
-
-                                                       exportData(saveddata, isend, dbname, sci);
-
-                                                   }
-
-                                               }
-                                           });
+}
 
 
-
-                                       }
-
-
-
-
-
-
-                                   }
-
-
-                                   function exportData(data, isend, tbl,secid) {
+ function exportData(data, isend, tbl,secid) {
 
 
                                        $.ajax({
-                                           url: 'saveGapsData?tbl='+tbl,
+                                           url: 'saveRet?tbl='+tbl,
                                            type: 'post',
                                            dataType: 'html',
                                            data: data,
@@ -863,7 +791,7 @@ getPeriod();
 
 //call the function that displays the data
 
-function refreshujumbe(eid){
+function refreshujumbe(){
     
     $(".feedback").html("");
     
@@ -951,26 +879,27 @@ function refreshujumbe(eid){
                                      
             
        
-                                       var ym = $("#period").val().trim();
+                                       var ym = $("#period").val();
                                       
-                                       var fc = $("#facility").val().trim();
+                                       var fc = $("#facility").val();
 //    console.log("_"+fc+"vs"+dt);
-                                       if ( ym !== '' && fc !== 'Select facility' && fc !== '')
+                                       if ( ym !== '' && fc !== 'Select facility' && fc !== ''&& fc !==null )
                                        {
                                            // display facility name
                                            $("#form1a_accordion").show();
 
-
+console.log("facility:"+fc);
+console.log("yearmonth:"+ym);
                                            //now load the data
                                            $.ajax({
-                                               url: 'loadindicators?ym=' + ym + "&fc=" + fc,
+                                               url: 'ret_getIndicators?ym=' + ym + "&fc=" + fc,
                                                type: 'post',
                                                dataType: 'html',
                                                success: function (data)
                                                {
 
                                                    $("#form1a_accordion").html(data);
-console.log(data);
+
 
                                                }});
 
@@ -978,7 +907,6 @@ console.log(data);
 
                                        } else
                                        {
-                                           console.log("Hide accordion");
                                            $("#form1a_accordion").hide();
                                            //        
                                        }
@@ -997,6 +925,86 @@ Date.prototype.getWeekNumber = function(){
 function checkFormAction (){
     
   $('#reportingForm').attr('action', $("#report").val());  
+    
+}
+
+
+
+function validatedata(){
+    
+
+
+//___indicators to pull___
+
+
+var daterange="";
+var hosi="";
+var facility_mfl_code="";
+var period="";
+
+facility_mfl_code=$("#facility").val();
+//organisationunitid=$("#facilityname").find(":selected").data('datimid');
+//hosi=$("#facilityname").find(":selected").data("facil");
+
+period=$("#period").val();
+//eddate=$("#reportingdate").val();
+//stdate=$("#reportingdate").find(':selected').data('sdate');
+
+
+//console.log("datimid:"+organisationunitid+"\n edate:"+eddate+"\n stdate:"+stdate+"\n daterange:"+daterange+"\n hospital:"+hosi+"\n mflcode"+facility_mfl_code+"\n ward"+ward);
+//<option data-sdate="2019-09-24" data-edate="2019-09-30" data-wk="20" value="2019-09-30">2019-09-24 to 2019-09-30 (Week 20) </option>
+
+//this should happen in a loop
+
+
+if(facility_mfl_code==='' || facility_mfl_code==='Select facility' ){
+    
+  alert("enter facility name");  
+    
+}
+
+
+else if(period===''  )
+{
+   alert("select reporting period");  
+    
+}
+
+    
+    else {
+    loadValidation();
+    //load validation will call save data
+
+
+}
+
+
+
+
+
+    
+}
+
+
+function exportData( data, isend){
+    
+    
+    $.ajax({
+                    url:'saveRet',                            
+                    type:'post',  
+                    dataType: 'html',
+                    data:data ,
+                    success: function(dat) {
+                       if(isend){
+                           
+                           console.log("Data saved Succesfully!");
+                           $("#fedback").html("<font color='green'><h3>Data saved Succesfully!</h3></f>");
+                             setTimeout(refreshujumbe,2000);
+                       } 
+                        
+                    }
+                });
+    
     
 }
 

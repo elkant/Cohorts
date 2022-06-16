@@ -14,9 +14,14 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,6 +34,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFFormulaEvaluator;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -51,11 +57,13 @@ public class getKPForm extends HttpServlet {
             
             String non_art_Rows_arr[]={"1","2"};
             
-            HashMap<String, Integer[]> hm= new HashMap<String, Integer[] >();
+            HashMap<String, Integer[]> hm= new HashMap< >();
+            HashMap<String, String> hmd= new HashMap< >();
             
-            hm.put("prep", new Integer[]{43,56});
-            hm.put("hts", new Integer[]{63,115});
-            hm.put("art", new Integer[]{133,180});
+            hm.put("prep", new Integer[]{43,49});
+            hm.put("hts", new Integer[]{82,126});
+            hm.put("art", new Integer[]{154,201});
+            hm.put("prepct", new Integer[]{57,73});
             
             //Prep 43 to 56
             //Testing 63 to 115
@@ -322,7 +330,7 @@ if(smonth.equals(emonth)){  mwezi=emonth;  } else { mwezi=smonth+"_to_"+emonth; 
                     
                     XSSFCell yearcl= rw.getCell(26);
                     yearcl.setCellValue(mwaka);
-                    
+                    String mwakamwezi=mwaka+month;
                     //_____________Hide the unsupported sections
                     
                     
@@ -339,6 +347,25 @@ if(smonth.equals(emonth)){  mwezi=emonth;  } else { mwezi=smonth+"_to_"+emonth; 
                        rwx.setZeroHeight(true);
                         
                         }
+                        
+                        } else {
+                        
+                        
+                  if(!month.equals("12") && !month.equals("03") && !month.equals("06") && !month.equals("09")){
+                            String ctd[]=Arrays.toString(hm.get("prepct")).split(",");
+                    int fstart=hm.get("prepct")[0];
+                    int fend=hm.get("prepct")[1];
+                            
+                    
+                    for(int ef=fstart;ef<=fend;ef++)
+                        {
+                        
+                       XSSFRow rwx = shet.getRow(ef);
+                       rwx.setZeroHeight(true);
+                        
+                        }
+                    }
+                    
                         
                         }
                         
@@ -374,6 +401,47 @@ if(smonth.equals(emonth)){  mwezi=emonth;  } else { mwezi=smonth+"_to_"+emonth; 
                         }
                    
                     
+                        
+                        //per each facility, get available data
+        ArrayList requiredrows= new ArrayList();
+        
+                                
+        requiredrows= convertResultSetToArrayList(getAnyDataFromDb(conn, "call internal_system.sp_pull_data_KP_keys('"+mwakamwezi+"','"+diccode+"');"));
+        hmd=convertResultSetToMap(getAnyDataFromDb(conn, "call internal_system.sp_pull_data_KP('"+mwakamwezi+"');"));
+                    
+        ArrayList allin = new ArrayList();
+          
+//allin.add("muk");
+//allin.add("fuk");
+allin.add("m1");
+allin.add("f1");
+allin.add("m4");
+allin.add("f4");
+allin.add("m9");
+allin.add("f9");
+allin.add("m14");
+allin.add("f14");
+allin.add("m19");
+allin.add("f19");
+allin.add("m24");
+allin.add("f24");
+allin.add("m29");
+allin.add("f29");
+allin.add("m34");
+allin.add("f34");
+allin.add("m39");
+allin.add("f39");
+allin.add("m44");
+allin.add("f44");
+allin.add("m49");
+allin.add("f49");
+allin.add("m50");
+allin.add("f50");
+allin.add("total");
+                    
+                    
+                  wb=  populateF1a(wb, requiredrows,allin,  hmd);
+                        
 
                 }
                 //outside here, create workbooks
@@ -385,11 +453,11 @@ if(smonth.equals(emonth)){  mwezi=emonth;  } else { mwezi=smonth+"_to_"+emonth; 
                   
             if (OSValidator.isWindows()) 
             {
-            npt = mydrive + ":\\HSDSA\\InternalSystem\\F1a\\Templates\\KP_MONTHLY_" + workbookidentifier.replace(" ", "_")+ ".xlsx";
+            npt = mydrive + ":\\HSDSA\\InternalSystem\\F1a\\Templates\\KP_Monthly_" + workbookidentifier.replace(" ", "_")+ ".xlsx";
             }
             else if (OSValidator.isUnix()) 
             {
-            npt = "/HSDSA/InternalSystem/F1a/Templates/KP_MONTHLY_" + workbookidentifier.replace(" ", "_")+ ".xlsx";
+            npt = "/HSDSA/InternalSystem/F1a/Templates/KP_Monthly_" + workbookidentifier.replace(" ", "_")+ ".xlsx";
             }
                 
 
@@ -420,7 +488,7 @@ byte[] outArray = outByteStream.toByteArray();
 response.setContentType("application/ms-excel");
 response.setContentLength(outArray.length);
 response.setHeader("Expires:", "0"); // eliminates browser caching
-response.setHeader("Content-Disposition", "attachment; filename=" + "KP_MONTHLY_"+workbookidentifier.replace(" ", "_") + ".xlsx");
+response.setHeader("Content-Disposition", "attachment; filename=" + "KP_Monthly_"+workbookidentifier.replace(" ", "_") + ".xlsx");
 response.setHeader("Set-Cookie","fileDownload=true; path=/");
 OutputStream outStream = response.getOutputStream();
 outStream.write(outArray);
@@ -472,7 +540,7 @@ byte[] outArray = zipFiles(files);
 response.setContentType("application/zip");
 response.setContentLength(outArray.length);
 response.setHeader("Expires:", "0"); // eliminates browser caching
-response.setHeader("Content-Disposition", "attachment; filename=KP_MONTHLY__"+filename+".zip");
+response.setHeader("Content-Disposition", "attachment; filename=KP_Monthly_"+filename+".zip");
 response.setHeader("Set-Cookie","fileDownload=true; path=/");
 OutputStream outStream = response.getOutputStream();
 outStream.write(outArray);
@@ -648,6 +716,202 @@ else if(monthno.equals("6")||monthno.equals("06")){
         return ((int)(fraction + start));
     }
       
+        public List<HashMap<String,Object>> convertResultSetToList(ResultSet rs) throws SQLException 
+ {
+    ResultSetMetaData md = rs.getMetaData();
+    int columns = md.getColumnCount();
+    List<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
+
+    while (rs.next()) 
+    {
+        HashMap<String,Object> row = new HashMap<String, Object>(columns);
+        for(int i=1; i<=columns; ++i) {
+            row.put(md.getColumnName(i),rs.getObject(i));
+        }
+        list.add(row);
+    }
+
+    return list;
+}
+ 
+  
+ 
       
+      
+      public HashMap<String,String> convertResultSetToMap(ResultSet rs) throws SQLException{
+          
+          
+          //Create an arraylist for all the indicators
+          
+          ArrayList allin = new ArrayList();
+          
+//allin.add("muk");
+//allin.add("fuk");
+allin.add("m1");
+allin.add("f1");
+allin.add("m4");
+allin.add("f4");
+allin.add("m9");
+allin.add("f9");
+allin.add("m14");
+allin.add("f14");
+allin.add("m19");
+allin.add("f19");
+allin.add("m24");
+allin.add("f24");
+allin.add("m29");
+allin.add("f29");
+allin.add("m34");
+allin.add("f34");
+allin.add("m39");
+allin.add("f39");
+allin.add("m44");
+allin.add("f44");
+allin.add("m49");
+allin.add("f49");
+allin.add("m50");
+allin.add("f50");
+allin.add("total");
+
+      
+HashMap<String,String> hm = new HashMap<String,String>();
+          
+ResultSetMetaData md = rs.getMetaData();
+          
+           int columns = md.getColumnCount();
+           
+           while (rs.next()){
+           String indicid=rs.getString("indicid");
+               for(int a=1;a<=columns;a++)
+               {
+                   String colname=md.getColumnName(a);
+                   
+               if(allin.contains(colname))
+               {
+                   
+                hm.put(indicid+"_"+colname, rs.getString(colname));
+                   
+               }
+               }               
+                
+                   
+           
+           }          
+          
+          
+      
+      return hm;
+      }
+      
+      
+      
+      public XSSFWorkbook populateF1a(XSSFWorkbook wb, ArrayList RowstoUpdate, ArrayList ColstoUpdate, HashMap<String, String > data_to_populatedatahm  )
+      {
+          //System.out.println(" Hash map is "+data_to_populatedatahm);
+          int poi_column[]={3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27};
+          
+          int sheetcount=wb.getNumberOfSheets();
+          
+          ArrayList sheetsAL= new ArrayList();
+         
+          for(int p=0;p<sheetcount;p++){
+          if(!wb.getSheetName(p).equals("Instructions")){
+              
+              sheetsAL.add(wb.getSheetName(p));
+          
+          }
+          
+          }
+          
+          
+          for(int a=0;a<sheetsAL.size(); a++)
+          {
+          
+            XSSFSheet sht = wb.getSheet(sheetsAL.get(a).toString());
+            for(int b=0; b<RowstoUpdate.size(); b++)
+            {
+             String [] row_key=RowstoUpdate.get(b).toString().split(":");   
+             //data is saved as row:Indicator eg 4:tx_new
+             
+                System.out.println("sheet is "+sheetsAL.get(a).toString());
+                System.out.println("row is "+row_key[0]);
+                
+             //loop through all the rows while updating data
+             
+             
+             
+             XSSFRow rw=sht.getRow(new Integer(row_key[0]));
+            for(int c=0; c<poi_column.length; c++)
+            {
+            
+             XSSFCell cl=rw.getCell(c+3);
+             //txcurr_113_202007
+             
+             String fullkey=row_key[1]+"_"+ColstoUpdate.get(c);
+                System.out.println("Key to search for:"+fullkey);
+             
+             if(data_to_populatedatahm.get(fullkey)!=null){
+             if(isNumeric(data_to_populatedatahm.get(fullkey))){
+                 
+                 Double dv=new Double(data_to_populatedatahm.get(fullkey));
+                 if(dv>0)
+                 {
+               cl.setCellValue( new Double(data_to_populatedatahm.get(fullkey)));
+                 }
+                //System.out.println("Populated as Integer");  
+             }
+             else {
+                 //System.out.println("Not Populated as Integer");
+                cl.setCellValue(data_to_populatedatahm.get(fullkey));
+             }
+             
+           
+             }
+             else {
+             
+                 //System.out.println(" Hash map is null ");
+             }
+            
+            }
+            }
+         
+              
+          }
+         
+         XSSFFormulaEvaluator.evaluateAllFormulaCells(wb);  
+      
+      return wb;
+      }
+      
+     public boolean isNumeric(String s) {
+        return s != null && s.matches("[-+]?\\d*\\.?\\d+");
+    }
     
+      public ResultSet getAnyDataFromDb(dbConn conn, String query) throws SQLException{
+    
+        return conn.st2.executeQuery(query);
+        
+        
+    }
+      
+       public ArrayList convertResultSetToArrayList(ResultSet rs) throws SQLException 
+ {
+    ResultSetMetaData md = rs.getMetaData();
+    int columns = md.getColumnCount();
+    ArrayList al = new ArrayList();
+
+    while (rs.next()) 
+    {
+         
+        for(int i=1; i<=columns; ++i) {
+            String colname=md.getColumnName(i);
+            al.add(rs.getString(colname));
+        }
+        
+    }
+
+    return al;
+}
+     
+     
 }

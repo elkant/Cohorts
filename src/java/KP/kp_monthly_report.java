@@ -33,7 +33,7 @@ import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openxmlformats.schemas.spreadsheetml.x2006.main.CTTable;
-import static reports.pnsreports.isNumeric;
+
 import static scripts.OSValidator.isUnix;
 
 /**
@@ -283,7 +283,7 @@ XSSFWorkbook wb = wb1;
                  {
                // if(1==1){
                 
-                     cell0.setCellValue(conn.rs.getInt(mycolumns.get(a).toString()));
+                     cell0.setCellValue(Double.parseDouble(conn.rs.getString(mycolumns.get(a).toString())));
                     
                  }
                 else 
@@ -394,4 +394,17 @@ ctTable.setRef("A1:AR" + (shet.getLastRowNum() + 1)); // adjust reference as nee
         return "Short description";
     }// </editor-fold>
 
+    
+        public static boolean isNumeric(String strNum) {
+      
+    
+    try {
+        double d = Double.parseDouble(strNum);
+    } catch (NumberFormatException | NullPointerException nfe) {
+        return false;
+    }
+    return true;
+      
+}
+    
 }
