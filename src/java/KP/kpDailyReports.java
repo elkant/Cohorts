@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package retention;
+package KP;
 
 
 import General.IdGenerator;
@@ -40,7 +40,7 @@ import static scripts.OSValidator.isUnix;
  *
  * @author EKaunda
  */
-public class retreported extends HttpServlet {
+public class kpDailyReports extends HttpServlet {
 
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -62,7 +62,7 @@ public class retreported extends HttpServlet {
 
 
 
-String allpath = getServletContext().getRealPath("/retention.xlsx");
+String allpath = getServletContext().getRealPath("/kp_rpt_daily.xlsx");
 
 XSSFWorkbook wb1;
  
@@ -77,7 +77,7 @@ String mydrive = allpath.substring(0, 1);
 
 String np=mydrive+":\\HSDSA\\PNS\\MACROS\\";
 
-String filepath="Retention_Audit_Report_"+dat2+".xlsx";
+String filepath="KP_Daily_data_"+dat2+".xlsx";
 
 
 if(isUnix()){
@@ -161,6 +161,7 @@ XSSFWorkbook wb = wb1;
         
         String startdate="2021-06-01";
         String enddate=IG.toDay();
+        String lip="";
       
         String county="";
         if(request.getParameter("startdate")!=null)
@@ -173,6 +174,13 @@ XSSFWorkbook wb = wb1;
         {
         
             enddate=request.getParameter("enddate");
+        
+        }
+        
+        if(request.getParameter("liprpt")!=null)
+        {
+        
+            lip=request.getParameter("liprpt");
         
         }
         
@@ -230,7 +238,7 @@ XSSFWorkbook wb = wb1;
         
         //========Query two====Facility Details==============
         
-        String qry = "call internal_system.sp_ret_reported('"+startdate+"', '"+enddate+"');";
+        String qry = " SELECT * FROM aphiaplus_moi.kp_all_data where date between '"+startdate+"' and '"+enddate+"' and LIP in('"+lip+"');";
        
         System.out.println("query ni "+qry);
        
@@ -275,7 +283,7 @@ XSSFWorkbook wb = wb1;
                  {
                // if(1==1){
                 
-                     cell0.setCellValue(conn.rs.getInt(mycolumns.get(a).toString()));
+                     cell0.setCellValue(Double.parseDouble(conn.rs.getString(mycolumns.get(a).toString())));
                     
                  }
                 else 
@@ -317,11 +325,11 @@ XSSFWorkbook wb = wb1;
   if(1==1){
      XSSFSheet sheet= wb.getSheet("rawdata");
         // tell your xssfsheet where its content begins and where it ends
-((XSSFSheet)shet).getCTWorksheet().getDimension().setRef("A1:S" + (shet.getLastRowNum() + 1));
+((XSSFSheet)shet).getCTWorksheet().getDimension().setRef("A1:N" + (shet.getLastRowNum() + 1));
 
 CTTable ctTable = ((XSSFSheet)shet).getTables().get(0).getCTTable();
 
-ctTable.setRef("A1:S" + (shet.getLastRowNum() + 1)); // adjust reference as needed
+ctTable.setRef("A1:N" + (shet.getLastRowNum() + 1)); // adjust reference as needed
 
 
         
@@ -339,9 +347,9 @@ ctTable.setRef("A1:S" + (shet.getLastRowNum() + 1)); // adjust reference as need
         if(conn.connect!=null){conn.connect.close();}
         
         
-       
+       String lipn=lip.trim().toUpperCase();
 
-        System.out.println("" + "Retention_Audit_Reports_Gen_" + createdOn.trim() + ".xlsx");
+        System.out.println("" + "KP Daily Form_Reports_Gen_" + createdOn.trim() + ".xlsx");
 
         ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
         wb.write(outByteStream);
@@ -349,7 +357,7 @@ ctTable.setRef("A1:S" + (shet.getLastRowNum() + 1)); // adjust reference as need
         response.setContentType("application/ms-excel");
         response.setContentLength(outArray.length);
         response.setHeader("Expires:", "0"); // eliminates browser caching
-        response.setHeader("Content-Disposition", "attachment; filename=" + "Retention_Audit_Reports_btwn_"+startdate+"_to_"+enddate+"_gen_" + createdOn.trim() + ".xlsx");
+        response.setHeader("Content-Disposition", "attachment; filename=" + lipn+"_daily_data_btwn_"+startdate+"_to_"+enddate+"_gen_" + createdOn.trim() + ".xlsx");
          response.setHeader("Set-Cookie","fileDownload=true; path=/");
         OutputStream outStream = response.getOutputStream();
         outStream.write(outArray);
@@ -363,9 +371,9 @@ ctTable.setRef("A1:S" + (shet.getLastRowNum() + 1)); // adjust reference as need
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(retreported.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(kp_monthly_report.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InvalidFormatException ex) {
-            Logger.getLogger(retreported.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(kp_monthly_report.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -375,9 +383,9 @@ ctTable.setRef("A1:S" + (shet.getLastRowNum() + 1)); // adjust reference as need
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(retreported.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(kp_monthly_report.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InvalidFormatException ex) {
-            Logger.getLogger(retreported.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(kp_monthly_report.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -386,7 +394,8 @@ ctTable.setRef("A1:S" + (shet.getLastRowNum() + 1)); // adjust reference as need
         return "Short description";
     }// </editor-fold>
 
-      public static boolean isNumeric(String strNum) {
+    
+        public static boolean isNumeric(String strNum) {
       
     
     try {

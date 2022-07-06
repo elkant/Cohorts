@@ -366,7 +366,8 @@ input[readonly]{
 
                                                     <div class="controls">
                                                         <select class="form-control input-sm" onchange="checkFormAction();"   name='report' id='report' >
-                                                            <option value='retreported'>2.Reported Data</option>
+                                                            <option value='retreported'>1.Reported Data</option>
+                                                            <option value='retentiontracker'>2.missing and Submitted Reports</option>
                                                            
                                                             <!--<option value='hts_self_reports'>6.HTS Self</option>-->
 

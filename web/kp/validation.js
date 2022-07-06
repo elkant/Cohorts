@@ -17,7 +17,7 @@ function loadValidation() {
     breakloop = false;
 
     $.ajax({
-        url:'loadRetValidation',
+        url:'loadKPDailyValidation',
         type:'post',
         dataType:'json',
         success:function (data) {
@@ -97,16 +97,16 @@ function less(valids, message, iscritical, sectionid) {
 
     var val1, val2;
 
-var columns = ["9m","9f","14m","14f","19m","19f","24m","24f","25m","25f"];
-var agearray = ["9m","9f","14m","14f","19m","19f","24m","24f","25m","25f"];
+    var columns = ["msm","fsw"];
+    var agearray = ["msm","fsw"];
 
 
 
-    //bkd<kpt      bkd_9f    
+    //    
 //    var indicator_id=document.getElementById("indic_pos_"+indic_pos).value;
 //    alert(indicator_id);
     var num_elems = 1;
-    for (var i = 0; i < columns.length; i++) {
+    for (var i = 0; i < num_elems; i++) {
 
         var valarray = valids.split("<");
 
@@ -116,24 +116,21 @@ var agearray = ["9m","9f","14m","14f","19m","19f","24m","24f","25m","25f"];
         val1 = multisum(valarray[0], columns[i]);
         val2 = multisum(valarray[1], columns[i]);
         //m_uk
-var agegender = columns[i];
-        var sx = agegender.charAt(agegender.length-1);
-        var ag = agegender.replace("m").replace("f");
-         if (sx === 'm') {
+var agegender = columns[i].split("_");
+        var sx = "";
+        var ag = "";
+         if (agegender[0] === 'Male') {
             sx = "Male";
-        } else if (sx === 'f') {
+        } else if (agegender[0] === 'Female') {
             sx = "Female";
         }
-        else {
-            sx="Unknown";
-            
-        }
 
-//         ag=agearray[i];
+         ag=agearray[i];
 
         if ((isNumber(val1) ) || ( isNumber(val2) )) {
             if (val1 < val2) {
-                if (iscritical === 'yes') {
+                //if (iscritical === 1) {
+                if (1===1) {
                     
                      $("#fedback").html(" <img style='width:4%;' src='images/stop.png'/> <b>" + message+"</b>");
                     //alert("For age disaggregation " +columns[i]+ "   , " + message);
@@ -148,15 +145,17 @@ var agegender = columns[i];
                     break;
                     //end the loop so that the data entry person can make corrections
 
-                } else {
+                } 
+              /**  else {
 
                      // $("#msg" + sectionid).append("<b>For " + ag + " years " + sx + " , " + message + "</b><br/>");
-                        $("<font color=\'red\''><b>" + message + "</b></font><br/>").insertBefore("#msg" + sectionid);
+                      $("#fedback").html(" <img style='width:4%;' src='images/stop.png'/> <b>" + message+"</b>");
+                        //$(" <font color='red'><b>  " + message + "</b></font> <br/>").insertBefore("#msg" + sectionid);
 savebutton_active(sectionid);
                     yellowborder(columns[i], valarray[0],message);
                     yellowborder(columns[i], valarray[1],message);
 
-                }
+                }**/
             } else {
 
                 blackborder(columns[i], valarray[0]);
@@ -190,18 +189,17 @@ function greater(valids, message, iscritical, sectionid) {
 
     var val1, val2;
 
-    var columns = ["9m","9f","14m","14f","19m","19f","24m","24f","25m","25f"];
-var agearray = ["9m","9f","14m","14f","19m","19f","24m","24f","25m","25f"];
-
+    var columns = ["msm","fsw"];
+    var agearray = ["msm","fsw"];
 
 
     //    
 //    var indicator_id=document.getElementById("indic_pos_"+indic_pos).value;
 //    alert(indicator_id);
-    var num_elems = 1;
-    for (var i = 0; i < columns.length; i++) {
+    var num_elems = columns.length;
+    for (var i = 0; i < num_elems; i++) {
 
-        var valarray = valids.split("<");
+        var valarray = valids.split(">");
 
 
 
@@ -209,20 +207,18 @@ var agearray = ["9m","9f","14m","14f","19m","19f","24m","24f","25m","25f"];
         val1 = multisum(valarray[0], columns[i]);
         val2 = multisum(valarray[1], columns[i]);
         //m_uk
-var agegender = columns[i];
-        var sx = agegender.charAt(agegender.length-1);
-        var ag = agegender.replace("m").replace("f");
-         if (sx === 'm') {
+
+        var agegender = columns[i].split("_");
+        var sx = "";
+        var ag = "";
+         if (agegender[0] === 'Male') {
             sx = "Male";
-        } else if (sx === 'f') {
+        } else if (agegender[0] === 'Female') {
             sx = "Female";
         }
-        else {
-            sx="Unknown";
-            
-        }
 
-//         ag=agearray[i];
+         ag=agearray[i];
+
 //        if (agegender[1] === 'uk') {
 //            ag = "Unknown";
 //        } else {
@@ -287,39 +283,38 @@ function lessOrEqual(valids, message, iscritical, sectionid) {
 
     var val1, val2;
 
-   var columns = ["9m","9f","14m","14f","19m","19f","24m","24f","25m","25f"];
-var agearray = ["9m","9f","14m","14f","19m","19f","24m","24f","25m","25f"];
+   var columns = ["msm","fsw"];
+    var agearray = ["msm","fsw"];
 
 
 
     //    
 //    var indicator_id=document.getElementById("indic_pos_"+indic_pos).value;
 //    alert(indicator_id);
-    var num_elems = 1;
-    for (var i = 0; i < columns.length; i++) {
+    var num_elems = columns.length;
+    for (var i = 0; i < num_elems; i++) {
 
-        var valarray = valids.split("<");
+        var valarray = valids.split("<=");
 
 
 
-        //    alert(columns[i]+"_"+indicator_id);
+        console.log(valarray[0]+"<="+valarray[1]);
+            
         val1 = multisum(valarray[0], columns[i]);
         val2 = multisum(valarray[1], columns[i]);
         //m_uk
-var agegender = columns[i];
-        var sx = agegender.charAt(agegender.length-1);
-        var ag = agegender.replace("m").replace("f");
-         if (sx === 'm') {
+
+        var agegender = columns[i].split("_");
+        var sx = "";
+        var ag = "";
+         if (agegender[0] === 'Male') {
             sx = "Male";
-        } else if (sx === 'f') {
+        } else if (agegender[0] === 'Female') {
             sx = "Female";
         }
-        else {
-            sx="Unknown";
-            
-        }
 
-//         ag=agearray[i];
+         ag=agearray[i];
+
 //        if (agegender[1] === 'uk') {
 //            ag = "Unknown";
 //        } else {
@@ -388,18 +383,18 @@ function greaterOrEqual(valids, message, iscritical, sectionid) {
 
     var val1, val2;
 
-   var columns = ["9m","9f","14m","14f","19m","19f","24m","24f","25m","25f"];
-var agearray = ["9m","9f","14m","14f","19m","19f","24m","24f","25m","25f"];
+     var columns = ["msm","fsw"];
+    var agearray = ["msm","fsw"];
 
 
 
     //    
 //    var indicator_id=document.getElementById("indic_pos_"+indic_pos).value;
 //    alert(indicator_id);
-    var num_elems = 1;
-    for (var i = 0; i < columns.length; i++) {
+    var num_elems = columns.length;
+    for (var i = 0; i < num_elems; i++) {
 
-        var valarray = valids.split("<");
+        var valarray = valids.split(">=");
 
 
 
@@ -407,20 +402,20 @@ var agearray = ["9m","9f","14m","14f","19m","19f","24m","24f","25m","25f"];
         val1 = multisum(valarray[0], columns[i]);
         val2 = multisum(valarray[1], columns[i]);
         //m_uk
-var agegender = columns[i];
-        var sx = agegender.charAt(agegender.length-1);
-        var ag = agegender.replace("m").replace("f");
-         if (sx === 'm') {
+
+
+
+        var agegender = columns[i].split("_");
+        var sx = "";
+        var ag = "";
+         if (agegender[0] === 'Male') {
             sx = "Male";
-        } else if (sx === 'f') {
+        } else if (agegender[0] === 'Female') {
             sx = "Female";
         }
-        else {
-            sx="Unknown";
-            
-        }
 
-//         ag=agearray[i];
+          ag=agearray[i];
+
 //        if (agegender[1] === 'uk') {
 //            ag = "Unknown";
 //        } else {
@@ -503,16 +498,16 @@ function notEqual(valids, message, iscritical, sectionid) {
 
     var val1, val2;
 
-   var columns = ["9m","9f","14m","14f","19m","19f","24m","24f","25m","25f"];
-var agearray = ["9m","9f","14m","14f","19m","19f","24m","24f","25m","25f"];
+     var columns = ["msm","fsw"];
+    var agearray = ["msm","fsw"];
 
 
 
     //    
 //    var indicator_id=document.getElementById("indic_pos_"+indic_pos).value;
 //    alert(indicator_id);
-    var num_elems = 1;
-    for (var i = 0; i < columns.length; i++) {
+    var num_elems = columns.length;
+    for (var i = 0; i < num_elems; i++) {
 
         var valarray = valids.split("!=");
 
@@ -522,20 +517,18 @@ var agearray = ["9m","9f","14m","14f","19m","19f","24m","24f","25m","25f"];
         val1 = multisum(valarray[0], columns[i]);
         val2 = multisum(valarray[1], columns[i]);
         //m_uk
-var agegender = columns[i];
-        var sx = agegender.charAt(agegender.length-1);
-        var ag = agegender.replace("m").replace("f");
-         if (sx === 'm') {
+
+        var agegender = columns[i].split("_");
+        var sx = "";
+        var ag = "";
+        if (agegender[0] === 'Male') {
             sx = "Male";
-        } else if (sx === 'f') {
+        } else if (agegender[0] === 'Female') {
             sx = "Female";
         }
-        else {
-            sx="Unknown";
-            
-        }
 
-//         ag=agearray[i];
+        ag=agearray[i];
+
 //        if (agegender[1] === 'uk') {
 //            ag = "Unknown";
 //        } else {
@@ -591,11 +584,11 @@ var agegender = columns[i];
 
 
 function multisum(vals, age) {
-console.log("vals ni::"+vals);
+
     var valsarr = vals.split("+");
 
     var totl = 0;
- console.log("valsarray"+valsarr);
+ //console.log("valsarray"+valsarr);
  
     for (var v = 0; v < valsarr.length; v++)
     {
@@ -615,7 +608,13 @@ console.log("vals ni::"+vals);
 
             totl = totl + parseInt(valsarr[v]);
             console.log("value for "+valsarr[v]+" is "+valsarr[v]);
-        } 
+        }
+        else {
+            
+            //consider subtraction
+           totl=totl+multideduct(totl,valsarr[v], age);
+            console.log("multideduct "+totl+" , "+valsarr[v]);
+        }
             
         }
     }
@@ -625,6 +624,50 @@ console.log("vals ni::"+vals);
 }
 
 
+
+function multideduct(prevtotal,vals, age) {
+
+    var valsarr = vals.split("-");
+
+    var totl = prevtotal;
+ console.log("valsarray_deduct"+valsarr);
+ 
+    for (var v = 0; v < valsarr.length; v++)
+    {
+        if(document.getElementById(valsarr[v]+"_"+age)!==null){
+        
+        var val = document.getElementById(valsarr[v]+"_"+age).value;
+        if (isNumber(val))
+        {
+if(v===0){
+    //first add the left side to the prevtotal  eg 4+3-2, when you split it should first add 4 to 3, then deduct
+                    totl = totl + parseInt(val);
+       }
+else {
+            totl = totl - parseInt(val);
+        }
+             
+        }
+        }
+        else {
+            if (isNumber(valsarr[v]))
+        {
+
+            totl = totl - parseInt(valsarr[v]);
+            console.log("value for "+valsarr[v]+" is "+valsarr[v]);
+        }
+        else {
+            
+            //consider addition
+           totl= totl-multisum(valsarr[v], age);
+        }
+            
+        }
+    }
+
+    return totl;
+
+}
 
 
 function redborder(age, elem,msg) {

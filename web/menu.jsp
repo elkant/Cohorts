@@ -132,7 +132,8 @@
 else {
 
   out.println("<li ><a  target='_blank' href='https://usaidtujengejamii.org:8443/htslive/livesummary.jsp'><i class='icon-list'></i>RRI Live Summary</a></li>");
-  out.println("<li ><a style='color:green;' href='importDtriangulation.jsp'><i class='icon-plus'></i><b>Daily Data Triangulation</b></a></li>");
+  out.println("<li ><a style='' href='importDtriangulation.jsp'><i class='icon-plus'></i><b>Daily Data Triangulation</b></a></li>");
+  out.println("<li ><a target='_blank' style='color:green;' href='https://usaidtujengejamii.org:8443/InternalSystem//fmattupload.jsp'><i class='icon-plus'></i><b>Daily Fmatt Upload</b></a></li>");
   out.println("<li ><a href='importpns.jsp'><i class='icon-plus'></i>Daily PNS Data Upload</a></li>");
   out.println("<li ><a href='importder.jsp'><i class='icon-plus'></i>Daily ART Data Upload</a></li>");
   out.println("<li ><a href='importcovid.jsp'><i class='icon-plus'></i>Covid 19 Data Upload</a></li>");

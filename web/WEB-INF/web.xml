@@ -488,6 +488,22 @@
         <servlet-name>gapsnotaccountedfor</servlet-name>
         <servlet-class>rri_gaps.gapsnotaccountedfor</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>kpDailyReports</servlet-name>
+        <servlet-class>KP.kpDailyReports</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>getKPDailyIndicators</servlet-name>
+        <servlet-class>KP.getKPDailyIndicators</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>loadKPDailyValidation</servlet-name>
+        <servlet-class>KP.loadKPDailyValidation</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>retentiontracker</servlet-name>
+        <servlet-class>retention.retentiontracker</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loadcohort</servlet-name>
         <url-pattern>/loadcohort</url-pattern>
@@ -975,6 +991,22 @@
     <servlet-mapping>
         <servlet-name>gapsnotaccountedfor</servlet-name>
         <url-pattern>/gapsnotaccountedfor</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>kpDailyReports</servlet-name>
+        <url-pattern>/kpDailyReports</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getKPDailyIndicators</servlet-name>
+        <url-pattern>/getKPDailyIndicators</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>loadKPDailyValidation</servlet-name>
+        <url-pattern>/loadKPDailyValidation</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>retentiontracker</servlet-name>
+        <url-pattern>/retentiontracker</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

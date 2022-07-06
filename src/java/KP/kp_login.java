@@ -71,7 +71,7 @@ String userAccess;
              
            //session.setAttribute("userAccess", userAccess);  
           status="success"; 
-          nextPage="kp_main.jsp";
+          nextPage="kp_home.jsp";
           
           //System.out.println("access rights : "+session.getAttribute("userAccess"));
          }

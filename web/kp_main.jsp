@@ -23,7 +23,7 @@
     <head>
         <meta http-equiv="content-type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">
-        <title>KP</title>
+        <title>KP Monthly Form</title>
         <meta name="generator" content="Bootply" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
           <link rel="stylesheet" href="css/progress_bar.css">
@@ -121,29 +121,31 @@ tr>td {
                     </button>
 
                 </div>
-                <div class="navbar-collapse collapse">
+                 <div class="navbar-collapse collapse">
+                       
 
-
-
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="dropdown">
-
-                            <ul id="g-account-menu" class="dropdown-menu" role="menu">
-                                <li><a href="#">My Profile</a></li>
-                            </ul>
-                        </li>
-
-
-                        <!--<li><a title="Add Widget" id="adduserbutton" data-toggle="modal" href="#userdetails"><i class="glyphicon glyphicon-user"></i><span id="usernamelabel"> Add Username</span></a></li>-->
-                        <!--<li><a title="Add Widget" data-toggle="modal" style="display:none;" id="exportdataanchor2" href="#addWidgetModal"><i class="glyphicon glyphicon-cloud-upload"></i> Export Data</a></li>-->
-                        <li>
-                            <a  title="Help" data-toggle="modal" href="#help">
-                                <i class="glyphicon glyphicon-question-sign"></i>
-                                Help
-                            </a></li>
-                        <li><a  class=''  href='kp_index.jsp'><i class='glyphicon glyphicon-log-out'></i> Log out</a></li>
+            
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+              
+                    <ul id="g-account-menu" class="dropdown-menu" role="menu">
+                        <li><a href="#">My Profile</a></li>
                     </ul>
-                </div>
+                </li>
+          
+                
+                 <!--<li><a title="Add Widget" id="adduserbutton" data-toggle="modal" href="#userdetails"><i class="glyphicon glyphicon-user"></i><span id="usernamelabel"> Add Username</span></a></li>-->
+                 <!--<li><a title="Add Widget" data-toggle="modal" style="display:none;" id="exportdataanchor2" href="#addWidgetModal"><i class="glyphicon glyphicon-cloud-upload"></i> Export Data</a></li>-->
+                 <li>
+                  <a  title="Help" data-toggle="modal" href="#help">
+                            <i class="glyphicon glyphicon-question-sign"></i>
+                            Help
+                        </a></li>
+                              <li><a style="text-align: center;" href='kp_daily_main.jsp'><i class="glyphicon glyphicon-star"></i> Daily Data Section</a></li>
+                              <li><a style="text-align: center;" href='kp_main.jsp'><i class="glyphicon glyphicon-stats"></i> Monthly Data Section</a></li>
+                              <li><a style="text-align: center;" href='kp_index.jsp'><i class="glyphicon glyphicon-log-out"></i> Logout</a></li>
+            </ul>
+        </div>
 
             </div>
             <!-- /container -->
@@ -172,7 +174,7 @@ tr>td {
                             <!--tabs-->
                             <div class="panel">
                                 <ul class="nav nav-tabs " id="myTab">
-                                    <li class="newdata"><a href="#dataentry" id="newdatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-plus"></i> Daily Form</a></li>
+                                    <!--<li class="newdata"><a href="#dataentry" id="newdatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-plus"></i> Daily Form</a></li>-->
                                     <li ><a href="#monthlyform" id="monthlyformbtn" data-toggle="tab">  <i class="glyphicon glyphicon-download"></i>  Download KP Form</a></li>
                                     <li class="active"><a href="#monthlyformupload" id="monthlyformuploadbtn" data-toggle="tab">  <i class="glyphicon glyphicon-Upload"></i> Upload KP Form</a></li>
                                     <!--<li class="active editdata" style='display:none;' ><a href="#dataentry" id="newdatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-edit"></i> Edit Data</a></li>-->

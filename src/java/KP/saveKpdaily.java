@@ -41,7 +41,7 @@ public class saveKpdaily extends HttpServlet {
           
           
             
- String[] dataelementsarr= {"id","ward","date","dic","indicator","fsw","msm"}; 
+ String[] dataelementsarr= {"id","ward","date","dic","indicator","fsw","msm","ttl"}; 
  String[] orgunitsarr= {"county","`sub-county`"}; 
           
  ArrayList al= new ArrayList();
