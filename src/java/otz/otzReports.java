@@ -341,8 +341,8 @@ ctTable.setRef("A1:M" + (shet.getLastRowNum() + 1)); // adjust reference as need
         if(conn.connect!=null){conn.connect.close();}
         
         
-       XSSFFormulaEvaluator.evaluateAllFormulaCells(wb);
-
+       //XSSFFormulaEvaluator.evaluateAllFormulaCells(wb);
+wb.setForceFormulaRecalculation(true);
         System.out.println("" + "OTZ_Reports_Gen_" + createdOn.trim() + ".xlsx");
 
         ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();

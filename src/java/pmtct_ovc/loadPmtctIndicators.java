@@ -1,0 +1,328 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package pmtct_ovc;
+
+import db.dbConn;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.NoSuchElementException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+/**
+ *
+ * @author EKaunda
+ */
+public class loadPmtctIndicators extends HttpServlet {
+
+    
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException, SQLException {
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+           
+            String dt="";
+            
+            String fc="";
+            String pid="";
+            
+if(request.getParameter("fc")!=null){fc=request.getParameter("fc");}
+if(request.getParameter("dt")!=null){dt=request.getParameter("dt");}
+if(request.getParameter("pid")!=null){dt=request.getParameter("pid");}
+            
+            
+            
+           dbConn conn = new dbConn();
+           if(!fc.equals("")&&!dt.equals(""))
+           {
+           //return tables
+           out.println(getHtmlTable(conn,dt,fc,pid));
+           
+           }
+           else {
+           //return indicators
+           ResultSet r=pullIndicators(conn);
+           
+           out.println(toJson(r));
+          
+           }
+           
+        if(conn.rs!=null){conn.rs.close();}
+        if(conn.rs1!=null){conn.rs1.close();}
+        if(conn.st!=null){conn.st.close();}
+        if(conn.st1!=null){conn.st1.close();}
+        if(conn.connect!=null){conn.connect.close();}
+        }
+    }
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(loadPmtctIndicators.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(loadPmtctIndicators.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+
+public String getHtmlTable(dbConn conn, String reportingdate, String facility, String patientId) throws SQLException{
+String indicators="<thead><tr style='background-color:#9f9999;color:white;'><th>Section/Indicator</th><th>Code</th><th>10-19 M</th><th>10-19 F</th><th>Total</th></tr></thead><tbody>";
+
+    
+
+ JSONObject jo= getData(conn, reportingdate, facility,patientId);
+    
+int count=1;
+ResultSet r=pullIndicators(conn);
+
+while(r.next()){
+   
+//  System.out.println("__"+jo.toString());  
+    
+    String showsection=r.getString("showsection");
+    String section_name=r.getString("section_name");
+    String indic=r.getString("indicator");
+    String id=r.getString("id");
+    String indicator_code=r.getString("code");
+    
+    String bl19m="";
+    String bl19f="";
+    String ttl="";
+    
+    try{ 
+    //if length is greater than 0
+    if(!jo.get("length").toString().equals("0")){
+      
+    if(jo.get(id)!=null)
+    {
+       JSONObject joage=(JSONObject) jo.get(id);
+        
+         bl19m=joage.get("19m").toString();
+         bl19f=joage.get("19f").toString();
+         ttl=joage.get("ttl").toString();
+    }
+        
+    
+    }
+        }
+        catch(NoSuchElementException ex){
+        
+        }
+     
+     String readonly_b19_m="";
+     String readonly_b19_f="";
+     String readonly_ttl=" readonly='true' ";
+     
+    String displaysection="";
+    
+    if(showsection.equals("1"))
+    {
+    displaysection="<tr style='background-color:#4b8df8;'><td ><b>"+section_name+"</b></td><td><b>Code</b></td><td><b>10-19 M</b></td><td><b>10-19 F</b></td><td><b>Total</b></td></tr>";
+    }
+    else {
+    displaysection="";
+    }
+     
+     //Baseline Information	Code	Male 10-19yrs	Female 10-19yrs	Total
+
+     //sumofindicators(sourceindicators,destinationindicator)
+     String inputb19_M="<input "+readonly_b19_m+" value='"+bl19m+"' onkeyup='sumofindicators(\""+id+"_bl19_Male@"+id+"_bl19_Female\",\""+id+"_ttl\");'  onkeypress='return numbers(event); ' placeholder='< 19 Yr M'  type='tel' maxlength='4' min='0' max='9999' name='"+id+"_bl19_Male' id='"+id+"_bl19_Male' class='form-control inputs'>"; 
+     String inputb19_F="<input "+readonly_b19_f+" value='"+bl19f+"' onkeyup='sumofindicators(\""+id+"_bl19_Male@"+id+"_bl19_Female\",\""+id+"_ttl\");' onkeypress='return numbers(event);' placeholder='< 19 Yr F'  type='tel' maxlength='4' min='0' max='9999' name='"+id+"_bl19_Female' id='"+id+"_bl19_Female' class='form-control inputs'>"; 
+     String inputttl="<input "+readonly_ttl+" value='"+ttl+"' tabindex='-1'  onkeypress='return numbers(event);' placeholder='Total'  type='tel' maxlength='4' min='0' max='9999' name='"+id+"_ttl' id='"+id+"_ttl' class='form-control inputs'>"; 
+     
+    
+indicators+=""+displaysection
+        + "<tr>"
+        + "<td style='vertical-align: middle;' rowspan='1'> <span class='badge'>"+count+"  </span><b> "+indic+"</b></td>"
+        + "<td>"+indicator_code+"</td>"
+       
+        + "<td>"+inputb19_M+"</td>"
+        + "<td>"+inputb19_F+"</td>"
+        + "<td>"+inputttl+"</td>"
+        + "</tr>";
+        
+
+count++;
+                     }
+
+
+return indicators+"</tbody>";
+
+}
+
+
+public JSONObject getData( dbConn conn, String reportingdate, String facilitymfl,String patientId) throws SQLException{
+    JSONArray ja= new JSONArray();
+    
+
+
+int hasdata=0;
+
+String getdata=" select * from internal_system.pmtct_ovc_data where linelisting_month='"+reportingdate+"' and patient_id='"+patientId+"'";
+
+conn.rs1=conn.st1.executeQuery(getdata);
+
+   JSONObject lengthobject= new JSONObject();
+JSONObject hm= new JSONObject();
+        while (conn.rs1.next()) 
+        {
+ 
+ JSONObject hm2= new JSONObject();
+hasdata++;
+//we want something like this {"6":{"value":0,"bl15_Female":1,"ab15_Male":2,"ab15_Female":1}}
+hm2.put("value", conn.rs1.getString("value"));
+hm2.put("indicator_id", conn.rs1.getString("indicator_id"));
+hm2.put("patient_id", conn.rs1.getString("patient_id"));
+hm2.put("listing_month", conn.rs1.getString("listing_month"));
+hm2.put("userid", conn.rs1.getString("userid"));
+hm2.put("last_updated", conn.rs1.getString("last_updated"));
+hm2.put("timestamp", conn.rs1.getString("timestamp"));
+hm2.put("facility_id", conn.rs1.getString("facility_id"));
+hm.put(conn.rs1.getString("indicator_id"), hm2);
+//ja.put(hm);
+      }
+        hm.put("length", hasdata);
+        //lengthobject.put("length", hasdata);
+        
+ja.put(lengthobject);
+return hm;
+}
+
+
+
+
+
+
+
+public ResultSet pullIndicators(dbConn conn) throws SQLException 
+{
+
+String qry="select * from internal_system.pmtct_ovc_indicators where is_active='1' order by order_no asc";
+
+
+conn.rs=conn.st.executeQuery(qry);
+
+
+return conn.rs;
+
+}
+
+
+public JSONArray toJson(ResultSet res) 
+        throws SQLException
+{
+
+    
+    
+JSONArray jo2 = new JSONArray();
+int count=0;
+
+while(res.next())
+{
+    
+JSONObject jo = new JSONObject(); 
+String  indicator_id="";
+String  Form="";
+String  section="";
+String  label="";
+String  guide="";
+String  id="";
+String  js_class="";
+String  field_type="";
+String  readonly="";
+String  required="";
+String  is_hidden="";
+String  options="";
+String  condition="";
+String  onchange="";
+
+indicator_id=res.getString("indicator_id");
+Form=res.getString("Form");
+section=res.getString("section");
+label=res.getString("label");
+guide=res.getString("guide");
+id=res.getString("id");
+js_class=res.getString("js_class");
+field_type=res.getString("field_type");
+readonly=res.getString("readonly");
+required=res.getString("required");
+is_hidden=res.getString("is_hidden");
+options=res.getString("options");
+condition=res.getString("condition");
+onchange=res.getString("onchange");
+
+jo.put("indicator_id",indicator_id);
+jo.put("Form",Form);
+jo.put("section",section);
+jo.put("label",label);
+jo.put("guide",guide);
+jo.put("id",id);
+jo.put("js_class",js_class);
+jo.put("field_type",field_type);
+jo.put("readonly",readonly);
+jo.put("required",required);
+jo.put("is_hidden",is_hidden);
+jo.put("options",options);
+jo.put("condition",condition);
+jo.put("onchange",onchange);
+
+jo2.put(jo);
+    
+count++;
+    
+}
+    
+return jo2;    
+}
+
+
+}

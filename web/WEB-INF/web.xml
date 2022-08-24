@@ -504,6 +504,14 @@
         <servlet-name>retentiontracker</servlet-name>
         <servlet-class>retention.retentiontracker</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>pmtct_ovc_login</servlet-name>
+        <servlet-class>pmtct_ovc.pmtct_ovc_login</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>loadPmtctIndicators</servlet-name>
+        <servlet-class>pmtct_ovc.loadPmtctIndicators</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loadcohort</servlet-name>
         <url-pattern>/loadcohort</url-pattern>
@@ -1007,6 +1015,14 @@
     <servlet-mapping>
         <servlet-name>retentiontracker</servlet-name>
         <url-pattern>/retentiontracker</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>pmtct_ovc_login</servlet-name>
+        <url-pattern>/pmtct_ovc_login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>loadPmtctIndicators</servlet-name>
+        <url-pattern>/loadPmtctIndicators</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
