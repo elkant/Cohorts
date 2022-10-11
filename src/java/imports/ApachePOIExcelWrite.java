@@ -54,7 +54,7 @@ public class ApachePOIExcelWrite {
         try {
             FileOutputStream outputStream = new FileOutputStream(FILE_NAME);
             workbook.write(outputStream);
-            workbook.close();
+            //workbook.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

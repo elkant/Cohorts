@@ -4,6 +4,7 @@
     Author     : Emmanuel E
 --%>
 
+<%@page import="upi.getUpiReportingDates"%>
 <%@page import="General.IdGenerator2"%>
 <%@page import="hfr.getIndicators"%>
 <%@page import="java.util.logging.Logger"%>
@@ -18,18 +19,19 @@
 
 <!DOCTYPE html>
 
+<!--<html  manifest="cohortsv1.appcache">-->
 <html>
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
-		<title>PMTCT | OVC </title>
+		<title>UPI</title>
 		<meta name="generator" content="Bootply" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
                 <link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
 		<link href="css/bootstrap.css" rel="stylesheet">
                 <link href="css/bootstrap-datepicker.min.css" rel="stylesheet">
                 <link rel="stylesheet" href="css/select2.min.css">
-                <link rel="shortcut icon" href="images/pmtct_ovc.png">
+                <link rel="shortcut icon" href="images/upi.png">
                 <!--<link data-jsfiddle="common" rel="stylesheet" media="screen" href="css/handsontable.css">-->
 <!--  <link data-jsfiddle="common" rel="stylesheet" media="screen" href="dist/pikaday/pikaday.css">-->
                   
@@ -103,7 +105,7 @@ input:focus {
                             <i class="glyphicon glyphicon-question-sign"></i>
                             Help
                         </a></li>
-                              <li><a style="text-align: center;" href='otz_index.jsp'><i class="glyphicon glyphicon-log-out"></i> Logout</a></li>
+                              <li><a style="text-align: center;" href='upi_index.jsp'><i class="glyphicon glyphicon-log-out"></i> Logout</a></li>
             </ul>
         </div>
         
@@ -128,10 +130,11 @@ input:focus {
         <!-- /col-3 -->
         <div class="col-sm-12">
 
-            
+             <a class='btn-warning btn' target="_blank" href="nupi_summary.txt" style="margin-left:40%;">Access Nupi Summary Query</a> 
             
           
-          <h5 class="btn btn-default col-md-12" style="text-align: center;color:blue;"><b>PMTCT OVC Linelists</b></h5>
+          <h5 class="btn btn-default col-md-12" style="text-align: center;color:blue;"><b>UPI Weekly Reporting Module</b></h5>
+        
 
             <div class="row">
                 <!-- center left-->
@@ -175,17 +178,14 @@ input:focus {
                     <!--tabs-->
                     <div class="panel">
                         <ul class="nav nav-tabs " id="myTab">
-                            <li class="active newdata"> <a href="#addmother" id="newmotherdatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-plus"> </i> <font color='green'><b>Add </b></font> Mother(s)</a></li>
-                            <li class=" editdata"  >    <a href="#addbaby" id="newbabydatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-baby-formula"></i> <font color='green'><b>Add </b></font> Baby</a></li>
-                           
-                            <li class="newdata"> <a href="#editmother" id="editmotherdatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-edit"> </i> <font color='green'><b>Edit</b></font> Mothers</a></li>
-                            <li class=" editdata"  >    <a href="#editbaby" id="editbabydatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-edit"></i> <font color='green'><b>Edit</b></font>Baby</a></li>
-                            <li><a href="#reports" style="" id="reportsbutton" data-toggle="tab"> <i class="glyphicon glyphicon-stats"></i>Reports</a></li> 
+                            <li class="active newdata"><a href="#dataentry" id="newdatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-plus"></i>New Data</a></li>
+                            <!--<li class="active editdata" style='display:none;' ><a href="#dataentry" id="newdatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-edit"></i> Edit Data</a></li>-->
+                           <li><a href="#reports" style="" id="reportsbutton" data-toggle="tab"> <i class="glyphicon glyphicon-stats"></i>Reports</a></li> 
                             <!--<li><a href="#searchdata" data-toggle="tab"> <i class="glyphicon glyphicon-search"></i> Edit Data</a></li>--> 
                            <!-- <li><a href="#export" data-toggle="tab"> <i class="glyphicon glyphicon-cloud-upload"></i> Data Export</a></li>-->
                         </ul>
                         <div class="tab-content">
-                            <div class="tab-pane active well col-md-12" id="addmother">
+                            <div class="tab-pane active well col-md-12" id="dataentry">
                                 
                                 
                               <!--Data entry code-->
@@ -214,7 +214,7 @@ input:focus {
                                                                 <div class="control-group">
 
                                                                     <div class="controls">
-                                                                        <label><required-option></required-option>Linelisting  Month</label> 
+                                                                        <label><required-option></required-option>Reporting Period</label> 
 
                                                                     </div>
                                                                 </div>
@@ -240,7 +240,20 @@ input:focus {
 
                                                                     <div class="controls">
                                                                         <select required="true"   onchange="getFacilitiesJson();isdisplayindicators();"   name="period" id="period" class="form-control" >
-                                                                                                                   
+                                                                             <%
+                                               getUpiReportingDates gd = new getUpiReportingDates();
+                                               dbConn conn = new dbConn();
+
+                                               try {
+                                                   JSONArray ja = gd.getRepDates(conn, "2022-08-23");
+
+                                                   out.println(gd.toHtmlDates(ja));
+
+                                               } catch (SQLException ex) {
+                                                   Logger.getLogger(getReportingDates.class.getName()).log(Level.SEVERE, null, ex);
+                                               }
+
+                                           %>                                       
                                                                         </select>
                                                                     </div>
                                                                 </div>
@@ -263,13 +276,18 @@ input:focus {
 
 
                                                     </table>
-                                
-                                <!--<form id="addmothersform">-->
-                                
-                                         <table class='table table-striped table-bordered' id="dynamicindicators" style="display:none;border :3px solid #4b8df8;padding:1px;" > 
+                                         <table class='table table-striped table-bordered' id="dynamicindicators" style="display:none;border :3px solid #4b8df8;" > 
                                    
                                 <!------INDICATORS----->
-                                                               
+                                 <tr ><td class='col-xs-12' colspan='3'>
+                                 <div class='control-group'>
+                                     
+                                    
+                                    
+                                    
+                                    
+                                  </div></td>
+                                 </tr>                                 
                                  
                                   
                                      </table>
@@ -303,35 +321,8 @@ input:focus {
                               <!--Data entry code-->
                             
                             </div>
-                            
-                            <div class="tab-pane well" id="addbaby">
-                                
-                                
-                               <!--- Heis---->
-                               
-                               <table class='table table-striped table-bordered' id="dynamicindicatorshei" style="display:none;border :3px solid #4b8df8;padding:1px;" > 
-                                   
-                                <!------INDICATORS----->
-                                                               
-                                 
-                                  
-                                     </table>
-                               
-                            </div>
-                            
-                             <div class="tab-pane well" id="editmother">
-                                
-                                
-                               <!--- Data export---->
-                            </div>
-      <div class="tab-pane well" id="editbaby">
-                                
-                                
-                               <!--- Data export---->
-                            </div>
-                            
-<div class="tab-pane well" id="reports">
-<form action="otzReports" id="reportingForm">
+                                                       <div class="tab-pane well" id="reports">
+<form action="upiReports" id="reportingForm">
 
                                         <!--Dashboard code-->
 
@@ -364,7 +355,7 @@ input:focus {
 
                                                     <div class="controls">
                                                         <select class="form-control input-sm" onchange="checkFormAction();"   name='report' id='report' >
-                                                            <option value='otzReports'>1.Tracker and Data Summary</option>
+                                                            <option value='upiReports'>1.Tracker and Data Summary</option>
                                                            
                                                             <!--<option value='hts_self_reports'>6.HTS Self</option>-->
 
@@ -602,7 +593,7 @@ input:focus {
                 <script src="js/select2.min.js"></script>
                  <script src="js/pouchdb-4.0.1.js"></script>
                  <script type="text/javascript" src="js/datatables.min.js"></script>
-                 <script type="text/javascript" src="pmtct_ovc/validation.js"></script>
+                 <script type="text/javascript" src="upi/validation.js"></script>
   
 <!--  <script data-jsfiddle="common" src="dist/pikaday/pikaday.js"></script>
   <script data-jsfiddle="common" src="dist/moment/moment.js"></script>
@@ -640,7 +631,7 @@ input:focus {
        
        
               $.ajax({
-                    url:'loadActiveSites',                            
+                    url:'loadEmrSites',                            
                     type:'post',  
                     dataType: 'html',  
                     success: function(data)
@@ -807,17 +798,17 @@ function save_data(){
 //___indicators to pull___
 
 var id="";
-var yearmonth="";
+var dater="";
 var facility="";
 var indicatorid="";
-var _19m="";
-var _19f="";
+var bl15="";
+var ab15="";
 var ttl="";
 var userid="";
 
 facility=$("#facility").val();
 
-yearmonth=$("#period").val();
+dater=$("#period").val();
 
 
 
@@ -834,7 +825,7 @@ if(facility==='' || facility==='Select facility' ){
 }
 
 
-else if(yearmonth===''  ){
+else if(dater===''  ){
     
    alert("Select Reporting Month");  
     
@@ -853,7 +844,7 @@ else if(yearmonth===''  ){
 
 
 $.ajax({
-                    url:'getOtzIndicators',                            
+                    url:'getUpiIndicators',                            
                     type:'post',  
                     dataType: 'json',  
                     success: function(data){
@@ -862,10 +853,10 @@ $.ajax({
               var isend=false;             
                           
 var indicatorid=data[a].id;
-var bl19_Male=$("#"+indicatorid+"_bl19_Male").val();
-var bl19_Female=$("#"+indicatorid+"_bl19_Female").val();
+var bl15v=$("#"+indicatorid+"_bl15").val();
+var ab15v=$("#"+indicatorid+"_ab15").val();
 var ttl=$("#"+indicatorid+"_ttl").val();
-var identifier=facility+"_"+yearmonth+"_"+indicatorid;
+var identifier=facility+"_"+dater+"_"+indicatorid;
         
         
       
@@ -875,11 +866,11 @@ var identifier=facility+"_"+yearmonth+"_"+indicatorid;
            
            var saveddata={
                id:identifier,              
-               yearmonth:yearmonth,
+               date:dater,
                facility:""+facility,
                indicatorid:indicatorid,
-               _19m:bl19_Male,
-               _19f:bl19_Female,
+              bl15:bl15v,
+               ab15:ab15v,
                ttl:ttl,
                userid:'909090'
                
@@ -916,7 +907,7 @@ function exportData( data, isend){
     
     
     $.ajax({
-                    url:'saveotz',                            
+                    url:'saveupi',                            
                     type:'post',  
                     dataType: 'html',
                     data:data ,
@@ -988,25 +979,6 @@ for(b=0;b<allindicatorsarray.length;b++){
     
 }
 
-function clearcmtsandprcent(){
-    
-       //clear progress bar hidden fields too
-   
-  for(b=0;b<allprogressbar_hiddentext_array.length;b++){
-    
-  $("#"+allprogressbar_hiddentext_array[b]).val("");  
-    
-} 
-       
-       //comnts
- 
-     for(b=0;b<allcommentsarray.length;b++){
-    
-  $("#"+allcommentsarray[b]).val("");  
-    
-                                            }//end of for loop 
-    
-}
 
 var dbdata="";
 
@@ -1288,7 +1260,7 @@ function getPeriod(){
    }
    
 
-getPeriod();
+//getPeriod();
 
 
 
@@ -1306,22 +1278,16 @@ function isdisplayindicators()
     // display facility name
     $("#dynamicindicators").show();    
      
-            var motherwhere="Form='mother'";
-            var babywhere="Form='baby'";
+            
             //now load the data
           $.ajax({
-                    url:'loadPmtctIndicators?dt='+dt+"&fc="+fc+"&wr="+motherwhere,                            
+                    url:'getUpiIndicators?dt='+dt+"&fc="+fc,                            
                     type:'post',  
                     dataType: 'html',  
                     success: function(data) 
                     {
                         
                    $("#dynamicindicators").html(data); 
-                         $('.dates').datepicker({
-                             todayHighlight: true, daysOfWeekDisabled: "0,6",clearBtn: true, autoclose: true,format: "yyyy-mm-dd",
-     });
-     
-     setuuid('id');
                         
                         
                     }});    
@@ -1365,42 +1331,6 @@ $('#dataentry').on('keydown', 'input, select, textarea', function(e) {
 
 
 
-
-function ShowAge(dob,dest) 
-{
-    
-    var sikuyakuzaliwa=$("#"+dob).val(); 
-    
-    console.log("called at Age"+ sikuyakuzaliwa);
-    if(sikuyakuzaliwa!=='')
-    {
-    var today = new Date();
-    var birthDate = new Date(sikuyakuzaliwa);
-    var age = today.getFullYear() - birthDate.getFullYear();
-    var m = today.getMonth() - birthDate.getMonth();
-    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) 
-    {
-        age--;
-    }
-    
-    $("#"+dest).val(age);
-    
-        
-    
-    return age;
-}
-}
-
-function uuidv4() {
-  return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
-    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
-  );
-}
-
-function setuuid(id){
-    
-    $("#"+id).val(uuidv4());
-}
               </script>
 
 	</body>

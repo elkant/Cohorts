@@ -11,6 +11,7 @@ import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.NoSuchElementException;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -37,10 +38,12 @@ public class loadPmtctIndicators extends HttpServlet {
             
             String fc="";
             String pid="";
+            String wr="";
             
 if(request.getParameter("fc")!=null){fc=request.getParameter("fc");}
 if(request.getParameter("dt")!=null){dt=request.getParameter("dt");}
 if(request.getParameter("pid")!=null){dt=request.getParameter("pid");}
+if(request.getParameter("wr")!=null){wr=request.getParameter("wr");}
             
             
             
@@ -48,12 +51,12 @@ if(request.getParameter("pid")!=null){dt=request.getParameter("pid");}
            if(!fc.equals("")&&!dt.equals(""))
            {
            //return tables
-           out.println(getHtmlTable(conn,dt,fc,pid));
+           out.println(getHtmlTable(conn,dt,fc,pid,wr));
            
            }
            else {
            //return indicators
-           ResultSet r=pullIndicators(conn);
+           ResultSet r=pullIndicators(conn,wr);
            
            out.println(toJson(r));
           
@@ -114,88 +117,108 @@ if(request.getParameter("pid")!=null){dt=request.getParameter("pid");}
         return "Short description";
     }// </editor-fold>
 
-public String getHtmlTable(dbConn conn, String reportingdate, String facility, String patientId) throws SQLException{
-String indicators="<thead><tr style='background-color:#9f9999;color:white;'><th>Section/Indicator</th><th>Code</th><th>10-19 M</th><th>10-19 F</th><th>Total</th></tr></thead><tbody>";
+public String getHtmlTable(dbConn conn, String reportingdate, String facility, String patientId, String where) throws SQLException{
+//String indicators="<thead><tr style='background-color:#9f9999;color:white;'><th>Section/Indicator</th><th>Code</th><th>10-19 M</th><th>10-19 F</th><th>Total</th></tr></thead><tbody>";
+String indicators="<tbody><tr><td>";
 
-    
-
- JSONObject jo= getData(conn, reportingdate, facility,patientId);
+JSONObject jo=getData(conn, reportingdate, facility,patientId);
     
 int count=1;
-ResultSet r=pullIndicators(conn);
+ResultSet r=pullIndicators(conn,where);
 
 while(r.next()){
+ 
+    String showsection=r.getString("show_section");
+    String section_name=r.getString("section");
+    String indic=r.getString("label");
+    String id=r.getString("indicator_id");
+    String date=r.getString("indicator_id");
+   // String indicator_code=r.getString("code");
+    
    
-//  System.out.println("__"+jo.toString());  
-    
-    String showsection=r.getString("showsection");
-    String section_name=r.getString("section_name");
-    String indic=r.getString("indicator");
-    String id=r.getString("id");
-    String indicator_code=r.getString("code");
-    
-    String bl19m="";
-    String bl19f="";
-    String ttl="";
+   //_____________________________________
+   
+String indicator_id=r.getString("indicator_id");
+String Form=r.getString("Form");
+String section=r.getString("section");
+String label=r.getString("label");
+String guide=r.getString("guide");
+String element_id=r.getString("element_id");
+String js_class=r.getString("js_class");
+String field_type=r.getString("field_type");
+String is_future_date=r.getString("is_future_date");
+String readonly=r.getString("readonly");
+String required=r.getString("required");
+String is_hidden=r.getString("is_hidden");
+String options=r.getString("options");
+String condition=r.getString("condition");
+String onchange=r.getString("onchange");
+String timestamp=r.getString("timestamp");
+String is_active=r.getString("is_active");
+String order_no=r.getString("order_no");
+String show_section=r.getString("show_section");
+  
+   //_____________________________________
+   
+   
+    String val="";
     
     try{ 
     //if length is greater than 0
-    if(!jo.get("length").toString().equals("0")){
+    if(!jo.get("length").toString().equals("0"))
+    {
       
     if(jo.get(id)!=null)
     {
-       JSONObject joage=(JSONObject) jo.get(id);
+         
+        JSONObject joage=(JSONObject) jo.get(id);
         
-         bl19m=joage.get("19m").toString();
-         bl19f=joage.get("19f").toString();
-         ttl=joage.get("ttl").toString();
-    }
-        
-    
-    }
-        }
-        catch(NoSuchElementException ex){
-        
-        }
-     
-     String readonly_b19_m="";
-     String readonly_b19_f="";
-     String readonly_ttl=" readonly='true' ";
-     
-    String displaysection="";
-    
-    if(showsection.equals("1"))
-    {
-    displaysection="<tr style='background-color:#4b8df8;'><td ><b>"+section_name+"</b></td><td><b>Code</b></td><td><b>10-19 M</b></td><td><b>10-19 F</b></td><td><b>Total</b></td></tr>";
-    }
-    else {
-    displaysection="";
-    }
-     
-     //Baseline Information	Code	Male 10-19yrs	Female 10-19yrs	Total
-
-     //sumofindicators(sourceindicators,destinationindicator)
-     String inputb19_M="<input "+readonly_b19_m+" value='"+bl19m+"' onkeyup='sumofindicators(\""+id+"_bl19_Male@"+id+"_bl19_Female\",\""+id+"_ttl\");'  onkeypress='return numbers(event); ' placeholder='< 19 Yr M'  type='tel' maxlength='4' min='0' max='9999' name='"+id+"_bl19_Male' id='"+id+"_bl19_Male' class='form-control inputs'>"; 
-     String inputb19_F="<input "+readonly_b19_f+" value='"+bl19f+"' onkeyup='sumofindicators(\""+id+"_bl19_Male@"+id+"_bl19_Female\",\""+id+"_ttl\");' onkeypress='return numbers(event);' placeholder='< 19 Yr F'  type='tel' maxlength='4' min='0' max='9999' name='"+id+"_bl19_Female' id='"+id+"_bl19_Female' class='form-control inputs'>"; 
-     String inputttl="<input "+readonly_ttl+" value='"+ttl+"' tabindex='-1'  onkeypress='return numbers(event);' placeholder='Total'  type='tel' maxlength='4' min='0' max='9999' name='"+id+"_ttl' id='"+id+"_ttl' class='form-control inputs'>"; 
-     
-    
-indicators+=""+displaysection
-        + "<tr>"
-        + "<td style='vertical-align: middle;' rowspan='1'> <span class='badge'>"+count+"  </span><b> "+indic+"</b></td>"
-        + "<td>"+indicator_code+"</td>"
+         val=joage.get("value").toString();
        
-        + "<td>"+inputb19_M+"</td>"
-        + "<td>"+inputb19_F+"</td>"
-        + "<td>"+inputttl+"</td>"
-        + "</tr>";
+    }
+        
+    
+    }
+        }
+        catch(NoSuchElementException ex)
+        {
+        
+        }
+     
+    
+ 
+     
+    
+   
+  if(field_type.equals("input"))
+  {
+  indicators+=""+buildInputField(field_type, is_future_date, element_id, val, label, readonly, label, is_hidden, required, js_class, guide, condition, show_section, section, onchange, options);
+  }
+  else if(field_type.equals("date"))
+  {
+  indicators+=""+buildInputField(field_type, is_future_date, element_id, val, label, readonly, label, is_hidden, required, js_class, guide, condition, show_section, section, onchange, options);
+  }
+  else if(field_type.equals("select"))
+  {
+  indicators+=""+buildSelectField(field_type, is_future_date, element_id, val, label, readonly, label, is_hidden, required, js_class, guide, condition, show_section, section, onchange, options);
+  }
+  else if(field_type.equals("text_area"))
+  {
+  indicators+=""+buildTextField(field_type, is_future_date, element_id, val, label, readonly, label, is_hidden, required, js_class, guide, condition, show_section, section, onchange, options);
+  }
+   else 
+  {
+  indicators+="<div style='color:red;'>Element id "+element_id+" is not well defined</div>";
+  }
+    
+
         
 
 count++;
-                     }
+        }
 
 
-return indicators+"</tbody>";
+return indicators+"</td></tr></tbody>";
 
 }
 
@@ -243,12 +266,35 @@ return hm;
 
 
 
-public ResultSet pullIndicators(dbConn conn) throws SQLException 
+public ResultSet pullIndicators(dbConn conn, String where) throws SQLException 
 {
 
-String qry="select * from internal_system.pmtct_ovc_indicators where is_active='1' order by order_no asc";
+    if(where.equals("")){where="1=1";}
+    
+String qry="select "
+        + ""
+        + "ifnull(indicator_id,'') as indicator_id, \n" +
+"ifnull(Form,'') as Form, \n" +
+"ifnull(section,'') as section, \n" +
+"ifnull(label,'') as label,\n" +
+" ifnull(guide,'') as guide,\n" +
+" ifnull(element_id,'') as element_id, \n" +
+" ifnull(js_class,'') as js_class, \n" +
+" ifnull(field_type,'') as field_type, \n" +
+" ifnull(is_future_date,'') as is_future_date, \n" +
+" ifnull(readonly,'') as readonly, \n" +
+" ifnull(required,'') as required, \n" +
+" ifnull(is_hidden,'') as is_hidden,\n" +
+" ifnull(`options`,'') as `options`,\n" +
+" ifnull(`condition`,'') as `condition`, \n" +
+" ifnull(onchange,'') as onchange, \n" +
+" ifnull(`timestamp`,'') as `timestamp`, \n" +
+" ifnull(is_active,'') as is_active, \n" +
+" ifnull(order_no,'') as order_no, \n" +
+" ifnull(show_section,'') as show_section"
+        + " from internal_system.pmtct_ovc_indicators where is_active='1' and "+where+" ";
 
-
+    System.out.println(""+qry);
 conn.rs=conn.st.executeQuery(qry);
 
 
@@ -284,6 +330,7 @@ String  is_hidden="";
 String  options="";
 String  condition="";
 String  onchange="";
+String  show_section="";
 
 indicator_id=res.getString("indicator_id");
 Form=res.getString("Form");
@@ -299,6 +346,7 @@ is_hidden=res.getString("is_hidden");
 options=res.getString("options");
 condition=res.getString("condition");
 onchange=res.getString("onchange");
+show_section=res.getString("show_section");
 
 jo.put("indicator_id",indicator_id);
 jo.put("Form",Form);
@@ -314,6 +362,7 @@ jo.put("is_hidden",is_hidden);
 jo.put("options",options);
 jo.put("condition",condition);
 jo.put("onchange",onchange);
+jo.put("show_section",show_section);
 
 jo2.put(jo);
     
@@ -324,5 +373,219 @@ count++;
 return jo2;    
 }
 
+
+public String buildInputField(String field_type, String is_future_date, String id, String Value, String label, String readonly, String placeholder, String is_hidden, String required,String js_class, String guide, String condition, String show_section,String section,String onchange,String opts){
+String finalelement="";
+//___Required attribute
+String req_asterick="";
+String req_elem="";
+if(required.equals("Yes")){
+req_asterick="<font color='red'>*</font>";
+req_elem="required";
+}
+
+
+//___Read only___
+String readonly_elem="";
+if(readonly.equals("yes")){
+readonly_elem="readonly='true'";
+}
+
+//___date element
+
+String isdate="";
+String isdateclass="";
+if(field_type.equals("date")){
+isdate="dates";
+
+}
+
+if(is_future_date.equals("0")&& field_type.equals("date")){
+isdateclass="data-date-end-date='0d'";
+}
+//___future date element
+
+String showstatus="";
+if(is_hidden.equals("yes")){showstatus="display:none;";}
+
+
+String section_n="";
+if(show_section.equals("1")){section_n="<br/><div class='form-group col-md-12' style='background-color:#4b8df8;text-align:center;padding-top:2px;padding-bottom:2px;'><b>"+section+"</b></div><br/>";}else{section_n="";}
+
+
+finalelement=""+section_n
+        + "<div class='form-group col-md-3 "+js_class+"' style="+showstatus+">" +
+"<label>" +
+req_asterick+"<b>"+label+"</b>\n" +
+"</label>\n" +
+"<input "+req_elem+" "+readonly_elem+" value='"+Value+"' onchange='"+onchange+"' placeholder='"+guide+"'   autocomplete='off' "+isdateclass+"  class='form-control "+isdate+" "+js_class+"' type='text' name='"+id+"' id='"+id+"' />" +
+"</div>"
+        + ""
+        + "";
+
+
+
+return finalelement;
+
+
+}
+
+public String buildTextField(String field_type, String is_future_date, String id, String Value, String label, String readonly, String placeholder, String is_hidden, String required,String js_class, String guide, String condition, String show_section,String section,String onchange,String opts){
+String finalelement="";
+//___Required attribute
+String req_asterick="";
+String req_elem="";
+if(required.equals("Yes")){
+req_asterick="<font color='red'>*</font>";
+req_elem="required";
+}
+
+
+//___Read only___
+String readonly_elem="";
+if(readonly.equals("Yes")){
+readonly_elem="readonly='true'";
+}
+
+//___date element
+
+String isdate="";
+String isdateclass="";
+if(field_type.equals("date")){
+isdate="dates";
+
+}
+
+if(is_future_date.equals("0")&& field_type.equals("date")){
+isdateclass="data-date-end-date='0d'";
+}
+//___future date element
+
+String showstatus="";
+if(is_hidden.equals("yes")){showstatus="display:none;";}
+
+
+String section_n="";
+if(show_section.equals("1")){section_n="<br/><div class='form-group col-md-12' style='background-color:#4b8df8;text-align:center;padding-top:2px;padding-bottom:2px;'><b>"+section+"</b></div><br/>";}else{section_n="";}
+
+
+finalelement=""+section_n
+        + "<div class='form-group col-md-3 "+js_class+"' style="+showstatus+">" +
+"<label>" +
+req_asterick+"<b>"+label+"</b>\n" +
+"</label>\n" +
+"<textarea "+req_elem+" "+readonly_elem+" value='"+Value+"' placeholder='"+guide+"' onchange='"+onchange+"' rows='1' cols='50'   autocomplete='off' "+isdateclass+"  class='form-control "+js_class+"'  name='"+id+"' id='"+id+"' ></textarea>" +
+"</div>"
+        + ""
+        + "";
+
+
+
+return finalelement;
+
+
+}
+
+
+public String buildSelectField(String field_type, String is_future_date, String id, String Value, String label, String readonly, String placeholder, String is_hidden, String required,String js_class, String guide, String condition, String show_section,String section,String onchange,String opts){
+String finalelement="";
+//___Required attribute
+String req_asterick="";
+String req_elem="";
+if(required.equals("Yes")){
+req_asterick="<font color='red'>*</font>";
+req_elem="required";
+}
+
+
+//___Read only___
+String readonly_elem="";
+if(readonly.equals("Yes")){
+readonly_elem="readonly='true'";
+}
+
+//___date element
+
+String isdate="";
+String isdateclass="";
+if(field_type.equals("date")){
+isdate="dates";
+
+}
+
+if(is_future_date.equals("0")&& field_type.equals("date")){
+isdateclass="data-date-end-date='0d'";
+}
+//___future date element
+
+String showstatus="";
+if(is_hidden.equals("yes")){showstatus="display:none;";}
+
+
+String section_n="";
+if(show_section.equals("1")){section_n="<br/><div class='form-group col-md-12' style='background-color:#4b8df8;text-align:center;padding-top:2px;padding-bottom:2px;'><b>"+section+"</b></div><br/>";}else{section_n="";}
+
+//String conditionfun="";
+//String changefunction="";
+//if(condition!=null){
+//conditionfun="isShowOnlyIf(\'"+condition+"\');";
+//}
+//if(onchange!=null){
+//changefunction="isToggleDisplay(\'"+onchange+"\');";
+//}
+
+finalelement=""+section_n
+        + "<div class='form-group col-md-3 "+js_class+"' style="+showstatus+">" +
+"<label>" +
+req_asterick+"<b>"+label+"</b>\n" +
+"</label>\n" +
+"<select "+req_elem+" "+readonly_elem+"  onchange='"+onchange+"'       class='form-control "+js_class+"' type='text' name='"+id+"' id='"+id+"' >"
+        +buildopts(opts, Value)
+        +"</select>" +
+"</div>"
+        + ""
+        + "";
+
+
+
+return finalelement;
+
+
+}
+
+public  String buildopts(String opts, String value){
+
+String finalopts="<option value=''>select option</option>";
+//Yes|Yes:No|No
+//System.out.println(""+opts);
+
+String valkey[]=opts.split(":");
+for(int s=0;s<valkey.length;s++){
+
+  String valkey_in[]=valkey[s].split("\\|");  
+   
+  
+   String selected="";
+  if(value.equals(valkey_in[0])){selected="selected";}
+   
+ finalopts+="<option "+selected+" value='"+valkey_in[0]+"'>"+valkey_in[1]+"</option>";
+    //System.out.println("valkey_in 1"+valkey_in[0]);
+    //System.out.println("valkey_in 2"+valkey_in[1]);
+
+}
+
+
+
+return finalopts;
+    
+    
+}
+    
+public int getRandNo(int start, int end ){
+        Random random = new Random();
+        long fraction = (long) ((end - start + 1 ) * random.nextDouble());
+        return ((int)(fraction + start));
+    }
+      
 
 }

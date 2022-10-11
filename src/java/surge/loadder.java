@@ -55,7 +55,7 @@ public class loadder extends HttpServlet {
             String orodha_string="";
             
             
-            String getdeliveries="SELECT * FROM der_rri.delivery_point where active=1 limit 1" ;
+            String getdeliveries="SELECT * FROM der_rri.delivery_point where active=1 " ;
             
             dbConn conn = new dbConn();
             conn.rs=conn.st.executeQuery(getdeliveries);

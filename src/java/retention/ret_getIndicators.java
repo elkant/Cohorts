@@ -160,6 +160,21 @@ ResultSet r=pullIndicators(conn);
 
 while(r.next()){
    
+    String showsection=r.getString("show_section");
+    
+    String section_name=r.getString("section");
+    
+    String displaysection="";
+    
+    if(showsection.equals("1"))
+    {
+    displaysection="<tr style='background-color:#4b8df8;'><td ><b>"+section_name+"</b></td><td><b>0-9 M</b></td><td><b>0-9 F</b></td><td><b>10-14 M</b></td><td><b>10-14 F</b></td><td><b>15-19 M</b></td><td><b>15-19 F</b></td><td><b>20-24 M</b></td><td><b>20-24 F</b></td><td><b>25+ M</b></td><td><b>25+ F</b></td><td><b>Total</b></td></tr>";
+    }
+    else {
+    displaysection="";
+    }
+    
+    
 //  System.out.println("__"+jo.toString());  
     String indic=r.getString("indicatorname");
     String id=r.getString("id");
@@ -225,7 +240,8 @@ while(r.next()){
                        + "<td><input "+readonly_value+" value='"+_ttl+"' tabindex='-1'  readonly='true' placeholder='Total '  type='tel' maxlength='4' min='0' max='9999' name='"+id+"_ttl' id='"+id+"_ttl' class='form-control inputs'></td>"; 
    
     //0-9	10-14	15-19	20-24	25+
-indicators+="<tr>"
+indicators+=""+displaysection
+        + "<tr>"
         + "<td style='vertical-align: middle;' rowspan='1'> <span class='badge'>"+count+"  </span><b> "+indic+"</b></td>"
         
         + ""+inputtotal+""
@@ -319,16 +335,23 @@ String indicator_code="";
 String active="";
 String indicatorname="";
 String orodha="";
+String show_section="";
+String section_name="";
 
     id =res.getString("id");
     indicator_code =res.getString("indicator_code");
     indicatorname =res.getString("indicatorname");
     orodha =res.getString("orodha");
+    show_section =res.getString("show_section");
+    section_name =res.getString("section");
 
     jo.put("id",id);
     jo.put("indicator_code",indicator_code);
     jo.put("indicatorname",indicatorname);
     jo.put("orodha",orodha);
+    jo.put("show_section",show_section);
+    jo.put("show_section",show_section);
+    jo.put("section_name",section_name);
     jo2.put(jo);
     
     count++;

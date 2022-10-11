@@ -512,6 +512,38 @@
         <servlet-name>loadPmtctIndicators</servlet-name>
         <servlet-class>pmtct_ovc.loadPmtctIndicators</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>getUpiIndicators</servlet-name>
+        <servlet-class>upi.getUpiIndicators</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>saveupi</servlet-name>
+        <servlet-class>upi.saveupi</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>upi_login</servlet-name>
+        <servlet-class>upi.upi_login</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>getUpiReportingDates</servlet-name>
+        <servlet-class>upi.getUpiReportingDates</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>loadEmrSites</servlet-name>
+        <servlet-class>upi.loadEmrSites</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>loadUpiValidation</servlet-name>
+        <servlet-class>upi.loadUpiValidation</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>upiReports</servlet-name>
+        <servlet-class>upi.upiReports</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>importderv91</servlet-name>
+        <servlet-class>imports.importderv91</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loadcohort</servlet-name>
         <url-pattern>/loadcohort</url-pattern>
@@ -1023,6 +1055,38 @@
     <servlet-mapping>
         <servlet-name>loadPmtctIndicators</servlet-name>
         <url-pattern>/loadPmtctIndicators</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getUpiIndicators</servlet-name>
+        <url-pattern>/getUpiIndicators</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>saveupi</servlet-name>
+        <url-pattern>/saveupi</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>upi_login</servlet-name>
+        <url-pattern>/upi_login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getUpiReportingDates</servlet-name>
+        <url-pattern>/getUpiReportingDates</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>loadEmrSites</servlet-name>
+        <url-pattern>/loadEmrSites</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>loadUpiValidation</servlet-name>
+        <url-pattern>/loadUpiValidation</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>upiReports</servlet-name>
+        <url-pattern>/upiReports</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>importderv91</servlet-name>
+        <url-pattern>/importderv91</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
