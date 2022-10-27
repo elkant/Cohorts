@@ -544,6 +544,34 @@
         <servlet-name>importderv91</servlet-name>
         <servlet-class>imports.importderv91</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>upi_missing_reports</servlet-name>
+        <servlet-class>upi.upi_missing_reports</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>hei_login</servlet-name>
+        <servlet-class>hei_weekly.hei_login</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>getHeiIndicators</servlet-name>
+        <servlet-class>hei_weekly.getHeiIndicators</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>getHeiReportingDates</servlet-name>
+        <servlet-class>hei_weekly.getHeiReportingDates</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>saveHei</servlet-name>
+        <servlet-class>hei_weekly.saveHei</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>loadHeiValidation</servlet-name>
+        <servlet-class>hei_weekly.loadHeiValidation</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>otz_missing_reports</servlet-name>
+        <servlet-class>otz.otz_missing_reports</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loadcohort</servlet-name>
         <url-pattern>/loadcohort</url-pattern>
@@ -1087,6 +1115,34 @@
     <servlet-mapping>
         <servlet-name>importderv91</servlet-name>
         <url-pattern>/importderv91</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>upi_missing_reports</servlet-name>
+        <url-pattern>/upi_missing_reports</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>hei_login</servlet-name>
+        <url-pattern>/hei_login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getHeiIndicators</servlet-name>
+        <url-pattern>/getHeiIndicators</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getHeiReportingDates</servlet-name>
+        <url-pattern>/getHeiReportingDates</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>saveHei</servlet-name>
+        <url-pattern>/saveHei</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>loadHeiValidation</servlet-name>
+        <url-pattern>/loadHeiValidation</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>otz_missing_reports</servlet-name>
+        <url-pattern>/otz_missing_reports</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

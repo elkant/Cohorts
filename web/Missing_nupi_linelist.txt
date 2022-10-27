@@ -1,30 +1,29 @@
 select 
-
-FacilityName as 'Facility',
-siteCode as 'Mflcode',
-sum( case when `Age Bracket` like '<15 Yrs' then 1 else 0 end ) as `TX_CURR < 15`,
-sum( case when `Age Bracket` like '15+ Yrs' then 1 else 0 end ) as `TX_CURR 15 +`,
-sum( case when `Age Bracket` like '<15 Yrs' and nupi !='Missing' then 1 else 0 end ) as `TX_CURR Verified < 15`,
-sum( case when `Age Bracket` like '15+ Yrs' and nupi !='Missing' then 1 else 0 end ) as `TX_CURR Verified 15+`,
- sum( case when `Age Bracket` like '<15 Yrs' and nupi ='Missing' and (`Last Visit Date` between DATE_SUB(curdate(), INTERVAL 7 DAY) and curdate() ) then 1 else 0 end ) as `Patients Scheduled for Appointment this week without Nupi < 15`,
-sum( case when `Age Bracket` like '15+ Yrs' and nupi ='Missing' and (`Last Visit Date` between DATE_SUB(curdate(), INTERVAL 7 DAY) and curdate() ) then 1 else 0 end ) as `Patients Scheduled for Appointment this week without Nupi 15+`
- 
- from(
-select 
-'1. TX_CURR' as indicator,
+'1. TX_CURR Missing Nupi' as indicator,
 t.patient_id 
+,given_name as 'First name'
+,ifnull(middle_name,'') as 'Middle Name'
+,ifnull(family_name,'') as 'Family Name'
 , t.DOB
-,Gender as gender
-, (FLOOR(IFNULL(DATEDIFF(substring(curdate(),1,10), DOB)/365,0))) as Age
-,unique_patient_no as cccno
+,t.Gender as gender
+, (FLOOR(IFNULL(DATEDIFF(substring(curdate(),1,10), t.DOB)/365,0))) as Age
+,t.unique_patient_no as cccno
 , nupi
+,ifnull(phone_number,'') as Phone_no
+,ifnull(national_id_no,'') as Natinal_Id
   ,   Case 
-  when (FLOOR(IFNULL(DATEDIFF(substring(curdate(),1,10), DOB)/365,0))) <15 then '<15 Yrs'  
+  when (FLOOR(IFNULL(DATEDIFF(substring(curdate(),1,10), t.DOB)/365,0))) <15 then '<15 Yrs'  
   else '15+ Yrs'
   end 
   as 'Age Bracket'
   ,latest_tca as 'Next Appointment Date'
   ,latest_vis_date as 'Last Visit Date'
+  ,DATEDIFF(latest_tca,curdate()) as '# of Days to Next Appointment'
+  ,FLOOR(DATEDIFF(latest_tca,curdate())/30) as '# of Months to Next Appointment'
+ 
+  , IF(latest_tca=curdate(),'Yes','No') as 'Patient Coming Today?'
+  , IF(latest_tca between curdate() and DATE_ADD(curdate(), INTERVAL 7 DAY),'Yes','No') as 'Patient Coming In the Next 7 days?'
+  , IF(latest_tca between curdate() and DATE_ADD(curdate(), INTERVAL 30 DAY),'Yes','No') as 'Patient Coming In the next 30 Days'
                 from(
                     select fup.visit_date,fup.patient_id, max(e.visit_date) as enroll_date,
                            greatest(max(e.visit_date), ifnull(max(date(e.transfer_in_date)),'0000-00-00')) as latest_enrolment_date,
@@ -55,6 +54,16 @@ t.patient_id
                               and (date(latest_vis_date) >= date(date_discontinued) or date(latest_tca) >= date(date_discontinued) or disc_patient is null)
                             )
                         )
-                    ) t) t1 
+                    ) t 
+					left join kenyaemr_datatools.patient_demographics pd on pd.patient_id= t.patient_id
+left join kenyaemr_datatools.person_address ad on ad.patient_id=t.patient_id
 					
-					cross join kenyaemr_datatools.default_facility_info
+					group by cccno 
+					having nupi='Missing'
+					
+                    
+                    
+                    
+               
+
+

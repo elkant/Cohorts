@@ -131,6 +131,7 @@ input:focus {
         <div class="col-sm-12">
 
              <a class='btn-warning btn' target="_blank" href="nupi_summary.txt" style="margin-left:40%;">Access Nupi Summary Query</a> 
+             <a class='btn-warning btn' target="_blank" href="Missing_nupi_linelist.txt" style="margin-left:1%;">Access Missing Nupi Linelist Query</a> 
             
           
           <h5 class="btn btn-default col-md-12" style="text-align: center;color:blue;"><b>UPI Weekly Reporting Module</b></h5>
@@ -355,7 +356,8 @@ input:focus {
 
                                                     <div class="controls">
                                                         <select class="form-control input-sm" onchange="checkFormAction();"   name='report' id='report' >
-                                                            <option value='upiReports'>1.Tracker and Data Summary</option>
+                                                            <option value='upiReports'>1.Data Summary</option>
+                                                            <option value='upi_missing_reports'>2.Missing Reports</option>
                                                            
                                                             <!--<option value='hts_self_reports'>6.HTS Self</option>-->
 
@@ -393,7 +395,7 @@ input:focus {
                                             </td>
                                             <td class="col-xs-4">
                                                 <div class="controls">
-                                                    <input data-date-end-date="0d" required type="text"  title="this is the date that the week ended" value="<%=ig.LastMonthEndDate()%>" class="form-control input-sm dates" name="enddate" id="enddate" autocomplete="off"/>
+                                                    <input data-date-end-date="0d" required type="text"  title="this is the date that the week ended" value="<%=ig.toDay()%>" class="form-control input-sm dates" name="enddate" id="enddate" autocomplete="off"/>
                                                 </div>
                                                 </div>
                                             </td>
@@ -1329,7 +1331,11 @@ $('#dataentry').on('keydown', 'input, select, textarea', function(e) {
     }
 });
 
-
+function checkFormAction (){
+    
+  $('#reportingForm').attr('action', $("#report").val());  
+    
+}
 
               </script>
 

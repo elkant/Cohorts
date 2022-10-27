@@ -2,12 +2,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>UPI Weekly Reports</title>
+	<title>HEI Weekly Reports</title>
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
-<link rel="icon" type="image/png" href="images/upi.png"/>
+<link rel="icon" type="image/png" href="images/hei_weekly.png"/>
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css" href="Login_v6/vendor/bootstrap/css/bootstrap.min.css">
 <!--===============================================================================================-->
@@ -29,15 +29,15 @@
 	<link rel="stylesheet" type="text/css" href="Login_v6/css/main.css">
 <!--===============================================================================================-->
 
-      <%if (session.getAttribute("upi_login") != null) { %>
+      <%if (session.getAttribute("hei_login") != null) { %>
                                 <script type="text/javascript"> 
                     
-                    var n = noty({text: '<%=session.getAttribute("upi_login")%>',
+                    var n = noty({text: '<%=session.getAttribute("hei_login")%>',
                         layout: 'center',
                         type: 'Success'});
                     
                 </script> <%
-                session.removeAttribute("upi_login");
+                session.removeAttribute("hei_login");
                             }
 
                         %>
@@ -48,11 +48,11 @@
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100 p-t-3 p-b-20">
-				<form action='upi_login' class="login100-form validate-form">
-					<h3 style="text-align: center;">UPI Weekly Progress Reports</h3>
+				<form action='hei_login' class="login100-form validate-form">
+					<h3 style="text-align: center;">HEI Weekly Progress Reports</h3>
                                         <hr>
 					<span class="login100-form-avatar">
-                                            <img src="images/upi.png" alt="welcome">
+                                            <img src="images/hei_weekly.png" alt="welcome">
 					</span>
 					
 

@@ -217,13 +217,18 @@ scncode=r.getString("section_code");
 if(!scnid.equals(scnidcopy))
     {
         scnidcopy=scnid;
+        
+        
+        //if(scnid.equals("")){}
+        
         String showsection="style='display:none;'";
         String hasdata="style='color:red;width:100%;text-align:left;'";
         
         if(!value.equals("")){showsection="";hasdata="style='display:none;'";}
         
     //create the card
-    indicators+= "<h4 class='btn grey' "+hasdata+" id='hasdata"+scnid+"'><i class='glyphicon glyphicon-close'></i><b>No Gaps to account under "+scn+"</b></h4><div "+showsection+" class='card'>";
+    indicators+= "<h4 class='btn grey' "+hasdata+" id='hasdata"+scnid+"'><i class='glyphicon glyphicon-close'></i><b>No Gaps to account under "+scn+"</b></h4>"
+            + "<div "+showsection+" class='card'>";
     indicators+= "<div class='card-header' >"
     +"<h5 class='mb-0'>";
     indicators+="<button class='btn blue collapsed' id='section"+scnid+"' type='button' data-toggle='collapse' data-target='#collapse"+scnid+"' aria-expanded='false' aria-controls='collapse"+scnid+"' style='width:100%; text-align:left;background-color:#0394ff;font-weight: bolder;'>" +

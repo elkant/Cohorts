@@ -4,6 +4,8 @@
     Author     : Emmanuel E
 --%>
 
+<%@page import="hei_weekly.getHeiReportingDates"%>
+
 <%@page import="General.IdGenerator2"%>
 <%@page import="hfr.getIndicators"%>
 <%@page import="java.util.logging.Logger"%>
@@ -23,14 +25,14 @@
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
-		<title>OTZ</title>
+		<title>Hei Weekly</title>
 		<meta name="generator" content="Bootply" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
                 <link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
 		<link href="css/bootstrap.css" rel="stylesheet">
                 <link href="css/bootstrap-datepicker.min.css" rel="stylesheet">
                 <link rel="stylesheet" href="css/select2.min.css">
-                <link rel="shortcut icon" href="images/otz.png">
+                <link rel="shortcut icon" href="images/hei_weekly.png">
                 <!--<link data-jsfiddle="common" rel="stylesheet" media="screen" href="css/handsontable.css">-->
 <!--  <link data-jsfiddle="common" rel="stylesheet" media="screen" href="dist/pikaday/pikaday.css">-->
                   
@@ -104,7 +106,7 @@ input:focus {
                             <i class="glyphicon glyphicon-question-sign"></i>
                             Help
                         </a></li>
-                              <li><a style="text-align: center;" href='otz_index.jsp'><i class="glyphicon glyphicon-log-out"></i> Logout</a></li>
+                              <li><a style="text-align: center;" href='hei_weekly_index.jsp'><i class="glyphicon glyphicon-log-out"></i> Logout</a></li>
             </ul>
         </div>
         
@@ -129,10 +131,12 @@ input:focus {
         <!-- /col-3 -->
         <div class="col-sm-12">
 
-            
-            
+<!--             <a class='btn-warning btn' target="_blank" href="nupi_summary.txt" style="margin-left:40%;">Access Nupi Summary Query</a> 
+             <a class='btn-warning btn' target="_blank" href="Missing_nupi_linelist.txt" style="margin-left:1%;">Access Missing Nupi Linelist Query</a> 
+            -->
           
-          <h5 class="btn btn-default col-md-12" style="text-align: center;color:blue;"><b>OTZ Monthly Reporting Module</b></h5>
+          <h5 class="btn btn-default col-md-12" style="text-align: center;color:blue;"><b>HEI Weekly Reporting Module</b></h5>
+        
 
             <div class="row">
                 <!-- center left-->
@@ -238,7 +242,20 @@ input:focus {
 
                                                                     <div class="controls">
                                                                         <select required="true"   onchange="getFacilitiesJson();isdisplayindicators();"   name="period" id="period" class="form-control" >
-                                                                                                                   
+                                                                             <%
+                                               getHeiReportingDates gd = new getHeiReportingDates();
+                                               dbConn conn = new dbConn();
+
+                                               try {
+                                                   JSONArray ja = gd.getRepDates(conn, "2022-10-01");
+
+                                                   out.println(gd.toHtmlDates(ja));
+
+                                               } catch (SQLException ex) {
+                                                   Logger.getLogger(getReportingDates.class.getName()).log(Level.SEVERE, null, ex);
+                                               }
+
+                                           %>                                       
                                                                         </select>
                                                                     </div>
                                                                 </div>
@@ -282,7 +299,7 @@ input:focus {
                                         <div id='fedback' class="alert-info">Note: Please enter all the required data.</div>
                                    <br/>
                                     <div class="controls">
-                                        <input type="input" onClick="loadValidation();"  id='savebutton' value="SAVE"  style="margin-left: 0%;" class="btn-lg btn-success active">
+                                        <input type="input" onClick="loadValidation();"  id='savebutton' value="Save"  style="margin-left: 0%;" class="btn-lg btn-success active">
                                             
                                      </div>
                                      <div class="controls">
@@ -307,7 +324,7 @@ input:focus {
                             
                             </div>
                                                        <div class="tab-pane well" id="reports">
-<form action="otzReports" id="reportingForm">
+<form action="upiReports" id="reportingForm">
 
                                         <!--Dashboard code-->
 
@@ -340,8 +357,8 @@ input:focus {
 
                                                     <div class="controls">
                                                         <select class="form-control input-sm" onchange="checkFormAction();"   name='report' id='report' >
-                                                            <option value='otzReports'>1.Data Summary</option>
-                                                            <option value='otz_missing_reports'>2.Missing Reports</option>
+                                                            <option value='upiReports'>1.Data Summary</option>
+                                                            <option value='upi_missing_reports'>2.Missing Reports</option>
                                                            
                                                             <!--<option value='hts_self_reports'>6.HTS Self</option>-->
 
@@ -379,7 +396,7 @@ input:focus {
                                             </td>
                                             <td class="col-xs-4">
                                                 <div class="controls">
-                                                    <input data-date-end-date="0d" required type="text"  title="this is the date that the week ended" value="<%=ig.LastMonthEndDate()%>" class="form-control input-sm dates" name="enddate" id="enddate" autocomplete="off"/>
+                                                    <input data-date-end-date="0d" required type="text"  title="this is the date that the week ended" value="<%=ig.toDay()%>" class="form-control input-sm dates" name="enddate" id="enddate" autocomplete="off"/>
                                                 </div>
                                                 </div>
                                             </td>
@@ -579,7 +596,7 @@ input:focus {
                 <script src="js/select2.min.js"></script>
                  <script src="js/pouchdb-4.0.1.js"></script>
                  <script type="text/javascript" src="js/datatables.min.js"></script>
-                 <script type="text/javascript" src="otz/validation.js"></script>
+                 <script type="text/javascript" src="hei_weekly/validation.js"></script>
   
 <!--  <script data-jsfiddle="common" src="dist/pikaday/pikaday.js"></script>
   <script data-jsfiddle="common" src="dist/moment/moment.js"></script>
@@ -617,7 +634,7 @@ input:focus {
        
        
               $.ajax({
-                    url:'loadActiveSites',                            
+                    url:'loadEmrSites',                            
                     type:'post',  
                     dataType: 'html',  
                     success: function(data)
@@ -784,17 +801,16 @@ function save_data(){
 //___indicators to pull___
 
 var id="";
-var yearmonth="";
+var dater="";
 var facility="";
 var indicatorid="";
-var _19m="";
-var _19f="";
+
 var ttl="";
 var userid="";
 
 facility=$("#facility").val();
 
-yearmonth=$("#period").val();
+dater=$("#period").val();
 
 
 
@@ -811,7 +827,7 @@ if(facility==='' || facility==='Select facility' ){
 }
 
 
-else if(yearmonth===''  ){
+else if(dater===''  ){
     
    alert("Select Reporting Month");  
     
@@ -830,7 +846,7 @@ else if(yearmonth===''  ){
 
 
 $.ajax({
-                    url:'getOtzIndicators',                            
+                    url:'getHeiIndicators',                            
                     type:'post',  
                     dataType: 'json',  
                     success: function(data){
@@ -839,10 +855,9 @@ $.ajax({
               var isend=false;             
                           
 var indicatorid=data[a].id;
-var bl19_Male=$("#"+indicatorid+"_bl19_Male").val();
-var bl19_Female=$("#"+indicatorid+"_bl19_Female").val();
+
 var ttl=$("#"+indicatorid+"_ttl").val();
-var identifier=facility+"_"+yearmonth+"_"+indicatorid;
+var identifier=facility+"_"+dater+"_"+indicatorid;
         
         
       
@@ -852,11 +867,9 @@ var identifier=facility+"_"+yearmonth+"_"+indicatorid;
            
            var saveddata={
                id:identifier,              
-               yearmonth:yearmonth,
+               date:dater,
                facility:""+facility,
-               indicatorid:indicatorid,
-               _19m:bl19_Male,
-               _19f:bl19_Female,
+               indicatorid:indicatorid,           
                ttl:ttl,
                userid:'909090'
                
@@ -893,7 +906,7 @@ function exportData( data, isend){
     
     
     $.ajax({
-                    url:'saveotz',                            
+                    url:'saveHei',                            
                     type:'post',  
                     dataType: 'html',
                     data:data ,
@@ -965,25 +978,6 @@ for(b=0;b<allindicatorsarray.length;b++){
     
 }
 
-function clearcmtsandprcent(){
-    
-       //clear progress bar hidden fields too
-   
-  for(b=0;b<allprogressbar_hiddentext_array.length;b++){
-    
-  $("#"+allprogressbar_hiddentext_array[b]).val("");  
-    
-} 
-       
-       //comnts
- 
-     for(b=0;b<allcommentsarray.length;b++){
-    
-  $("#"+allcommentsarray[b]).val("");  
-    
-                                            }//end of for loop 
-    
-}
 
 var dbdata="";
 
@@ -1265,7 +1259,7 @@ function getPeriod(){
    }
    
 
-getPeriod();
+//getPeriod();
 
 
 
@@ -1286,7 +1280,7 @@ function isdisplayindicators()
             
             //now load the data
           $.ajax({
-                    url:'getOtzIndicators?dt='+dt+"&fc="+fc,                            
+                    url:'getHeiIndicators?dt='+dt+"&fc="+fc,                            
                     type:'post',  
                     dataType: 'html',  
                     success: function(data) 

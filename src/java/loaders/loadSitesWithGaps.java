@@ -39,7 +39,7 @@ public class loadSitesWithGaps extends HttpServlet {
           {
          ym= request.getParameter("ym");
          
-         additionalwhere=" and SubPartnerID in ( select distinct(facility_id) from internal_system.rri_gaps_baseline where yearmonth ='"+ym+"' ) ";
+        // additionalwhere=" and SubPartnerID in ( select distinct(facility_id) from internal_system.rri_gaps_baseline where yearmonth ='"+ym+"' ) ";
           }
             
             

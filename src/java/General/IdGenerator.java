@@ -57,6 +57,19 @@ now=new Timestamp(date.getTime());
    String full_date=year+"-"+month+"-"+date2;     
    return full_date;
     }
+    
+    
+     public String tomorrow()
+    {
+        if(date<10){
+    date2="0"+date;
+}
+  if(date>=10){
+    date2=""+date;
+}
+   String full_date=year+"-"+month+"-"+date2;     
+   return full_date;
+    }
        
   public String current_id(){
        

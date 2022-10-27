@@ -1325,6 +1325,22 @@ function isdisplayindicators()
                         
                         
                     }});    
+          $.ajax({
+                    url:'loadPmtctIndicators?dt='+dt+"&fc="+fc+"&wr="+babywhere,                            
+                    type:'post',  
+                    dataType: 'html',  
+                    success: function(data) 
+                    {
+                        $("#dynamicindicatorshei").show();
+                   $("#dynamicindicatorshei").html(data); 
+                         $('.dates').datepicker({
+                             todayHighlight: true, daysOfWeekDisabled: "0,6",clearBtn: true, autoclose: true,format: "yyyy-mm-dd",
+     });
+     
+     //setuuid('id');
+                        
+                        
+                    }});    
            
             
             
@@ -1332,6 +1348,7 @@ function isdisplayindicators()
     else 
     {
     $("#dynamicindicators").hide();
+    $("#dynamicindicatorshei").hide();
     //        
     }
     
