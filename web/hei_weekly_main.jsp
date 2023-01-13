@@ -324,7 +324,7 @@ input:focus {
                             
                             </div>
                                                        <div class="tab-pane well" id="reports">
-<form action="upiReports" id="reportingForm">
+<form action="hei_weekly_report" id="reportingForm">
 
                                         <!--Dashboard code-->
 
@@ -357,8 +357,8 @@ input:focus {
 
                                                     <div class="controls">
                                                         <select class="form-control input-sm" onchange="checkFormAction();"   name='report' id='report' >
-                                                            <option value='upiReports'>1.Data Summary</option>
-                                                            <option value='upi_missing_reports'>2.Missing Reports</option>
+                                                            <option value='hei_weekly_report'>1.Data Summary</option>
+                                                            <option value='hei_weekly_missing'>2.Missing Reports</option>
                                                            
                                                             <!--<option value='hts_self_reports'>6.HTS Self</option>-->
 

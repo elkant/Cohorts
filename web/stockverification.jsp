@@ -177,21 +177,21 @@ input[readonly]{
         <!-- /Header -->
 
         <!-- Main -->
-        <div ng-app="htsselfapp" ng-controller="htsselfcont" class="container-fluid">
+            <div ng-app="htsselfapp" ng-controller="htsselfcont" class="container-fluid">
 
             <div class="row">
 
             </div>
             <div class="row">
 
-                <!-- /col-3 -->
-                <div class="col-sm-12">
+            <!-- /col-3 -->
+            <div class="col-sm-12">
 
-                    <div class="row">
-                        <div style="text-align: center;" class=" well col-md-12">USAID Tujenge Jamii Stocks Receipt verification</div>
+            <div class="row">
+            <div style="text-align: center;" class=" well col-md-12">USAID Tujenge Jamii Stocks Receipt verification</div>
                         
-                        <!-- center left-->
-                        <div class="col-md-12">
+            <!-- center left-->
+            <div class="col-md-12">
 
                             <!--</div>-->
 
@@ -1048,39 +1048,7 @@ cmts
       getFacilitiesJson();                            
 
 
- function getSections(){
-       
-   
-       
-       
-              $.ajax({
-                         url:'getParameterData',                            
-                    type:'post',  
-                    dataType: 'json',  
-                    success: function(data) {                        
-                       
-        var dat=data.sections;
-        
-        console.log(dat[0].section);
-        var o="<option value=''>Select Option</option>";
-                        
-                        for(var a=0;a<dat.length;a++){
-                            
-                     
-                          o+="<option value='"+dat[a].sectio_id+"'>"+dat[a].sectio+"</option>";   
-                        }
-                        
-                   $("#section").html(o);
-                   $(document).ready(function() {
-                    $('#section').select2(); 
-             
-                                 } ); 
-                        
-                        
-                    }});
-   
-   }
-
+ 
 //getSections();
 
 
@@ -1391,29 +1359,29 @@ docdate:docdate};
                                    }
 
 
-                                   function exportData(data, isend, tbl,secid) {
-
-
-                                       $.ajax({
-                                           url: 'saveGapsData?tbl='+tbl,
-                                           type: 'post',
-                                           dataType: 'html',
-                                           data: data,
-                                           success: function (dat) {
-                                               if (isend) {
-
-                                                   console.log("Data saved Succesfully!");
-                                                   $("#msg"+secid).html("<font color='green'><b>Data saved Succesfully!!!</b></font>");
-                                              section_saved(secid);
-                                         setTimeout(refreshujumbeandreload,2000);
-    
-                                               }
-
-                                           }
-                                       });
-
-
-                                   }
+//                                   function exportData(data, isend, tbl,secid) {
+//
+//
+//                                       $.ajax({
+//                                           url: 'saveGapsData?tbl='+tbl,
+//                                           type: 'post',
+//                                           dataType: 'html',
+//                                           data: data,
+//                                           success: function (dat) {
+//                                               if (isend) {
+//
+//                                                   console.log("Data saved Succesfully!");
+//                                                   $("#msg"+secid).html("<font color='green'><b>Data saved Succesfully!!!</b></font>");
+//                                              section_saved(secid);
+//                                         setTimeout(refreshujumbeandreload,2000);
+//    
+//                                               }
+//
+//                                           }
+//                                       });
+//
+//
+//                                   }
 
 //call the function that displays the data
 

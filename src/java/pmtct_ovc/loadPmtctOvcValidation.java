@@ -3,51 +3,92 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package stockverification;
+package pmtct_ovc;
 
+import db.dbConn;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 /**
  *
  * @author EKaunda
  */
-public class stocks_login extends HttpServlet {
+public class loadPmtctOvcValidation extends HttpServlet {
 
-   HttpSession session;
-    
+   
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        session=request.getSession();
-        
-        try (PrintWriter out = response.getWriter()) {
+        PrintWriter out = response.getWriter();
+        try {
             /* TODO output your page here. You may use following sample code. */
+         
+                        
             
-            String pwd="";
-            String nextPage="stock_index.jsp";
-            if(request.getParameter("codeaccess")!=null){
+            JSONArray arr= new JSONArray();
             
-            pwd=request.getParameter("codeaccess");
+            
+            String scid="";
+            
+            if(request.getParameter("scid")!=null)
+            {
+            scid=request.getParameter("scid");
             }
             
+            String validation="";
             
-            if(pwd.equals("959595")){
-        nextPage="stockverification.jsp";
-                                    }
-            else {
-                session.setAttribute("stocks_login", "Access code incorect");
+            dbConn conn = new dbConn();
+            
+            String getList="select * from internal_system.pmtct_ovc_validation where is_active='1'  ";
+            
+            
+            conn.rs=conn.st.executeQuery(getList);
+            
+            while(conn.rs.next()){
+                
+                JSONObject obj=new JSONObject();
+                
+            //(valids, message, iscritical, sectionid)
+            
+            
+            
+            obj.put("validation", conn.rs.getString("flag_if"));
+            obj.put("message", conn.rs.getString("message"));
+            obj.put("id", conn.rs.getString("id"));
+            obj.put("section_name", conn.rs.getString("section"));
+            obj.put("iscritical","1");
+            
+           arr.add(obj);
+            
+            
             }
             
+          
+            if(conn.rs!=null){conn.rs.close();}
+            if(conn.st!=null){conn.st.close();}
             
-           response.sendRedirect(nextPage);
-        }
+            
+            if(!arr.isEmpty()){
+            out.println(arr);
+            }
+            else{
+            
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(loadPmtctOvcValidation.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            out.close();
+                  }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

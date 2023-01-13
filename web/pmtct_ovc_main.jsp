@@ -279,15 +279,14 @@ input:focus {
                                         <div id='fedback' class="alert-info">Note: Please enter all the required data.</div>
                                    <br/>
                                     <div class="controls">
-                                        <input type="input" onClick="loadValidation();"  id='savebutton' value="SAVE"  style="margin-left: 0%;" class="btn-lg btn-success active">
+                                        <input type="input" onClick="loadMotherValidation();"  id='savebutton' value="Add Mother"  style="margin-left: 0%;" class="btn-lg btn-success active">
                                             
                                      </div>
                                      <div class="controls">
-                                        <button type="submit" id='updatebutton' onclick="loadValidation();" style="margin-left: 0%;display:none;" class="btn-lg btn-info active">
-                                            UPDATE 
+                                        <button type="submit" id='updatebutton' onclick="loadMotherValidation();" style="margin-left: 0%;display:none;" class="btn-lg btn-info active">
+                                            Update Mother 
                                         </button>
-                                    </div>
-                                   
+                                    </div>                                   
                                     
                                 </div>
                                         </td></tr>
@@ -317,7 +316,23 @@ input:focus {
                                   
                                      </table>
                                
+                               <div class="control-group col-xs-12">
+                                        
+                                   <br/>
+                                    <div class="controls">
+                                        <input type="input" onClick="loadBabyValidation();"  id='savebutton' value="Add Baby"  style="margin-left: 0%;" class="btn-lg btn-success active">
+                                            
+                                     </div>
+                                     <div class="controls">
+                                        <button type="submit" id='updatebutton' onclick="loadBabyValidation();" style="margin-left: 0%;display:none;" class="btn-lg btn-info active">
+                                            Update Baby 
+                                        </button>
+                                    </div>                                   
+                                    
+                                </div>
+                               
                             </div>
+                             
                             
                              <div class="tab-pane well" id="editmother">
                                 

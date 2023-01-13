@@ -572,6 +572,26 @@
         <servlet-name>otz_missing_reports</servlet-name>
         <servlet-class>otz.otz_missing_reports</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>hei_weekly_missing</servlet-name>
+        <servlet-class>hei_weekly.hei_weekly_missing</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>hei_weekly_report</servlet-name>
+        <servlet-class>hei_weekly.hei_weekly_report</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>save_pmtct_ovc</servlet-name>
+        <servlet-class>pmtct_ovc.save_pmtct_ovc</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>loadPmtctOvcValidation</servlet-name>
+        <servlet-class>pmtct_ovc.loadPmtctOvcValidation</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>loadStfGaps</servlet-name>
+        <servlet-class>stf.loadStfGaps</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loadcohort</servlet-name>
         <url-pattern>/loadcohort</url-pattern>
@@ -1143,6 +1163,26 @@
     <servlet-mapping>
         <servlet-name>otz_missing_reports</servlet-name>
         <url-pattern>/otz_missing_reports</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>hei_weekly_missing</servlet-name>
+        <url-pattern>/hei_weekly_missing</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>hei_weekly_report</servlet-name>
+        <url-pattern>/hei_weekly_report</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>save_pmtct_ovc</servlet-name>
+        <url-pattern>/save_pmtct_ovc</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>loadPmtctOvcValidation</servlet-name>
+        <url-pattern>/loadPmtctOvcValidation</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>loadStfGaps</servlet-name>
+        <url-pattern>/loadStfGaps</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

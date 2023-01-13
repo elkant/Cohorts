@@ -36,7 +36,8 @@ public class loadEmrSites extends HttpServlet {
             
             
             
-            String getfacils="select * from internal_system.subpartnera where EMR_Sites=1 and active=1";
+            //String getfacils="select * from internal_system.subpartnera where EMR_Sites=1 and active=1";
+            String getfacils="select * from internal_system.subpartnera where  active=1";
          
             dbConn conn= new dbConn();
             conn.rs=conn.st.executeQuery(getfacils);
