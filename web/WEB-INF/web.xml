@@ -592,6 +592,14 @@
         <servlet-name>loadStfGaps</servlet-name>
         <servlet-class>stf.loadStfGaps</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>importderv92</servlet-name>
+        <servlet-class>imports.importderv92</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>importderv93</servlet-name>
+        <servlet-class>imports.importderv93</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loadcohort</servlet-name>
         <url-pattern>/loadcohort</url-pattern>
@@ -1183,6 +1191,14 @@
     <servlet-mapping>
         <servlet-name>loadStfGaps</servlet-name>
         <url-pattern>/loadStfGaps</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>importderv92</servlet-name>
+        <url-pattern>/importderv92</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>importderv93</servlet-name>
+        <url-pattern>/importderv93</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

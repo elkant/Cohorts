@@ -38,7 +38,7 @@ public class stocks_login extends HttpServlet {
             }
             
             
-            if(pwd.equals("959595")){
+            if(pwd.equals("909090")){
         nextPage="stockverification.jsp";
                                     }
             else {
