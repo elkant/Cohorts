@@ -597,6 +597,7 @@ input:focus {
                  <script src="js/pouchdb-4.0.1.js"></script>
                  <script type="text/javascript" src="js/datatables.min.js"></script>
                  <script type="text/javascript" src="hei_weekly/validation.js"></script>
+                 <script type="text/javascript" src="hei_weekly/sum_values.js"></script>
   
 <!--  <script data-jsfiddle="common" src="dist/pikaday/pikaday.js"></script>
   <script data-jsfiddle="common" src="dist/moment/moment.js"></script>

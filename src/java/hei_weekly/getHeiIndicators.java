@@ -131,6 +131,9 @@ while(r.next()){
     String id=r.getString("id");
     String indicator_code=r.getString("code");
     
+    String Auto_Calculate=r.getString("Auto_Calculate");
+    String readonl=r.getString("readonl");
+    String isbaseline=r.getString("isbaseline");
     
     String ttl="";
     
@@ -154,9 +157,23 @@ while(r.next()){
         
         }
      
-     String readonly_b19_m="";
-     String readonly_b19_f="";
+  
      String readonly_ttl=" ";
+     
+    
+     if(readonl==null || readonl.equals("null") || readonl.equals("")){readonly_ttl="";}else {readonly_ttl=readonl;}
+     
+     
+     
+       String hasautocalc="";
+
+if(Auto_Calculate!=null && !Auto_Calculate.equals("") && !Auto_Calculate.equals("null") ){
+
+hasautocalc="buildAutocalculate(\""+Auto_Calculate+"\");";
+
+}
+     
+     
      
     String displaysection="";
     
@@ -171,7 +188,7 @@ while(r.next()){
      //Baseline Information	Code	Male 10-19yrs	Female 10-19yrs	Total
 
      //sumofindicators(sourceindicators,destinationindicator)
-    String inputttl="<input "+readonly_ttl+" value='"+ttl+"'   onkeypress='return numbers(event);' placeholder='Total'  type='tel' maxlength='4' min='0' max='9999' name='"+id+"_ttl' id='"+id+"_ttl' class='form-control inputs'>"; 
+    String inputttl="<input "+readonly_ttl+" value='"+ttl+"' onkeyup='"+hasautocalc+"'  onkeypress='return numbers(event);' placeholder='Total'  type='tel' maxlength='4' min='0' max='9999' name='"+id+"_ttl' id='"+id+"_ttl' class='form-control inputs'>"; 
      
     
 indicators+=""+displaysection
@@ -263,12 +280,21 @@ String orodha="";
 String showsection="";
 String section_name="";
 
+
+String Auto_Calculate=""; 
+String isbaseline="";
+String readonl="";
+
     id =res.getString("id");
     indicator_code =res.getString("code");
     indicatorname =res.getString("indicator");
     orodha =res.getString("order_no");
     showsection =res.getString("showsection");
     section_name =res.getString("section_name");
+    
+    Auto_Calculate =res.getString("Auto_Calculate");
+    isbaseline =res.getString("isbaseline");
+    readonl =res.getString("readonl");
 
     jo.put("id",id);
     jo.put("indicator_code",indicator_code);
@@ -276,6 +302,10 @@ String section_name="";
     jo.put("orodha",orodha);
     jo.put("showsection",showsection);
     jo.put("section_name",section_name);
+    
+    jo.put("Auto_Calculate",Auto_Calculate);
+    jo.put("isbaseline",isbaseline);
+    jo.put("readonl",readonl);
     jo2.put(jo);
     
     count++;

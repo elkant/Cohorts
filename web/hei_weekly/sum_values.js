@@ -59,7 +59,7 @@ document.getElementById("total_"+indicator_id).value = total;
      $("#section_"+section_id).css('font-weight','700'); 
     }
 //eg function sum_multipleindicators('1+2+3-1','4'){
-function buildAutocalculate(dataelements,savebtn)
+function buildAutocalculate(dataelements)
 {
   var dems=dataelements.split(",");
   for(var s=0;s<dems.length;s++)
@@ -87,20 +87,23 @@ function buildAutocalculate(dataelements,savebtn)
      }
              
          }         
-        
-            document.getElementById(rightside).value = ttl;   
+        console.log("Total__"+rightside);
+            document.getElementById(rightside).value = ttl;
+             
+             
+             
             if(ttl<0){redbordercl(rightside);
-                $("#validate_"+savebtn).hide();
-            $("#msg"+savebtn).html("Validation Error!. Please correct to save entries");
+                $("#savebutton").hide();
+            $("#fedback").html("Validation Error!. Please correct to save entries");
             } else 
             {blackbordercl(rightside);
-                $("#validate_"+savebtn).show();
-             $("#msg"+savebtn).html("");
+                $("#savebutton").show();
+             $("#fedback").html("");
             }
          
      }
      else {
-        autocalculate(innerdems[0],innerdems[1],savebtn);
+        autocalculate(innerdems[0],innerdems[1]);
     }
   }
 }
@@ -109,7 +112,7 @@ function autocalculate_and_return(sourceindicators)
 {
    // console.log(sourceindicators+" = source indicators");
     
-var agesets = ["total"];
+var agesets = ["ttl"];
 //    var indicator_id=document.getElementById("indic_pos_"+indic_pos).value;
 //    alert(indicator_id);
 
@@ -119,7 +122,7 @@ var agesets = ["total"];
 
  var sourcearrays=sourceindicators.split("+");
 
-var num_agesets = 1;
+var num_agesets = agesets.length;
 
 var num_indics = sourcearrays.length;
 
@@ -139,7 +142,7 @@ if(sourcearrays[f].indexOf("-")>=0){
   
   for(var g=0;g<sourcearrays_neg.length;g++){
     
-   value=document.getElementById(sourcearrays_neg[g]).value;
+   value=document.getElementById(sourcearrays_neg[g]+"_"+agesets[i]).value;
    //in array index 0, pick the value in the array and summ with 0, then onwards
    
   if(g===0){
@@ -168,7 +171,9 @@ if(sourcearrays[f].indexOf("-")>=0){
 //if no subtration i.e only addition
 else {
     
-  value=document.getElementById(sourcearrays[f]).value;
+  value=document.getElementById(sourcearrays[f]+"_"+agesets[i]).value;
+  $(sourcearrays[f]+"_"+agesets[i]).change();
+  
     if(value!=='')
     {
         
@@ -193,10 +198,10 @@ return total;
 
 
 
-function autocalculate(sourceindicators,destination_indicator,save_button){
+function autocalculate(sourceindicators,destination_indicator){
   //  console.log(sourceindicators+" = source indicators");
   //  console.log(destination_indicator+" = destination indicators");
-var agesets = ["total"];
+var agesets = ["ttl"];
 //    var indicator_id=document.getElementById("indic_pos_"+indic_pos).value;
 //    alert(indicator_id);
 
@@ -206,7 +211,7 @@ sourceindicators=sourceindicators.replace("(","");
 
  var sourcearrays=sourceindicators.split("+");
 
-var num_agesets = 1;
+var num_agesets = agesets.length;
 
 var num_indics = sourcearrays.length;
 
@@ -226,7 +231,7 @@ if(sourcearrays[f].indexOf("-")>=0){
   
   for(var g=0;g<sourcearrays_neg.length;g++){
     
-   value=document.getElementById(sourcearrays_neg[g]).value;
+   value=document.getElementById(sourcearrays_neg[g]+"_"+agesets[i]).value;
    //in array index 0, pick the value in the array and summ with 0, then onwards
    
   if(g===0){
@@ -255,7 +260,7 @@ if(sourcearrays[f].indexOf("-")>=0){
 //if no subtration i.e only addition
 else {
     
-  value=document.getElementById(sourcearrays[f]).value;
+  value=document.getElementById(sourcearrays[f]+"_"+agesets[i]).value;
     if(value!=='')
     {
         
@@ -270,16 +275,16 @@ else {
     
  if(isNumber(total))
 {
-document.getElementById(destination_indicator).value = total;
+document.getElementById(destination_indicator+"_"+agesets[i]).value = total;
 }   
    
-if(total<0){redbordercl(destination_indicator);
-    $("#validate_"+save_button).hide();
-    $("#msg"+save_button).html("Validation Error!. Please correct to save entries");
+if(total<0){redbordercl(destination_indicator+"_"+agesets[i]);
+    $("#savebutton").hide();
+    $("#fedback").html("Validation Error!. Please correct to save entries");
 }
-else {blackbordercl(destination_indicator);
-    $("#msg"+save_button).html("");
-    $("#validate_"+save_button).show();}    
+else {blackbordercl(destination_indicator+"_"+agesets[i]);
+    $("#savebutton").html("");
+    $("#savebutton").show();}    
 }//end of looping of indicators
 
 
@@ -289,7 +294,6 @@ else {blackbordercl(destination_indicator);
 
 //alert(total);
 }
-
 
 
 

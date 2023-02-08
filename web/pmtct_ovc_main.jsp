@@ -169,31 +169,7 @@ input:focus {
 
                     <hr>
 
-
-                   
-
-                    <!--tabs-->
-                    <div class="panel">
-                        <ul class="nav nav-tabs " id="myTab">
-                            <li class="active newdata"> <a href="#addmother" id="newmotherdatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-plus"> </i> <font color='green'><b>Add </b></font> Mother(s)</a></li>
-                            <li class=" editdata"  >    <a href="#addbaby" id="newbabydatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-baby-formula"></i> <font color='green'><b>Add </b></font> Baby</a></li>
-                           
-                            <li class="newdata"> <a href="#editmother" id="editmotherdatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-edit"> </i> <font color='green'><b>Edit</b></font> Mothers</a></li>
-                            <li class=" editdata"  >    <a href="#editbaby" id="editbabydatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-edit"></i> <font color='green'><b>Edit</b></font>Baby</a></li>
-                            <li><a href="#reports" style="" id="reportsbutton" data-toggle="tab"> <i class="glyphicon glyphicon-stats"></i>Reports</a></li> 
-                            <!--<li><a href="#searchdata" data-toggle="tab"> <i class="glyphicon glyphicon-search"></i> Edit Data</a></li>--> 
-                           <!-- <li><a href="#export" data-toggle="tab"> <i class="glyphicon glyphicon-cloud-upload"></i> Data Export</a></li>-->
-                        </ul>
-                        <div class="tab-content">
-                            <div class="tab-pane active well col-md-12" id="addmother">
-                                
-                                
-                              <!--Data entry code-->
-                    <div class="panel panel-default">
-                       
-                        <div class="panel-body" style="width:100%;">
-                            <form class="form form-vertical"  action="#" method="post" id="weeklydataform">
-                              <table class='table table-striped table-bordered'  style=" width:100%;border :3px solid #4b8df8;" >
+<table class='table table-striped table-bordered'  style=" width:100%;border :3px solid #4b8df8;" >
 
                                                         
 
@@ -263,13 +239,60 @@ input:focus {
 
 
                                                     </table>
+                   
+
+                    <!--tabs-->
+                    <div class="panel">
+                        <ul class="nav nav-tabs " id="myTab">
+                            <li class="active newdata"> <a href="#addmother" id="newmotherdatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-plus"> </i> <font color='green'><b>Add </b></font> Mother(s)</a></li>
+                            <li class=" editdata"  >    <a href="#addbaby" id="newbabydatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-baby-formula"></i> <font color='green'><b>Add </b></font> Baby</a></li>
+                           
+                            <li class="newdata"> <a href="#editmother" id="editmotherdatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-edit"> </i> <font color='green'><b>Edit</b></font> Mothers</a></li>
+                            <li class=" editdata"  >    <a href="#editbaby" id="editbabydatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-edit"></i> <font color='green'><b>Edit</b></font>Baby</a></li>
+                            <li><a href="#reports" style="" id="reportsbutton" data-toggle="tab"> <i class="glyphicon glyphicon-stats"></i>Reports</a></li> 
+                            <!--<li><a href="#searchdata" data-toggle="tab"> <i class="glyphicon glyphicon-search"></i> Edit Data</a></li>--> 
+                           <!-- <li><a href="#export" data-toggle="tab"> <i class="glyphicon glyphicon-cloud-upload"></i> Data Export</a></li>-->
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active well col-md-12" id="addmother">
+                                
+                                
+                              <!--Data entry code-->
+                    <div class="panel panel-default">
+                       
+                        <div class="panel-body" style="width:100%;">
+                            <form class="form form-vertical"  action="#" method="post" id="weeklydataform">
+                              <table class='table table-striped table-bordered'  style=" width:100%;border :3px solid #4b8df8;" >
+
+                                                        
+
+
+                                                        
+
+
+
+
+
+                      <!-------Data Management ---------->
+
+                      
+                      
+                                                      
+
+
+                                                      
+
+
+
+
+                                                    </table>
                                 
                                 <!--<form id="addmothersform">-->
                                 
                                          <table class='table table-striped table-bordered' id="dynamicindicators" style="display:none;border :3px solid #4b8df8;padding:1px;" > 
                                    
                                 <!------INDICATORS----->
-                                                               
+                                           <tr><td><h3>Select Line listing Year, Month and Facility to Load data for.</h3></td></tr>                    
                                  
                                   
                                      </table>
@@ -279,11 +302,11 @@ input:focus {
                                         <div id='fedback' class="alert-info">Note: Please enter all the required data.</div>
                                    <br/>
                                     <div class="controls">
-                                        <input type="input" onClick="loadMotherValidation();"  id='savebutton' value="Add Mother"  style="margin-left: 0%;" class="btn-lg btn-success active">
+                                        <input type="input" onClick="getElementsToBeSaved('mother');"  id='savebutton' value="Add Mother"  style="margin-left: 0%;" class="btn-sm btn-success active">
                                             
                                      </div>
                                      <div class="controls">
-                                        <button type="submit" id='updatebutton' onclick="loadMotherValidation();" style="margin-left: 0%;display:none;" class="btn-lg btn-info active">
+                                        <button type="submit" id='updatebutton' onclick="getElementsToBeSaved('mother');" style="margin-left: 0%;display:none;" class="btn-sm btn-info active">
                                             Update Mother 
                                         </button>
                                     </div>                                   
@@ -292,6 +315,9 @@ input:focus {
                                         </td></tr>
                                         
                                 </table>
+                                
+                                <div class="control-group col-xs-12" id="ujumbe"></div>
+                                
                             </form>
                         </div>
                         <!--/panel content-->
@@ -312,6 +338,7 @@ input:focus {
                                    
                                 <!------INDICATORS----->
                                                                
+                                  <tr><td><h3>Select Line listing Year, Month and Facility to Load data for.</h3></td></tr>                    
                                  
                                   
                                      </table>
@@ -320,11 +347,11 @@ input:focus {
                                         
                                    <br/>
                                     <div class="controls">
-                                        <input type="input" onClick="loadBabyValidation();"  id='savebutton' value="Add Baby"  style="margin-left: 0%;" class="btn-lg btn-success active">
+                                        <input type="input" onClick="getElementsToBeSaved('baby');"  id='savebutton' value="Add Baby"  style="margin-left: 0%;" class="btn-sm btn-success active">
                                             
                                      </div>
                                      <div class="controls">
-                                        <button type="submit" id='updatebutton' onclick="loadBabyValidation();" style="margin-left: 0%;display:none;" class="btn-lg btn-info active">
+                                        <button type="submit" id='updatebutton' onclick="getElementsToBeSaved('baby');" style="margin-left: 0%;display:none;" class="btn-sm btn-info active">
                                             Update Baby 
                                         </button>
                                     </div>                                   
@@ -695,264 +722,18 @@ input:focus {
     
 
 
-   //added 201605 
-    var progressbarstoskip=[];
-    var allindicatorsarray=[];
-    var allcommentsarray=[];
-    var allprogressbar_hiddentext_array=[];
-     
-
 //createdynamicinputs();
 
-function sumofindicators(sourceindicators,destinationindicator){
-    var sourceindicatorsarray=sourceindicators.split("@");
-  
-   
-    var destinationelement=destinationindicator;
-    var total=0;
-    for(b=0;b<sourceindicatorsarray.length;b++){
-        //check if there
-        var indiic=sourceindicatorsarray[b].replace("_minus_","");
-        var originalindic=sourceindicatorsarray[b];
-        
-        
-        if($("#"+indiic).val()!==''){
-            //remove negative
-            //if(originalindic.indexOf("_minus_") >==0){
-            if(originalindic.indexOf("_minus_")>=0){
-               //has negative 
-                total=parseInt(total)-parseInt($("#"+indiic).val()); 
-            }
-            else {
-            
-      total=parseInt(total)+parseInt($("#"+indiic).val());
-      
-            }
-        
-            $("#"+destinationelement).val(total);
-            }
-            $("#"+destinationelement).val(total);                                   
-        }
-                                              
-                                             
-    
-}
-
-
-
-//=========================================set targets================================
-
-//function runvalidation(){
-//    
-//    var retv=true;
-//    
-//    //hts tsts > HTS Pos
-//    
-//    //HTS Pos > HTS Link
-//    
-//    //HTS_TST
-//    //HTS_TST_POS
-//    //TX_LINK
-//    
-//       var validationsid=["HTS_TST@HTS_TST_POS","HTS_TST_POS@TX_LINK"];
-// 
-//       var agedis=["bl19_Male","bl19_Female","ttl"];
-//       var agedis_detailed=["< 19 Male","< 19 Female","Total"];
-//    
-//    for( var b=0;b<validationsid.length;b++){
-//    for( var a=0;a<agedis.length;a++)
-//    {
-//        
-//    var indicab=validationsid[b].split("@");
-//        
-//      
-//        
-//    var elem_a=$("#"+indicab[0]+"_"+agedis[a]).val();  
-//    var elem_b=$("#"+indicab[1]+"_"+agedis[a]).val();  
-//     console.log("#"+indicab[0]+"_"+agedis[a]+" is "+elem_a);
-//     console.log("#"+indicab[1]+"_"+agedis[a]+" is "+elem_b);
-//    
-//    
-//    if(elem_a===""){elem_a=0;}
-//    if(elem_b===""){elem_b=0;}
-//            
-//            if(elem_a!=="" && elem_b!==""){
-//                
-//                elem_a=parseInt(elem_a);
-//                elem_b=parseInt(elem_b);
-//                
-//                if(elem_b>elem_a) {
-//                    retv=false;
-//                    
-//                    alert(" Data for "+indicab[1]+" "+agedis_detailed[a]+" cannot be more than "+indicab[0]+" "+agedis_detailed[a]);
-//                    $("#"+indicab[0]+"_"+agedis[a]).css('background-color','red');
-//                    $("#"+indicab[1]+"_"+agedis[a]).css('background-color','red');
-//                    break;
-//                                  }
-//                                 
-//                
-//                
-//                                  }
-//                                            
-//    }
-//    
-//     if(retv===false)
-//                                  {
-//                                      
-//                                  break;    
-//                                      
-//                                  }
-//}
-//    
-// return retv;   
-//}
-//    
 
 
 
 
-
-
-
-
-function save_data(){
-    
-
-
-//___indicators to pull___
-
-var id="";
-var yearmonth="";
-var facility="";
-var indicatorid="";
-var _19m="";
-var _19f="";
-var ttl="";
-var userid="";
-
-facility=$("#facility").val();
-
-yearmonth=$("#period").val();
-
-
-
-//console.log("datimid:"+organisationunitid+"\n edate:"+eddate+"\n stdate:"+stdate+"\n daterange:"+daterange+"\n hospital:"+hosi+"\n mflcode"+facility_mfl_code+"\n ward"+ward);
-//<option data-sdate="2019-09-24" data-edate="2019-09-30" data-wk="20" value="2019-09-30">2019-09-24 to 2019-09-30 (Week 20) </option>
-
-//this should happen in a loop
-
-
-if(facility==='' || facility==='Select facility' ){
-    
-  alert("enter facility name");  
-    
-}
-
-
-else if(yearmonth===''  ){
-    
-   alert("Select Reporting Month");  
-    
-}
-
-// else if(runvalidation()===false)
-//    {       
-//        
-//        
-//        
-//    }
-    
-    else {
-    
-
-
-
-$.ajax({
-                    url:'getOtzIndicators',                            
-                    type:'post',  
-                    dataType: 'json',  
-                    success: function(data){
-                        
-                       for(a=0;a<data.length;a++){
-              var isend=false;             
-                          
-var indicatorid=data[a].id;
-var bl19_Male=$("#"+indicatorid+"_bl19_Male").val();
-var bl19_Female=$("#"+indicatorid+"_bl19_Female").val();
-var ttl=$("#"+indicatorid+"_ttl").val();
-var identifier=facility+"_"+yearmonth+"_"+indicatorid;
-        
-        
-      
-
-        
-           //save the data
-           
-           var saveddata={
-               id:identifier,              
-               yearmonth:yearmonth,
-               facility:""+facility,
-               indicatorid:indicatorid,
-               _19m:bl19_Male,
-               _19f:bl19_Female,
-               ttl:ttl,
-               userid:'909090'
-               
-           };
-           
-           
-           
-           
-           if(a===parseInt(data.length)-1){
-               isend=true;
-               
-           }
-           
-           exportData(saveddata,isend);
-                           
-                       } 
-                   
-                    }
-                });
-
-
-
-}
-
-
-
-
-
-    
-}
-
-
-function exportData( data, isend){
-    
-    
-    $.ajax({
-                    url:'saveotz',                            
-                    type:'post',  
-                    dataType: 'html',
-                    data:data ,
-                    success: function(dat) {
-                       if(isend){
-                           
-                           console.log("Data saved Succesfully!");
-                           $("#fedback").html("<font color='green'><h3>Data saved Succesfully!</h3></f>");
-                             setTimeout(refreshujumbe,2000);
-                       } 
-                        
-                    }
-                });
-    
-    
-}
 
 
 function refreshujumbe(){
     
-  $("#fedback").html("");   
+  $("#fedback").html(""); 
+ refreshPage();
     
 }
 
@@ -1003,25 +784,7 @@ for(b=0;b<allindicatorsarray.length;b++){
     
 }
 
-function clearcmtsandprcent(){
-    
-       //clear progress bar hidden fields too
-   
-  for(b=0;b<allprogressbar_hiddentext_array.length;b++){
-    
-  $("#"+allprogressbar_hiddentext_array[b]).val("");  
-    
-} 
-       
-       //comnts
- 
-     for(b=0;b<allcommentsarray.length;b++){
-    
-  $("#"+allcommentsarray[b]).val("");  
-    
-                                            }//end of for loop 
-    
-}
+
 
 var dbdata="";
 
@@ -1076,7 +839,7 @@ function showreports(){
 $("#refreshpage" ).click(function() 
 {
     window.location.reload();
-    clearweeklyfields();
+   
 });
 
 $("#refr" ).click(function() 
@@ -1337,6 +1100,7 @@ function isdisplayindicators()
      });
      
      setuuid('id');
+     setuuid('hei_id');
                         
                         
                     }});    
@@ -1346,8 +1110,10 @@ function isdisplayindicators()
                     dataType: 'html',  
                     success: function(data) 
                     {
-                        $("#dynamicindicatorshei").show();
+                   $("#dynamicindicatorshei").show();
                    $("#dynamicindicatorshei").html(data); 
+                   loadAddedMothersPerSite("");
+                   
                          $('.dates').datepicker({
                              todayHighlight: true, daysOfWeekDisabled: "0,6",clearBtn: true, autoclose: true,format: "yyyy-mm-dd",
      });
@@ -1370,7 +1136,157 @@ function isdisplayindicators()
     
 }
 
+function getElementsToBeSaved(formname)
+{ 
+    
+    
+    //First do validation checks then save
+    
+    var dt=$("#period").val();
+   
+    var fc=$("#facility").val().trim();
+      
+ 
+            //now load the data
+          $.ajax({
+                    url:'loadPmtctIndicators?fm='+formname,                            
+                    type:'post',  
+                    dataType: 'json',  
+                    success: function(data) 
+                    {
+                        var dt = data;
+ 
+ 
+ console.log('Save '+formname+' Elements'+dt);
+ //no call the save function and pass the list of variables
+          
+          saveFormDetails(dt);
+                        
+                    }});    
+         
+           
+            
+          
+    
+}
 
+
+
+function saveFormDetails(de)
+{
+
+
+
+
+ var pid=$("#"+de[0].client_identifier_field).val(); 
+    
+    
+    console.log("You are requested to save "+de);    
+    
+    //First Delete any entered data
+    
+    
+     $.ajax({
+                    url:'deletePatientRecords',                            
+                    type:'post',  
+                    data:{pid:pid},
+                    dataType: 'html',  
+                    success: function(fdbk) 
+                    {
+             
+             if(fdbk.trim()==='success')
+             {
+             
+                 var last_save_status="";
+               for(var i=0;i<de.length;i++){
+                       
+                       
+                       //"id","facility_id","linelisting_month","patient_id","indicator_id","value","encounter_id","user_id","","is_locked"
+                             console.log("at saving point"+de[i].element_id);
+                             
+   var dt=$("#period").val();
+   var fc=$("#facility").val().trim();
+   var tid=uuidv4();
+   var elementid=de[i].element_id; 
+   var val=$("#"+de[i].element_id).val(); 
+  
+             
+             
+             //First delete the existing Record in the database then after deletion, proceed and save
+             //
+             
+             
+        
+             
+               $.ajax({
+                    url:'save_pmtct_ovc',                            
+                    type:'post',  
+                    data:{id:tid,
+                        facility_id:fc,
+                        linelisting_month:dt,
+                        patient_id:pid,
+                        indicator_id:elementid,
+                        value:val,
+                        encounter_id:pid,
+                        user_id:"not specified",
+                        is_locked:"1"},
+                    dataType: 'html',  
+                    success: function(dat) 
+                    {
+                        
+  last_save_status=dat;
+  
+   
+  
+ 
+                    },
+        error: function (xhr, ajaxOptions, thrownError) {
+        alert(xhr.status);
+        alert(thrownError);
+      }
+                
+            
+            }); 
+           
+           
+           if(i===parseInt(de.length)-1){
+            
+            
+            //refresh page
+            
+            console.log("Data saved Succesfully!"+last_save_status);
+                           $("#fedback").html("<font color='green'><h3>Data saved Succesfully</h3></f>");
+                             setTimeout(refreshujumbe,4000);
+            
+               
+           }
+           
+        
+                     } //end of for loop
+    
+             
+            }
+            else {
+             console.log("records not saved successfully");   
+                
+                }
+                     
+    } ,
+    
+    error: function (xhr, ajaxOptions, thrownError) {
+        alert(xhr.status);
+        alert(thrownError);
+      }
+
+
+
+
+});
+    
+    
+    
+  
+}
 
 
  
@@ -1395,6 +1311,50 @@ $('#dataentry').on('keydown', 'input, select, textarea', function(e) {
     }
 });
 
+
+
+function loadAddedMothersPerSite(selval){
+    
+    //loadmtrs_sel_val,act=loadmothers,fac
+    
+    { 
+    
+    
+    //First do validation checks then save
+    
+//    var dt=$("#period").val();
+   
+    var fc=$("#facility").val().trim();
+      
+ 
+            //now load the data
+          $.ajax({
+                    url:'dataPulls',                            
+                    type:'post',  
+                    dataType: 'html',  
+                    data:{act:"loadmothers",
+                         fac:fc,
+                         loadmtrs_sel_val:selval},
+                    success: function(data) 
+                    {
+                        var dt = data;
+ 
+ 
+ console.log('Loaded Option '+dt);
+ //no call the save function and pass the list of variables
+          
+          $("#mother_id").html(dt);
+                        
+                    }});    
+         
+           
+            
+          
+    
+}
+    
+    
+}
 
 
 
@@ -1433,6 +1393,15 @@ function setuuid(id){
     
     $("#"+id).val(uuidv4());
 }
+
+
+function refreshPage(){
+    
+      window.location.reload();
+    
+}
+
+
               </script>
 
 	</body>

@@ -600,6 +600,14 @@
         <servlet-name>importderv93</servlet-name>
         <servlet-class>imports.importderv93</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>deletePatientRecords</servlet-name>
+        <servlet-class>pmtct_ovc.deletePatientRecords</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>dataPulls</servlet-name>
+        <servlet-class>pmtct_ovc.dataPulls</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loadcohort</servlet-name>
         <url-pattern>/loadcohort</url-pattern>
@@ -1199,6 +1207,14 @@
     <servlet-mapping>
         <servlet-name>importderv93</servlet-name>
         <url-pattern>/importderv93</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>deletePatientRecords</servlet-name>
+        <url-pattern>/deletePatientRecords</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>dataPulls</servlet-name>
+        <url-pattern>/dataPulls</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

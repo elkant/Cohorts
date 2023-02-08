@@ -9,7 +9,9 @@ import db.dbConn;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Random;
 import java.util.logging.Level;
@@ -39,6 +41,7 @@ public class loadPmtctIndicators extends HttpServlet {
             String fc="";
             String pid="";
             String wr="";
+        
             
 if(request.getParameter("fc")!=null){fc=request.getParameter("fc");}
 if(request.getParameter("dt")!=null){dt=request.getParameter("dt");}
@@ -46,6 +49,11 @@ if(request.getParameter("pid")!=null){dt=request.getParameter("pid");}
 if(request.getParameter("wr")!=null){wr=request.getParameter("wr");}
             
             
+//below parameters are used when you click on to get indicators
+
+  String fm="";
+            
+if(request.getParameter("fm")!=null){fm=request.getParameter("fm");}
             
            dbConn conn = new dbConn();
            if(!fc.equals("")&&!dt.equals(""))
@@ -54,9 +62,16 @@ if(request.getParameter("wr")!=null){wr=request.getParameter("wr");}
            out.println(getHtmlTable(conn,dt,fc,pid,wr));
            
            }
+           else if (!fm.equals("")) {
+           //return indicator id and 
+           ResultSet r=pullElementsBySection(conn, fm);
+           
+           out.println(toJsonDynamic(r));
+          
+           }
            else {
            //return indicators
-           ResultSet r=pullIndicators(conn,wr);
+           ResultSet r=pullIndicators(conn, pid);
            
            out.println(toJson(r));
           
@@ -309,6 +324,8 @@ public JSONArray toJson(ResultSet res)
 
     
     
+    
+    
 JSONArray jo2 = new JSONArray();
 int count=0;
 
@@ -372,6 +389,61 @@ count++;
     
 return jo2;    
 }
+public JSONArray toJsonDynamic(ResultSet res) 
+        throws SQLException
+{
+
+    
+int count1=0;
+
+  ResultSetMetaData metaData = res.getMetaData();
+        int columnCount = metaData.getColumnCount();
+
+         
+        int count = count1;
+        ArrayList mycolumns = new ArrayList();
+    
+    
+    
+JSONArray jo2 = new JSONArray();
+
+
+
+
+while(res.next())
+{
+    
+     if (count == (count1)) 
+     {
+
+                for (int i = 1; i <= columnCount; i++) {
+                    mycolumns.add(metaData.getColumnLabel(i));                    
+                  
+                }//end of for loop
+                count++;
+            }//end of if
+    
+    
+    
+JSONObject jo = new JSONObject(); 
+
+for(int c=0;c<mycolumns.size();c++){
+    
+jo.put(mycolumns.get(c).toString(),res.getString(mycolumns.get(c).toString()));
+
+
+}
+
+
+
+jo2.put(jo);
+    
+count++;
+    
+}
+    
+return jo2;    
+}
 
 
 public String buildInputField(String field_type, String is_future_date, String id, String Value, String label, String readonly, String placeholder, String is_hidden, String required,String js_class, String guide, String condition, String show_section,String section,String onchange,String opts){
@@ -379,7 +451,7 @@ String finalelement="";
 //___Required attribute
 String req_asterick="";
 String req_elem="";
-if(required.equals("Yes")){
+if(required.equalsIgnoreCase("yes")){
 req_asterick="<font color='red'>*</font>";
 req_elem="required";
 }
@@ -418,7 +490,7 @@ finalelement=""+section_n
 "<label>" +
 req_asterick+"<b>"+label+"</b>\n" +
 "</label>\n" +
-"<input "+req_elem+" "+readonly_elem+" value='"+Value+"' onchange='"+onchange+"' placeholder='"+guide+"'   autocomplete='off' "+isdateclass+"  class='form-control "+isdate+" "+js_class+"' type='text' name='"+id+"' id='"+id+"' />" +
+"<input "+req_elem+" "+readonly_elem+" value='"+Value+"' onchange='"+onchange+"' placeholder='"+guide+"' title='"+guide+"'  autocomplete='off' "+isdateclass+"  class='form-control "+isdate+" "+js_class+"' type='text' name='"+id+"' id='"+id+"' />" +
 "</div>"
         + ""
         + "";
@@ -435,7 +507,7 @@ String finalelement="";
 //___Required attribute
 String req_asterick="";
 String req_elem="";
-if(required.equals("Yes")){
+if(required.equalsIgnoreCase("yes")){
 req_asterick="<font color='red'>*</font>";
 req_elem="required";
 }
@@ -474,7 +546,7 @@ finalelement=""+section_n
 "<label>" +
 req_asterick+"<b>"+label+"</b>\n" +
 "</label>\n" +
-"<textarea "+req_elem+" "+readonly_elem+" value='"+Value+"' placeholder='"+guide+"' onchange='"+onchange+"' rows='1' cols='50'   autocomplete='off' "+isdateclass+"  class='form-control "+js_class+"'  name='"+id+"' id='"+id+"' ></textarea>" +
+"<textarea "+req_elem+" "+readonly_elem+" value='"+Value+"' placeholder='"+guide+"' title='"+guide+"' onchange='"+onchange+"' rows='1' cols='50'   autocomplete='off' "+isdateclass+"  class='form-control "+js_class+"'  name='"+id+"' id='"+id+"' ></textarea>" +
 "</div>"
         + ""
         + "";
@@ -492,7 +564,7 @@ String finalelement="";
 //___Required attribute
 String req_asterick="";
 String req_elem="";
-if(required.equals("Yes")){
+if(required.equalsIgnoreCase("yes")){
 req_asterick="<font color='red'>*</font>";
 req_elem="required";
 }
@@ -539,7 +611,7 @@ finalelement=""+section_n
 "<label>" +
 req_asterick+"<b>"+label+"</b>\n" +
 "</label>\n" +
-"<select "+req_elem+" "+readonly_elem+"  onchange='"+onchange+"'       class='form-control "+js_class+"' type='text' name='"+id+"' id='"+id+"' >"
+"<select "+req_elem+" "+readonly_elem+"  onchange='"+onchange+"'  title='"+guide+"'     class='form-control "+js_class+"' type='text' name='"+id+"' id='"+id+"' >"
         +buildopts(opts, Value)
         +"</select>" +
 "</div>"
@@ -586,6 +658,26 @@ public int getRandNo(int start, int end ){
         long fraction = (long) ((end - start + 1 ) * random.nextDouble());
         return ((int)(fraction + start));
     }
-      
+  
+
+public ResultSet pullElementsBySection(dbConn conn, String Sectionname) throws SQLException 
+{
+    
+    //This method gets data that belongs to a specific form only
+    String where="";
+
+    if(Sectionname.equals("")){where="";} else {where="and  Form in ('"+Sectionname+"')";}
+    
+String qry="select  ifnull(element_id,'') as element_id,client_identifier_field from internal_system.pmtct_ovc_indicators where is_active='1' "+where+"";
+
+    System.out.println(""+qry);
+conn.rs=conn.st.executeQuery(qry);
+
+
+return conn.rs;
+
+}
+
+
 
 }
