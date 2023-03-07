@@ -244,11 +244,11 @@ input:focus {
                     <!--tabs-->
                     <div class="panel">
                         <ul class="nav nav-tabs " id="myTab">
-                            <li class="active newdata"> <a href="#addmother" id="newmotherdatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-plus"> </i> <font color='green'><b>Add </b></font> Mother(s)</a></li>
-                            <li class=" editdata"  >    <a href="#addbaby" id="newbabydatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-baby-formula"></i> <font color='green'><b>Add </b></font> Baby</a></li>
+                            <li class="active newdata"> <a href="#addmother" id="addmotherbutton" data-toggle="tab">  <i class="glyphicon glyphicon-plus"> </i> <font color='green'><b>Add </b></font> Mother(s)</a></li>
+                            <li class=" editdata"  >    <a href="#addbaby" id="addbabybutton" data-toggle="tab">  <i class="glyphicon glyphicon-baby-formula"></i> <font color='green'><b>Add </b></font> Baby</a></li>
                            
-                            <li class="newdata"> <a href="#editmother" id="editmotherdatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-edit"> </i> <font color='green'><b>Edit</b></font> Mothers</a></li>
-                            <li class=" editdata"  >    <a href="#editbaby" id="editbabydatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-edit"></i> <font color='green'><b>Edit</b></font>Baby</a></li>
+                            <li class="newdata"> <a href="#editmother" id="editmotherbutton" data-toggle="tab">  <i class="glyphicon glyphicon-edit"> </i> <font color='green'><b>Edit</b></font> Mothers</a></li>
+                            <li class=" editdata"  >    <a href="#editbaby" id="editbabybutton" data-toggle="tab">  <i class="glyphicon glyphicon-edit"></i> <font color='green'><b>Edit</b></font>Baby</a></li>
                             <li><a href="#reports" style="" id="reportsbutton" data-toggle="tab"> <i class="glyphicon glyphicon-stats"></i>Reports</a></li> 
                             <!--<li><a href="#searchdata" data-toggle="tab"> <i class="glyphicon glyphicon-search"></i> Edit Data</a></li>--> 
                            <!-- <li><a href="#export" data-toggle="tab"> <i class="glyphicon glyphicon-cloud-upload"></i> Data Export</a></li>-->
@@ -289,7 +289,7 @@ input:focus {
                                 
                                 <!--<form id="addmothersform">-->
                                 
-                                         <table class='table table-striped table-bordered' id="dynamicindicators" style="display:none;border :3px solid #4b8df8;padding:1px;" > 
+                                         <table class='table table-striped table-bordered' id="dynamicindicatorsmother" style="display:none;border :3px solid #4b8df8;padding:1px;" > 
                                    
                                 <!------INDICATORS----->
                                            <tr><td><h3>Select Line listing Year, Month and Facility to Load data for.</h3></td></tr>                    
@@ -301,7 +301,7 @@ input:focus {
                                 <div class="control-group col-xs-12">
                                         <div id='fedback' class="alert-info">Note: Please enter all the required data.</div>
                                    <br/>
-                                    <div class="controls">
+                                    <div style="display:none;" class="controls savebuttons">
                                         <input type="input" onClick="getElementsToBeSaved('mother');"  id='savebutton' value="Add Mother"  style="margin-left: 0%;" class="btn-sm btn-success active">
                                             
                                      </div>
@@ -334,7 +334,7 @@ input:focus {
                                 
                                <!--- Heis---->
                                
-                               <table class='table table-striped table-bordered' id="dynamicindicatorshei" style="display:none;border :3px solid #4b8df8;padding:1px;" > 
+                               <table class='table table-striped table-bordered' id="dynamicindicatorsbaby" style="display:none;border :3px solid #4b8df8;padding:1px;" > 
                                    
                                 <!------INDICATORS----->
                                                                
@@ -346,7 +346,7 @@ input:focus {
                                <div class="control-group col-xs-12">
                                         
                                    <br/>
-                                    <div class="controls">
+                                    <div style="display:none;" class="controls savebuttons">
                                         <input type="input" onClick="getElementsToBeSaved('baby');"  id='savebutton' value="Add Baby"  style="margin-left: 0%;" class="btn-sm btn-success active">
                                             
                                      </div>
@@ -363,17 +363,17 @@ input:focus {
                             
                              <div class="tab-pane well" id="editmother">
                                 
-                                
+                                <div id="editmother_div"></div>
                                <!--- Data export---->
                             </div>
       <div class="tab-pane well" id="editbaby">
                                 
-                                
+                               <div id="editbaby_div"></div>   
                                <!--- Data export---->
                             </div>
                             
 <div class="tab-pane well" id="reports">
-<form action="otzReports" id="reportingForm">
+<form action="pmtctOvcReports" id="reportingForm">
 
                                         <!--Dashboard code-->
 
@@ -406,7 +406,7 @@ input:focus {
 
                                                     <div class="controls">
                                                         <select class="form-control input-sm" onchange="checkFormAction();"   name='report' id='report' >
-                                                            <option value='otzReports'>1.Tracker and Data Summary</option>
+                                                            <option value='pmtctOvcReports'>1.Tracker and Data Summary</option>
                                                            
                                                             <!--<option value='hts_self_reports'>6.HTS Self</option>-->
 
@@ -1082,10 +1082,18 @@ function isdisplayindicators()
     if( dt!=='' && fc!=='Select Facility'&& fc!=='')
     {        
     // display facility name
-    $("#dynamicindicators").show();    
+    $("#dynamicindicatorsmother").show();    
      
             var motherwhere="Form='mother'";
             var babywhere="Form='baby'";
+            
+            
+            //also load the edit fields
+           
+            loadEdits('baby','editbaby_div');
+             loadEdits('mother','editmother_div');
+            
+            
             //now load the data
           $.ajax({
                     url:'loadPmtctIndicators?dt='+dt+"&fc="+fc+"&wr="+motherwhere,                            
@@ -1094,13 +1102,17 @@ function isdisplayindicators()
                     success: function(data) 
                     {
                         
-                   $("#dynamicindicators").html(data); 
+                       
+                        $(".savebuttons").show();
+                        
+                   $("#dynamicindicatorsmother").html(data); 
+                    setuuid('id');
                          $('.dates').datepicker({
                              todayHighlight: true, daysOfWeekDisabled: "0,6",clearBtn: true, autoclose: true,format: "yyyy-mm-dd",
      });
      
-     setuuid('id');
-     setuuid('hei_id');
+     
+
                         
                         
                     }});    
@@ -1110,10 +1122,10 @@ function isdisplayindicators()
                     dataType: 'html',  
                     success: function(data) 
                     {
-                   $("#dynamicindicatorshei").show();
-                   $("#dynamicindicatorshei").html(data); 
+                   $("#dynamicindicatorsbaby").show();
+                   $("#dynamicindicatorsbaby").html(data); 
                    loadAddedMothersPerSite("");
-                   
+                        setuuid('hei_id');
                          $('.dates').datepicker({
                              todayHighlight: true, daysOfWeekDisabled: "0,6",clearBtn: true, autoclose: true,format: "yyyy-mm-dd",
      });
@@ -1128,8 +1140,66 @@ function isdisplayindicators()
     }
     else 
     {
-    $("#dynamicindicators").hide();
-    $("#dynamicindicatorshei").hide();
+    $("#dynamicindicatorsmother").hide();
+    $("#dynamicindicatorsbaby").hide();
+      $(".savebuttons").hide();
+    //        
+    }
+    
+    
+}
+function loadExistingClient(clientid,frm)
+{ 
+    
+    //once the edit form is clicked, the assumption is that the add section will be loaded
+    $('#add'+frm+"button").click();
+    
+    var dt=$("#period").val();
+   
+    var fc=$("#facility").val().trim();
+//    console.log("_"+fc+"vs"+dt);
+    if( dt!=='' && fc!=='Select Facility'&& fc!=='')
+    {        
+    // display facility name
+    $("#dynamicindicatorsmother").show();    
+     
+            var frmwhere="Form='"+frm+"'";
+            
+            
+            
+           
+            
+            //now load the data
+          $.ajax({
+                    url:'loadPmtctIndicators',                            
+                    type:'post',  
+                    data:{
+                        dt:dt,
+                        fc:fc,
+                        wr:frmwhere,
+                    pid:clientid},
+                    dataType: 'html',  
+                    success: function(data) 
+                    {
+                         $(".savebuttons").show();
+                   $("#dynamicindicators"+frm).html(data); 
+                         $('.dates').datepicker({
+                             todayHighlight: true, daysOfWeekDisabled: "0,6",clearBtn: true, autoclose: true,format: "yyyy-mm-dd",
+     });
+     
+   
+                        
+                        
+                    }});    
+             
+           
+            
+            
+    }
+    else 
+    {
+    $("#dynamicindicatorsmother").hide();
+    $("#dynamicindicatorsbaby").hide();
     //        
     }
     
@@ -1344,6 +1414,65 @@ function loadAddedMothersPerSite(selval){
  //no call the save function and pass the list of variables
           
           $("#mother_id").html(dt);
+                        
+                    }});    
+         
+           
+            
+          
+    
+}
+    
+    
+}
+
+
+
+//showedits
+
+function loadEdits(formtoload,elementtoappend){
+    
+    //loadmtrs_sel_val,act=loadmothers,fac
+    
+    { 
+    
+    
+    //First do validation checks then save
+    
+//    var dt=$("#period").val();
+   
+    var fc=$("#facility").val().trim();
+      
+  //now load the data
+          $.ajax({
+                    url:'dataPulls',                            
+                    type:'post',  
+                   
+                    dataType: 'html',  
+                    data:{act:"showedits",
+                         fac:fc,
+                         fm:formtoload,
+                         table_docker:elementtoappend},
+                    success: function(data) 
+                    {
+                        var dt = data;
+                        
+     
+//<label class='btn btn-success'>Edit</label>          
+$("#"+elementtoappend).html(""+dt);
+         
+	  
+                
+          $('#searchtable_'+elementtoappend).DataTable({              
+              "autoWidth": true,
+              "paging": true,
+              "pagingType": "full",
+              "lengthChange": false                    
+          });
+            
+           
+          
+          //$("#mother_id").html(dt);
                         
                     }});    
          

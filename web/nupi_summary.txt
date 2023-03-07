@@ -6,9 +6,14 @@ sum( case when `Age Bracket` like '<15 Yrs' then 1 else 0 end ) as `TX_CURR < 15
 sum( case when `Age Bracket` like '15+ Yrs' then 1 else 0 end ) as `TX_CURR 15 +`,
 sum( case when `Age Bracket` like '<15 Yrs' and nupi !='Missing' then 1 else 0 end ) as `TX_CURR Verified < 15`,
 sum( case when `Age Bracket` like '15+ Yrs' and nupi !='Missing' then 1 else 0 end ) as `TX_CURR Verified 15+`,
- sum( case when `Age Bracket` like '<15 Yrs' and nupi ='Missing' and (`Last Visit Date` between DATE_SUB(curdate(), INTERVAL 7 DAY) and curdate() ) then 1 else 0 end ) as `Patients Scheduled for Appointment this week without Nupi < 15`,
-sum( case when `Age Bracket` like '15+ Yrs' and nupi ='Missing' and (`Last Visit Date` between DATE_SUB(curdate(), INTERVAL 7 DAY) and curdate() ) then 1 else 0 end ) as `Patients Scheduled for Appointment this week without Nupi 15+`
- 
+
+sum( case when `Age Bracket` like '<15 Yrs' and Vaccination_status like 'Fully Vaccinated' then 1 else 0 end ) as `Fully Vaccinated < 15`,
+sum( case when `Age Bracket` like '15+ Yrs' and Vaccination_status like 'Fully Vaccinated' then 1 else 0 end ) as `Fully Vaccinated 15+`,
+
+sum( case when `Age Bracket` like '<15 Yrs' and Vaccination_status like 'Partially Vaccinated' then 1 else 0 end ) as `Partially Vaccinated < 15`,
+sum( case when `Age Bracket` like '15+ Yrs' and Vaccination_status like 'Partially Vaccinated' then 1 else 0 end ) as `Partially Vaccinated 15+`
+
+ #Vaccination_status
  from(
 select 
 '1. TX_CURR' as indicator,
@@ -25,6 +30,7 @@ t.patient_id
   as 'Age Bracket'
   ,latest_tca as 'Next Appointment Date'
   ,latest_vis_date as 'Last Visit Date'
+  ,ifnull(final_vaccination_status,'') as Vaccination_status 
                 from(
                     select fup.visit_date,fup.patient_id, max(e.visit_date) as enroll_date,
                            greatest(max(e.visit_date), ifnull(max(date(e.transfer_in_date)),'0000-00-00')) as latest_enrolment_date,
@@ -55,6 +61,16 @@ t.patient_id
                               and (date(latest_vis_date) >= date(date_discontinued) or date(latest_tca) >= date(date_discontinued) or disc_patient is null)
                             )
                         )
-                    ) t) t1 
+                    ) t
+                    
+                    left join 
+                    
+                    (select patient_id, final_vaccination_status from kenyaemr_datatools.covid_19_assessment cvd
+
+join (SELECT patient_id as pid_cv,max(visit_date) as max_dt FROM kenyaemr_datatools.covid_19_assessment where 
+final_vaccination_status is not null  group by patient_id) max_cvd on max_cvd.pid_cv=cvd.patient_id and max_dt=cvd.visit_date
+group by patient_id having final_vaccination_status is not null ) cv on cv.patient_id=t.patient_id 
+                    
+                    ) t1 
 					
 					cross join kenyaemr_datatools.default_facility_info

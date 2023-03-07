@@ -342,7 +342,7 @@ public JSONObject getData( dbConn conn, HashMap par) throws SQLException {
 
 int hasdata=0;
 
-String getdata=" select * from internal_system.rri_gaps_data where yearmonth='"+par.get("yearmonth")+"' and facility_id='"+par.get("facility")+"' and indicator_id not in (1,10,13,16,40,41,42,43) "
+String getdata=" select * from internal_system.rri_gaps_data where yearmonth='"+par.get("yearmonth")+"' and facility_id='"+par.get("facility")+"' and indicator_id not in ( select id from internal_system.rri_gaps_indicators where is_baseline=1) "
         + " UNION ALL "
         + " select * from internal_system.rri_gaps_baseline where yearmonth='"+par.get("yearmonth")+"' and facility_id='"+par.get("facility")+"' ;";
   

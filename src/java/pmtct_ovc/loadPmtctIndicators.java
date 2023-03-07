@@ -45,7 +45,7 @@ public class loadPmtctIndicators extends HttpServlet {
             
 if(request.getParameter("fc")!=null){fc=request.getParameter("fc");}
 if(request.getParameter("dt")!=null){dt=request.getParameter("dt");}
-if(request.getParameter("pid")!=null){dt=request.getParameter("pid");}
+if(request.getParameter("pid")!=null){pid=request.getParameter("pid");}
 if(request.getParameter("wr")!=null){wr=request.getParameter("wr");}
             
             
@@ -146,7 +146,7 @@ while(r.next()){
     String showsection=r.getString("show_section");
     String section_name=r.getString("section");
     String indic=r.getString("label");
-    String id=r.getString("indicator_id");
+    String id=r.getString("element_id");
     String date=r.getString("indicator_id");
    // String indicator_code=r.getString("code");
     
@@ -182,14 +182,15 @@ String show_section=r.getString("show_section");
     //if length is greater than 0
     if(!jo.get("length").toString().equals("0"))
     {
-      
+        System.out.println("ID ni "+id);
+        System.out.println(""+jo.toString());
     if(jo.get(id)!=null)
     {
-         
+       
         JSONObject joage=(JSONObject) jo.get(id);
         
          val=joage.get("value").toString();
-       
+        System.out.println("Value ya "+id+" ni "+val);
     }
         
     
@@ -260,8 +261,8 @@ hasdata++;
 hm2.put("value", conn.rs1.getString("value"));
 hm2.put("indicator_id", conn.rs1.getString("indicator_id"));
 hm2.put("patient_id", conn.rs1.getString("patient_id"));
-hm2.put("listing_month", conn.rs1.getString("listing_month"));
-hm2.put("userid", conn.rs1.getString("userid"));
+hm2.put("linelisting_month", conn.rs1.getString("linelisting_month"));
+hm2.put("user_id", conn.rs1.getString("user_id"));
 hm2.put("last_updated", conn.rs1.getString("last_updated"));
 hm2.put("timestamp", conn.rs1.getString("timestamp"));
 hm2.put("facility_id", conn.rs1.getString("facility_id"));
@@ -309,7 +310,7 @@ String qry="select "
 " ifnull(show_section,'') as show_section"
         + " from internal_system.pmtct_ovc_indicators where is_active='1' and "+where+" ";
 
-    System.out.println(""+qry);
+//    System.out.println(""+qry);
 conn.rs=conn.st.executeQuery(qry);
 
 
@@ -546,7 +547,7 @@ finalelement=""+section_n
 "<label>" +
 req_asterick+"<b>"+label+"</b>\n" +
 "</label>\n" +
-"<textarea "+req_elem+" "+readonly_elem+" value='"+Value+"' placeholder='"+guide+"' title='"+guide+"' onchange='"+onchange+"' rows='1' cols='50'   autocomplete='off' "+isdateclass+"  class='form-control "+js_class+"'  name='"+id+"' id='"+id+"' ></textarea>" +
+"<textarea "+req_elem+" "+readonly_elem+"  placeholder='"+guide+"' title='"+guide+"' onchange='"+onchange+"' rows='1' cols='50'   autocomplete='off' "+isdateclass+"  class='form-control "+js_class+"'  name='"+id+"' id='"+id+"' >"+Value+"</textarea>" +
 "</div>"
         + ""
         + "";

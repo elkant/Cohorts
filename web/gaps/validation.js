@@ -546,7 +546,7 @@ function notEqual(valids, message, iscritical, sectionid) {
                         //$("#" + columns[i] + "_" + valarray[1]).focus();
                     }
            
-                    savebutton_inactive(sectionid);
+                    savebutton_inactive_nohide(sectionid);
            
                     redborder(columns[i], valarray[0],message);
                     redborder(columns[i], valarray[1],message);
@@ -627,10 +627,16 @@ function redborder(age, elem,msg) {
 
     for (var v = 0; v < valsarr.length; v++)
     {
-        if(document.getElementById(age + "_" + valsarr[v])!==null){
-        $("#" + age + "_" + valsarr[v]).css('border-color', '#ff0000');
-        $("#" + age + "_" + valsarr[v]).css('background', '#ff0000');
-         $("#" + age + "_" + valsarr[v]).prop('title',msg);
+        if(document.getElementById(valsarr[v])!==null){
+        $("#" +  valsarr[v]).css('border-color', '#ff0000');
+        $("#" +  valsarr[v]).css('background', '#ff0000');
+         $("#" +  valsarr[v]).prop('title',msg);
+         
+         
+//          $("#" + age + "_" + valsarr[v]).css('border-color', '#ff0000');
+//        $("#" + age + "_" + valsarr[v]).css('background', '#ff0000');
+//         $("#" + age + "_" + valsarr[v]).prop('title',msg);
+         
      }
            
 
@@ -646,10 +652,14 @@ function yellowborder(age, elem,msg) {
 
     for (var v = 0; v < valsarr.length; v++)
     {
-        if(document.getElementById(age + "_" + valsarr[v])!==null){
-        $("#" + age + "_" + valsarr[v]).css('border-color', '#fc7044');
-        $("#" + age + "_" + valsarr[v]).css('background', '#fc7044');
-        $("#" + age + "_" + valsarr[v]).prop('title',msg);
+        if(document.getElementById( valsarr[v])!==null){
+        $("#" +  valsarr[v]).css('border-color', '#fc7044');
+        $("#" +  valsarr[v]).css('background', '#fc7044');
+        $("#" +  valsarr[v]).prop('title',msg);
+        
+//        $("#" + age + "_" + valsarr[v]).css('border-color', '#fc7044');
+//        $("#" + age + "_" + valsarr[v]).css('background', '#fc7044');
+//        $("#" + age + "_" + valsarr[v]).prop('title',msg);
     }
     
 
@@ -666,11 +676,13 @@ function blackborder(age, elem) {
 
     for (var v = 0; v < valsarr.length; v++)
     {
-        if(document.getElementById(age + "_" + valsarr[v])!==null){
-        $("#" + age + "_" + valsarr[v]).css('border-color', '#000000');
+        if(document.getElementById(valsarr[v])!==null){
+        $("#" +  valsarr[v]).css('border-color', '#000000');
+        //$("#" + age + "_" + valsarr[v]).css('border-color', '#000000');
         //skip blank elements
-        if($("#" + age + "_" + valsarr[v]).val()!==''){
-        $("#" + age + "_" + valsarr[v]).css('background', '#fae512');
+        if($("#" + valsarr[v]).val()!==''){
+        //$("#" + age + "_" + valsarr[v]).css('background', '#fae512');
+        $("#" + valsarr[v]).css('background', '#fae512');
                                                        }
                                                    }
         
@@ -682,6 +694,7 @@ function blackborder(age, elem) {
 
 
 function savebutton_active(sectionid) {
+     $("#validate_" + sectionid).html('Saved');
    var saverpt=$("#validate_"+sectionid).attr("data-save_"+sectionid);
    console.log(saverpt);
         $("#validate_" + sectionid).css('background', '#4d90fe');
@@ -702,7 +715,19 @@ function savebutton_inactive(sectionid) {
          $("#validate_"+sectionid).removeClass('blue');
          $("#validate_" + sectionid).css('background', '#ff0000');
          $("#validate_" + sectionid).css('color', '#ffffff');
-          $("#validate_"+sectionid).hide();
-            $("#msg"+sectionid).html("Validation Error!. Please correct to save entries");
+//          $("#validate_"+sectionid).hide();
+           // $("#msg"+sectionid).html("Validation Error!. Please correct to save entries");
+  
+}
+
+function savebutton_inactive_nohide(sectionid) {
+   
+      
+        $("#validate_" + sectionid).html('Not Saved');
+         $("#validate_"+sectionid).removeClass('blue');
+         $("#validate_" + sectionid).css('background', '#ff0000');
+         $("#validate_" + sectionid).css('color', '#ffffff');
+//          $("#validate_"+sectionid).hide();
+           // $("#msg"+sectionid).html("Validation Error!. Please correct to save entries");
   
 }

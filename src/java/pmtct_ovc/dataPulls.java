@@ -50,16 +50,37 @@ public class dataPulls extends HttpServlet {
             //below variable will tell this servlet what to do
             //it will call various methods and return different values in json format
             
+            
+            String userregion="";
+            
+           
+            
             String act="";
             String loadmtrs_sel_val="";
+            String fm="";
+            String table_docker="";
             //loadmtrs_sel_val,act=loadmothers,fac
             
             if(request.getParameter("act")!=null){act=request.getParameter("act");}
             if(request.getParameter("fac")!=null){fac=request.getParameter("fac");}
+           
             if(request.getParameter("loadmtrs_sel_val")!=null){loadmtrs_sel_val=request.getParameter("loadmtrs_sel_val");}
             
             
             if(act.equals("loadmothers")){out.println(buildoptsFromDbResultSet(conn,pullAddedMothers(conn, fac),loadmtrs_sel_val));}
+            
+             if(request.getParameter("fm")!=null){fm=request.getParameter("fm");}
+             if(request.getParameter("table_docker")!=null){table_docker=request.getParameter("table_docker");}
+             
+             //A table will load both headers and data values dynamically
+            if(act.equals("showedits"))
+            {               
+                
+               ResultSet rs1=pullAddedDataPerFormForEditing(conn,fm,fac,"sp_pmtct_ovc_pull_all_editing_data_dynamically");
+
+                out.println(buildDataTable(conn,rs1,table_docker,fm));                                               
+    
+            }
             
             
         }
@@ -131,6 +152,41 @@ return conn.rs;
 
 }
 
+    
+       public ResultSet pullAddedDataPerFormForEditing(dbConn conn,String form, String facilid,String sp) throws SQLException 
+{
+    
+    //This method gets data that belongs to a specific form only
+
+
+    
+    
+String qry="call internal_system."+sp+"('"+facilid+"','"+form+"');";
+
+    System.out.println("_called_query:"+qry);
+conn.rs=conn.st.executeQuery(qry);
+
+
+return conn.rs;
+
+}
+       public ResultSet pullFormElementdeadersForEditing(dbConn conn,String form) throws SQLException 
+{
+    
+    //This method gets data that belongs to a specific form only
+    String where="";
+
+    
+    
+String qry="call internal_system.sp_pmtct_ovc_pull_form_headers_for_editing('"+form+"');";
+
+    System.out.println(""+qry);
+conn.rs=conn.st.executeQuery(qry);
+
+
+return conn.rs;
+
+}
 
 
 public  String buildoptsFromDbResultSet(dbConn cn,ResultSet res, String selectedvalue){
@@ -161,18 +217,19 @@ public  String buildoptsFromDbResultSet(dbConn cn,ResultSet res, String selected
 //System.out.println(""+opts);
 
 String valkey[]=opts.split(":");
+            System.out.println("val_key_length:"+valkey.length);
 
 for(int s=0;s<valkey.length;s++){
     
     String valkey_in[]=valkey[s].split(",");
     
-    
+    if(valkey[s].contains(",")){
     String selected="";
     if(selectedvalue.equals(valkey_in[0])){selected="selected";}
     
     finalopts+="<option "+selected+" value='"+valkey_in[0]+"'>"+valkey_in[1]+"</option>";
     
-    
+    }
 }
 
 
@@ -247,5 +304,74 @@ return jo2;
 
 //[{"Tablecolumn1":"Row1Value1","Tablecolumn2":"Row1Value2"},{"Tablecolumn1":"Row2Value1","Tablecolumn2":"Row2Value2"},{"Tablecolumn1":"Row2Value1","Tablecolumn2":"Row2Value2"}]
 
+
+
+public String buildDataTable(dbConn con, ResultSet res, String elementtoappend,String frm) throws SQLException{
+    
+String finaltbl="";
+String hdslist_html="";
+String dtlist_html="";
+
+
+
+
+
+ 
+int count1=0;
+
+  ResultSetMetaData metaData = res.getMetaData();
+        int columnCount = metaData.getColumnCount();
+
+         
+        int count = count1;
+        ArrayList mycolumns = new ArrayList();
+    
+    
+
+while(res.next())
+{
+    
+     if (count == (count1)) 
+     {
+
+                for (int i = 1; i <= columnCount; i++) 
+                {
+                       mycolumns.add(metaData.getColumnLabel(i));             
+                     hdslist_html+="<th>"+metaData.getColumnLabel(i)+"</th>";
+                }//end of for loop
+                count++;
+     }//end of if
+     else { }
+    
+    
+
+
+for(int c=0;c<mycolumns.size();c++)
+{
+    
+     String id="";
+ if(c==0){id="id='"+res.getString(mycolumns.get(c).toString())+"'"; System.out.println("Id Ni __"+id);  dtlist_html+="<tr "+id+">";}
+      dtlist_html+="<td>"+res.getString(mycolumns.get(c).toString())+"</td>";
+      if(c==mycolumns.size()-1){ dtlist_html+="<td><label onclick='loadExistingClient(\""+res.getString("patient_id")+"\",\""+frm+"\");' class='btn btn-info'>Edit</label></td></tr>";}
+
+}
+    
+
+
+
+count++;
+    
+}
+
+
+
+
+finaltbl= "<table id='searchtable_"+elementtoappend+"' class='table table-striped table-bordered'><thead><tr>"+hdslist_html+"<th>Edit</th></tr></thead><tbody>"+dtlist_html+"</tbody></table>";
+
+
+
+
+return finaltbl;
+}
     
 }

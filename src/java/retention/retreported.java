@@ -275,14 +275,14 @@ XSSFWorkbook wb = wb1;
                  {
                // if(1==1){
                 
-                     cell0.setCellValue(conn.rs.getInt(mycolumns.get(a).toString()));
+                     cell0.setCellValue(conn.rs.getInt(mycolumns.get(a).toString().trim()));
                     
                  }
                 else 
                 {
                     //System.out.println(mycolumns.get(a)+" Last option"+conn.rs.getString("" + mycolumns.get(a)));
-                    //System.out.println(mycolumns.get(a)+" --Last option"+conn.rs.getString("" + mycolumns.get(a)));
-                    cell0.setCellValue(conn.rs.getString(""+mycolumns.get(a)));
+                    System.out.println(mycolumns.get(a)+" --Last option"+conn.rs.getString("" + mycolumns.get(a)));
+                    cell0.setCellValue(conn.rs.getString(""+mycolumns.get(a)).trim());
                     //cell0.setCellValue(conn.rs.getString("" + mycolumns.get(a)));
                    
                 }

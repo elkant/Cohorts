@@ -24,7 +24,7 @@
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
-		<title>UPI</title>
+		<title>EMR Key Indicators</title>
 		<meta name="generator" content="Bootply" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
                 <link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
@@ -130,11 +130,11 @@ input:focus {
         <!-- /col-3 -->
         <div class="col-sm-12">
 
-             <a class='btn-warning btn' target="_blank" href="nupi_summary.txt" style="margin-left:40%;">Access Nupi Summary Query</a> 
+             <a class='btn-warning btn' target="_blank" href="nupi_summary.txt" style="margin-left:40%;">Access Nupi & Covid Summary Query</a> 
              <a class='btn-warning btn' target="_blank" href="Missing_nupi_linelist.txt" style="margin-left:1%;">Access Missing Nupi Linelist Query</a> 
             
           
-          <h5 class="btn btn-default col-md-12" style="text-align: center;color:blue;"><b>UPI Weekly Reporting Module</b></h5>
+          <h5 class="btn btn-default col-md-12" style="text-align: center;color:blue;"><b>EMR Weekly Reporting Module</b></h5>
         
 
             <div class="row">
