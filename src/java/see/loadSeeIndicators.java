@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pmtct_ovc;
+package see;
 
 import db.dbConn;
 import java.io.IOException;
@@ -27,7 +27,7 @@ import org.json.JSONObject;
  *
  * @author EKaunda
  */
-public class loadPmtctIndicators extends HttpServlet {
+public class loadSeeIndicators extends HttpServlet {
 
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -100,7 +100,7 @@ if(request.getParameter("fm")!=null){fm=request.getParameter("fm");}
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(loadPmtctIndicators.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(loadSeeIndicators.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -118,7 +118,7 @@ if(request.getParameter("fm")!=null){fm=request.getParameter("fm");}
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(loadPmtctIndicators.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(loadSeeIndicators.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -151,7 +151,7 @@ while(r.next()){
    // String indicator_code=r.getString("code");
     
    
-//_____________________________________
+   //_____________________________________
    
 String indicator_id=r.getString("indicator_id");
 String Form=r.getString("Form");
@@ -172,18 +172,8 @@ String timestamp=r.getString("timestamp");
 String is_active=r.getString("is_active");
 String order_no=r.getString("order_no");
 String show_section=r.getString("show_section");
-
-
-String maxchars=r.getString("maxchars");
-String isphonenumber=r.getString("isphonenumber");
-String acceptnumbersonly=r.getString("acceptnumbersonly");
-String minchars=r.getString("minchars");
   
-
-
-//maxchars	isphonenumber	acceptnumbersonly	minchars
-
-//_____________________________________
+   //_____________________________________
    
    
     String val="";
@@ -218,11 +208,11 @@ String minchars=r.getString("minchars");
    
   if(field_type.equals("input"))
   {
-  indicators+=""+buildInputField(field_type, is_future_date, element_id, val, label, readonly, label, is_hidden, required, js_class, guide, condition, show_section, section, onchange, options,maxchars,minchars,acceptnumbersonly,isphonenumber);
+  indicators+=""+buildInputField(field_type, is_future_date, element_id, val, label, readonly, label, is_hidden, required, js_class, guide, condition, show_section, section, onchange, options);
   }
   else if(field_type.equals("date"))
   {
-  indicators+=""+buildInputField(field_type, is_future_date, element_id, val, label, readonly, label, is_hidden, required, js_class, guide, condition, show_section, section, onchange, options,maxchars,minchars,acceptnumbersonly,isphonenumber);
+  indicators+=""+buildInputField(field_type, is_future_date, element_id, val, label, readonly, label, is_hidden, required, js_class, guide, condition, show_section, section, onchange, options);
   }
   else if(field_type.equals("select"))
   {
@@ -256,7 +246,7 @@ public JSONObject getData( dbConn conn, String reportingdate, String facilitymfl
 
 int hasdata=0;
 
-String getdata=" select * from internal_system.pmtct_ovc_data where linelisting_month='"+reportingdate+"' and patient_id='"+patientId+"'";
+String getdata=" select * from internal_system.see_data where linelisting_month='"+reportingdate+"' and patient_id='"+patientId+"'";
 
 conn.rs1=conn.st1.executeQuery(getdata);
 
@@ -299,7 +289,7 @@ public ResultSet pullIndicators(dbConn conn, String where) throws SQLException
     
 String qry="select "
         + ""
-        + "ifnull(indicator_id,0) as indicator_id, \n" +
+        + "ifnull(indicator_id,'') as indicator_id, \n" +
 "ifnull(Form,'') as Form, \n" +
 "ifnull(section,'') as section, \n" +
 "ifnull(label,'') as label,\n" +
@@ -316,16 +306,11 @@ String qry="select "
 " ifnull(onchange,'') as onchange, \n" +
 " ifnull(`timestamp`,'') as `timestamp`, \n" +
 " ifnull(is_active,'') as is_active, \n" +
-" ifnull(order_no,0) as order_no, \n" +
+" ifnull(order_no,'') as order_no, \n" +
 " ifnull(show_section,'') as show_section"
-+", ifnull(maxchars,'') as maxchars"
-+", ifnull(isphonenumber,'') as isphonenumber"
-+", ifnull(acceptnumbersonly,'') as acceptnumbersonly"
-+", ifnull(minchars,'') as minchars"
-        + " from internal_system.pmtct_ovc_indicators where is_active='1' and "+where+" order by order_no ";
-//maxchars	isphonenumber	acceptnumbersonly	minchars
+        + " from internal_system.see_indicators where is_active='1' and "+where+"  ";
 
-    System.out.println(""+qry);
+//    System.out.println(""+qry);
 conn.rs=conn.st.executeQuery(qry);
 
 
@@ -462,24 +447,8 @@ return jo2;
 }
 
 
-public String buildInputField(String field_type, String is_future_date, String id, String Value, String label, String readonly, String placeholder, String is_hidden, String required,String js_class, String guide, String condition, String show_section,String section,String onchange,String opts, String maxchars,String minchars,String acceptnumbersonly,String isphonenumber ){
-
-    String maxchar_elem="";
-    String minchar_elem="";
-    String acceptsnos_elem="";
-    String isphoneno_elem="";
-    
-    
-    
-    if(!maxchars.equals("")){maxchar_elem="maxlength='"+maxchars+"'";}
-    if(!minchars.equals("")){minchar_elem="minlength='"+minchars+"'";}
-    if(acceptnumbersonly.equals("1")){acceptsnos_elem="onkeypress='return numbers(event);'";}
-    if(isphonenumber.equals("1")){isphoneno_elem="pattern='[0-9]{10,10}'";}
-    
-    //pattern="[0-9]{10,10}"
-//return numbers(event);
-    
-    String finalelement="";
+public String buildInputField(String field_type, String is_future_date, String id, String Value, String label, String readonly, String placeholder, String is_hidden, String required,String js_class, String guide, String condition, String show_section,String section,String onchange,String opts){
+String finalelement="";
 //___Required attribute
 String req_asterick="";
 String req_elem="";
@@ -522,7 +491,7 @@ finalelement=""+section_n
 "<label>" +
 req_asterick+"<b>"+label+"</b>\n" +
 "</label>\n" +
-"<input "+isphoneno_elem+" "+acceptsnos_elem+" "+maxchar_elem+" "+minchar_elem+" "+req_elem+" "+readonly_elem+" value='"+Value+"' onchange='"+onchange+"' placeholder='"+guide+"' title='"+guide+"'  autocomplete='off' "+isdateclass+"  class='form-control "+isdate+" "+js_class+"' type='text' name='"+id+"' id='"+id+"' />" +
+"<input "+req_elem+" "+readonly_elem+" value='"+Value+"' onchange='"+onchange+"' placeholder='"+guide+"' title='"+guide+"'  autocomplete='off' "+isdateclass+"  class='form-control "+isdate+" "+js_class+"' type='text' name='"+id+"' id='"+id+"' />" +
 "</div>"
         + ""
         + "";
@@ -700,7 +669,7 @@ public ResultSet pullElementsBySection(dbConn conn, String Sectionname) throws S
 
     if(Sectionname.equals("")){where="";} else {where="and  Form in ('"+Sectionname+"')";}
     
-String qry="select  ifnull(element_id,'') as element_id,client_identifier_field from internal_system.pmtct_ovc_indicators where is_active='1' "+where+"";
+String qry="select  ifnull(element_id,'') as element_id,client_identifier_field from internal_system.see_indicators where is_active='1' "+where+" ";
 
     System.out.println(""+qry);
 conn.rs=conn.st.executeQuery(qry);

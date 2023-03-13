@@ -22,14 +22,14 @@
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
-		<title>PMTCT | OVC </title>
+		<title>Understanding RoCs</title>
 		<meta name="generator" content="Bootply" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
                 <link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
 		<link href="css/bootstrap.css" rel="stylesheet">
                 <link href="css/bootstrap-datepicker.min.css" rel="stylesheet">
                 <link rel="stylesheet" href="css/select2.min.css">
-                <link rel="shortcut icon" href="images/pmtct_ovc.png">
+                <link rel="shortcut icon" href="images/see.png">
                 <!--<link data-jsfiddle="common" rel="stylesheet" media="screen" href="css/handsontable.css">-->
 <!--  <link data-jsfiddle="common" rel="stylesheet" media="screen" href="dist/pikaday/pikaday.css">-->
                   
@@ -131,7 +131,7 @@ input:focus {
             
             
           
-          <h5 class="btn btn-default col-md-12" style="text-align: center;color:blue;"><b>PMTCT OVC Linelists</b></h5>
+          <h5 class="btn btn-default col-md-12" style="text-align: center;color:blue;"><b>Social Economic and Environmental Factors affecting RoCs</b></h5>
 
             <div class="row">
                 <!-- center left-->
@@ -244,17 +244,14 @@ input:focus {
                     <!--tabs-->
                     <div class="panel">
                         <ul class="nav nav-tabs " id="myTab">
-                            <li class="active newdata"> <a href="#addmother" id="addmotherbutton" data-toggle="tab">  <i class="glyphicon glyphicon-plus"> </i> <font color='green'><b>Add </b></font> Mother(s)</a></li>
-                            <li class=" editdata"  >    <a href="#addbaby" id="addbabybutton" data-toggle="tab">  <i class="glyphicon glyphicon-baby-formula"></i> <font color='green'><b>Add </b></font> Baby</a></li>
-                           
-                            <li class="newdata"> <a href="#editmother" id="editmotherbutton" data-toggle="tab">  <i class="glyphicon glyphicon-edit"> </i> <font color='green'><b>Edit</b></font> Mothers</a></li>
-                            <li class=" editdata"  >    <a href="#editbaby" id="editbabybutton" data-toggle="tab">  <i class="glyphicon glyphicon-edit"></i> <font color='green'><b>Edit</b></font>Baby</a></li>
-                            <li><a href="#reports" style="" id="reportsbutton" data-toggle="tab"> <i class="glyphicon glyphicon-stats"></i>Reports</a></li> 
+                            <li class="active newdata"> <a href="#addroc" id="addrocbutton" data-toggle="tab">  <i class="glyphicon glyphicon-plus"> </i> <font color='green'><b>Add </b></font> Patient(s)</a></li>
+                            <li class="newdata"> <a href="#editroc" id="editrocbutton" data-toggle="tab">  <i class="glyphicon glyphicon-edit"> </i> <font color='green'><b>View</b></font> Patient(s)</a></li>
+                          <li><a href="#reports" style="" id="reportsbutton" data-toggle="tab"> <i class="glyphicon glyphicon-stats"></i>Reports</a></li> 
                             <!--<li><a href="#searchdata" data-toggle="tab"> <i class="glyphicon glyphicon-search"></i> Edit Data</a></li>--> 
                            <!-- <li><a href="#export" data-toggle="tab"> <i class="glyphicon glyphicon-cloud-upload"></i> Data Export</a></li>-->
                         </ul>
                         <div class="tab-content">
-                            <div class="tab-pane active well col-md-12" id="addmother">
+                            <div class="tab-pane active well col-md-12" id="addroc">
                                 
                                 
                               <!--Data entry code-->
@@ -287,9 +284,9 @@ input:focus {
 
                                                     </table>
                                 
-                                <!--<form id="addmothersform">-->
+                                <!--<form id="addrocsform">-->
                                 
-                                         <table class='table table-striped table-bordered' id="dynamicindicatorsmother" style="display:none;border :3px solid #4b8df8;padding:1px;" > 
+                                         <table class='table table-striped table-bordered' id="dynamicindicatorsroc" style="display:none;border :3px solid #4b8df8;padding:1px;" > 
                                    
                                 <!------INDICATORS----->
                                            <tr><td><h3>Select Line listing Year, Month and Facility to Load data for.</h3></td></tr>                    
@@ -302,12 +299,12 @@ input:focus {
                                         <div id='fedback' class="alert-info">Note: Please enter all the required data.</div>
                                    <br/>
                                     <div style="display:none;" class="controls savebuttons">
-                                        <input type="input" onClick="getElementsToBeSaved('mother');"  id='savebutton' value="Add Mother"  style="margin-left: 0%;" class="btn-sm btn-success active">
+                                        <input type="input" onClick="getElementsToBeSaved('roc');"  id='savebutton' value="Save Recipient Of Care"  style="margin-left: 0%;" class="btn-sm btn-success active">
                                             
                                      </div>
                                      <div class="controls">
-                                        <button type="submit" id='updatebutton' onclick="getElementsToBeSaved('mother');" style="margin-left: 0%;display:none;" class="btn-sm btn-info active">
-                                            Update Mother 
+                                        <button type="submit" id='updatebutton' onclick="getElementsToBeSaved('roc');" style="margin-left: 0%;display:none;" class="btn-sm btn-info active">
+                                            Update Client 
                                         </button>
                                     </div>                                   
                                     
@@ -361,9 +358,9 @@ input:focus {
                             </div>
                              
                             
-                             <div class="tab-pane well" id="editmother">
+                             <div class="tab-pane well" id="editroc">
                                 
-                                <div id="editmother_div"></div>
+                                <div id="editroc_div"></div>
                                <!--- Data export---->
                             </div>
       <div class="tab-pane well" id="editbaby">
@@ -1082,21 +1079,21 @@ function isdisplayindicators()
     if( dt!=='' && fc!=='Select Facility'&& fc!=='')
     {        
     // display facility name
-    $("#dynamicindicatorsmother").show();    
+    $("#dynamicindicatorsroc").show();    
      
-            var motherwhere="Form='mother'";
-            var babywhere="Form='baby'";
+            var motherwhere="Form='roc'";
+           
             
             
             //also load the edit fields
            
-            loadEdits('baby','editbaby_div');
-             loadEdits('mother','editmother_div');
+           
+             loadEdits('roc','editroc_div');
             
             
             //now load the data
           $.ajax({
-                    url:'loadPmtctIndicators?dt='+dt+"&fc="+fc+"&wr="+motherwhere,                            
+                    url:'loadSeeIndicators?dt='+dt+"&fc="+fc+"&wr="+motherwhere,                            
                     type:'post',  
                     dataType: 'html',  
                     success: function(data) 
@@ -1105,7 +1102,7 @@ function isdisplayindicators()
                        
                         $(".savebuttons").show();
                         
-                   $("#dynamicindicatorsmother").html(data); 
+                   $("#dynamicindicatorsroc").html(data); 
                     setuuid('id');
                          $('.dates').datepicker({
                              todayHighlight: true, daysOfWeekDisabled: "0,6",clearBtn: true, autoclose: true,format: "yyyy-mm-dd",
@@ -1116,32 +1113,15 @@ function isdisplayindicators()
                         
                         
                     }});    
-          $.ajax({
-                    url:'loadPmtctIndicators?dt='+dt+"&fc="+fc+"&wr="+babywhere,                            
-                    type:'post',  
-                    dataType: 'html',  
-                    success: function(data) 
-                    {
-                   $("#dynamicindicatorsbaby").show();
-                   $("#dynamicindicatorsbaby").html(data); 
-                   loadAddedMothersPerSite("");
-                        setuuid('hei_id');
-                         $('.dates').datepicker({
-                             todayHighlight: true, daysOfWeekDisabled: "0,6",clearBtn: true, autoclose: true,format: "yyyy-mm-dd",
-     });
-     
-     //setuuid('id');
-                        
-                        
-                    }});    
+            
            
             
             
     }
     else 
     {
-    $("#dynamicindicatorsmother").hide();
-    $("#dynamicindicatorsbaby").hide();
+    $("#dynamicindicatorsroc").hide();
+    
       $(".savebuttons").hide();
     //        
     }
@@ -1161,7 +1141,7 @@ function loadExistingClient(clientid,frm)
     if( dt!=='' && fc!=='Select Facility'&& fc!=='')
     {        
     // display facility name
-    $("#dynamicindicatorsmother").show();    
+    $("#dynamicindicatorsroc").show();    
      
             var frmwhere="Form='"+frm+"'";
             
@@ -1171,7 +1151,7 @@ function loadExistingClient(clientid,frm)
             
             //now load the data
           $.ajax({
-                    url:'loadPmtctIndicators',                            
+                    url:'loadSeeIndicators',                            
                     type:'post',  
                     data:{
                         dt:dt,
@@ -1198,8 +1178,8 @@ function loadExistingClient(clientid,frm)
     }
     else 
     {
-    $("#dynamicindicatorsmother").hide();
-    $("#dynamicindicatorsbaby").hide();
+    $("#dynamicindicatorsroc").hide();
+    
     //        
     }
     
@@ -1219,7 +1199,7 @@ function getElementsToBeSaved(formname)
  
             //now load the data
           $.ajax({
-                    url:'loadPmtctIndicators?fm='+formname,                            
+                    url:'loadSeeIndicators?fm='+formname,                            
                     type:'post',  
                     dataType: 'json',  
                     success: function(data) 
@@ -1289,7 +1269,7 @@ function saveFormDetails(de)
         
              
                $.ajax({
-                    url:'save_pmtct_ovc',                            
+                    url:'save_see',                            
                     type:'post',  
                     data:{id:tid,
                         facility_id:fc,
@@ -1337,6 +1317,7 @@ function saveFormDetails(de)
              
             }
             else {
+                
              console.log("records not saved successfully");   
                 
                 }
@@ -1399,7 +1380,7 @@ function loadAddedMothersPerSite(selval){
  
             //now load the data
           $.ajax({
-                    url:'dataPulls',                            
+                    url:'seeDataPulls',                            
                     type:'post',  
                     dataType: 'html',  
                     data:{act:"loadmothers",
@@ -1527,49 +1508,6 @@ function setuuid(id){
 function refreshPage(){
     
       window.location.reload();
-    
-}
-
-
-
-function ShowVlStatus(source,dest,hasnumericresults){
-  
-  
- // vl_results_ldl
-//vl_results_values
-//Suppressed|Suppressed:Unsuppressed|Unsuppressed
-  
-        var src=$("#"+source).val();
-       
-        if(hasnumericresults==='no'){
-        if (src==='LDL') {
-            $("#"+dest).val("Suppressed");
-    
-}
-else {
-    
-    $("#"+dest).val(""); 
-    
-}
-
-
-
-        }
- if(hasnumericresults==='yes'){
-        if (src>=1000) {
-            $("#"+dest).val("Unsuppressed");
-            $("#"+dest).trigger("change");
-    
-}
-     else  if (src<=1000) {
-            $("#"+dest).val("Suppressed");
-    
-                             }
-                         }
-        
-//        var dest=$("#"+source).val();
-    
-    
     
 }
 

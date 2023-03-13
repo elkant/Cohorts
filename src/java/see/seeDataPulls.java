@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pmtct_ovc;
+package see;
 
 import db.dbConn;
 import java.io.IOException;
@@ -25,7 +25,7 @@ import org.json.JSONObject;
  *
  * @author Emmanuel Kaunda
  */
-public class dataPulls extends HttpServlet {
+public class seeDataPulls extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -100,7 +100,7 @@ public class dataPulls extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(dataPulls.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(seeDataPulls.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -118,7 +118,7 @@ public class dataPulls extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(dataPulls.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(seeDataPulls.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -235,7 +235,7 @@ for(int s=0;s<valkey.length;s++){
 
 
         } catch (SQLException ex) {
-            Logger.getLogger(dataPulls.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(seeDataPulls.class.getName()).log(Level.SEVERE, null, ex);
         }
   return finalopts;  
     

@@ -728,7 +728,6 @@ function displayIfFunction(sourceele,iscondition,equalval,destination,action)
             console.log("show "+destination);
             $(destination).show();} 
                          else { $(destination).hide();$(destination).val("");
-                             $(destination).trigger("change");
          console.log("hide "+destination);                 
         }
     }
@@ -736,13 +735,13 @@ function displayIfFunction(sourceele,iscondition,equalval,destination,action)
     {
         
         if(srcval!==equalval){$(destination).show();  console.log("show "+destination);} 
-                         else{$(destination).hide();  console.log("hide "+destination); $(destination).val("");$(destination).trigger("change");}
+                         else{$(destination).hide();  console.log("hide "+destination); $(destination).val("");}
     }
     else  if(iscondition==='contains')
     {
         
         if(srcval.indexOf(equalval)>=0 ){$(destination).show();  console.log("show "+destination);} 
-                         else{$(destination).hide();  console.log("hide "+destination); $(destination).val("");$(destination).trigger("change");}
+                         else{$(destination).hide();  console.log("hide "+destination); $(destination).val("");}
     }
      else  
     {

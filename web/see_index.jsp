@@ -2,12 +2,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>PMTCT OVC</title>
+	<title>S.E.E</title>
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
-<link rel="icon" type="image/png" href="images/pmtct_ovc.png"/>
+<link rel="icon" type="image/png" href="images/see.png"/>
 <!--===============================================================================================-->
 <link rel="stylesheet" type="text/css" href="Login_v6/vendor/bootstrap/css/bootstrap.min.css">
 <!--===============================================================================================-->
@@ -29,7 +29,7 @@
 	<link rel="stylesheet" type="text/css" href="Login_v6/css/main.css">
 <!--===============================================================================================-->
 
-      <%if (session.getAttribute("rri_gaps_login") != null) { %>
+      <%if (session.getAttribute("see_login") != null) { %>
                                 <script type="text/javascript"> 
                     
                     var n = noty({text: '<%=session.getAttribute("rri_gaps_login")%>',
@@ -37,7 +37,7 @@
                         type: 'Success'});
                     
                 </script> <%
-                session.removeAttribute("rri_gaps_login");
+                session.removeAttribute("see_login");
                             }
 
                         %>
@@ -48,11 +48,11 @@
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100 p-t-3 p-b-20">
-				<form action='pmtct_ovc_login' class="login100-form validate-form">
-					<h3 style="text-align: center;">PMTCT | OVC Module</h3>
+				<form action='see_login' class="login100-form validate-form">
+					<h3 style="text-align: center;">Understanding our Recipients of Care</h3>
                                         <hr>
 					<span class="login100-form-avatar">
-                                            <img src="images/pmtct_ovc.png" alt="welcome">
+                                            <img src="images/see.png" alt="welcome">
 					</span>
 					
 
