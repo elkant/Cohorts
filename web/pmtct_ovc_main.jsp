@@ -1124,7 +1124,7 @@ function isdisplayindicators()
                     {
                    $("#dynamicindicatorsbaby").show();
                    $("#dynamicindicatorsbaby").html(data); 
-                   loadAddedMothersPerSite("");
+                   //loadAddedMothersPerSite("");
                         setuuid('hei_id');
                          $('.dates').datepicker({
                              todayHighlight: true, daysOfWeekDisabled: "0,6",clearBtn: true, autoclose: true,format: "yyyy-mm-dd",

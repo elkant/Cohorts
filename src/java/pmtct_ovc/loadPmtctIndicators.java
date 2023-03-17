@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import see.loadSeeIndicators;
 
 /**
  *
@@ -226,7 +227,7 @@ String minchars=r.getString("minchars");
   }
   else if(field_type.equals("select"))
   {
-  indicators+=""+buildSelectField(field_type, is_future_date, element_id, val, label, readonly, label, is_hidden, required, js_class, guide, condition, show_section, section, onchange, options);
+  indicators+=""+buildSelectField(facility,conn,field_type, is_future_date, element_id, val, label, readonly, label, is_hidden, required, js_class, guide, condition, show_section, section, onchange, options);
   }
   else if(field_type.equals("text_area"))
   {
@@ -591,7 +592,7 @@ return finalelement;
 }
 
 
-public String buildSelectField(String field_type, String is_future_date, String id, String Value, String label, String readonly, String placeholder, String is_hidden, String required,String js_class, String guide, String condition, String show_section,String section,String onchange,String opts){
+public String buildSelectField(String facil,dbConn conn,String field_type, String is_future_date, String id, String Value, String label, String readonly, String placeholder, String is_hidden, String required,String js_class, String guide, String condition, String show_section,String section,String onchange,String opts){
 String finalelement="";
 //___Required attribute
 String req_asterick="";
@@ -638,13 +639,40 @@ if(show_section.equals("1")){section_n="<br/><div class='form-group col-md-12' s
 //changefunction="isToggleDisplay(\'"+onchange+"\');";
 //}
 
+String finaloptions=buildopts(opts, Value);
+
+
+
+if(opts.contains("vw_")){try {
+    //the assumption is that the select column looks like vw_see_loadcts|Select County, where vw_see_loadcts is a view in the db that nned to be executed and return 1 row of data in format of 
+    //1|Nakuru:2|Laikipia:4|Baringo:7|Samburu
+    //Therefore, we need to split opts with | delimitter into an array, then pick index 0 of the array
+   
+    finaloptions=buildopts(queryToString(pullDataFromView(conn, opts.split("\\|")[0])), Value);
+    
+    } catch (SQLException ex) {
+        Logger.getLogger(loadSeeIndicators.class.getName()).log(Level.SEVERE, null, ex);
+    }
+}
+if(opts.contains("sp_")){try {
+    //the assumption is that the select column looks like vw_see_loadcts|Select County, where vw_see_loadcts is a view in the db that nned to be executed and return 1 row of data in format of 
+    //1|Nakuru:2|Laikipia:4|Baringo:7|Samburu
+    //Therefore, we need to split opts with | delimitter into an array, then pick index 0 of the array
+   
+    finaloptions=buildopts(queryToString(pullDataFromSpperOrgunit(conn, opts.split("\\|")[0],facil)), Value);
+    
+    } catch (SQLException ex) {
+        Logger.getLogger(loadSeeIndicators.class.getName()).log(Level.SEVERE, null, ex);
+    }
+}
+
 finalelement=""+section_n
         + "<div class='form-group col-md-3 "+js_class+"' style="+showstatus+">" +
 "<label>" +
 req_asterick+"<b>"+label+"</b>\n" +
 "</label>\n" +
 "<select "+req_elem+" "+readonly_elem+"  onchange='"+onchange+"'  title='"+guide+"'     class='form-control "+js_class+"' type='text' name='"+id+"' id='"+id+"' >"
-        +buildopts(opts, Value)
+        +finaloptions
         +"</select>" +
 "</div>"
         + ""
@@ -711,5 +739,30 @@ return conn.rs;
 }
 
 
+private ResultSet pullDataFromView(dbConn conn, String tbl) throws SQLException {
+    
+    return conn.st3.executeQuery("select * from "+tbl);
+    
+    
+    }
+private ResultSet pullDataFromSpperOrgunit(dbConn conn, String sp,String orgunit) throws SQLException {
+    
+    return conn.st3.executeQuery("call "+sp+"('"+orgunit+"');");
+    
+    
+    }
+
+private String queryToString(ResultSet rs) throws SQLException{
+
+String status="";
+
+while(rs.next()){
+
+status=rs.getString(1);
+}
+
+return status;
+
+}
 
 }

@@ -58,15 +58,21 @@ public class seeDataPulls extends HttpServlet {
             String loadmtrs_sel_val="";
             String fm="";
             String table_docker="";
+            
+            String sel_ct="";
+            String sel_sbct="";
+          
             //loadmtrs_sel_val,act=loadmothers,fac
             
             if(request.getParameter("act")!=null){act=request.getParameter("act");}
             if(request.getParameter("fac")!=null){fac=request.getParameter("fac");}
            
             if(request.getParameter("loadmtrs_sel_val")!=null){loadmtrs_sel_val=request.getParameter("loadmtrs_sel_val");}
+            if(request.getParameter("sel_ct")!=null){sel_ct=request.getParameter("sel_ct");}
+            if(request.getParameter("sel_sbct")!=null){sel_sbct=request.getParameter("sel_sbct");}
             
             
-            if(act.equals("loadmothers")){out.println(buildoptsFromDbResultSet(conn,pullAddedMothers(conn, fac),loadmtrs_sel_val));}
+           
             
              if(request.getParameter("fm")!=null){fm=request.getParameter("fm");}
              if(request.getParameter("table_docker")!=null){table_docker=request.getParameter("table_docker");}
@@ -75,12 +81,41 @@ public class seeDataPulls extends HttpServlet {
             if(act.equals("showedits"))
             {               
                 
-               ResultSet rs1=pullAddedDataPerFormForEditing(conn,fm,fac,"sp_pmtct_ovc_pull_all_editing_data_dynamically");
+               ResultSet rs1=pullAddedDataPerFormForEditing(conn,fm,fac,"sp_see_pull_all_editing_data_dynamically");
 
                 out.println(buildDataTable(conn,rs1,table_docker,fm));                                               
     
             }
             
+            
+             if(act.equals("loadcts"))
+            {               
+           ResultSet rs1=runAnyQuery(conn,"select concat(CountyID,',',County) as data  from internal_system.county where isactive=1 order by County");
+                
+                out.println(buildoptsFromDbResultSet(rs1, ""));                                               
+    
+            }
+             
+              if(act.equals("loadsbct"))
+            {        
+                  String where=" where active=1 ";
+                  if(!sel_ct.equals("")){where+=" and CountyID='"+sel_ct+"'";}
+             ResultSet rs1=runAnyQuery(conn,"select concat(DistrictID,',',DistrictNom) as data  from internal_system.district "+where+" order by DistrictNom");
+                
+                out.println(buildoptsFromDbResultSet(rs1, ""));                                               
+    
+            }
+              
+              
+                 if(act.equals("loadwrd"))
+            {        
+                String where="";
+                if(!sel_sbct.equals("")){where=" where subcountyid='"+sel_sbct+"'";}
+            ResultSet rs1=runAnyQuery(conn,"select concat(ward_id,',',Ward) as data  from internal_system.ward "+where);
+                
+                out.println(buildoptsFromDbResultSet(rs1, ""));                                               
+    
+            }
             
         }
     }
@@ -132,6 +167,14 @@ public class seeDataPulls extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    
+    
+    public ResultSet runAnyQuery(dbConn conn, String qry) throws SQLException{
+    
+    return conn.st.executeQuery(qry);
+    
+    
+    }
     
     public ResultSet pullAddedMothers(dbConn conn, String facilid) throws SQLException 
 {
@@ -188,48 +231,28 @@ return conn.rs;
 }
 
 
-public  String buildoptsFromDbResultSet(dbConn cn,ResultSet res, String selectedvalue){
+public  String buildoptsFromDbResultSet(ResultSet res, String selectedvalue){
 
     
      String finalopts="<option value=''>select option</option>";
         try {
             //this method gets data from db and converts it to jsonArray, the from JSON array, get the JSONObjects in place
             
-            JSONArray ja=new JSONArray();
-            
-            ja=toJsonFormatDynamic(res);
-            
-            
-                    
-            String opts="";     
-                    for(int h=0;h<ja.length();h++){
-                        JSONObject jo=ja.getJSONObject(h);
-                    for(int i = 0; i<jo.names().length(); i++){
-                    opts+=jo.get(jo.names().getString(i))+":";
-                    }
-                    }
-                    
-                    
-                    
-                   
-//Yes|Yes:No|No
-//System.out.println(""+opts);
+     
 
-String valkey[]=opts.split(":");
-            System.out.println("val_key_length:"+valkey.length);
-
-for(int s=0;s<valkey.length;s++){
+while(res.next()){
     
-    String valkey_in[]=valkey[s].split(",");
     
-    if(valkey[s].contains(",")){
+    String valkey_in[]=res.getString(1).split(",");
+    
+  
     String selected="";
     if(selectedvalue.equals(valkey_in[0])){selected="selected";}
     
     finalopts+="<option "+selected+" value='"+valkey_in[0]+"'>"+valkey_in[1]+"</option>";
+  
     
-    }
-}
+                             }
 
 
 

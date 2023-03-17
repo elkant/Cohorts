@@ -151,7 +151,7 @@ while(r.next()){
    // String indicator_code=r.getString("code");
     
    
-   //_____________________________________
+//_____________________________________
    
 String indicator_id=r.getString("indicator_id");
 String Form=r.getString("Form");
@@ -172,8 +172,18 @@ String timestamp=r.getString("timestamp");
 String is_active=r.getString("is_active");
 String order_no=r.getString("order_no");
 String show_section=r.getString("show_section");
+
+
+String maxchars=r.getString("maxchars");
+String isphonenumber=r.getString("isphonenumber");
+String acceptnumbersonly=r.getString("acceptnumbersonly");
+String minchars=r.getString("minchars");
   
-   //_____________________________________
+
+
+//maxchars	isphonenumber	acceptnumbersonly	minchars
+
+//_____________________________________
    
    
     String val="";
@@ -208,15 +218,15 @@ String show_section=r.getString("show_section");
    
   if(field_type.equals("input"))
   {
-  indicators+=""+buildInputField(field_type, is_future_date, element_id, val, label, readonly, label, is_hidden, required, js_class, guide, condition, show_section, section, onchange, options);
+  indicators+=""+buildInputField(field_type, is_future_date, element_id, val, label, readonly, label, is_hidden, required, js_class, guide, condition, show_section, section, onchange, options,maxchars,minchars,acceptnumbersonly,isphonenumber);
   }
   else if(field_type.equals("date"))
   {
-  indicators+=""+buildInputField(field_type, is_future_date, element_id, val, label, readonly, label, is_hidden, required, js_class, guide, condition, show_section, section, onchange, options);
+  indicators+=""+buildInputField(field_type, is_future_date, element_id, val, label, readonly, label, is_hidden, required, js_class, guide, condition, show_section, section, onchange, options,maxchars,minchars,acceptnumbersonly,isphonenumber);
   }
   else if(field_type.equals("select"))
   {
-  indicators+=""+buildSelectField(field_type, is_future_date, element_id, val, label, readonly, label, is_hidden, required, js_class, guide, condition, show_section, section, onchange, options);
+  indicators+=""+buildSelectField(conn,field_type, is_future_date, element_id, val, label, readonly, label, is_hidden, required, js_class, guide, condition, show_section, section, onchange, options);
   }
   else if(field_type.equals("text_area"))
   {
@@ -289,7 +299,7 @@ public ResultSet pullIndicators(dbConn conn, String where) throws SQLException
     
 String qry="select "
         + ""
-        + "ifnull(indicator_id,'') as indicator_id, \n" +
+        + "ifnull(indicator_id,0) as indicator_id, \n" +
 "ifnull(Form,'') as Form, \n" +
 "ifnull(section,'') as section, \n" +
 "ifnull(label,'') as label,\n" +
@@ -306,11 +316,16 @@ String qry="select "
 " ifnull(onchange,'') as onchange, \n" +
 " ifnull(`timestamp`,'') as `timestamp`, \n" +
 " ifnull(is_active,'') as is_active, \n" +
-" ifnull(order_no,'') as order_no, \n" +
+" ifnull(order_no,0) as order_no, \n" +
 " ifnull(show_section,'') as show_section"
-        + " from internal_system.see_indicators where is_active='1' and "+where+"  ";
++", ifnull(maxchars,'') as maxchars"
++", ifnull(isphonenumber,'') as isphonenumber"
++", ifnull(acceptnumbersonly,'') as acceptnumbersonly"
++", ifnull(minchars,'') as minchars"
+        + " from internal_system.see_indicators where is_active='1' and "+where+" order by order_no ";
+//maxchars	isphonenumber	acceptnumbersonly	minchars
 
-//    System.out.println(""+qry);
+    System.out.println(""+qry);
 conn.rs=conn.st.executeQuery(qry);
 
 
@@ -447,8 +462,24 @@ return jo2;
 }
 
 
-public String buildInputField(String field_type, String is_future_date, String id, String Value, String label, String readonly, String placeholder, String is_hidden, String required,String js_class, String guide, String condition, String show_section,String section,String onchange,String opts){
-String finalelement="";
+public String buildInputField(String field_type, String is_future_date, String id, String Value, String label, String readonly, String placeholder, String is_hidden, String required,String js_class, String guide, String condition, String show_section,String section,String onchange,String opts, String maxchars,String minchars,String acceptnumbersonly,String isphonenumber ){
+
+    String maxchar_elem="";
+    String minchar_elem="";
+    String acceptsnos_elem="";
+    String isphoneno_elem="";
+    
+    
+    
+    if(!maxchars.equals("")){maxchar_elem="maxlength='"+maxchars+"'";}
+    if(!minchars.equals("")){minchar_elem="minlength='"+minchars+"'";}
+    if(acceptnumbersonly.equals("1")){acceptsnos_elem="onkeypress='return numbers(event);'";}
+    if(isphonenumber.equals("1")){isphoneno_elem="pattern='[0-9]{10,10}'";}
+    
+    //pattern="[0-9]{10,10}"
+//return numbers(event);
+    
+    String finalelement="";
 //___Required attribute
 String req_asterick="";
 String req_elem="";
@@ -491,7 +522,7 @@ finalelement=""+section_n
 "<label>" +
 req_asterick+"<b>"+label+"</b>\n" +
 "</label>\n" +
-"<input "+req_elem+" "+readonly_elem+" value='"+Value+"' onchange='"+onchange+"' placeholder='"+guide+"' title='"+guide+"'  autocomplete='off' "+isdateclass+"  class='form-control "+isdate+" "+js_class+"' type='text' name='"+id+"' id='"+id+"' />" +
+"<input "+isphoneno_elem+" "+acceptsnos_elem+" "+maxchar_elem+" "+minchar_elem+" "+req_elem+" "+readonly_elem+" value='"+Value+"' onchange='"+onchange+"' placeholder='"+guide+"' title='"+guide+"'  autocomplete='off' "+isdateclass+"  class='form-control "+isdate+" "+js_class+"' type='text' name='"+id+"' id='"+id+"' />" +
 "</div>"
         + ""
         + "";
@@ -560,7 +591,7 @@ return finalelement;
 }
 
 
-public String buildSelectField(String field_type, String is_future_date, String id, String Value, String label, String readonly, String placeholder, String is_hidden, String required,String js_class, String guide, String condition, String show_section,String section,String onchange,String opts){
+public String buildSelectField(dbConn conn,String field_type, String is_future_date, String id, String Value, String label, String readonly, String placeholder, String is_hidden, String required,String js_class, String guide, String condition, String show_section,String section,String onchange,String opts){
 String finalelement="";
 //___Required attribute
 String req_asterick="";
@@ -607,13 +638,30 @@ if(show_section.equals("1")){section_n="<br/><div class='form-group col-md-12' s
 //changefunction="isToggleDisplay(\'"+onchange+"\');";
 //}
 
+String finaloptions=buildopts(opts, Value);
+
+
+
+if(opts.contains("vw_")){try {
+    //the assumption is that the select column looks like vw_see_loadcts|Select County, where vw_see_loadcts is a view in the db that nned to be executed and return 1 row of data in format of 
+    //1|Nakuru:2|Laikipia:4|Baringo:7|Samburu
+    //Therefore, we need to split opts with | delimitter into an array, then pick index 0 of the array
+   
+    finaloptions=buildopts(queryToString(pullDataFromView(conn, opts.split("\\|")[0])), Value);
+    
+    } catch (SQLException ex) {
+        Logger.getLogger(loadSeeIndicators.class.getName()).log(Level.SEVERE, null, ex);
+    }
+}
+
+
 finalelement=""+section_n
         + "<div class='form-group col-md-3 "+js_class+"' style="+showstatus+">" +
 "<label>" +
 req_asterick+"<b>"+label+"</b>\n" +
 "</label>\n" +
 "<select "+req_elem+" "+readonly_elem+"  onchange='"+onchange+"'  title='"+guide+"'     class='form-control "+js_class+"' type='text' name='"+id+"' id='"+id+"' >"
-        +buildopts(opts, Value)
+        +finaloptions
         +"</select>" +
 "</div>"
         + ""
@@ -669,7 +717,7 @@ public ResultSet pullElementsBySection(dbConn conn, String Sectionname) throws S
 
     if(Sectionname.equals("")){where="";} else {where="and  Form in ('"+Sectionname+"')";}
     
-String qry="select  ifnull(element_id,'') as element_id,client_identifier_field from internal_system.see_indicators where is_active='1' "+where+" ";
+String qry="select  ifnull(element_id,'') as element_id,client_identifier_field from internal_system.see_indicators where is_active='1' "+where+"";
 
     System.out.println(""+qry);
 conn.rs=conn.st.executeQuery(qry);
@@ -679,6 +727,26 @@ return conn.rs;
 
 }
 
+
+private ResultSet pullDataFromView(dbConn conn, String tbl) throws SQLException {
+    
+    return conn.st3.executeQuery("select * from "+tbl);
+    
+    
+    }
+
+private String queryToString(ResultSet rs) throws SQLException{
+
+String status="";
+
+while(rs.next()){
+
+status=rs.getString(1);
+}
+
+return status;
+
+}
 
 
 }

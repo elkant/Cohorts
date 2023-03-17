@@ -190,7 +190,7 @@ input:focus {
                                                                 <div class="control-group">
 
                                                                     <div class="controls">
-                                                                        <label><required-option></required-option>Linelisting  Month</label> 
+                                                                        <label><required-option></required-option>Reporting  Month</label> 
 
                                                                     </div>
                                                                 </div>
@@ -246,7 +246,7 @@ input:focus {
                         <ul class="nav nav-tabs " id="myTab">
                             <li class="active newdata"> <a href="#addroc" id="addrocbutton" data-toggle="tab">  <i class="glyphicon glyphicon-plus"> </i> <font color='green'><b>Add </b></font> Patient(s)</a></li>
                             <li class="newdata"> <a href="#editroc" id="editrocbutton" data-toggle="tab">  <i class="glyphicon glyphicon-edit"> </i> <font color='green'><b>View</b></font> Patient(s)</a></li>
-                          <li><a href="#reports" style="" id="reportsbutton" data-toggle="tab"> <i class="glyphicon glyphicon-stats"></i>Reports</a></li> 
+                          <!--<li><a href="#reports" style="" id="reportsbutton" data-toggle="tab"> <i class="glyphicon glyphicon-stats"></i>Reports</a></li>--> 
                             <!--<li><a href="#searchdata" data-toggle="tab"> <i class="glyphicon glyphicon-search"></i> Edit Data</a></li>--> 
                            <!-- <li><a href="#export" data-toggle="tab"> <i class="glyphicon glyphicon-cloud-upload"></i> Data Export</a></li>-->
                         </ul>
@@ -299,7 +299,7 @@ input:focus {
                                         <div id='fedback' class="alert-info">Note: Please enter all the required data.</div>
                                    <br/>
                                     <div style="display:none;" class="controls savebuttons">
-                                        <input type="input" onClick="getElementsToBeSaved('roc');"  id='savebutton' value="Save Recipient Of Care"  style="margin-left: 0%;" class="btn-sm btn-success active">
+                                        <input type="input" onClick="getElementsToBeSaved('roc');"  id='savebutton' value="Save Data"  style="margin-left: 0%;" class="btn-sm btn-success active">
                                             
                                      </div>
                                      <div class="controls">
@@ -344,11 +344,11 @@ input:focus {
                                         
                                    <br/>
                                     <div style="display:none;" class="controls savebuttons">
-                                        <input type="input" onClick="getElementsToBeSaved('baby');"  id='savebutton' value="Add Baby"  style="margin-left: 0%;" class="btn-sm btn-success active">
+                                        <input type="input" onClick="getElementsToBeSaved('roc');"  id='savebutton' value="Add Baby"  style="margin-left: 0%;" class="btn-sm btn-success active">
                                             
                                      </div>
                                      <div class="controls">
-                                        <button type="submit" id='updatebutton' onclick="getElementsToBeSaved('baby');" style="margin-left: 0%;display:none;" class="btn-sm btn-info active">
+                                        <button type="submit" id='updatebutton' onclick="getElementsToBeSaved('roc');" style="margin-left: 0%;display:none;" class="btn-sm btn-info active">
                                             Update Baby 
                                         </button>
                                     </div>                                   
@@ -370,7 +370,7 @@ input:focus {
                             </div>
                             
 <div class="tab-pane well" id="reports">
-<form action="pmtctOvcReports" id="reportingForm">
+<form action="seeReports" id="reportingForm">
 
                                         <!--Dashboard code-->
 
@@ -403,7 +403,7 @@ input:focus {
 
                                                     <div class="controls">
                                                         <select class="form-control input-sm" onchange="checkFormAction();"   name='report' id='report' >
-                                                            <option value='pmtctOvcReports'>1.Tracker and Data Summary</option>
+                                                            <option value='seeReports'>1.Tracker and Data Summary</option>
                                                            
                                                             <!--<option value='hts_self_reports'>6.HTS Self</option>-->
 
@@ -730,7 +730,7 @@ input:focus {
 function refreshujumbe(){
     
   $("#fedback").html(""); 
- refreshPage();
+ //refreshPage();
     
 }
 
@@ -1106,8 +1106,10 @@ function isdisplayindicators()
                     setuuid('id');
                          $('.dates').datepicker({
                              todayHighlight: true, daysOfWeekDisabled: "0,6",clearBtn: true, autoclose: true,format: "yyyy-mm-dd",
-     });
-     
+                            });
+     //loadLocationOptionsFromDb('loadcts','county');
+     //loadLocationOptionsFromDb('loadsbct','subcounty');
+     //loadLocationOptionsFromDb('loadwrd','ward');
      
 
                         
@@ -1167,6 +1169,9 @@ function loadExistingClient(clientid,frm)
                              todayHighlight: true, daysOfWeekDisabled: "0,6",clearBtn: true, autoclose: true,format: "yyyy-mm-dd",
      });
      
+     // loadLocationOptionsFromDb('loadcts','county');
+     //loadLocationOptionsFromDb('loadsbct','subcounty');
+     //loadLocationOptionsFromDb('loadwrd','ward');
    
                         
                         
@@ -1233,8 +1238,31 @@ function saveFormDetails(de)
     
     console.log("You are requested to save "+de);    
     
+    var cccno=$("#ccc_no").val();
+    var cname=$("#client_name").val();
+    var ag=$("#age").val();
+    var pn=$("#phoneno").val().trim();
     //First Delete any entered data
     
+if(cname===''){$("#fedback").html("<font color='red'><h3>Please enter Client Name</h3></f>");   $("#client_name").focus();}
+if(cname.trim().length<4){$("#fedback").html("<font color='red'><h3>Please enter full Client Name</h3></f>");   $("#client_name").focus();}
+else if($("#ccc_no").val()===''){$("#fedback").html("<font color='red'><h3>Please enter Patient CCC Number</h3></f>");  $("#ccc_no").focus();}
+else if(cccno.length!==10){$("#fedback").html("<font color='red'><h3>Please enter a 10 digit CCC number</h3></f>");  $("#ccc_no").focus();}
+else if ($("#dob").val()===''){$("#fedback").html("<font color='red'><h3>Please enter Patient Date of Birth</h3></f>");  $("#dob").focus();}
+else if ($("#sex").val()===''){$("#fedback").html("<font color='red'><h3>Please Specify Patient Sex</h3></f>");  $("#sex").focus();}
+else if (ag>19){$("#fedback").html("<font color='red'><h3>The required data is for Patients below 19 Yrs Only</h3></f>");  $("#dob").focus();}
+else if (pn>0 && pn!==10){$("#fedback").html("<font color='red'><h3>Please enter 10 digit phone number in 07XX XXX XXX format</h3></f>");  $("#phoneno").focus();}
+
+else if ($("#county").val()===''){$("#fedback").html("<font color='red'><h3>Please specify County of residence</h3></f>");  $("#county").focus();}
+else if ($("#subcounty").val()===''){$("#fedback").html("<font color='red'><h3>Please specify Sub-County of residence</h3></f>");  $("#subcounty").focus();}
+else if ($("#ward").val()===''){$("#fedback").html("<font color='red'><h3>Please specify ward</h3></f>");  $("#ward").focus();}
+else if ($("#village").val()===''){$("#fedback").html("<font color='red'><h3>Please specify Village of residence</h3></f>");  $("#village").focus();}
+
+
+else if ($("#economic_issue").val()===''){$("#fedback").html("<font color='red'><h3>Please specify economic issue</h3></f>");  $("#economic_issue").focus();}
+else if ($("#social_issue").val()===''){$("#fedback").html("<font color='red'><h3>Please specify social Issues</h3></f>");  $("#social_issue").focus();}
+else if($("#environmental_issue").val()==='' ){$("#fedback").html("<font color='red'><h3>Please specify environmenta issue</h3></f>");  $("#environmental_issue").focus();}
+else {
     
      $.ajax({
                     url:'deletePatientRecords',                            
@@ -1285,8 +1313,8 @@ function saveFormDetails(de)
                     {
                         
   last_save_status=dat;
-  
-   
+  //after saving every field, reset it
+   $('#'+elementid).val("");
   
  
                     },
@@ -1306,8 +1334,8 @@ function saveFormDetails(de)
             
             console.log("Data saved Succesfully!"+last_save_status);
                            $("#fedback").html("<font color='green'><h3>Data saved Succesfully</h3></f>");
-                             setTimeout(refreshujumbe,4000);
-            
+             setTimeout(refreshujumbe,3000);
+            //resetForm('roc');
                
            }
            
@@ -1335,7 +1363,8 @@ function saveFormDetails(de)
 });
     
     
-    
+        }
+        
   
 }
 
@@ -1364,49 +1393,6 @@ $('#dataentry').on('keydown', 'input, select, textarea', function(e) {
 
 
 
-function loadAddedMothersPerSite(selval){
-    
-    //loadmtrs_sel_val,act=loadmothers,fac
-    
-    { 
-    
-    
-    //First do validation checks then save
-    
-//    var dt=$("#period").val();
-   
-    var fc=$("#facility").val().trim();
-      
- 
-            //now load the data
-          $.ajax({
-                    url:'seeDataPulls',                            
-                    type:'post',  
-                    dataType: 'html',  
-                    data:{act:"loadmothers",
-                         fac:fc,
-                         loadmtrs_sel_val:selval},
-                    success: function(data) 
-                    {
-                        var dt = data;
- 
- 
- console.log('Loaded Option '+dt);
- //no call the save function and pass the list of variables
-          
-          $("#mother_id").html(dt);
-                        
-                    }});    
-         
-           
-            
-          
-    
-}
-    
-    
-}
-
 
 
 //showedits
@@ -1426,7 +1412,7 @@ function loadEdits(formtoload,elementtoappend){
       
   //now load the data
           $.ajax({
-                    url:'dataPulls',                            
+                    url:'seeDataPulls',                            
                     type:'post',  
                    
                     dataType: 'html',  
@@ -1510,6 +1496,41 @@ function refreshPage(){
       window.location.reload();
     
 }
+
+
+function resetForm(frm){
+    
+    $('#'+frm)[0].reset();
+    isdisplayindicators();
+    
+}
+
+
+
+
+
+function loadLocationOptionsFromDb(act,dest)
+{
+var ct=$("#county").val();
+var sbct=$("#subcounty").val();
+//now load the data
+$.ajax({
+url:'seeDataPulls',                            
+type:'post',  
+dataType: 'html',  
+data:{act:act,
+sel_ct:ct,
+sel_sbct:sbct},
+success: function(data) 
+{
+
+$("#"+dest).html(data);
+
+}}); 
+
+}
+
+
 
 
               </script>
