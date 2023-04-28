@@ -114,7 +114,7 @@ public class uploadMonthlyForm extends HttpServlet {
             String subpartnerid = "", yearmonth = "", month = "";
             
             String uploadstatus="";
-            String lastexcelid="286";
+            String lastexcelid="356";
             
             session = request.getSession();
             if (session.getAttribute("userid") != null) 
@@ -160,7 +160,7 @@ public class uploadMonthlyForm extends HttpServlet {
              
              
        
-            String activeversion = "KP Form  version 2.0.0";
+            String activeversion = "KP Form  version 2.0.1";
          
             
             String dbname = "internal_system.kp_temp";
@@ -1120,7 +1120,7 @@ String deleteqry=" delete from internal_system."+destinationtable+" where concat
                 
             String skipblanks=" and concat_ws(',',m_uk,f_uk,m_1,f_1,m_4,f_4,m_9,f_9,m_14,f_14,m_19,f_19,m_24,f_24,m_29,f_29,m_34,f_34,m_39,f_39,m_44,f_44,m_49,f_49,m_50,f_50,total) !='0' && concat_ws(',',m_uk,f_uk,m_1,f_1,m_4,f_4,m_9,f_9,m_14,f_14,m_19,f_19,m_24,f_24,m_29,f_29,m_34,f_34,m_39,f_39,m_44,f_44,m_49,f_49,m_50,f_50,total) !='' ";    
 replaceqry = "Replace  internal_system." + destinationtable + " select " + colstomigrate + " from internal_system.kp_temp where destination_table='" + destinationtable + "' and concat(yearmonth,'_',facility_id) in (" + yearmonth_subpartnerid + ")  "+skipblanks+" ";
-//System.out.println(""+replaceqry);
+System.out.println(""+replaceqry);
 conn.st_1.executeUpdate(replaceqry);
 count++;
 

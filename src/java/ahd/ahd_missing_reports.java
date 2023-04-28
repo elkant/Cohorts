@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hfr;
+package ahd;
 
 
 import General.IdGenerator;
@@ -14,13 +14,15 @@ import java.io.OutputStream;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+
+
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.util.CellRangeAddress;
@@ -31,12 +33,11 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-
 /**
  *
  * @author EKaunda
  */
-public class hfrreport_uploadble extends HttpServlet {
+public class ahd_missing_reports extends HttpServlet {
 
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -51,110 +52,154 @@ public class hfrreport_uploadble extends HttpServlet {
         XSSFWorkbook wb = new XSSFWorkbook();
 
         XSSFFont font = wb.createFont();
-        font.setFontHeightInPoints((short) 18);
-        font.setFontName("Cambria");
+        font.setFontHeightInPoints((short) 11);
+        font.setFontName("Daytona");
         font.setColor((short) 0000);
         CellStyle style = wb.createCellStyle();
         style.setFont(font);
-        style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+        style.setAlignment(XSSFCellStyle.ALIGN_CENTER);
         XSSFFont font2 = wb.createFont();
-        font2.setFontName("Cambria");
+        font2.setFontName("Daytona");
         font2.setColor((short) 0000);
+        font2.setFontHeightInPoints((short) 11);
         CellStyle style2 = wb.createCellStyle();
         style2.setFont(font2);
-        style2.setBorderTop(HSSFCellStyle.BORDER_THIN);
-        style2.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-        style2.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-        style2.setBorderRight(HSSFCellStyle.BORDER_THIN);
-        style2.setAlignment(HSSFCellStyle.ALIGN_LEFT);
+        style2.setBorderTop(XSSFCellStyle.BORDER_THIN);
+        style2.setBorderBottom(XSSFCellStyle.BORDER_THIN);
+        style2.setBorderLeft(XSSFCellStyle.BORDER_THIN);
+        style2.setBorderRight(XSSFCellStyle.BORDER_THIN);
+        style2.setAlignment(XSSFCellStyle.ALIGN_LEFT);
+        style2.setBottomBorderColor(HSSFColor.GREEN.index);
+        style2.setTopBorderColor(HSSFColor.GREEN.index);
+        style2.setLeftBorderColor(HSSFColor.GREEN.index);
+        style2.setRightBorderColor(HSSFColor.GREEN.index);
+        
 
         XSSFCellStyle stborder = wb.createCellStyle();
-        stborder.setBorderTop(HSSFCellStyle.BORDER_THIN);
-        stborder.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-        stborder.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-        stborder.setBorderRight(HSSFCellStyle.BORDER_THIN);
-        stborder.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+        stborder.setBorderTop(XSSFCellStyle.BORDER_THIN);
+        stborder.setBorderBottom(XSSFCellStyle.BORDER_THIN);
+        stborder.setBorderLeft(XSSFCellStyle.BORDER_THIN);
+        stborder.setBorderRight(XSSFCellStyle.BORDER_THIN);
+        stborder.setBottomBorderColor(HSSFColor.GREEN.index);
+        stborder.setTopBorderColor(HSSFColor.GREEN.index);
+        stborder.setLeftBorderColor(HSSFColor.GREEN.index);
+        stborder.setRightBorderColor(HSSFColor.GREEN.index);
+        stborder.setAlignment(XSSFCellStyle.ALIGN_CENTER);
 
         XSSFCellStyle stylex = wb.createCellStyle();
-        stylex.setFillForegroundColor(HSSFColor.GREY_25_PERCENT.index);
-        stylex.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-        stylex.setBorderTop(HSSFCellStyle.BORDER_THIN);
-        stylex.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-        stylex.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-        stylex.setBorderRight(HSSFCellStyle.BORDER_THIN);
-        stylex.setAlignment(HSSFCellStyle.ALIGN_LEFT);
+        stylex.setFillForegroundColor(HSSFColor.GREEN.index);
+        stylex.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
+        stylex.setBorderTop(XSSFCellStyle.BORDER_THIN);
+        stylex.setBorderBottom(XSSFCellStyle.BORDER_THIN);
+        stylex.setBorderLeft(XSSFCellStyle.BORDER_THIN);
+        stylex.setBorderRight(XSSFCellStyle.BORDER_THIN);
+        stylex.setBottomBorderColor(HSSFColor.GREEN.index);
+        stylex.setTopBorderColor(HSSFColor.GREEN.index);
+        stylex.setLeftBorderColor(HSSFColor.GREEN.index);
+        stylex.setRightBorderColor(HSSFColor.GREEN.index);
+        
+        stylex.setAlignment(XSSFCellStyle.ALIGN_LEFT);
 
         XSSFCellStyle stylesum = wb.createCellStyle();
-        stylesum.setFillForegroundColor(HSSFColor.GREY_25_PERCENT.index);
-        stylesum.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-        stylesum.setBorderTop(HSSFCellStyle.BORDER_THIN);
-        stylesum.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-        stylesum.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-        stylesum.setBorderRight(HSSFCellStyle.BORDER_THIN);
-        stylesum.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+        stylesum.setFillForegroundColor(HSSFColor.GREEN.index);
+        stylesum.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
+        stylesum.setBorderTop(XSSFCellStyle.BORDER_THIN);
+        stylesum.setBorderBottom(XSSFCellStyle.BORDER_THIN);
+        stylesum.setBorderLeft(XSSFCellStyle.BORDER_THIN);
+        stylesum.setBorderRight(XSSFCellStyle.BORDER_THIN);
+        stylesum.setAlignment(XSSFCellStyle.ALIGN_CENTER);
+        
+        stylesum.setBottomBorderColor(HSSFColor.GREEN.index);
+        stylesum.setTopBorderColor(HSSFColor.GREEN.index);
+        stylesum.setLeftBorderColor(HSSFColor.GREEN.index);
+        stylesum.setRightBorderColor(HSSFColor.GREEN.index);
 
         XSSFFont fontx = wb.createFont();
         fontx.setColor(HSSFColor.BLACK.index);
-        fontx.setFontName("Cambria");
-        stylex.setFont(fontx);
+        fontx.setFontName("Daytona");
+        
+        XSSFFont fontwhite = wb.createFont();
+        fontwhite.setColor(HSSFColor.WHITE.index);
+        fontwhite.setFontName("Daytona");
+        fontwhite.setFontHeightInPoints((short)9);
+                
+        stylex.setFont(fontwhite);
         stylex.setWrapText(true);
 
         stylesum.setFont(fontx);
         stylesum.setWrapText(true);
-
-        XSSFSheet shet = wb.createSheet("Worksheet");
-
-        String year="";
-       IdGenerator dats= new IdGenerator();
         
-        String startdate="2020-01-20";
+        HashMap<Integer , String> sps= new HashMap<Integer, String>();
+        
+        sps.put(1, "Missing_AHD_Reports@internal_system.sp_ahd_missing_reports");
+        //sps.put(2, "Raw Data@sp_nonemr_raw_data");
+
+//        HSSFSheet acashet = wb.createSheet("ACA raw Data");
+//        HSSFSheet mcashet = wb.createSheet("MCA raw Data");
+        
+//        HSSFSheet Sheetnames[]={acashet,mcashet};
+
+ String year="";
+       IdGenerator dats= new IdGenerator();
+String startdate="2020-04-01";
         String enddate=dats.toDay();
         String subcounty="";
         String county="";
-        String weeknumber="";
-        String weekstring="";
-       
+        String facil="";
+        
         if(request.getParameter("startdate")!=null)
         {
         
             startdate=request.getParameter("startdate");
         
         }
-        if(request.getParameter("enddate")!=null)
-        {
-        enddate=request.getParameter("enddate");
-        }
         
-        
-      
-        
-//        //subcounty
-//        if(request.getParameter("rpt_subcounty")!=null)
-//        {
-//            subcounty=request.getParameter("rpt_subcounty");
-//        }
-//        //county
-//        if(request.getParameter("rpt_county")!=null)
-//        {
-//         county=request.getParameter("rpt_county");
-//        }
-        
-        dbConn conn = new dbConn();
-        //========Query 1=================
-        
-            
-                int count1  = 0;
-        
-       String ym=startdate.replace("-","").substring(0,6);
-        
-        //========Query two====Facility Details==============
-        
-        String storedprocedurename=" call pews.getHFR_uploadable('"+startdate+"','"+enddate+"');";
         
        
+        if(request.getParameter("enddate")!=null)
+        {
         
-        String qry = ""+storedprocedurename;
-
+            enddate=request.getParameter("enddate");
+        
+        }
+       
+        
+        
+  
+        
+        
+        
+        
+        dbConn conn = new dbConn();
+        
+        
+        //========Query 1=================
+        
+        for(int sheetno=1;sheetno <= sps.size();sheetno++)
+               {
+        //for(HSSFSheet shet:Sheetnames){
+        
+        XSSFSheet shet = wb.createSheet(sps.get(sheetno).split("@")[0]);
+        
+        XSSFRow rw0=shet.createRow(1);
+        XSSFCell cell = rw0.createCell(0);
+                    cell.setCellValue(shet.getSheetName()+" for Period "+enddate);
+                    cell.setCellStyle(style);
+        shet.addMergedRegion(new CellRangeAddress(1, 1, 0,10));
+                    
+                int count1  = 3;
+        
+              //shet.getSheetName();
+              
+                String storedprocedure="";
+                
+        String ym=enddate.replace("-", "").substring(0, 6);
+                
+                storedprocedure=sps.get(sheetno).split("@")[1];
+                
+        //========Query two====Facility Details==============
+        
+        String qry = "call "+storedprocedure+" ('"+startdate+"','"+enddate+"')";
          System.out.println(qry);
         conn.rs = conn.st.executeQuery(qry);
         
@@ -171,7 +216,7 @@ public class hfrreport_uploadble extends HttpServlet {
             if (count == (count1)) {
 //header rows
                 XSSFRow rw = shet.createRow(count);
-rw.setHeightInPoints(26);
+rw.setHeightInPoints(32);
                 for (int i = 1; i <= columnCount; i++) {
 
                     mycolumns.add(metaData.getColumnLabel(i));
@@ -183,6 +228,8 @@ rw.setHeightInPoints(26);
                 }//end of for loop
                 count++;
             }//end of if
+            
+            
             //data rows     
             XSSFRow rw = shet.createRow(count);
 
@@ -193,7 +240,7 @@ rw.setHeightInPoints(26);
                  if(isNumeric(conn.rs.getString("" + mycolumns.get(a)))){
                // if(1==1){
                 
-                     cell0.setCellValue(conn.rs.getInt(mycolumns.get(a).toString()));
+                     cell0.setCellValue(conn.rs.getDouble(mycolumns.get(a).toString()));
                     
                    }
                 else 
@@ -214,15 +261,19 @@ rw.setHeightInPoints(26);
         
         
         //Autofreeze  || Autofilter  || Remove Gridlines ||  
-        
+        if(count1<count-1){
         shet.setAutoFilter(new CellRangeAddress(count1, count - 1, 0, columnCount-1));
+        }
+
         //System.out.println("1,"+rowpos+",0,"+colposcopy);
         for (int i = 0; i <= columnCount; i++) {
             shet.autoSizeColumn(i);
         }
-        
+
         shet.setDisplayGridlines(false);
-        shet.createFreezePane(6, 0);
+        shet.createFreezePane(4, 4);
+
+    }
         
         if(conn.rs!=null){conn.rs.close();}
         if(conn.rs1!=null){conn.rs1.close();}
@@ -231,10 +282,24 @@ rw.setHeightInPoints(26);
         if(conn.connect!=null){conn.connect.close();}
         
         
+        
+        
+
+        
+         if(conn.st!=null){conn.st.close();}  
+         if(conn.st1!=null){conn.st1.close();}  
+         if(conn.st_6!=null){conn.st_6.close();}  
+         if(conn.rs!=null){conn.rs.close();}  
+         if(conn.rs1!=null){conn.rs1.close();}  
+         if(conn.rs_6!=null){conn.rs_6.close();}  
+         if(conn.pst1!=null){conn.pst1.close();}  
+         if(conn.connect!=null){conn.connect.close();}  
+        
+        
         IdGenerator IG = new IdGenerator();
         String createdOn = IG.CreatedOn();
 
-        System.out.println("" + "HFR_reports_Gen_" + createdOn.trim() + ".xlsx");
+        System.out.println("" + "AHD_Tracker_reports_Gen_" + createdOn.trim() + ".xlsx");
 
         ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
         wb.write(outByteStream);
@@ -242,7 +307,7 @@ rw.setHeightInPoints(26);
         response.setContentType("application/ms-excel");
         response.setContentLength(outArray.length);
         response.setHeader("Expires:", "0"); // eliminates browser caching
-        response.setHeader("Content-Disposition", "attachment; filename=" + "PPMS-HFR-USAID_Tujenge_Jamii_"+ym+"_" + createdOn.trim() + ".xlsx");
+        response.setHeader("Content-Disposition", "attachment; filename=" + "AHD_Tracker_rpt_for_"+enddate+"__gen_" + createdOn.trim() + ".xlsx");
          response.setHeader("Set-Cookie","fileDownload=true; path=/");
         OutputStream outStream = response.getOutputStream();
         outStream.write(outArray);
@@ -256,7 +321,7 @@ rw.setHeightInPoints(26);
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(hfrreport_uploadble.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ahd_missing_reports.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -266,7 +331,7 @@ rw.setHeightInPoints(26);
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(hfrreport_uploadble.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ahd_missing_reports.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -275,15 +340,9 @@ rw.setHeightInPoints(26);
         return "Short description";
     }// </editor-fold>
 
-       public static boolean isNumeric(String strNum) {
-      
     
-    try {
-        double d = Double.parseDouble(strNum);
-    } catch (NumberFormatException | NullPointerException nfe) {
-        return false;
-    }
-    return true;
-      
+   public boolean isNumeric(String s) {  
+        return s != null && s.matches("[-+]?\\d*\\.?\\d+");  
 }
+    
 }

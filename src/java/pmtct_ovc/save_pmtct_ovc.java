@@ -113,6 +113,11 @@ for(int a=0;a<dataelementsarr.length;a++)
     {
     data=request.getParameter(""+dataelementsarr[a]);
     }
+     else if(request.getParameterValues(""+dataelementsarr[a]+"[]")!=null)
+    {
+    data=ArrayToString(request.getParameterValues(""+dataelementsarr[a]+"[]"));
+        System.out.println(" Data Ni ________"+data);
+    }
 conn.pst1.setString(rowcount,data);
 
 rowcount++;
@@ -194,5 +199,19 @@ else
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+
+
+
+
+private String ArrayToString(String [] arr)
+{
+     String vals="";
+for(int x=0;x<arr.length;x++){vals+=arr[x]+",";}
+       
+
+
+return vals;
+}
 
 }

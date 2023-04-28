@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hfr;
+package ahd;
 
 
 import General.IdGenerator;
@@ -14,6 +14,7 @@ import java.io.OutputStream;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -22,42 +23,94 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.openxml4j.opc.OPCPackage;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFFont;
-import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFFormulaEvaluator;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.openxmlformats.schemas.spreadsheetml.x2006.main.CTTable;
 
+import static scripts.OSValidator.isUnix;
 
 /**
  *
  * @author EKaunda
  */
-public class hfrreport_uploadble extends HttpServlet {
+public class ahdreported extends HttpServlet {
 
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException {
+            throws ServletException, IOException, SQLException, InvalidFormatException {
         response.setContentType("text/html;charset=UTF-8");
         //PrintWriter out = response.getWriter();
 
+        
+         IdGenerator IG = new IdGenerator();
+        String createdOn = IG.CreatedOn();
+        
+     
+        
         /* TODO output your page here. You may use following sample code. */
 //______________________________________________________________________________________
 //                       CREATE THE WORKSHEETS          
 //______________________________________________________________________________________  
-        XSSFWorkbook wb = new XSSFWorkbook();
+        
 
-        XSSFFont font = wb.createFont();
+
+
+String allpath = getServletContext().getRealPath("/ahd_report.xlsx");
+
+XSSFWorkbook wb1;
+ 
+String pathtodelete=null;
+
+Date da= new Date();
+String dat2 = da.toString().replace(" ", "_");
+
+dat2 = dat2.toString().replace(":", "_");
+
+String mydrive = allpath.substring(0, 1);
+
+String np=mydrive+":\\HSDSA\\PNS\\MACROS\\";
+
+String filepath="AHD_"+dat2+".xlsx";
+
+
+if(isUnix()){
+    np="/HSDSA/PNS/MACROS/";
+}
+
+
+
+
+wb1 = new XSSFWorkbook( OPCPackage.open(allpath) );
+//wb1 = new XSSFWorkbook();
+
+
+
+
+
+
+
+
+XSSFWorkbook wb = wb1;
+
+
+//SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 1000);
+
+        Font font =  wb.createFont();
         font.setFontHeightInPoints((short) 18);
         font.setFontName("Cambria");
         font.setColor((short) 0000);
         CellStyle style = wb.createCellStyle();
         style.setFont(font);
         style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-        XSSFFont font2 = wb.createFont();
+        XSSFFont font2 = (XSSFFont) wb.createFont();
         font2.setFontName("Cambria");
         font2.setColor((short) 0000);
         CellStyle style2 = wb.createCellStyle();
@@ -68,14 +121,14 @@ public class hfrreport_uploadble extends HttpServlet {
         style2.setBorderRight(HSSFCellStyle.BORDER_THIN);
         style2.setAlignment(HSSFCellStyle.ALIGN_LEFT);
 
-        XSSFCellStyle stborder = wb.createCellStyle();
+        CellStyle stborder = wb.createCellStyle();
         stborder.setBorderTop(HSSFCellStyle.BORDER_THIN);
         stborder.setBorderBottom(HSSFCellStyle.BORDER_THIN);
         stborder.setBorderLeft(HSSFCellStyle.BORDER_THIN);
         stborder.setBorderRight(HSSFCellStyle.BORDER_THIN);
         stborder.setAlignment(HSSFCellStyle.ALIGN_CENTER);
 
-        XSSFCellStyle stylex = wb.createCellStyle();
+        CellStyle stylex = wb.createCellStyle();
         stylex.setFillForegroundColor(HSSFColor.GREY_25_PERCENT.index);
         stylex.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
         stylex.setBorderTop(HSSFCellStyle.BORDER_THIN);
@@ -84,7 +137,7 @@ public class hfrreport_uploadble extends HttpServlet {
         stylex.setBorderRight(HSSFCellStyle.BORDER_THIN);
         stylex.setAlignment(HSSFCellStyle.ALIGN_LEFT);
 
-        XSSFCellStyle stylesum = wb.createCellStyle();
+        CellStyle stylesum = wb.createCellStyle();
         stylesum.setFillForegroundColor(HSSFColor.GREY_25_PERCENT.index);
         stylesum.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
         stylesum.setBorderTop(HSSFCellStyle.BORDER_THIN);
@@ -93,7 +146,7 @@ public class hfrreport_uploadble extends HttpServlet {
         stylesum.setBorderRight(HSSFCellStyle.BORDER_THIN);
         stylesum.setAlignment(HSSFCellStyle.ALIGN_CENTER);
 
-        XSSFFont fontx = wb.createFont();
+        Font fontx = wb.createFont();
         fontx.setColor(HSSFColor.BLACK.index);
         fontx.setFontName("Cambria");
         stylex.setFont(fontx);
@@ -102,31 +155,27 @@ public class hfrreport_uploadble extends HttpServlet {
         stylesum.setFont(fontx);
         stylesum.setWrapText(true);
 
-        XSSFSheet shet = wb.createSheet("Worksheet");
-
+        
+      XSSFSheet shet = wb.getSheet("rawdata");
         String year="";
        IdGenerator dats= new IdGenerator();
         
-        String startdate="2020-01-20";
-        String enddate=dats.toDay();
-        String subcounty="";
+        String startdate="2021-06-01";
+        String enddate=IG.toDay();
+      
         String county="";
-        String weeknumber="";
-        String weekstring="";
-       
         if(request.getParameter("startdate")!=null)
         {
         
-            startdate=request.getParameter("startdate");
+        startdate=request.getParameter("startdate");
         
         }
         if(request.getParameter("enddate")!=null)
         {
-        enddate=request.getParameter("enddate");
+        
+            enddate=request.getParameter("enddate");
+        
         }
-        
-        
-      
         
 //        //subcounty
 //        if(request.getParameter("rpt_subcounty")!=null)
@@ -134,71 +183,107 @@ public class hfrreport_uploadble extends HttpServlet {
 //            subcounty=request.getParameter("rpt_subcounty");
 //        }
 //        //county
-//        if(request.getParameter("rpt_county")!=null)
+//        if(request.getParameter("county")!=null)
 //        {
-//         county=request.getParameter("rpt_county");
+//         county=request.getParameter("county");
 //        }
-        
+//        
         dbConn conn = new dbConn();
+        
         //========Query 1=================
+      
+
+     
+       
         
-            
-                int count1  = 0;
         
-       String ym=startdate.replace("-","").substring(0,6);
+     
         
-        //========Query two====Facility Details==============
+        //_______________________________________________________________________________________________
         
-        String storedprocedurename=" call pews.getHFR_uploadable('"+startdate+"','"+enddate+"');";
+        
+        String mfl="(";
+        String facilityar[]=null;
+        
+       
+		   facilityar=request.getParameterValues("facility"); 
+       
+       
         
        
         
-        String qry = ""+storedprocedurename;
-
-         System.out.println(qry);
+        
+        //_______________________________________________________________________________________________
+        
+        
+        
+        
+//        
+//        XSSFRow rw0=shet.createRow(1);
+//        XSSFCell cell = rw0.createCell(0);
+//        cell.setCellValue("Surge Tracker for Period "+startdate+"  to "+enddate+"");
+//        cell.setCellStyle(style);
+//        shet.addMergedRegion(new CellRangeAddress(1, 1, 0,10));
+//                    
+                int count1 =1;
+        
+       
+        
+        //========Query two====Facility Details==============
+        
+        String qry = "call internal_system.sp_pull_ahd_data('"+startdate+"', '"+enddate+"');";
+       
+        System.out.println("query ni "+qry);
+       
         conn.rs = conn.st.executeQuery(qry);
         
          ResultSetMetaData metaData = conn.rs.getMetaData();
         int columnCount = metaData.getColumnCount();
 
-         metaData = conn.rs.getMetaData();
-         columnCount = metaData.getColumnCount();
-        int count = count1;
-        ArrayList mycolumns = new ArrayList();
+     
+         
+         int count = count1;
+         ArrayList mycolumns = new ArrayList();
 
-        while (conn.rs.next()) {
+         while (conn.rs.next()) {
 
-            if (count == (count1)) {
+         if (count == (count1)) {
 //header rows
-                XSSFRow rw = shet.createRow(count);
-rw.setHeightInPoints(26);
-                for (int i = 1; i <= columnCount; i++) {
-
+         //Row rw = shet.createRow(count);
+//rw.setHeightInPoints(26);
+                for (int i = 1; i <= columnCount; i++) 
+                {
+//skip header
+                   // System.out.println("Column number "+i);
                     mycolumns.add(metaData.getColumnLabel(i));
-                    XSSFCell cell0 = rw.createCell(i - 1);
-                    cell0.setCellValue(metaData.getColumnLabel(i));
-                    cell0.setCellStyle(stylex);
+                    //Cell cell0 = rw.createCell(i - 1);
+                    //cell0.setCellValue(metaData.getColumnLabel(i));
+                    //cell0.setCellStyle(stylex);
 
                     //create row header
                 }//end of for loop
                 count++;
             }//end of if
             //data rows     
-            XSSFRow rw = shet.createRow(count);
+            Row rw = shet.createRow(count);
 
-            for (int a = 0; a < columnCount; a++) {
-                //System.out.print(mycolumns.get(a) + ":" + conn.rs.getString("" + mycolumns.get(a)));
+            for (int a = 0; a < columnCount; a++) 
+            {
+               // System.out.print(mycolumns.get(a) + ":" + conn.rs.getString("" + mycolumns.get(a)));
 
-                XSSFCell cell0 = rw.createCell(a);
-                 if(isNumeric(conn.rs.getString("" + mycolumns.get(a)))){
+                Cell cell0 = rw.createCell(a);
+                 if(isNumeric(conn.rs.getString("" + mycolumns.get(a))) && conn.rs.getString("" + mycolumns.get(a)).length()<=10 )
+                 {
                // if(1==1){
                 
                      cell0.setCellValue(conn.rs.getInt(mycolumns.get(a).toString()));
                     
-                   }
+                 }
                 else 
                 {
-                     cell0.setCellValue(conn.rs.getString("" + mycolumns.get(a)));
+                    //System.out.println(mycolumns.get(a)+" Last option"+conn.rs.getString("" + mycolumns.get(a)));
+                    //System.out.println(mycolumns.get(a)+" --Last option"+conn.rs.getString("" + mycolumns.get(a)));
+                    cell0.setCellValue(conn.rs.getString(""+mycolumns.get(a)));
                     //cell0.setCellValue(conn.rs.getString("" + mycolumns.get(a)));
                    
                 }
@@ -214,15 +299,40 @@ rw.setHeightInPoints(26);
         
         
         //Autofreeze  || Autofilter  || Remove Gridlines ||  
-        
-        shet.setAutoFilter(new CellRangeAddress(count1, count - 1, 0, columnCount-1));
+     if(count!=count1)   
+     {
+       // shet.setAutoFilter(new CellRangeAddress(count1, count - 1, 0, columnCount-1));
+
         //System.out.println("1,"+rowpos+",0,"+colposcopy);
-        for (int i = 0; i <= columnCount; i++) {
-            shet.autoSizeColumn(i);
+        for (int i = 0; i <= columnCount; i++) 
+        {
+            //shet.autoSizeColumn(i);
         }
-        
+
         shet.setDisplayGridlines(false);
-        shet.createFreezePane(6, 0);
+        shet.createFreezePane(6, 2);
+    }
+     
+     
+     
+  if(1==1)
+  {
+     XSSFSheet sheet= wb.getSheet("rawdata");
+        // tell your xssfsheet where its content begins and where it ends
+((XSSFSheet)shet).getCTWorksheet().getDimension().setRef("A1:T" + (shet.getLastRowNum() + 1));
+
+CTTable ctTable = ((XSSFSheet)shet).getTables().get(0).getCTTable();
+
+ctTable.setRef("A1:T" + (shet.getLastRowNum() + 1)); // adjust reference as needed
+
+
+        
+}
+     
+  
+    
+     
+     
         
         if(conn.rs!=null){conn.rs.close();}
         if(conn.rs1!=null){conn.rs1.close();}
@@ -231,10 +341,9 @@ rw.setHeightInPoints(26);
         if(conn.connect!=null){conn.connect.close();}
         
         
-        IdGenerator IG = new IdGenerator();
-        String createdOn = IG.CreatedOn();
-
-        System.out.println("" + "HFR_reports_Gen_" + createdOn.trim() + ".xlsx");
+       //XSSFFormulaEvaluator.evaluateAllFormulaCells(wb);
+wb.setForceFormulaRecalculation(true);
+        System.out.println("" + "AHD_Reports_Gen_" + createdOn.trim() + ".xlsx");
 
         ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
         wb.write(outByteStream);
@@ -242,7 +351,7 @@ rw.setHeightInPoints(26);
         response.setContentType("application/ms-excel");
         response.setContentLength(outArray.length);
         response.setHeader("Expires:", "0"); // eliminates browser caching
-        response.setHeader("Content-Disposition", "attachment; filename=" + "PPMS-HFR-USAID_Tujenge_Jamii_"+ym+"_" + createdOn.trim() + ".xlsx");
+        response.setHeader("Content-Disposition", "attachment; filename=" + "AHD_Reports_btwn_"+startdate+"_to_"+enddate+"_gen_" + createdOn.trim() + ".xlsx");
          response.setHeader("Set-Cookie","fileDownload=true; path=/");
         OutputStream outStream = response.getOutputStream();
         outStream.write(outArray);
@@ -256,7 +365,9 @@ rw.setHeightInPoints(26);
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(hfrreport_uploadble.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ahdreported.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvalidFormatException ex) {
+            Logger.getLogger(ahdreported.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -266,7 +377,9 @@ rw.setHeightInPoints(26);
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(hfrreport_uploadble.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ahdreported.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvalidFormatException ex) {
+            Logger.getLogger(ahdreported.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -275,7 +388,8 @@ rw.setHeightInPoints(26);
         return "Short description";
     }// </editor-fold>
 
-       public static boolean isNumeric(String strNum) {
+    
+        public static boolean isNumeric(String strNum) {
       
     
     try {

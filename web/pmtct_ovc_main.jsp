@@ -299,7 +299,7 @@ input:focus {
                                 <table class="table table-striped table-bordered">
                                        <tr><td colspan="3" class="col-xs-12">               
                                 <div class="control-group col-xs-12">
-                                        <div id='fedback' class="alert-info">Note: Please enter all the required data.</div>
+                                        
                                    <br/>
                                     <div style="display:none;" class="controls savebuttons">
                                         <input type="input" onClick="getElementsToBeSaved('mother');"  id='savebutton' value="Add Mother"  style="margin-left: 0%;" class="btn-sm btn-success active">
@@ -497,7 +497,7 @@ input:focus {
 
                 </div>
                 <!--/col-->
-               
+               <div id='fedback' class="alert-info">Note: Please enter all the required data.</div>
                 <!--/col-span-6-->
 
             </div>
@@ -658,7 +658,7 @@ input:focus {
                     
                     
                          $('.dates').datepicker({
-                             todayHighlight: true, daysOfWeekDisabled: "0,6",clearBtn: true, autoclose: true,format: "yyyy-mm-dd",
+                             todayHighlight: true,clearBtn: true, autoclose: true,format: "yyyy-mm-dd",
      });
                  </script>
 
@@ -733,7 +733,7 @@ input:focus {
 function refreshujumbe(){
     
   $("#fedback").html(""); 
- refreshPage();
+ //refreshPage();
     
 }
 
@@ -1108,7 +1108,7 @@ function isdisplayindicators()
                    $("#dynamicindicatorsmother").html(data); 
                     setuuid('id');
                          $('.dates').datepicker({
-                             todayHighlight: true, daysOfWeekDisabled: "0,6",clearBtn: true, autoclose: true,format: "yyyy-mm-dd",
+                             todayHighlight: true,clearBtn: true, autoclose: true,format: "yyyy-mm-dd",
      });
      
      
@@ -1127,7 +1127,7 @@ function isdisplayindicators()
                    //loadAddedMothersPerSite("");
                         setuuid('hei_id');
                          $('.dates').datepicker({
-                             todayHighlight: true, daysOfWeekDisabled: "0,6",clearBtn: true, autoclose: true,format: "yyyy-mm-dd",
+                             todayHighlight: true,clearBtn: true, autoclose: true,format: "yyyy-mm-dd",
      });
      
      //setuuid('id');
@@ -1184,9 +1184,10 @@ function loadExistingClient(clientid,frm)
                          $(".savebuttons").show();
                    $("#dynamicindicators"+frm).html(data); 
                          $('.dates').datepicker({
-                             todayHighlight: true, daysOfWeekDisabled: "0,6",clearBtn: true, autoclose: true,format: "yyyy-mm-dd",
+                             todayHighlight: true,clearBtn: true, autoclose: true,format: "yyyy-mm-dd",
      });
-     
+     //cal a trigger to refresh the forms so that hidden forms with data can unhide
+     getElementsToBeRefreshed(frm);
    
                         
                         
@@ -1230,7 +1231,43 @@ function getElementsToBeSaved(formname)
  console.log('Save '+formname+' Elements'+dt);
  //no call the save function and pass the list of variables
           
-          saveFormDetails(dt);
+          saveFormDetails(dt,formname);
+                        
+                    }});    
+         
+           
+            
+          
+    
+}
+function getElementsToBeRefreshed(formname)
+{ 
+    
+    
+    //First do validation checks then save
+    
+   
+ 
+            //now load the data
+          $.ajax({
+                    url:'loadPmtctIndicators?fm='+formname,                            
+                    type:'post',  
+                    dataType: 'json',  
+                    success: function(data) 
+                    {
+                        var dt = data;
+ 
+ 
+ console.log('Refresh '+formname+' Elements'+dt);
+ //no call the save function and pass the list of variables
+            for(var i=0;i<dt.length;i++){
+ 
+ var elementid=dt[i].element_id; 
+ 
+  triggerElementChange(elementid);
+ 
+ }
+         
                         
                     }});    
          
@@ -1242,7 +1279,7 @@ function getElementsToBeSaved(formname)
 
 
 
-function saveFormDetails(de)
+function saveFormDetails(de,frm)
 {
 
 
@@ -1255,6 +1292,18 @@ function saveFormDetails(de)
     
     //First Delete any entered data
     
+
+  
+ 
+    //First Delete any entered data
+     var issaveready=true;
+if(1===2){$("#fedback").html("<font color='red'><h3>Please enter Client Name</h3></f>");   $("#client_name").focus();}
+//if(cname.trim().length<4){$("#fedback").html("<font color='red'><h3>Please enter full Client Name</h3></f>");   $("#client_name").focus();}
+//else if($("#ccc_no").val()===''){$("#fedback").html("<font color='red'><h3>Please enter Patient CCC Number</h3></f>");  $("#ccc_no").focus();}
+//else if(cccno.length!==10){$("#fedback").html("<font color='red'><h3>Please enter a 10 digit CCC number</h3></f>");  $("#ccc_no").focus();}
+//else if ($("#dob").val()===''){$("#fedback").html("<font color='red'><h3>Please enter Patient Date of Birth</h3></f>");  $("#dob").focus();}
+
+else {
     
      $.ajax({
                     url:'deletePatientRecords',                            
@@ -1269,7 +1318,9 @@ function saveFormDetails(de)
              
                  var last_save_status="";
                for(var i=0;i<de.length;i++){
-                       
+         
+            
+                
                        
                        //"id","facility_id","linelisting_month","patient_id","indicator_id","value","encounter_id","user_id","","is_locked"
                              console.log("at saving point"+de[i].element_id);
@@ -1278,15 +1329,30 @@ function saveFormDetails(de)
    var fc=$("#facility").val().trim();
    var tid=uuidv4();
    var elementid=de[i].element_id; 
+   var lbl=de[i].label; 
    var val=$("#"+de[i].element_id).val(); 
   
-             
+ 
+              if($("#"+elementid).is(":visible"))
+              {
+               //check if is element is required
+               if($("#"+elementid).prop('required'))
+               {
+              if(val===''){
+                  issaveready=false;
+                  
+   $("#fedback").html("<font color='red'><h3>Please specify "+lbl+"</h3></f>");  $("#"+elementid).focus();   $("#"+elementid).css('border-color', '#FF0000');                  
+              }     
+                   
+               }
+               
+              }    
              
              //First delete the existing Record in the database then after deletion, proceed and save
              //
              
              
-        
+        if(issaveready){
              
                $.ajax({
                     url:'save_pmtct_ovc',                            
@@ -1326,12 +1392,20 @@ function saveFormDetails(de)
             
             console.log("Data saved Succesfully!"+last_save_status);
                            $("#fedback").html("<font color='green'><h3>Data saved Succesfully</h3></f>");
+                           //getElementsToBeReset(frm);
+                           isdisplayindicators();
                              setTimeout(refreshujumbe,4000);
             
                
            }
            
-        
+                }
+                else {
+                    //stop the loop
+                    console.log("Save loop stopped");
+                    break;
+                    
+                }
                      } //end of for loop
     
              
@@ -1354,12 +1428,51 @@ function saveFormDetails(de)
 });
     
     
-    
+    }
   
 }
 
 
+ function getElementsToBeReset(formname)
+{ 
+    
+    
+    //First do validation checks then save
+    
+   
  
+            //now load the data
+          $.ajax({
+                    url:'loadPmtctIndicators?fm='+formname,                            
+                    type:'post',  
+                    dataType: 'json',  
+                    success: function(data) 
+                    {
+                        var dt = data;
+ 
+ 
+ console.log('Refresh '+formname+' Elements'+dt);
+ //no call the save function and pass the list of variables
+            for(var i=0;i<dt.length;i++){
+ 
+ var elementid=dt[i].element_id; 
+ 
+  resetElement(elementid);
+  
+  
+  //after the 
+  
+ 
+ }
+         
+                        
+                    }});    
+         
+           
+            
+          
+    
+}
   
 
 
@@ -1572,6 +1685,48 @@ else {
     
     
 }
+
+
+
+function dltpt(pid){
+       var result = confirm("Are you sure you want to delete this patient?");
+if (result) {
+      $.ajax({
+                    url:'deletePatientRecords',                            
+                    type:'post',  
+                    data:{pid:pid},
+                    dataType: 'html',  
+                    success: function(fdbk) 
+                    {
+                      //after success in deletion, refresh tables
+             loadEdits('baby','editbaby_div');
+             loadEdits('mother','editmother_div');
+                        
+                        
+                    }
+                });
+                }
+    
+}
+
+
+function triggerElementChange(el){
+    
+    
+    $("#"+el).trigger("change");
+    
+}
+
+
+
+function resetElement(el)
+{
+    
+    
+    $("#"+el).val("");
+    
+}
+
 
 
               </script>

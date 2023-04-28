@@ -228,6 +228,10 @@ String minchars=r.getString("minchars");
   {
   indicators+=""+buildSelectField(conn,field_type, is_future_date, element_id, val, label, readonly, label, is_hidden, required, js_class, guide, condition, show_section, section, onchange, options);
   }
+   else if(field_type.equals("multiselect"))
+  {
+  indicators+=""+buildMultiSelectField(facility,conn,field_type, is_future_date, element_id, val, label, readonly, label, is_hidden, required, js_class, guide, condition, show_section, section, onchange, options);
+  }
   else if(field_type.equals("text_area"))
   {
   indicators+=""+buildTextField(field_type, is_future_date, element_id, val, label, readonly, label, is_hidden, required, js_class, guide, condition, show_section, section, onchange, options);
@@ -674,6 +678,109 @@ return finalelement;
 
 }
 
+
+
+
+public String buildMultiSelectField(String facil,dbConn conn,String field_type, String is_future_date, String id, String Value, String label, String readonly, String placeholder, String is_hidden, String required,String js_class, String guide, String condition, String show_section,String section,String onchange,String opts){
+String finalelement="";
+//___Required attribute
+String req_asterick="";
+String req_elem="";
+if(required.equalsIgnoreCase("yes")){
+req_asterick="<font color='red'>*</font>";
+req_elem="required";
+}
+
+
+//___Read only___
+String readonly_elem="";
+if(readonly.equals("Yes")){
+readonly_elem="readonly='true'";
+}
+
+//___date element
+
+String isdate="";
+String isdateclass="";
+if(field_type.equals("date")){
+isdate="dates";
+
+}
+
+if(is_future_date.equals("0")&& field_type.equals("date")){
+isdateclass="data-date-end-date='0d'";
+}
+//___future date element
+
+String showstatus="";
+if(is_hidden.equals("yes")){showstatus="display:none;";}
+
+
+String section_n="";
+if(show_section.equals("1")){section_n="<br/><div class='form-group col-md-12' style='background-color:#4b8df8;text-align:center;padding-top:2px;padding-bottom:2px;'><b>"+section+"</b></div><br/>";}else{section_n="";}
+
+//String conditionfun="";
+//String changefunction="";
+//if(condition!=null){
+//conditionfun="isShowOnlyIf(\'"+condition+"\');";
+//}
+//if(onchange!=null){
+//changefunction="isToggleDisplay(\'"+onchange+"\');";
+//}
+
+String finaloptions=buildoptsMultiselect(opts, Value);
+
+
+
+if(opts.contains("vw_")){try {
+    //the assumption is that the select column looks like vw_see_loadcts|Select County, where vw_see_loadcts is a view in the db that nned to be executed and return 1 row of data in format of 
+    //1|Nakuru:2|Laikipia:4|Baringo:7|Samburu
+    //Therefore, we need to split opts with | delimitter into an array, then pick index 0 of the array
+   
+    finaloptions=buildoptsMultiselect(queryToString(pullDataFromView(conn, opts.split("\\|")[0])), Value);
+    
+    } catch (SQLException ex) {
+        Logger.getLogger(loadSeeIndicators.class.getName()).log(Level.SEVERE, null, ex);
+    }
+}
+if(opts.contains("sp_")){try {
+    //the assumption is that the select column looks like vw_see_loadcts|Select County, where vw_see_loadcts is a view in the db that nned to be executed and return 1 row of data in format of 
+    //1|Nakuru:2|Laikipia:4|Baringo:7|Samburu
+    //Therefore, we need to split opts with | delimitter into an array, then pick index 0 of the array
+   
+    finaloptions=buildoptsMultiselect(queryToString(pullDataFromSpperOrgunit(conn, opts.split("\\|")[0],facil)), Value);
+    
+    } catch (SQLException ex) {
+        Logger.getLogger(loadSeeIndicators.class.getName()).log(Level.SEVERE, null, ex);
+    }
+}
+
+finalelement=""+section_n
+        + "<div class='form-group col-md-3 "+js_class+"' style="+showstatus+">" +
+"<label>" +
+req_asterick+"<b>"+label+"</b>\n" +
+"</label>\n" +
+"<select multiple "+req_elem+" "+readonly_elem+"  onchange='"+onchange+"'  title='"+guide+"'     class='form-control "+js_class+"' type='text' name='"+id+"' id='"+id+"' >"
+        +finaloptions
+        +"</select>" +
+"</div>"
+        + ""
+        + "";
+
+
+
+return finalelement;
+
+
+}
+
+
+
+
+
+
+
+
 public  String buildopts(String opts, String value){
 
 String finalopts="<option value=''>select option</option>";
@@ -702,6 +809,48 @@ return finalopts;
     
 }
     
+
+
+
+
+public  String buildoptsMultiselect(String opts, String value){
+    //Note: comma on multiselect option is a special character 
+    
+    String[] ms=value.split(",");
+String finalopts="";
+//Yes|Yes:No|No
+//System.out.println(""+opts);
+
+String valkey[]=opts.split(":");
+for(int s=0;s<valkey.length;s++){
+
+  String valkey_in[]=valkey[s].split("\\|");  
+   
+  
+   String selected="";
+   
+   for (String t : ms) {
+	if (valkey_in[0].equals(t)) {
+		selected="selected";
+            System.out.println(" While searching for Key, "+valkey_in[0]+"  is selected");     
+	}
+   }
+ // if(value.equals(valkey_in[0])){selected="selected";}
+   
+ finalopts+="<option "+selected+" value='"+valkey_in[0]+"'>"+valkey_in[1]+"</option>";
+    //System.out.println("valkey_in 1"+valkey_in[0]);
+    //System.out.println("valkey_in 2"+valkey_in[1]);
+
+}
+
+
+
+return finalopts;
+    
+    
+}
+
+
 public int getRandNo(int start, int end ){
         Random random = new Random();
         long fraction = (long) ((end - start + 1 ) * random.nextDouble());
@@ -748,5 +897,12 @@ return status;
 
 }
 
+
+private ResultSet pullDataFromSpperOrgunit(dbConn conn, String sp,String orgunit) throws SQLException {
+    
+    return conn.st3.executeQuery("call "+sp+"('"+orgunit+"');");
+    
+    
+    }
 
 }

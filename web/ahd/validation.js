@@ -17,7 +17,7 @@ function loadValidation() {
     breakloop = false;
 
     $.ajax({
-        url:'loadOtzValidation',
+        url:'loadAhdValidation',
         type:'post',
         dataType:'json',
         success:function (data) {
@@ -97,16 +97,16 @@ function less(valids, message, iscritical, sectionid) {
 
     var val1, val2;
 
-    var columns = ["bl19_Male","bl19_Female"];
-    var agearray = ["bl19_Male","bl19_Female"];
+var columns = ["5m","5f","14m","14f","15m","15f","pbfw"];
+var agearray = ["5m","5f","14m","14f","15m","15f","pbfw"];
 
 
 
-    //    
+    //bkd<kpt      bkd_9f    
 //    var indicator_id=document.getElementById("indic_pos_"+indic_pos).value;
 //    alert(indicator_id);
     var num_elems = 1;
-    for (var i = 0; i < num_elems; i++) {
+    for (var i = 0; i < columns.length; i++) {
 
         var valarray = valids.split("<");
 
@@ -116,23 +116,27 @@ function less(valids, message, iscritical, sectionid) {
         val1 = multisum(valarray[0], columns[i]);
         val2 = multisum(valarray[1], columns[i]);
         //m_uk
-var agegender = columns[i].split("_");
-        var sx = "";
-        var ag = "";
-         if (agegender[0] === 'Male') {
+var agegender = columns[i];
+        var sx = agegender.charAt(agegender.length-1);
+        var ag = agegender.replace("m").replace("f");
+         if (sx === 'm') {
             sx = "Male";
-        } else if (agegender[0] === 'Female') {
+        } else if (sx === 'f') {
             sx = "Female";
         }
+        else {
+            sx="Unknown";
+            
+        }
 
-         ag=agearray[i];
+//         ag=agearray[i];
 
         if ((isNumber(val1) ) || ( isNumber(val2) )) {
             if (val1 < val2) {
-                if (iscritical === '1') {
+                if (iscritical === 'yes') {
                     
                      $("#fedback").html(" <img style='width:4%;' src='images/stop.png'/> <b>" + message+"</b>");
-                    alert("For age disaggregation " +columns[i]+ "   , " + message);
+                    //alert("For age disaggregation " +columns[i]+ "   , " + message);
                      savebutton_inactive(sectionid);
                      if (valarray[1].indexOf("+") === -1) {
                         //$("#" + columns[i] + "_" + valarray[1]).focus();
@@ -147,7 +151,7 @@ var agegender = columns[i].split("_");
                 } else {
 
                      // $("#msg" + sectionid).append("<b>For " + ag + " years " + sx + " , " + message + "</b><br/>");
-                        $(" <font color='red'><b>  " + message + "</b></font> <br/>").insertBefore("#msg" + sectionid);
+                        $("<font color=\'red\''><b>" + message + "</b></font><br/>").insertBefore("#msg" + sectionid);
 savebutton_active(sectionid);
                     yellowborder(columns[i], valarray[0],message);
                     yellowborder(columns[i], valarray[1],message);
@@ -186,15 +190,16 @@ function greater(valids, message, iscritical, sectionid) {
 
     var val1, val2;
 
-    var columns = ["bl19_Male","bl19_Female"];
-    var agearray = ["bl19_Male","bl19_Female"];
+    var columns = ["5m","5f","14m","14f","15m","15f","pbfw"];
+var agearray = ["5m","5f","14m","14f","15m","15f","pbfw"];
+
 
 
     //    
 //    var indicator_id=document.getElementById("indic_pos_"+indic_pos).value;
 //    alert(indicator_id);
-    var num_elems = columns.length;
-    for (var i = 0; i < num_elems; i++) {
+    var num_elems = 1;
+    for (var i = 0; i < columns.length; i++) {
 
         var valarray = valids.split(">");
 
@@ -204,18 +209,20 @@ function greater(valids, message, iscritical, sectionid) {
         val1 = multisum(valarray[0], columns[i]);
         val2 = multisum(valarray[1], columns[i]);
         //m_uk
-
-        var agegender = columns[i].split("_");
-        var sx = "";
-        var ag = "";
-         if (agegender[0] === 'Male') {
+var agegender = columns[i];
+        var sx = agegender.charAt(agegender.length-1);
+        var ag = agegender.replace("m").replace("f");
+         if (sx === 'm') {
             sx = "Male";
-        } else if (agegender[0] === 'Female') {
+        } else if (sx === 'f') {
             sx = "Female";
         }
+        else {
+            sx="Unknown";
+            
+        }
 
-         ag=agearray[i];
-
+//         ag=agearray[i];
 //        if (agegender[1] === 'uk') {
 //            ag = "Unknown";
 //        } else {
@@ -223,7 +230,7 @@ function greater(valids, message, iscritical, sectionid) {
 //        }
 
         if ((isNumber(val1)) || ( isNumber(val2) )) {
-            if (val1 > val2) {
+            if (parseInt(val1) > parseInt(val2)) {
                 if (iscritical === 'yes') {
                    
                     $("#fedback").html(" <img style='width:4%;' src='images/stop.png'/>  <b> " + message+"</b>");
@@ -280,38 +287,39 @@ function lessOrEqual(valids, message, iscritical, sectionid) {
 
     var val1, val2;
 
-   var columns = ["bl19_Male","bl19_Female"];
-    var agearray = ["bl19_Male","bl19_Female"];
+   var columns = ["5m","5f","14m","14f","15m","15f","pbfw"];
+var agearray = ["5m","5f","14m","14f","15m","15f","pbfw"];
 
 
 
     //    
 //    var indicator_id=document.getElementById("indic_pos_"+indic_pos).value;
 //    alert(indicator_id);
-    var num_elems = columns.length;
-    for (var i = 0; i < num_elems; i++) {
+    var num_elems = 1;
+    for (var i = 0; i < columns.length; i++) {
 
         var valarray = valids.split("<=");
 
 
 
-        console.log(valarray[0]+"<="+valarray[1]);
-            
+        //    alert(columns[i]+"_"+indicator_id);
         val1 = multisum(valarray[0], columns[i]);
         val2 = multisum(valarray[1], columns[i]);
         //m_uk
-
-        var agegender = columns[i].split("_");
-        var sx = "";
-        var ag = "";
-         if (agegender[0] === 'Male') {
+var agegender = columns[i];
+        var sx = agegender.charAt(agegender.length-1);
+        var ag = agegender.replace("m").replace("f");
+         if (sx === 'm') {
             sx = "Male";
-        } else if (agegender[0] === 'Female') {
+        } else if (sx === 'f') {
             sx = "Female";
         }
+        else {
+            sx="Unknown";
+            
+        }
 
-         ag=agearray[i];
-
+//         ag=agearray[i];
 //        if (agegender[1] === 'uk') {
 //            ag = "Unknown";
 //        } else {
@@ -319,7 +327,7 @@ function lessOrEqual(valids, message, iscritical, sectionid) {
 //        }
 
         if ((isNumber(val1) ) || ( isNumber(val2) )) {
-            if (val1 <= val2) {
+            if (parseInt(val1) <= parseInt(val2)) {
                 console.log(val1+"<="+val2);
                 
                 if (iscritical === 'yes') {
@@ -380,16 +388,16 @@ function greaterOrEqual(valids, message, iscritical, sectionid) {
 
     var val1, val2;
 
-     var columns = ["bl19_Male","bl19_Female"];
-    var agearray = ["bl19_Male","bl19_Female"];
+   var columns = ["5m","5f","14m","14f","15m","15f","pbfw"];
+var agearray = ["5m","5f","14m","14f","15m","15f","pbfw"];
 
 
 
     //    
 //    var indicator_id=document.getElementById("indic_pos_"+indic_pos).value;
 //    alert(indicator_id);
-    var num_elems = columns.length;
-    for (var i = 0; i < num_elems; i++) {
+    var num_elems = 1;
+    for (var i = 0; i < columns.length; i++) {
 
         var valarray = valids.split(">=");
 
@@ -399,20 +407,20 @@ function greaterOrEqual(valids, message, iscritical, sectionid) {
         val1 = multisum(valarray[0], columns[i]);
         val2 = multisum(valarray[1], columns[i]);
         //m_uk
-
-
-
-        var agegender = columns[i].split("_");
-        var sx = "";
-        var ag = "";
-         if (agegender[0] === 'Male') {
+var agegender = columns[i];
+        var sx = agegender.charAt(agegender.length-1);
+        var ag = agegender.replace("m").replace("f");
+         if (sx === 'm') {
             sx = "Male";
-        } else if (agegender[0] === 'Female') {
+        } else if (sx === 'f') {
             sx = "Female";
         }
+        else {
+            sx="Unknown";
+            
+        }
 
-          ag=agearray[i];
-
+//         ag=agearray[i];
 //        if (agegender[1] === 'uk') {
 //            ag = "Unknown";
 //        } else {
@@ -422,7 +430,7 @@ function greaterOrEqual(valids, message, iscritical, sectionid) {
         if ((isNumber(val1) ) || ( isNumber(val2) )) {
             
             
-            if (val1 >= val2) {
+            if (parseInt(val1) >= parseInt(val2)) {
                 console.log("val1:"+val1+" val2:"+val2);
                 
                 if (iscritical === 'yes') {
@@ -495,16 +503,16 @@ function notEqual(valids, message, iscritical, sectionid) {
 
     var val1, val2;
 
-     var columns = ["bl19_Male","bl19_Female"];
-    var agearray = ["bl19_Male","bl19_Female"];
+   var columns = ["5m","5f","14m","14f","15m","15f","pbfw"];
+var agearray = ["5m","5f","14m","14f","15m","15f","pbfw"];
 
 
 
     //    
 //    var indicator_id=document.getElementById("indic_pos_"+indic_pos).value;
 //    alert(indicator_id);
-    var num_elems = columns.length;
-    for (var i = 0; i < num_elems; i++) {
+    var num_elems = 1;
+    for (var i = 0; i < columns.length; i++) {
 
         var valarray = valids.split("!=");
 
@@ -514,18 +522,20 @@ function notEqual(valids, message, iscritical, sectionid) {
         val1 = multisum(valarray[0], columns[i]);
         val2 = multisum(valarray[1], columns[i]);
         //m_uk
-
-        var agegender = columns[i].split("_");
-        var sx = "";
-        var ag = "";
-        if (agegender[0] === 'Male') {
+var agegender = columns[i];
+        var sx = agegender.charAt(agegender.length-1);
+        var ag = agegender.replace("m").replace("f");
+         if (sx === 'm') {
             sx = "Male";
-        } else if (agegender[0] === 'Female') {
+        } else if (sx === 'f') {
             sx = "Female";
         }
+        else {
+            sx="Unknown";
+            
+        }
 
-        ag=agearray[i];
-
+//         ag=agearray[i];
 //        if (agegender[1] === 'uk') {
 //            ag = "Unknown";
 //        } else {
@@ -533,7 +543,7 @@ function notEqual(valids, message, iscritical, sectionid) {
 //        }
 
         if ((isNumber(val1) ) || ( isNumber(val2) )) {
-            if ((val1 < val2) || (val1 > val2)) {
+            if ((parseInt(val1) < parseInt(val2)) || (parseInt(val1) > parseInt(val2))) {
                 if (iscritical === 'yes') {
                     
                      $("#fedback").html("<img style='width:4%;' src='images/stop.png'/>  <b> " + message+"</b>");
@@ -581,7 +591,7 @@ function notEqual(valids, message, iscritical, sectionid) {
 
 
 function multisum(vals, age) {
-
+console.log("vals ni::"+vals);
     var valsarr = vals.split("+");
 
     var totl = 0;
@@ -707,205 +717,4 @@ function savebutton_inactive(sectionid) {
 
 function isNumber(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
-}
-
-function displayIfFunction(sourceele,iscondition,equalval,destination,action)
-{
-    
-    
-   //as at this point and version of the application, the action is assumed to be show 
-   var srcval=$(sourceele).val();
-    //equalto
-    //notequalto
-    //contains
-    if(iscondition==='equalto')
-    {
-        console.log("...in display if "+iscondition);
-        
-        if(srcval===equalval)
-        {
-            
-            console.log("show "+destination);
-            $(destination).show();} 
-                         else { $(destination).hide();$(destination).val("");
-                             $(destination).trigger("change");
-         console.log("hide "+destination);                 
-        }
-    }
-    else  if(iscondition==='notequalto')
-    {
-        
-        if(srcval!==equalval){$(destination).show();  console.log("show "+destination);} 
-                         else{$(destination).hide();  console.log("hide "+destination); $(destination).val("");$(destination).trigger("change");}
-    }
-    else  if(iscondition==='contains')
-    {
-        
-        if(srcval.indexOf(equalval)>=0 ){$(destination).show();  console.log("show "+destination);} 
-                         else{$(destination).hide();  console.log("hide "+destination); $(destination).val("");$(destination).trigger("change");}
-    }
-     else  
-    {
-        
-       $(destination).hide();
-    }
-    
-}
-
-function hideIfFunction(sourceele,iscondition,equalval,destination,action)
-{
-    
-    
-   //as at this point and version of the application, the action is assumed to be show 
-   var srcval=$(sourceele).val();
-    //equalto
-    //notequalto
-    //contains
-    if(iscondition==='equalto')
-    {
-        console.log("...in display if "+iscondition);
-        
-        if(srcval===equalval)
-        {
-            
-            console.log("show "+destination);
-            $(destination).hide();$(destination).val("");  $(destination).trigger("change");
-        } 
-     else { $(destination).show();
-         console.log("hide "+destination);                 
-        }
-    }
-    else  if(iscondition==='notequalto')
-    {
-        
-        if(srcval!==equalval){$(destination).hide(); $(destination).val("");$(destination).trigger("change"); } 
-                         else{$(destination).show(); }
-    }
-    else  if(iscondition==='contains')
-    {
-        
-        if(srcval.indexOf(equalval)>=0 ){$(destination).hide(); $(destination).val("");$(destination).trigger("change"); } 
-                         else{$(destination).show(); }
-    }
-     else  
-    {
-        
-       $(destination).hide();
-    }
-    
-}
-
-//Below is a function for disabling passed select options 
-
-function disableSelectOptionsIf(source_element,iscondition,expectedsource_value,dest_element,options_to_disable){
-    
-    
-    var srcval=$(source_element).val();
-    var opts_=options_to_disable.split(":");
-    
-   
-    
-    
-    
-    
-    
-     if(iscondition==='equalto')
-     {   
-      
-         if(srcval===expectedsource_value)
-        {
-            for(var x=0;x<opts_.length;x++) { $(""+dest_element+" option[value='"+ opts_[x] + "']").attr('disabled', true); } 
-        
-        }
-        else 
-        {
-          for(var x=0;x<opts_.length;x++) { $(dest_element+" option[value='"+ opts_[x] + "']").attr('disabled', false); }            
-        }
-         
-         
-     }
-    else   if(iscondition==='notequalto')
-    {
-        
-          if(srcval!==expectedsource_value)
-        {
-            for(var x=0;x<opts_.length;x++) { $(dest_element+" option[value='"+ opts_[x] + "']").attr('disabled', true); } 
-        
-        }
-        else 
-        {
-          for(var x=0;x<opts_.length;x++) { $(dest_element+" option[value='"+ opts_[x] + "']").attr('disabled', false); }            
-        }
-        
-    }
-    else   if(iscondition==='contains')
-    {
-        
-         if(srcval.indexOf(expectedsource_value)>=0 )
-        {
-            for(var x=0;x<opts_.length;x++) { $(dest_element+" option[value='"+ opts_[x] + "']").attr('disabled', true); } 
-        
-        }
-        else 
-        {
-          for(var x=0;x<opts_.length;x++) { $(dest_element+" option[value='"+ opts_[x] + "']").attr('disabled', false); }            
-        }  
-        
-    }
-    
-    
-}
-
-function setValueIf(source_element,iscondition,expectedsource_value,dest_element,value_to_set){
-    //SetValueIf may not work for MultiSelectAs at Now
-    
-    var srcval=$(source_element).val();
-    
-   
-    
-    
-     if(iscondition==='equalto')
-     {   
-      
-if  (srcval===expectedsource_value) 
-     {  
-         $(dest_element).val(value_to_set);  
-     }          
-else    {  
-$(dest_element).val(""); 
-}
-       
-         
-         
-     }
-    else   if(iscondition==='notequalto')
-    {
-        
-         if  (srcval===expectedsource_value) 
-     {  
-         $(dest_element).val(value_to_set);  
-     }          
-else    
-{  
-$(dest_element).val(""); 
-}
-       
-        
-    }
-    else   if(iscondition==='contains')
-    {
-        
-        if(srcval.indexOf(expectedsource_value)>=0 )
-
-        {  
-        $(dest_element).val(value_to_set);  
-        }          
-        else    
-        {  
-        $(dest_element).val(""); 
-        }  
-        
-    }
-    
-    
 }

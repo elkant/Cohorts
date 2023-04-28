@@ -7,7 +7,7 @@ function sum_indicators(indicator_id){
     var total=0, elem_value="";
    // indic	9m	9f	14m	14f	19m	19f	24m	24f	25m	25f	ttl
 
-var columns = ["9m","9f","14m","14f","19m","19f","24m","24f","25m","25f"];
+var columns = ["5m","5f","14m","14f","15m","15f"];
 //    var indicator_id=document.getElementById("indic_pos_"+indic_pos).value;
 //    alert(indicator_id);
 var has_a_non_blank=0;
@@ -24,8 +24,6 @@ for(var i=0;i<num_elems;i++){
     }
 }
 if(has_a_non_blank===0){total=0; document.getElementById(indicator_id+"_ttl").value = "";}
-
-
 
 //alert(total);
 }

@@ -101,4 +101,10 @@ String tableID=(db+""+full_date2).replace(".", "");
   
   }
   
+  public int getRandNo(int start, int end ){
+        Random random = new Random();
+        long fraction = (long) ((end - start + 1 ) * random.nextDouble());
+        return ((int)(fraction + start));
+    }
+  
 }

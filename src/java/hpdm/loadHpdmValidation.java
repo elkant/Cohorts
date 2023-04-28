@@ -3,70 +3,92 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package KP;
+package hpdm;
 
+import db.dbConn;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 /**
  *
- * @author Ekaunda
+ * @author EKaunda
  */
-public class check_status extends HttpServlet {
-String load_type,message;
-int pos=0;
-    HttpSession session;
+public class loadHpdmValidation extends HttpServlet {
+
+   
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        session = request.getSession();
-        
-        String refresh_page="false";
-        
         try {
-         load_type = request.getParameter("load_type");
-            JSONObject obj = new JSONObject();
-         pos = 0;
-         message = "Uknown Excel Loads";
-    
-        
+            /* TODO output your page here. You may use following sample code. */
          
-          if(load_type.equalsIgnoreCase("kpform1a"))
-         {
-             //System.out.println("Tuko kwa session checker");
-              if(session.getAttribute("kpform1a")!=null){
-             message = session.getAttribute("kpform1a").toString();
-                  
-             if(isNumeric(session.getAttribute("kpform1a_count").toString())){
-             pos = Integer.parseInt(session.getAttribute("kpform1a_count").toString());
-             }
+                        
+            
+            JSONArray arr= new JSONArray();
+            
+            
+            String scid="";
+            
+            if(request.getParameter("scid")!=null)
+            {
+            scid=request.getParameter("scid");
             }
-             
-              if(session.getAttribute("kpref_form1a")!=null){
-                  refresh_page=session.getAttribute("kpref_form1a").toString();
-                  //session.setAttribute("message", " <img src=\"images/failed.png\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b id=\"notify\">ERROR: Form Completed with a Validation Error. Check the errors sheet on the Data Quality Download</b> ");
-              session.removeAttribute("kpref_form1a");
-              
-              }
-              
-         }
-         
-         obj.put("count", pos);
-         obj.put("message", message);
-         obj.put("refreshpage", refresh_page);
-         
-            out.println(obj);
-            //System.out.println("Status"+obj);
+            
+            String validation="";
+            
+            dbConn conn = new dbConn();
+            
+            String getList="select * from internal_system.hpdm_validation where is_active='1'  ";
+            
+            
+            conn.rs=conn.st.executeQuery(getList);
+            
+            while(conn.rs.next()){
+                
+                JSONObject obj=new JSONObject();
+                
+            //(valids, message, iscritical, sectionid)
+            
+            
+            
+            obj.put("validation", conn.rs.getString("flag_if"));
+            obj.put("message", conn.rs.getString("message"));
+            obj.put("id", conn.rs.getString("id"));
+            obj.put("section_name", conn.rs.getString("section"));
+            obj.put("iscritical","1");
+            
+           arr.add(obj);
+            
+            
+            }
+            
+          
+            if(conn.rs!=null){conn.rs.close();}
+            if(conn.st!=null){conn.st.close();}
+            
+            
+            if(!arr.isEmpty()){
+            out.println(arr);
+            }
+            else{
+            
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(loadHpdmValidation.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             out.close();
-        }
+                  }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -108,7 +130,4 @@ int pos=0;
         return "Short description";
     }// </editor-fold>
 
-public boolean isNumeric(String s) {  
-    return s != null && s.matches("[-+]?\\d*\\.?\\d+");  
-}
 }

@@ -211,7 +211,7 @@
                                             </td>
                                             <td class="col-xs-4">
                                                 <div class="controls">
-                                                    <input data-date-end-date="0d" required type="text" title="this is the date that the week started" value="<%=ig.LastMonthStartDate()%>" class="form-control input-lg tarehe" name="startdate" autocomplete="off" id="weekstart">
+                                                    <input data-date-end-date="0d" required type="text" title="this is the date that the week started" value="<%=ig.CurrentMonthStartDate()%>" class="form-control input-lg tarehe" name="startdate" autocomplete="off" id="weekstart">
                                                 </div>
                                             </td>
                                         </tr>

@@ -369,9 +369,11 @@ tr>td {
                                     </div>
                             <!-----------------Monthly Form Upload------------------->                                            
                  <div class="tab-pane active well" id="monthlyformupload">
-                  <div  class="portlet-body form" id="progress_area" hidden="true">
+                  <div  class="portlet-body form" id="progress_area" >
+                      
+                     ...
                      <div class="progress"  style="height: 50px;">
-                     <div class="progress-bar progress-bar-striped active" id="progess" role="progressbar" style="width: 0%;  padding-top: 5px; font-weight: 900;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                     <div class="progress-bar progress-bar-striped active" id="progess" role="progressbar" style="width: 10%;  padding-top: 5px; font-weight: 900;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                      </div>   
                   </div>
                           

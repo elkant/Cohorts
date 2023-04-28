@@ -628,6 +628,58 @@
         <servlet-name>save_see</servlet-name>
         <servlet-class>see.save_see</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>registeruser</servlet-name>
+        <servlet-class>pmtct_ovc.registeruser</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>activateUser</servlet-name>
+        <servlet-class>pmtct_ovc.activateUser</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>deleteSeeRecords</servlet-name>
+        <servlet-class>see.deleteSeeRecords</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>hpdm_login</servlet-name>
+        <servlet-class>hpdm.hpdm_login</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ahd_login</servlet-name>
+        <servlet-class>ahd.ahd_login</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ahd_getIndicators</servlet-name>
+        <servlet-class>ahd.ahd_getIndicators</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>saveAhd</servlet-name>
+        <servlet-class>ahd.saveAhd</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>loadAhdValidation</servlet-name>
+        <servlet-class>ahd.loadAhdValidation</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>hpdm_getIndicators</servlet-name>
+        <servlet-class>hpdm.hpdm_getIndicators</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>saveHpdm</servlet-name>
+        <servlet-class>hpdm.saveHpdm</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>loadHpdmValidation</servlet-name>
+        <servlet-class>hpdm.loadHpdmValidation</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ahdreported</servlet-name>
+        <servlet-class>ahd.ahdreported</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ahd_missing_reports</servlet-name>
+        <servlet-class>ahd.ahd_missing_reports</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loadcohort</servlet-name>
         <url-pattern>/loadcohort</url-pattern>
@@ -1255,6 +1307,58 @@
     <servlet-mapping>
         <servlet-name>save_see</servlet-name>
         <url-pattern>/save_see</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>registeruser</servlet-name>
+        <url-pattern>/registeruser</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>activateUser</servlet-name>
+        <url-pattern>/activateUser</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>deleteSeeRecords</servlet-name>
+        <url-pattern>/deleteSeeRecords</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>hpdm_login</servlet-name>
+        <url-pattern>/hpdm_login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ahd_login</servlet-name>
+        <url-pattern>/ahd_login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ahd_getIndicators</servlet-name>
+        <url-pattern>/ahd_getIndicators</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>saveAhd</servlet-name>
+        <url-pattern>/saveAhd</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>loadAhdValidation</servlet-name>
+        <url-pattern>/loadAhdValidation</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>hpdm_getIndicators</servlet-name>
+        <url-pattern>/hpdm_getIndicators</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>saveHpdm</servlet-name>
+        <url-pattern>/saveHpdm</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>loadHpdmValidation</servlet-name>
+        <url-pattern>/loadHpdmValidation</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ahdreported</servlet-name>
+        <url-pattern>/ahdreported</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ahd_missing_reports</servlet-name>
+        <url-pattern>/ahd_missing_reports</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

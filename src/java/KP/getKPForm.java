@@ -60,10 +60,12 @@ public class getKPForm extends HttpServlet {
             HashMap<String, Integer[]> hm= new HashMap< >();
             HashMap<String, String> hmd= new HashMap< >();
             
-            hm.put("prep", new Integer[]{43,49});
-            hm.put("hts", new Integer[]{82,126});
-            hm.put("art", new Integer[]{154,201});
-            hm.put("prepct", new Integer[]{57,73});
+            hm.put("prep", new Integer[]{43,103});
+            hm.put("hts", new Integer[]{110,165});//120,175
+            hm.put("art", new Integer[]{184,245});//195,208
+            hm.put("prepct", new Integer[]{87,103});
+            hm.put("txml", new Integer[]{232,245});
+            hm.put("prepct_verif", new Integer[]{257,264});
             
             //Prep 43 to 56
             //Testing 63 to 115
@@ -351,8 +353,10 @@ if(smonth.equals(emonth)){  mwezi=emonth;  } else { mwezi=smonth+"_to_"+emonth; 
                         } else {
                         
                         
-                  if(!month.equals("12") && !month.equals("03") && !month.equals("06") && !month.equals("09")){
-                            String ctd[]=Arrays.toString(hm.get("prepct")).split(",");
+                  if(!month.equals("12") && !month.equals("03") && !month.equals("06") && !month.equals("09"))
+                  {
+                 String ctd[]=Arrays.toString(hm.get("prepct")).split(",");
+                            
                     int fstart=hm.get("prepct")[0];
                     int fend=hm.get("prepct")[1];
                             
@@ -364,6 +368,33 @@ if(smonth.equals(emonth)){  mwezi=emonth;  } else { mwezi=smonth+"_to_"+emonth; 
                        rwx.setZeroHeight(true);
                         
                         }
+                    
+                    
+                     fstart=hm.get("txml")[0];
+                     fend=hm.get("txml")[1];
+                            
+                    
+                    for(int ef=fstart;ef<=fend;ef++)
+                        {
+                        
+                       XSSFRow rwx = shet.getRow(ef);
+                       rwx.setZeroHeight(true);
+                        
+                        }
+                    
+                     fstart=hm.get("prepct_verif")[0];
+                     fend=hm.get("prepct_verif")[1];
+                            
+                    
+                    for(int ef=fstart;ef<=fend;ef++)
+                        {
+                        
+                       XSSFRow rwx = shet.getRow(ef);
+                       rwx.setZeroHeight(true);
+                        
+                        }
+                    
+                    
                     }
                     
                         

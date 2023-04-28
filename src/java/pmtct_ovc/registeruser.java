@@ -3,25 +3,41 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package see;
+package pmtct_ovc;
 
+import General.IdGenerator;
 import db.dbConn;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
+import javax.mail.BodyPart;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.SendFailedException;
+import javax.mail.Session;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Administrator
  */
-public class save_see extends HttpServlet {
+public class registeruser extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,32 +49,47 @@ public class save_see extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException {
+            throws ServletException, IOException, SQLException, MessagingException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             
- 
+ HttpSession session= request.getSession(true);
           
           
                       dbConn conn = new dbConn();
-          String table=" internal_system.see_data ";
+          String table=" internal_system.users_patient_level ";
           
           String mfl="";
+          String mdl="";
+          String eml="";
+          String fn="";
+          String ui="";
           
-          if(request.getParameter("facility")!=null){
-          mfl=request.getParameter("facility");
-          
-          }
-          if(request.getParameterValues("value[]")!=null)
-          {
-              
-              System.out.println("Testiii________"+(ArrayToString(request.getParameterValues("value[]"))));
+          if(request.getParameterValues("facility_id")!=null){
+          mfl=ArrayToString(request.getParameterValues("facility_id"));
           
           }
+          if(request.getParameter("assigned_modules")!=null){
+          mdl=request.getParameter("assigned_modules");
+          
+          }
+          if(request.getParameter("email")!=null){
+          eml=request.getParameter("email");
+          
+          }
+          if(request.getParameter("fullname")!=null){
+          fn=request.getParameter("fullname");
+          
+          }
+          if(request.getParameter("userid")!=null){
+          ui=request.getParameter("userid");
+          
+          }
+          
          
             
- String[] dataelementsarr= {"id","facility_id","linelisting_month","patient_id","indicator_id","value","encounter_id","user_id","is_locked"};
+ String[] dataelementsarr= {"userid","fullname","phone","password","email","facility_id","level","assigned_modules"};
  //String[] orgunitsarr= {"county","`sub-county`"}; 
           
  ArrayList al= new ArrayList();
@@ -118,12 +149,13 @@ for(int a=0;a<dataelementsarr.length;a++)
     {
     data=request.getParameter(""+dataelementsarr[a]);
     }
-    
-      else if(request.getParameterValues(""+dataelementsarr[a]+"[]")!=null)
+    else if(request.getParameterValues(""+dataelementsarr[a])!=null)
     {
-    data=ArrayToString(request.getParameterValues(""+dataelementsarr[a]+"[]"));
-        System.out.println(" Data Ni ________"+data);
+    data=ArrayToString(request.getParameterValues(""+dataelementsarr[a]));
     }
+    
+    
+    
 conn.pst1.setString(rowcount,data);
 
 rowcount++;
@@ -135,19 +167,22 @@ rowcount++;
 
 //______________________________________________________________________________________
 
-
+String rtn="Account Created successfully. Please check your email for approval within a day";
 
 
 if(conn.pst1.executeUpdate()==1)
 {
-   out.println("Data Saved Successfully");
+   //out.println("Data Saved Successfully");
+   rtn="Account Created successfully. Please check your email for approval within a day";
 }
 else 
 {
- out.println(" Data Not successfully saved ");
+ //out.println(" Data Not successfully saved ");
 
 }
+  String fname=getFacilityNames(conn,mfl);
   
+            SendApprovalRequest(fname, "1",  mdl, "emaingi@usaidtujengejamii.org", fn, ui);
 
         if(conn.rs!=null){conn.rs.close();}
         if(conn.rs1!=null){conn.rs1.close();}
@@ -155,8 +190,13 @@ else
         if(conn.st1!=null){conn.st1.close();}
         if(conn.connect!=null){conn.connect.close();}
 
-          
+        session.setAttribute("pmtct_ovc_register",rtn);
+            response.sendRedirect("pmtct_ovc_register.jsp");
         }
+        
+        
+        
+      
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -174,7 +214,9 @@ else
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(save_see.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(save_pmtct_ovc.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MessagingException ex) {
+            Logger.getLogger(registeruser.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -192,7 +234,9 @@ else
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(save_see.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(save_pmtct_ovc.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MessagingException ex) {
+            Logger.getLogger(registeruser.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -216,17 +260,102 @@ for(int x=0;x<arr.length;x++){vals+=arr[x]+",";}
 
 return vals;
 }
+        
+     
 
 
+ private void SendApprovalRequest(String facility, String status,  String module, String email,String username,String userid) throws MessagingException {
+        String toAddress = "";
 
-private String jsonToString(String [] arr)
+
+        String stat="";
+        
+        if(!status.equals("")){stat=" Below are the upload results:\n "+status;}
+
+        IdGenerator gn = new IdGenerator();
+
+        String textBody = "Hi "+username+",\n A new user by the name  "+username+" has requested to access "+module+" within IMIS to allow him/her make data records under facilities  " + facility + " on Date "+ gn.toDay() + " .\n"
+                + "\n \n To Approve the request, click the link https://usaidtujengejamii.org:8443/Cohorts/activateUser?ui="+userid+"&st=1 "
+                + "\n  \n *******This is a system autogenerated message*****";
+        toAddress = email;
+        String host = "smtp.gmail.com";
+        String Password = "tjyqrcbvwcgwawen";
+        String from = "aphiabackup@gmail.com";
+        // toAddress = "aphiapluschwsattendance@gmail.com";  filled above...
+
+        //Get system properties
+        Properties props = System.getProperties();
+        props.put("mail.smtp.host", host);
+        props.put("mail.smtps.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        Session session = Session.getInstance(props, null);
+
+        MimeMessage message = new MimeMessage(session);
+
+        message.setFrom(new InternetAddress(from));
+
+        message.setRecipients(Message.RecipientType.TO, toAddress);
+
+        message.setSubject("A new User "+username + " Has requested to Access  " + module);
+
+        BodyPart messageBodyPart = new MimeBodyPart();
+
+        messageBodyPart.setText(textBody);
+
+        Multipart multipart = new MimeMultipart();
+
+        multipart.addBodyPart(messageBodyPart);
+
+        ///messageBodyPart = new MimeBodyPart();
+
+      
+        //messageBodyPart.setFileName("Form1a_"+facility+"_"+yearmonth+".xlsx");
+        //messageBodyPart.setFileName(finalfilename);
+        //multipart.addBodyPart(messageBodyPart);
+
+        message.setContent(multipart);
+
+        try {
+            javax.mail.Transport tr = session.getTransport("smtps");
+            tr.connect(host, from, Password);
+            tr.sendMessage(message, message.getAllRecipients());
+
+            tr.close();
+
+        } catch (SendFailedException sfe) {
+
+            System.out.println(sfe);
+        }
+    }
+
+
+ 
+ private String getFacilityNames(dbConn conn, String ids){
+      String facs="";
+        try {
+           
+            
+            StringBuffer sb= new StringBuffer(ids);
+//invoking the method
+sb.deleteCharAt(sb.length()-1);
+
+String qry="select group_concat(SubPartnerNom) as facility from internal_system.subpartnera where SubPartnerID in ("+sb+")";
+
+conn.rs_3=conn.st.executeQuery(qry);
+
+while(conn.rs_3.next())
 {
-     String vals="";
-for(int x=0;x<arr.length;x++){vals+=arr[x]+",";}
-       
-
-
-return vals;
+    
+facs+=conn.rs_3.getString(1);
 }
 
+
+        } catch (SQLException ex) {
+            Logger.getLogger(registeruser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+ 
+ 
+ return facs;
+
+}
 }

@@ -171,7 +171,7 @@ public class ValidateExcelSL extends HttpServlet {
         //System.out.println("rules :"+getRules);
         conn.rs = conn.st.executeQuery(getRules);
         while(conn.rs.next()){
-            System.out.println("Tuko wapi value ni "+tukowapi);
+            //System.out.println("Tuko wapi value ni "+tukowapi);
          tukowapi++;
             session.setAttribute("kpform1a", "<b>Validating: "+conn.rs.getString("section_name")+" "+tukowapi+"/"+rowCount+"</b>");
         session.setAttribute("kpform1a_count", ((tukowapi)/rowCount)*100);

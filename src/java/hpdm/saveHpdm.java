@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package see;
+package hpdm;
 
 import db.dbConn;
 import java.io.IOException;
@@ -19,56 +19,39 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Administrator
+ * @author EKaunda
  */
-public class save_see extends HttpServlet {
+public class saveHpdm extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+  
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            
- 
           
-          
-                      dbConn conn = new dbConn();
-          String table=" internal_system.see_data ";
+            dbConn conn = new dbConn();
+          String table="internal_system.hpdm_data";
           
           String mfl="";
           
+          
           if(request.getParameter("facility")!=null){
           mfl=request.getParameter("facility");
-          
           }
-          if(request.getParameterValues("value[]")!=null)
-          {
-              
-              System.out.println("Testiii________"+(ArrayToString(request.getParameterValues("value[]"))));
-          
-          }
-         
-            
- String[] dataelementsarr= {"id","facility_id","linelisting_month","patient_id","indicator_id","value","encounter_id","user_id","is_locked"};
- //String[] orgunitsarr= {"county","`sub-county`"}; 
+//          if(request.getParameter("tbl")!=null){
+//            table="internal_system."+request.getParameter("tbl");
+//          }
+           //id	yearmonth	facility	indicatorid	9m	9f	14m	14f	19m	19f	24m	24f	25m	25f	ttl	timestamp	lastupdated	userid
+
+ String[] dataelementsarr= {"id","yearmonth","facility","indicatorid","m_14","f_14","m_19","f_19","m_29","f_29","m_39","f_39","m_49","f_49","m_50","f_50","ttl","userid"}; 
+ String[] destelementsarr= {"id","yearmonth","facility","indicatorid","m_14","f_14","m_19","f_19","m_29","f_29","m_39","f_39","m_49","f_49","m_50","f_50","ttl","userid"};
+//String[] orgunitsarr= {"county","`sub-county`"}; 
           
  ArrayList al= new ArrayList();
  
- //This section here saves every field in a div mode i.i every form fied has a row.
-  
-  //Any time you save data, First delete any existing data for that petient at the start of the operation.          
             
- 
-  
+            
  String insertqr_parta= "replace into "+table+" (";  // finish with )
          String insertqr_partb= " values ("; // finish with )
  
@@ -77,16 +60,23 @@ for(int a=0;a<dataelementsarr.length;a++)
 
 //build an inster qry
     if(a==dataelementsarr.length-1){
-insertqr_parta+=dataelementsarr[a]+"";
+insertqr_parta+=destelementsarr[a]+"";
 insertqr_partb+="?";
     }
     else {
-    insertqr_parta+=dataelementsarr[a]+",";
+    insertqr_parta+=destelementsarr[a]+",";
     insertqr_partb+="?,";
     }
 }
 //append orgunits
-
+//for(int a=0;a<orgunitsarr.length;a++)
+//{
+////build an inster qry
+//
+//insertqr_parta+=","+orgunitsarr[a]+"";
+//insertqr_partb+=",?";
+//
+//}
 //last section
 insertqr_parta+=")";
 insertqr_partb+=")";
@@ -97,7 +87,7 @@ insertqr_partb+=")";
 
 String insertqry=insertqr_parta+insertqr_partb;
 
-            //System.out.println(""+insertqry);
+            System.out.println(""+insertqry);
 
     //conn.st_2.executeUpdate(updateqr);
     conn.pst1=conn.connect.prepareStatement(insertqry);   
@@ -118,19 +108,25 @@ for(int a=0;a<dataelementsarr.length;a++)
     {
     data=request.getParameter(""+dataelementsarr[a]);
     }
-    
-      else if(request.getParameterValues(""+dataelementsarr[a]+"[]")!=null)
-    {
-    data=ArrayToString(request.getParameterValues(""+dataelementsarr[a]+"[]"));
-        System.out.println(" Data Ni ________"+data);
-    }
 conn.pst1.setString(rowcount,data);
 
 rowcount++;
 
 
 }
-
+////get orgunit values in array
+//
+//String[] org_unit_vl=getOrgunits(mfl,conn,orgunitsarr);
+//
+//for(int a=0;a<org_unit_vl.length;a++)
+//{
+//    System.out.println("__ updates 2"+org_unit_vl[a]);
+//    
+//conn.pst1.setString(rowcount,org_unit_vl[a]);
+//
+//rowcount++;
+//
+//}
 
 
 //______________________________________________________________________________________
@@ -140,12 +136,11 @@ rowcount++;
 
 if(conn.pst1.executeUpdate()==1)
 {
-   out.println("Data Saved Successfully");
+   out.println("Hpdm data Saved succesfully ");
 }
-else 
-{
- out.println(" Data Not successfully saved ");
-
+else {
+ out.println(" Data Not saved ");
+    
 }
   
 
@@ -155,8 +150,8 @@ else
         if(conn.st1!=null){conn.st1.close();}
         if(conn.connect!=null){conn.connect.close();}
 
-          
-        }
+            
+        } 
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -174,7 +169,7 @@ else
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(save_see.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(saveHpdm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -192,7 +187,7 @@ else
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(save_see.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(saveHpdm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -207,26 +202,51 @@ else
     }// </editor-fold>
 
 
-private String ArrayToString(String [] arr)
+public String[] getOrgunits(String mfl, dbConn conn,String [] orgunitsarr) throws SQLException
 {
-     String vals="";
-for(int x=0;x<arr.length;x++){vals+=arr[x]+",";}
+String orgcols=arraytostring(orgunitsarr);
+    
+    String qr="select "+orgcols+" from internal_system.orgunits_vw where mflcode='"+mfl+"'";
+
+    conn.rs1=conn.st1.executeQuery(qr);
+    
+   String [] orgunit_values= new String [orgunitsarr.length]; 
+        int columnCount = orgunitsarr.length;
+
        
+    
+    while(conn.rs1.next())
+    {
+      
+    for (int i = 1; i <= columnCount; i++) 
+               {
+ orgunit_values[i-1]=conn.rs1.getString(i);
+ 
+                  // System.out.println("   variables "+conn.rs1.getString(i));
+ 
+               //create row header
+                }
+    
+    
+    }
 
 
-return vals;
+
+return orgunit_values;
 }
 
 
+public String arraytostring(String [] ar){
+String vl="";
+int cnt=0;
+for(String a:ar){
+if(cnt==0)    { vl+=""+a;}
+else          { vl+=","+a;}
+cnt++;
+}
 
-private String jsonToString(String [] arr)
-{
-     String vals="";
-for(int x=0;x<arr.length;x++){vals+=arr[x]+",";}
-       
 
-
-return vals;
+return vl;
 }
 
 }

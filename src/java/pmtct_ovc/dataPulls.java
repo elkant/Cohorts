@@ -351,7 +351,7 @@ for(int c=0;c<mycolumns.size();c++)
      String id="";
  if(c==0){id="id='"+res.getString(mycolumns.get(c).toString())+"'"; System.out.println("Id Ni __"+id);  dtlist_html+="<tr "+id+">";}
       dtlist_html+="<td>"+res.getString(mycolumns.get(c).toString())+"</td>";
-      if(c==mycolumns.size()-1){ dtlist_html+="<td><label onclick='loadExistingClient(\""+res.getString("patient_id")+"\",\""+frm+"\");' class='btn btn-info'>Edit</label></td></tr>";}
+      if(c==mycolumns.size()-1){ dtlist_html+="<td><label onclick='loadExistingClient(\""+res.getString("patient_id")+"\",\""+frm+"\");' class='btn btn-info'>Edit</label></td><td><label onclick='dltpt(\""+res.getString("patient_id")+"\");' class='btn btn-danger'>Delete</label></td></tr>";}
 
 }
     
@@ -365,7 +365,7 @@ count++;
 
 
 
-finaltbl= "<table id='searchtable_"+elementtoappend+"' class='table table-striped table-bordered'><thead><tr>"+hdslist_html+"<th>Edit</th></tr></thead><tbody>"+dtlist_html+"</tbody></table>";
+finaltbl= "<table id='searchtable_"+elementtoappend+"' class='table table-striped table-bordered'><thead><tr>"+hdslist_html+"<th>Edit</th><th>Delete</th></tr></thead><tbody>"+dtlist_html+"</tbody></table>";
 
 
 

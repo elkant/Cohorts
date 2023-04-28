@@ -161,6 +161,22 @@ String last_reporting_month=ReportingStartDate(prevmonth, year);
   
   
   
+   public String CurrentMonthStartDate(){
+       
+       int mwaka=currentYear();
+       
+//if(prevmonth==0){mwaka=mwaka-1;}     
+
+ String mn=""+month;
+         if(month<10)
+         {
+    mn="0"+month;
+}
+
+       return  mwaka+"-"+mn+"-01";
+    }
+  
+  
   public int getNumberOfDays(int Year, int monthid ){
   
       int number_Of_DaysInMonth = 0; 

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package KP;
+package hpdm;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,60 +12,41 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import org.json.simple.JSONObject;
 
 /**
  *
- * @author Ekaunda
+ * @author EKaunda
  */
-public class check_status extends HttpServlet {
-String load_type,message;
-int pos=0;
-    HttpSession session;
+public class hpdm_login extends HttpServlet {
+
+   HttpSession session;
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        session = request.getSession();
         
-        String refresh_page="false";
+        session=request.getSession();
         
-        try {
-         load_type = request.getParameter("load_type");
-            JSONObject obj = new JSONObject();
-         pos = 0;
-         message = "Uknown Excel Loads";
-    
-        
-         
-          if(load_type.equalsIgnoreCase("kpform1a"))
-         {
-             //System.out.println("Tuko kwa session checker");
-              if(session.getAttribute("kpform1a")!=null){
-             message = session.getAttribute("kpform1a").toString();
-                  
-             if(isNumeric(session.getAttribute("kpform1a_count").toString())){
-             pos = Integer.parseInt(session.getAttribute("kpform1a_count").toString());
-             }
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            
+            String pwd="";
+            String nextPage="hpdm_index.jsp";
+            if(request.getParameter("codeaccess")!=null){
+            
+            pwd=request.getParameter("codeaccess");
             }
-             
-              if(session.getAttribute("kpref_form1a")!=null){
-                  refresh_page=session.getAttribute("kpref_form1a").toString();
-                  //session.setAttribute("message", " <img src=\"images/failed.png\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b id=\"notify\">ERROR: Form Completed with a Validation Error. Check the errors sheet on the Data Quality Download</b> ");
-              session.removeAttribute("kpref_form1a");
-              
-              }
-              
-         }
-         
-         obj.put("count", pos);
-         obj.put("message", message);
-         obj.put("refreshpage", refresh_page);
-         
-            out.println(obj);
-            //System.out.println("Status"+obj);
-        } finally {
-            out.close();
+            
+            
+            if(pwd.equals("909090")){
+        nextPage="hpdm_main.jsp";
+                                    }
+            else {
+                session.setAttribute("hpdm_login", "Access code incorect");
+            }
+            
+            
+           response.sendRedirect(nextPage);
         }
     }
 
@@ -108,7 +89,4 @@ int pos=0;
         return "Short description";
     }// </editor-fold>
 
-public boolean isNumeric(String s) {  
-    return s != null && s.matches("[-+]?\\d*\\.?\\d+");  
-}
 }

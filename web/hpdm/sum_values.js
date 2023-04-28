@@ -7,7 +7,7 @@ function sum_indicators(indicator_id){
     var total=0, elem_value="";
    // indic	9m	9f	14m	14f	19m	19f	24m	24f	25m	25f	ttl
 
-var columns = ["9m","9f","14m","14f","19m","19f","24m","24f","25m","25f"];
+var columns = ["m_14","f_14","m_19","f_19","m_29","f_29","m_39","f_39","m_49","f_49","m_50","f_50"];
 //    var indicator_id=document.getElementById("indic_pos_"+indic_pos).value;
 //    alert(indicator_id);
 var has_a_non_blank=0;

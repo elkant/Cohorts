@@ -1251,7 +1251,7 @@ else if(cccno.length!==10){$("#fedback").html("<font color='red'><h3>Please ente
 else if ($("#dob").val()===''){$("#fedback").html("<font color='red'><h3>Please enter Patient Date of Birth</h3></f>");  $("#dob").focus();}
 else if ($("#sex").val()===''){$("#fedback").html("<font color='red'><h3>Please Specify Patient Sex</h3></f>");  $("#sex").focus();}
 else if (ag>19){$("#fedback").html("<font color='red'><h3>The required data is for Patients below 19 Yrs Only</h3></f>");  $("#dob").focus();}
-else if (pn>0 && pn!==10){$("#fedback").html("<font color='red'><h3>Please enter 10 digit phone number in 07XX XXX XXX format</h3></f>");  $("#phoneno").focus();}
+else if (pn>0 && pn.length!==10){$("#fedback").html("<font color='red'><h3>Please enter 10 digit phone number in 07XX XXX XXX format</h3></f>");  $("#phoneno").focus();}
 
 else if ($("#county").val()===''){$("#fedback").html("<font color='red'><h3>Please specify County of residence</h3></f>");  $("#county").focus();}
 else if ($("#subcounty").val()===''){$("#fedback").html("<font color='red'><h3>Please specify Sub-County of residence</h3></f>");  $("#subcounty").focus();}
@@ -1265,7 +1265,7 @@ else if($("#environmental_issue").val()==='' ){$("#fedback").html("<font color='
 else {
     
      $.ajax({
-                    url:'deletePatientRecords',                            
+                    url:'deleteSeeRecords',                            
                     type:'post',  
                     data:{pid:pid},
                     dataType: 'html',  
@@ -1287,12 +1287,13 @@ else {
    var tid=uuidv4();
    var elementid=de[i].element_id; 
    var val=$("#"+de[i].element_id).val(); 
+
   
              
-             
+//        console.log(de[i].element_id+"  dawa yake ni  "+val+": si array?="+Array.isArray(val));     
              //First delete the existing Record in the database then after deletion, proceed and save
              //
-             
+         //if(Array.isArray(val)){    val=JSON.stringify(val); }
              
         
              
@@ -1531,6 +1532,30 @@ $("#"+dest).html(data);
 }
 
 
+
+
+function showOVCElements(){
+    
+    
+    var ag=$("#age").val();
+    
+    
+    if(ag<=15){
+        
+        
+
+
+        $(".is_ovc").show();
+        $(".is_from_chh").show();
+        
+    }
+    else {
+        
+        $(".is_ovc").hide();
+        $(".is_from_chh").hide();
+    }
+    
+}
 
 
               </script>
