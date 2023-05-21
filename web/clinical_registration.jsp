@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>PMTCT OVC</title>
+	<title>IMIS Clinical Modules Access</title>
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -51,7 +51,7 @@
 				<form action='registeruser' class="login100-form validate-form">
                                     
                                     <div class="container-login100-form-btn">
-						<a href='pmtct_ovc_index.jsp'   class="login100-form-btn" style="background-color: #2196f3;">
+						<a href='clinical_index.jsp'   class="login100-form-btn" style="background-color: #2196f3;">
 							Login
 						</a>
 					</div>

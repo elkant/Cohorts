@@ -127,7 +127,7 @@ public String getHtmlTable(dbConn conn, HashMap pms) throws SQLException{
 String indicators="<table class='table table-striped table-bordered'  style='width:100%' >"
         + "<thead>"
         + "<tr style='background-color:#0183f1;'>"
-        + "<th rowspan='2'>Indicator</th>"
+        + "<th class='head' rowspan='2'>Indicator</th>"
         + "<th style='text-align:center;color:white;' colspan='2'>0-5</th>"
         + "<th style='text-align:center;color:white;' colspan='2'>6-14</th>"
         + "<th style='text-align:center;color:white;' colspan='2'>15+</th>"

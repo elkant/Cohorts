@@ -680,6 +680,38 @@
         <servlet-name>ahd_missing_reports</servlet-name>
         <servlet-class>ahd.ahd_missing_reports</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>loadMortIndicators</servlet-name>
+        <servlet-class>mortalityAudit.loadMortIndicators</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>save_mort</servlet-name>
+        <servlet-class>mortalityAudit.save_mort</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>importder95</servlet-name>
+        <servlet-class>imports.importder95</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>getafyavIndicators</servlet-name>
+        <servlet-class>afyastat_verification.getafyavIndicators</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>saveafyav</servlet-name>
+        <servlet-class>afyastat_verification.saveafyav</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>loadeHTSSites</servlet-name>
+        <servlet-class>afyastat_verification.loadeHTSSites</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>loadAfyaValidation</servlet-name>
+        <servlet-class>afyastat_verification.loadAfyaValidation</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>jmwppmsReport</servlet-name>
+        <servlet-class>hfr.jmwppmsReport</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loadcohort</servlet-name>
         <url-pattern>/loadcohort</url-pattern>
@@ -1359,6 +1391,38 @@
     <servlet-mapping>
         <servlet-name>ahd_missing_reports</servlet-name>
         <url-pattern>/ahd_missing_reports</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>loadMortIndicators</servlet-name>
+        <url-pattern>/loadMortIndicators</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>save_mort</servlet-name>
+        <url-pattern>/save_mort</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>importder95</servlet-name>
+        <url-pattern>/importder95</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getafyavIndicators</servlet-name>
+        <url-pattern>/getafyavIndicators</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>saveafyav</servlet-name>
+        <url-pattern>/saveafyav</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>loadeHTSSites</servlet-name>
+        <url-pattern>/loadeHTSSites</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>loadAfyaValidation</servlet-name>
+        <url-pattern>/loadAfyaValidation</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>jmwppmsReport</servlet-name>
+        <url-pattern>/jmwppmsReport</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

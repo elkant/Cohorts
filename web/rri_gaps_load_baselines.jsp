@@ -181,15 +181,12 @@
                               <label class="control-label">Specify Output:<font color='red'><b>*</b></font></label>
                               <div class="controls">
                                   <select required type="text" title="" onchange='selectoutput();'  class="form-control input-lg" name="outiput" id="outiput" >
-                                      
-                                     
-                                       <option value='internal_system.sp_rri_gaps_baselines_txnew'>1. Refresh TX_NEW gaps</option>
+                                      <option value='internal_system.sp_rri_gaps_baselines_txnew'>1. Refresh TX_NEW gaps</option>
                                        <option value='internal_system.sp_rri_gaps_pns_untested_contacts'>2. Refresh Index Contacts Not Tested</option>
                                        <option value='internal_system.sp_rri_gaps_cxca_unlinked'>3. Refresh CXCA</option>                                       
                                        <option value='internal_system.sp_rri_gaps_baselines_netloss'>4. Refresh NetLoss gaps</option>
                                        <option value='internal_system.sp_rri_gaps_stfs'>5. Refresh STFs</option>
-                                      
-                                             
+                                       <option value='internal_system.sp_rri_gaps_prep_declined'>6. Refresh Prep Reasons for Decline</option>
                                       </select>
                               </div>
                            </div>

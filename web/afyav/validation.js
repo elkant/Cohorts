@@ -17,7 +17,7 @@ function loadValidation() {
     breakloop = false;
 
     $.ajax({
-        url:'loadOtzValidation',
+        url:'loadAfyaValidation',
         type:'post',
         dataType:'json',
         success:function (data) {
@@ -97,8 +97,8 @@ function less(valids, message, iscritical, sectionid) {
 
     var val1, val2;
 
-    var columns = ["bl19_Male","bl19_Female"];
-    var agearray = ["bl19_Male","bl19_Female"];
+    var columns = ["imis","ndwh","khis","emr","moh731","register"];
+    var agearray = ["imis","ndwh","khis","emr","moh731","register"];
 
 
 
@@ -186,8 +186,8 @@ function greater(valids, message, iscritical, sectionid) {
 
     var val1, val2;
 
-    var columns = ["bl19_Male","bl19_Female"];
-    var agearray = ["bl19_Male","bl19_Female"];
+    var columns = ["imis","ndwh","khis","emr","moh731","register"];
+    var agearray = ["imis","ndwh","khis","emr","moh731","register"];
 
 
     //    
@@ -204,7 +204,7 @@ function greater(valids, message, iscritical, sectionid) {
         val1 = multisum(valarray[0], columns[i]);
         val2 = multisum(valarray[1], columns[i]);
         //m_uk
-
+//alert(val1+" vs "+val2);
         var agegender = columns[i].split("_");
         var sx = "";
         var ag = "";
@@ -280,8 +280,8 @@ function lessOrEqual(valids, message, iscritical, sectionid) {
 
     var val1, val2;
 
-   var columns = ["bl19_Male","bl19_Female"];
-    var agearray = ["bl19_Male","bl19_Female"];
+   var columns = ["imis","ndwh","khis","emr","moh731","register"];
+    var agearray = ["imis","ndwh","khis","emr","moh731","register"];
 
 
 
@@ -380,8 +380,8 @@ function greaterOrEqual(valids, message, iscritical, sectionid) {
 
     var val1, val2;
 
-     var columns = ["bl19_Male","bl19_Female"];
-    var agearray = ["bl19_Male","bl19_Female"];
+     var columns = ["imis","ndwh","khis","emr","moh731","register"];
+    var agearray = ["imis","ndwh","khis","emr","moh731","register"];
 
 
 
@@ -495,8 +495,8 @@ function notEqual(valids, message, iscritical, sectionid) {
 
     var val1, val2;
 
-     var columns = ["bl19_Male","bl19_Female"];
-    var agearray = ["bl19_Male","bl19_Female"];
+     var columns = ["imis","ndwh","khis","emr","moh731","register"];
+    var agearray = ["imis","ndwh","khis","emr","moh731","register"];
 
 
 
@@ -707,217 +707,4 @@ function savebutton_inactive(sectionid) {
 
 function isNumber(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
-}
-
-function displayIfFunction(sourceele,iscondition,equalval,destination,action)
-{
-    
-    
-   //as at this point and version of the application, the action is assumed to be show 
-   var srcval=$(sourceele).val();
-    //equalto
-    //notequalto
-    //contains
-    if(iscondition==='equalto')
-    {
-        console.log("...in display if "+iscondition);
-        
-        if(srcval===equalval)
-        {
-            
-            console.log("show "+destination);
-            $(destination).show();} 
-                         else { $(destination).hide();$(destination).val("");
-                             $(destination).trigger("change");
-         console.log("hide "+destination);                 
-        }
-    }
-    else  if(iscondition==='notequalto')
-    {
-        
-        if(srcval!==equalval){$(destination).show();  console.log("show "+destination);} 
-                         else{$(destination).hide();  console.log("hide "+destination); $(destination).val("");$(destination).trigger("change");}
-    }
-     else  if(iscondition==='greaterthan')
-    {
-        
-        if(srcval>equalval){$(destination).show();  console.log("show "+destination);} 
-                         else{$(destination).hide();  console.log("hide "+destination); $(destination).val("");$(destination).trigger("change");}
-    }
-        else  if(iscondition==='lessthan')
-    {
-        
-        if(srcval<equalval){$(destination).show();  console.log("show "+destination);} 
-                         else{$(destination).hide();  console.log("hide "+destination); $(destination).val("");$(destination).trigger("change");}
-    }
-    else  if(iscondition==='contains')
-    {
-        
-        if(srcval.indexOf(equalval)>=0 ){$(destination).show();  console.log("show "+destination);} 
-                         else{$(destination).hide();  console.log("hide "+destination); $(destination).val("");$(destination).trigger("change");}
-    }
-     else  
-    {
-        
-       $(destination).hide();
-    }
-    
-}
-
-function hideIfFunction(sourceele,iscondition,equalval,destination,action)
-{
-    
-    
-   //as at this point and version of the application, the action is assumed to be show 
-   var srcval=$(sourceele).val();
-    //equalto
-    //notequalto
-    //contains
-    if(iscondition==='equalto')
-    {
-        console.log("...in display if "+iscondition);
-        
-        if(srcval===equalval)
-        {
-            
-            console.log("show "+destination);
-            $(destination).hide();$(destination).val("");  $(destination).trigger("change");
-        } 
-     else { $(destination).show();
-         console.log("hide "+destination);                 
-        }
-    }
-    else  if(iscondition==='notequalto')
-    {
-        
-        if(srcval!==equalval){$(destination).hide(); $(destination).val("");$(destination).trigger("change"); } 
-                         else{$(destination).show(); }
-    }
-    else  if(iscondition==='contains')
-    {
-        
-        if(srcval.indexOf(equalval)>=0 ){$(destination).hide(); $(destination).val("");$(destination).trigger("change"); } 
-                         else{$(destination).show(); }
-    }
-     else  
-    {
-        
-       $(destination).hide();
-    }
-    
-}
-
-//Below is a function for disabling passed select options 
-
-function disableSelectOptionsIf(source_element,iscondition,expectedsource_value,dest_element,options_to_disable){
-    
-    
-    var srcval=$(source_element).val();
-    var opts_=options_to_disable.split(":");
-    
-   
-    
-    
-    
-    
-    
-     if(iscondition==='equalto')
-     {   
-      
-         if(srcval===expectedsource_value)
-        {
-            for(var x=0;x<opts_.length;x++) { $(""+dest_element+" option[value='"+ opts_[x] + "']").attr('disabled', true); } 
-        
-        }
-        else 
-        {
-          for(var x=0;x<opts_.length;x++) { $(dest_element+" option[value='"+ opts_[x] + "']").attr('disabled', false); }            
-        }
-         
-         
-     }
-    else   if(iscondition==='notequalto')
-    {
-        
-          if(srcval!==expectedsource_value)
-        {
-            for(var x=0;x<opts_.length;x++) { $(dest_element+" option[value='"+ opts_[x] + "']").attr('disabled', true); } 
-        
-        }
-        else 
-        {
-          for(var x=0;x<opts_.length;x++) { $(dest_element+" option[value='"+ opts_[x] + "']").attr('disabled', false); }            
-        }
-        
-    }
-    else   if(iscondition==='contains')
-    {
-        
-         if(srcval.indexOf(expectedsource_value)>=0 )
-        {
-            for(var x=0;x<opts_.length;x++) { $(dest_element+" option[value='"+ opts_[x] + "']").attr('disabled', true); } 
-        
-        }
-        else 
-        {
-          for(var x=0;x<opts_.length;x++) { $(dest_element+" option[value='"+ opts_[x] + "']").attr('disabled', false); }            
-        }  
-        
-    }
-    
-    
-}
-
-function setValueIf(source_element,iscondition,expectedsource_value,dest_element,value_to_set){
-    //SetValueIf may not work for MultiSelectAs at Now
-    
-    var srcval=$(source_element).val();
-    
-   
-    
-    
-     if(iscondition==='equalto')
-     {   
-      
-if  (srcval===expectedsource_value) 
-     {  
-         $(dest_element).val(value_to_set);  
-     }          
-else    {  
-$(dest_element).val(""); 
-}
-       
-         
-         
-     }
-    else   if(iscondition==='notequalto')
-    {
-        
-         if  (srcval===expectedsource_value) 
-     {  
-         $(dest_element).val(value_to_set);  
-     }          
-else    
-{  
-$(dest_element).val(""); 
-}
-       
-        
-    }
-    else   if(iscondition==='contains')
-    {
-        
-        if(srcval.indexOf(expectedsource_value)>=0 )
-
-        {  
-        $(dest_element).val(value_to_set);  
-        }          
-        else    
-        {  
-        $(dest_element).val(""); 
-        }  
-        
-    }
-    
-    
 }

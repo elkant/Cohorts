@@ -17,7 +17,7 @@
 <!-- BEGIN HEAD -->
 <head>
    <meta charset="utf-8" />
-   <title>HFR Reports </title>
+   <title>HFR/ppms Reports </title>
    <link rel="shortcut icon" href="images/logo.png"/>
    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
    <meta content="" name="description" />
@@ -152,7 +152,7 @@
                   <!-- BEGIN SAMPLE FORM PORTLET-->   
                   <div class="portlet box ">
                      <div class="portlet-title">
-                     <h3 style="text-align: center;color:blue;"><i class="icon-bar-chart"></i> Non Surge Weekly Reports /Tracker</h3>
+                     <h3 style="text-align: center;color:blue;"><i class="icon-bar-chart"></i> PPMS Reports /Tracker</h3>
                      </div>
                       
                      <div class="portlet-body form">
@@ -180,8 +180,9 @@
                                     <div class="controls">
                                       <select   name='report' id='report' >
                                       <option value='hfrreport'>1.HFR Reports - Excel Version(Surge and Non Surge)</option>                                      
-                                      <option value='hfrreport_uploadble'>3.HFR Reports - Uploadable Version (Surge and Non Surge)</option>
-                                      <option value='nonsurge_tracker'>2.Missing Reports Tracker</option>
+                                      <option value='hfrreport_uploadble'>2.HFR Reports - Uploadable Version (Surge and Non Surge)</option>
+                                      <option value='jmwppmsReport'>3.JMW PPMS Reports</option>
+                                      <option value='nonsurge_tracker'>4.Missing Reports Tracker</option>
                                       
 <!--                                      <option value='htsclientraw'>3. HTS Client Level Raw </option>
                                       <option value='WeeklyData'>4. Data file only</option>-->

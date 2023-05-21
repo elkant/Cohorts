@@ -69,6 +69,21 @@
                 }
             }
 
+            
+            td {
+/*  padding: 1em 3em;
+  background: #999;
+  text-align: center;
+  color: #fff;*/
+}
+.head th, th.side {
+  position: sticky;
+  top: 0px;
+  left: 0px;
+  background: #333;
+}
+            
+            
 
         </style>
         <style>
@@ -893,7 +908,7 @@ console.log("yearmonth:"+ym);
                                                {
 
                                                    $("#form1a_accordion").html(data);
-
+                     //$("table th:first").css("position", "sticky").css("left", "0px").css("background-color", $("body").css("background-color"));
 
                                                }});
 
