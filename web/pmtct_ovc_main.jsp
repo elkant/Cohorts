@@ -25,18 +25,16 @@
 		<title>PMTCT | OVC </title>
 		<meta name="generator" content="Bootply" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-                <link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
+
 		<link href="css/bootstrap.css" rel="stylesheet">
                 <link href="css/bootstrap-datepicker.min.css" rel="stylesheet">
                 <link rel="stylesheet" href="css/select2.min.css">
-                <link rel="shortcut icon" href="images/pmtct_ovc.png">
-                <!--<link data-jsfiddle="common" rel="stylesheet" media="screen" href="css/handsontable.css">-->
-<!--  <link data-jsfiddle="common" rel="stylesheet" media="screen" href="dist/pikaday/pikaday.css">-->
-                  
-		<!--[if lt IE 9]>
-			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-		<![endif]-->
+                <link rel="shortcut icon" href="images/lab_manifest.png">
+                  <link href="assets/css/dataTables.bootstrap.min.css" rel="stylesheet">
+          <link href="assets/css/responsive.bootstrap.min.css" rel="stylesheet">
 		<link href="css/styles.css" rel="stylesheet">
+		<link href="https://cdn.datatables.net/fixedheader/3.3.2/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+
                 
                                                 <style type='text/css'>
 input:focus {
@@ -302,11 +300,11 @@ input:focus {
                                         
                                    <br/>
                                     <div style="display:none;" class="controls savebuttons">
-                                        <input type="input" onClick="getElementsToBeSaved('mother');"  id='savebutton' value="Add Mother"  style="margin-left: 0%;" class="btn-sm btn-success active">
+                                        <input type="input" onClick="loadClinicalValidation('loadClinicalValidation','mother','pmtct_ovc_indicators');"  id='savebutton' value="Add Mother"  style="margin-left: 0%;" class="btn-sm btn-success active">
                                             
                                      </div>
                                      <div class="controls">
-                                        <button type="submit" id='updatebutton' onclick="getElementsToBeSaved('mother');" style="margin-left: 0%;display:none;" class="btn-sm btn-info active">
+                                        <button type="submit" id='updatebutton' onclick="loadClinicalValidation('loadClinicalValidation','mother','pmtct_ovc_indicators');" style="margin-left: 0%;display:none;" class="btn-sm btn-info active">
                                             Update Mother 
                                         </button>
                                     </div>                                   
@@ -347,11 +345,11 @@ input:focus {
                                         
                                    <br/>
                                     <div style="display:none;" class="controls savebuttons">
-                                        <input type="input" onClick="getElementsToBeSaved('baby');"  id='savebutton' value="Add Baby"  style="margin-left: 0%;" class="btn-sm btn-success active">
+                                        <input type="input" onClick="loadClinicalValidation('loadClinicalValidation','baby','pmtct_ovc_indicators');"  id='savebutton' value="Add Baby"  style="margin-left: 0%;" class="btn-sm btn-success active">
                                             
                                      </div>
                                      <div class="controls">
-                                        <button type="submit" id='updatebutton' onclick="getElementsToBeSaved('baby');" style="margin-left: 0%;display:none;" class="btn-sm btn-info active">
+                                        <button type="submit" id='updatebutton' onClick="loadClinicalValidation('loadClinicalValidation','baby','pmtct_ovc_indicators');"  style="margin-left: 0%;display:none;" class="btn-sm btn-info active">
                                             Update Baby 
                                         </button>
                                     </div>                                   
@@ -602,19 +600,13 @@ input:focus {
                 <h4 class="modal-title">Help</h4>
             </div>
             <div class="modal-body">
-                <p>This  application is created for aiding users in collecting data for Weekly High Frequency Reporting.</p>
+                <p>This  application is created for aiding users in collecting data for PMTCT OVC Data Management.</p>
                 <h3>Indicators</h3>
-                <p>The specific indicators that one should enter data for are;</p>
+                <p>The specific patients that should be entered on the system are data for are;</p>
                 <ul>
 
 
-<li>HTS TST- No Tested for HIV	</li>														
-<li>HTS TST POS		</li>													
-<li>TX LINK</li>													
-<li>TX NEW</li>													
-<li>TX BTC</li>												
-<li>PREP NEW</li>													
-<li>VMMC CIRC</li>												
+											
 
 
 
@@ -637,23 +629,19 @@ input:focus {
 
 
 	<!-- script references -->
-        <script src="js/jquery-1.9.1.js"></script>
+                <script src="js/jquery-1.9.1.js"></script>
 		<script src="js/bootstrap.js"></script>
+                <!--<script type="text/javascript" src="assets/js/dataTables.bootstrap.min.js"></script>--> 
 		<script src="js/scripts.js"></script>
                 <script src="js/bootstrap-datepicker.min.js"></script>
                 <script src="js/select2.min.js"></script>
                  <script src="js/pouchdb-4.0.1.js"></script>
-                 <script type="text/javascript" src="js/datatables.min.js"></script>
+                 <!--<script type="text/javascript" src="js/datatables.min.js"></script>-->
                  <script type="text/javascript" src="pmtct_ovc/validation.js"></script>
-  
-<!--  <script data-jsfiddle="common" src="dist/pikaday/pikaday.js"></script>
-  <script data-jsfiddle="common" src="dist/moment/moment.js"></script>
-  <script data-jsfiddle="common" src="dist/zeroclipboard/ZeroClipboard.js"></script>
-  <script data-jsfiddle="common" src="dist/numbro/numbro.js"></script>
-  <script data-jsfiddle="common" src="dist/numbro/languages.js"></script>-->
-  <!--<script data-jsfiddle="common" src="js/handsontable.js"></script>-->
-                 
-<!--                   <script type="text/javascript" charset="utf-8" src="cordova-1.5.0.js"></script>  -->
+                 <script type="text/javascript" src="assets/js/jquery.dataTables_1.3.min.js"></script> 
+                 <script type="text/javascript" src="assets/js/dataTables.responsive.min.js"></script>
+                 <script type="text/javascript" src="https://cdn.datatables.net/fixedheader/3.3.2/js/dataTables.fixedHeader.min.js"></script>
+
                  <script>
                     
                     
@@ -790,44 +778,7 @@ var dbdata="";
 
 //===================================================VIEW WEEKLY DATA============================================================
 //a function to select a few search data that should appear in a data table
-function selectsearchdata()
-{
-    
-  
 
-    
-    
-    
-    
-    
-    
-    //read data from the db
-    
-  	  
-    
-    
-}
-
-//call the function that displays the data
-
-function appendtabledata( dbdata ){
-    
-     $("#searchtablediv").html("<table id='searchtable' class='table table-striped table-bordered'><thead><tr><th>week <br/>beginning </th><th>Facility</th><th>Edit</th></tr></thead><tbody>"+dbdata+"</tbody></table>");
-         
-	   $(document).ready(function() {
-                
-          $('#searchtable').DataTable({              
-              "autoWidth": true,
-              "paging": true,
-              "pagingType": "full",
-              "lengthChange": false,                     
-          });
-            
-                                     } ); 
-    
-                                                          }
-
- selectsearchdata();
 
 function showreports(){
     
@@ -961,73 +912,7 @@ $('form').on('blur', 'input[type=number]', function (e) {
 </script>
 
  <script data-jsfiddle="example1">
-                var
-                 
-                  container = $('example1'),
-                  exampleConsole = $('example1console'),
-                  autosave = $('autosave'),
-                  load = $('load'),
-                  save = $('save'),
-                  autosaveNotification,
-                  hot;
 
-//                hot = new Handsontable(container, {
-//                  startRows: 8,
-//                  startCols: 6,
-//                  rowHeaders: true,
-//                  colHeaders: true,
-//                  minSpareRows: 1,
-//                  contextMenu: true,
-//                  afterChange: function (change, source) {
-//                    if (source === 'loadData') {
-//                      return; //don't save this change
-//                    }
-//                    if (!autosave.checked) {
-//                      return;
-//                    }
-//                    clearTimeout(autosaveNotification);
-//                    ajax('json/save.json', 'GET', JSON.stringify({data: change}), function (data) {
-//                      exampleConsole.innerText  = 'Autosaved (' + change.length + ' ' + 'cell' + (change.length > 1 ? 's' : '') + ')';
-//                      autosaveNotification = setTimeout(function() {
-//                        exampleConsole.innerText ='Changes will be autosaved';
-//                      }, 1000);
-//                    });
-//                  }
-//                });
-
-//                Handsontable.Dom.addEvent(load, 'click', function() {
-//                  ajax('json/load.json', 'GET', '', function(res) {
-//                    var data = JSON.parse(res.response);
-//
-//                    hot.loadData(data.data);
-//                    exampleConsole.innerText = 'Data loaded';
-//                  });
-//                });
-
-//                Handsontable.Dom.addEvent(save, 'click', function() {
-//                  // save all cell's data
-//                  ajax('json/save.json', 'GET', JSON.stringify({data: hot.getData()}), function (res) {
-//                    var response = JSON.parse(res.response);
-//
-//                    if (response.result === 'ok') {
-//                      exampleConsole.innerText = 'Data saved';
-//                    }
-//                    else {
-//                      exampleConsole.innerText = 'Save error';
-//                    }
-//                  });
-//                });
-
-//                Handsontable.Dom.addEvent(autosave, 'click', function() {
-//                  if (autosave.checked) {
-//                    exampleConsole.innerText = 'Changes will be autosaved';
-//                  }
-//                  else {
-//                    exampleConsole.innerText ='Changes will not be autosaved';
-//                  }
-//                });
-                
-                
                
    
 
@@ -1046,7 +931,7 @@ function getPeriod(){
         var dat=data.periods;
         
       
-        var o="<option value=''>Select Seriod</option>";
+        var o="";
                         
                         for(var a=0;a<dat.length;a++)
                         {                           
@@ -1342,7 +1227,8 @@ else {
                   issaveready=false;
                   
    $("#fedback").html("<font color='red'><h3>Please specify "+lbl+"</h3></f>");  $("#"+elementid).focus();   $("#"+elementid).css('border-color', '#FF0000');                  
-              }     
+               dltptquietly(pid);
+                        }     
                    
                }
                
@@ -1580,7 +1466,8 @@ $("#"+elementtoappend).html(""+dt);
               "autoWidth": true,
               "paging": true,
               "pagingType": "full",
-              "lengthChange": false                    
+              "lengthChange": false,
+              "responsive":true,                    
           });
             
            
@@ -1707,6 +1594,29 @@ if (result) {
                     }
                 });
                 }
+    
+}
+
+
+
+function dltptquietly(pid){
+     
+      $.ajax({
+                    url:'deletePatientRecords',                            
+                    type:'post',  
+                    data:{pid:pid},
+                    dataType: 'html',  
+                    success: function(fdbk) 
+                    {
+                      //after success in deletion, refresh tables
+            
+             loadEdits('baby','editbaby_div');
+             loadEdits('mother','editmother_div');
+                        
+                        
+                    }
+                });
+                
     
 }
 

@@ -712,6 +712,30 @@
         <servlet-name>jmwppmsReport</servlet-name>
         <servlet-class>hfr.jmwppmsReport</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>deletePatientRecordsMotAudit</servlet-name>
+        <servlet-class>mortalityAudit.deletePatientRecordsMotAudit</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>importderv95</servlet-name>
+        <servlet-class>imports.importderv95</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>importderv96</servlet-name>
+        <servlet-class>imports.importderv96</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>loadClinicalValidation</servlet-name>
+        <servlet-class>clinicalforms.loadClinicalValidation</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CorrectHeiIds</servlet-name>
+        <servlet-class>pmtct_ovc.CorrectHeiIds</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>afyavreports</servlet-name>
+        <servlet-class>afyastat_verification.afyavreports</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loadcohort</servlet-name>
         <url-pattern>/loadcohort</url-pattern>
@@ -1423,6 +1447,30 @@
     <servlet-mapping>
         <servlet-name>jmwppmsReport</servlet-name>
         <url-pattern>/jmwppmsReport</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>deletePatientRecordsMotAudit</servlet-name>
+        <url-pattern>/deletePatientRecordsMotAudit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>importderv95</servlet-name>
+        <url-pattern>/importderv95</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>importderv96</servlet-name>
+        <url-pattern>/importderv96</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>loadClinicalValidation</servlet-name>
+        <url-pattern>/loadClinicalValidation</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CorrectHeiIds</servlet-name>
+        <url-pattern>/CorrectHeiIds</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>afyavreports</servlet-name>
+        <url-pattern>/afyavreports</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

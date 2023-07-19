@@ -81,6 +81,17 @@ public class dataPulls extends HttpServlet {
     
             }
             
+             if(act.equals("showMortalityedits"))
+            {               
+               
+               ResultSet rs1=pullAddedDataPerFormForEditing(conn,fm,fac,"sp_mot_audit_pull_all_editing_data_dynamically");
+
+               String tbl=buildDataTable(conn,rs1,table_docker,fm);               
+                System.out.println("_______"+tbl);
+                out.println(tbl);                                               
+    
+            }
+            
             
         }
     }

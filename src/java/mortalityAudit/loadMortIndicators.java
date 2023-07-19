@@ -519,7 +519,7 @@ if(is_hidden.equals("yes")){showstatus="display:none;";}
 
 
 String section_n="";
-if(show_section.equals("1")){section_n="<br/><div class='form-group control-group col-xs-12 ' style='background-color:#4b8df8;text-align:center;padding-top5px;padding-bottom:5px;color:white;'><b>"+section+"</b></div><br/>";}else{section_n="";}
+if(show_section.equals("1")){section_n="<br/><div class='form-group control-group col-xs-12 btn' style='background-color:#4b8df8;text-align:center;padding-top5px;padding-bottom:5px; margin-bottom:6px;color:white;'><b>"+section+"</b></div><br/>";}else{section_n="";}
 
 finalelement=""+section_n
         + "<div class='form-group col-md-4 "+js_class+"' style="+showstatus+">" +
@@ -574,7 +574,7 @@ if(is_hidden.equals("yes")){showstatus="display:none;";}
 
 
 String section_n="";
-if(show_section.equals("1")){section_n="<br/><div class='form-group control-group col-xs-12 ' style='background-color:#4b8df8;text-align:center;padding-top5px;padding-bottom:5px;color:white;'><b>"+section+"</b></div><br/>";}else{section_n="";}
+if(show_section.equals("1")){section_n="<br/><div class='form-group control-group col-xs-12 btn' style='background-color:#4b8df8;text-align:center;padding-top5px;padding-bottom:5px; margin-bottom:6px;color:white;'><b>"+section+"</b></div><br/>";}else{section_n="";}
 
 
 finalelement=""+section_n
@@ -631,7 +631,7 @@ if(is_hidden.equals("yes")){showstatus="display:none;";}
 
 
 String section_n="";
-if(show_section.equals("1")){section_n="<br/><div class='form-group control-group col-xs-12 ' style='background-color:#4b8df8;text-align:center;padding-top5px;padding-bottom:5px;color:white;'><b>"+section+"</b></div><br/>";}else{section_n="";}
+if(show_section.equals("1")){section_n="<br/><div class='form-group control-group col-xs-12 btn' style='background-color:#4b8df8;text-align:center;padding-top5px;padding-bottom:5px; margin-bottom:6px;color:white;'><b>"+section+"</b></div><br/>";}else{section_n="";}
 
 //String conditionfun="";
 //String changefunction="";
@@ -723,7 +723,7 @@ if(is_hidden.equals("yes")){showstatus="display:none;";}
 
 
 String section_n="";
-if(show_section.equals("1")){section_n="<br/><div class='form-group control-group col-xs-12 ' style='background-color:#4b8df8;text-align:center;padding-top5px;padding-bottom:5px;color:white;'><b>"+section+"</b></div><br/>";}else{section_n="";}
+if(show_section.equals("1")){section_n="<br/><div class='form-group control-group col-xs-12 btn ' style='background-color:#4b8df8;text-align:center;padding-top5px;padding-bottom:5px; margin-bottom:6px;color:white;'><b>"+section+"</b></div><br/>";}else{section_n="";}
 
 //String conditionfun="";
 //String changefunction="";
@@ -881,8 +881,13 @@ private ResultSet pullDataFromView(dbConn conn, String tbl) throws SQLException 
 private ResultSet pullDataFromSpperOrgunit(dbConn conn, String sp,String orgunit) throws SQLException {
     
   
+    String qry="call "+sp+"('"+orgunit+"');";
     
-    return conn.st3.executeQuery("call "+sp+"('"+orgunit+"');");
+    if(sp.contains("(")){qry="call "+sp+";";}
+    
+    
+    System.out.println("~~~~"+qry);
+    return conn.st3.executeQuery(qry);
     
     
     }

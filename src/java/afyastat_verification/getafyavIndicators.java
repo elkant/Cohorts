@@ -478,7 +478,7 @@ indicators+=""+displaysection
         + "<tr><td>NDWH</td><td>"+inputndwh+"</td></tr>"
         + "<tr><td>KenyaEMR</td><td>"+inputemr+"</td></tr>"
         + "<tr><td>MOH 731</td><td>"+inputmoh731+"</td></tr>"
-        + "<tr><td>Registers <br/>(All HTS registers)</td><td>"+inputregister+"</td></tr>"
+        + "<tr><td>Registers <br/>(All valid registers)</td><td>"+inputregister+"</td></tr>"
         //+ "<td>"+inputvariance+"</td>"
         + "";
         

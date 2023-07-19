@@ -24,7 +24,7 @@
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
-		<title>Afyastat Verification</title>
+		<title>EMR Data Verification</title>
 		<meta name="generator" content="Bootply" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
                 <link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
@@ -134,7 +134,7 @@ input:focus {
              <a class='btn-warning btn' target="_blank" href="Missing_nupi_linelist.txt" style="margin-left:1%;">Access Missing Nupi Linelist Query</a> 
             -->
           
-          <h5 class="btn btn-default col-md-12" style="text-align: center;color:blue;"><b>Afyastat Data Verification Module</b></h5>
+          <h5 class="btn btn-default col-md-12" style="text-align: center;color:blue;"><b>EMR Data Verification Module</b></h5>
         
 
             <div class="row">
@@ -241,7 +241,7 @@ input:focus {
 
                                                                     <div class="controls">
                                                                         <select required="true"   onchange="getFacilitiesJson();isdisplayindicators();"   name="period" id="period" class="form-control" >
-                                                                           <option value="202303">2023 March</option>                                
+                                                                           <option value="202305">2023 May</option>                                
                                                                         </select>
                                                                     </div>
                                                                 </div>

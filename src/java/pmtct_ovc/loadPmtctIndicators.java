@@ -519,7 +519,7 @@ if(is_hidden.equals("yes")){showstatus="display:none;";}
 
 
 String section_n="";
-if(show_section.equals("1")){section_n="<br/><div class='form-group col-md-12' style='background-color:#4b8df8;text-align:center;padding-top:2px;padding-bottom:2px;'><b>"+section+"</b></div><br/>";}else{section_n="";}
+if(show_section.equals("1")){section_n="<br/><div class='form-group col-md-12 btn' style='width:99%;margin-bottom:15px;color:white;background-color:#4b8df8;text-align:center;padding-top:2px;padding-bottom:2px;'><b>"+section+"</b></div><br/>";}else{section_n="";}
 
 
 finalelement=""+section_n
@@ -575,7 +575,7 @@ if(is_hidden.equals("yes")){showstatus="display:none;";}
 
 
 String section_n="";
-if(show_section.equals("1")){section_n="<br/><div class='form-group col-md-12' style='background-color:#4b8df8;text-align:center;padding-top:2px;padding-bottom:2px;'><b>"+section+"</b></div><br/>";}else{section_n="";}
+if(show_section.equals("1")){section_n="<br/><div class='form-group col-md-12 btn' style='width:99%;margin-bottom:15px;color:white;background-color:#4b8df8;text-align:center;padding-top:2px;padding-bottom:2px;'><b>"+section+"</b></div><br/>";}else{section_n="";}
 
 
 finalelement=""+section_n
@@ -632,7 +632,7 @@ if(is_hidden.equals("yes")){showstatus="display:none;";}
 
 
 String section_n="";
-if(show_section.equals("1")){section_n="<br/><div class='form-group col-md-12' style='background-color:#4b8df8;text-align:center;padding-top:2px;padding-bottom:2px;'><b>"+section+"</b></div><br/>";}else{section_n="";}
+if(show_section.equals("1")){section_n="<br/><div class='form-group col-md-12 btn' style='width:99%;margin-bottom:15px;color:white;background-color:#4b8df8;text-align:center;padding-top:2px;padding-bottom:2px;'><b>"+section+"</b></div><br/>";}else{section_n="";}
 
 //String conditionfun="";
 //String changefunction="";
@@ -724,7 +724,7 @@ if(is_hidden.equals("yes")){showstatus="display:none;";}
 
 
 String section_n="";
-if(show_section.equals("1")){section_n="<br/><div class='form-group col-md-12' style='background-color:#4b8df8;text-align:center;padding-top:2px;padding-bottom:2px;'><b>"+section+"</b></div><br/>";}else{section_n="";}
+if(show_section.equals("1")){section_n="<br/><div class='form-group col-md-12 btn' style='width:99%;margin-bottom:15px;color:white;background-color:#4b8df8;text-align:center;padding-top:2px;padding-bottom:2px;'><b>"+section+"</b></div><br/>";}else{section_n="";}
 
 //String conditionfun="";
 //String changefunction="";
@@ -785,8 +785,8 @@ public  String buildopts(String opts, String value){
 
 String finalopts="<option value=''>select option</option>";
 //Yes|Yes:No|No
-//System.out.println(""+opts);
-
+//System.out.println("~~~~~"+opts);
+if(opts.equals("") || opts==null ){opts=":Error Loading Options";}
 String valkey[]=opts.split(":");
 for(int s=0;s<valkey.length;s++){
 
@@ -795,10 +795,12 @@ for(int s=0;s<valkey.length;s++){
   
    String selected="";
   if(value.equals(valkey_in[0])){selected="selected";}
-   
+  System.out.println("valkey_in 1"+valkey_in[0]);
+    System.out.println("valkey_in 2"+valkey_in[1]); 
+  
  finalopts+="<option "+selected+" value='"+valkey_in[0]+"'>"+valkey_in[1]+"</option>";
-    //System.out.println("valkey_in 1"+valkey_in[0]);
-    //System.out.println("valkey_in 2"+valkey_in[1]);
+    System.out.println("valkey_in 1"+valkey_in[0]);
+    System.out.println("valkey_in 2"+valkey_in[1]);
 
 }
 

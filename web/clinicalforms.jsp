@@ -22,7 +22,7 @@
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
-		<title>Mortality Audit</title>
+		<title>Clinical Imis</title>
 		<meta name="generator" content="Bootply" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
                 <!--<link href="css/dataTables.bootstrap.min.css" rel="stylesheet">-->
@@ -87,7 +87,25 @@ input:focus {
         </div>
         <div class="navbar-collapse collapse">
                        
+<%  dbConn conn = new dbConn();
 
+String frm="";
+
+String getfrms="select distinct(Form) as fm from internal_system.clinical_indicators; ";
+
+conn.rs=conn.st.executeQuery(getfrms);
+while (conn.rs.next())
+{
+
+frm+="<option value='"+conn.rs.getString(1)+"' >"+conn.rs.getString(1)+"</option>";
+    
+}
+
+
+
+
+
+%>
             
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
@@ -104,7 +122,7 @@ input:focus {
                             <i class="glyphicon glyphicon-question-sign"></i>
                             Help
                         </a></li>
-                              <li><a style="text-align: center;" href='otz_index.jsp'><i class="glyphicon glyphicon-log-out"></i> Logout</a></li>
+                              <li><a style="text-align: center;" href='index.jsp'><i class="glyphicon glyphicon-log-out"></i> Logout</a></li>
             </ul>
         </div>
         
@@ -126,7 +144,7 @@ input:focus {
             
             
           
-          <h5 class="btn btn-default col-md-12" style="text-align: center;color:blue;"><b>Mortality Audit</b></h5>
+          <h5 class="btn btn-default col-md-12" style="text-align: center;color:blue;"><b>Clinical Forms</b></h5>
 
             <div class="row">
                 <!-- center left-->
@@ -181,7 +199,18 @@ input:focus {
                       
                                                         <tr>
 
-                                                            <td class="col-xs-6">
+                                                            
+                                                            <td class="col-xs-4">
+                                                                <div class="control-group">
+
+                                                                    <div class="controls">
+                                                                        <label><required-option></required-option>Form Name</label> 
+
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            
+                                                            <td class="col-xs-4">
                                                                 <div class="control-group">
 
                                                                     <div class="controls">
@@ -190,7 +219,7 @@ input:focus {
                                                                     </div>
                                                                 </div>
                                                             </td>
-                                                            <td class="col-xs-6">
+                                                            <td class="col-xs-4">
                                                                 <div class="control-group">
 
                                                                     <div class="controls">
@@ -205,8 +234,18 @@ input:focus {
 
 
                                                         <tr >
+                                                             <td class="col-xs-4">
+                                                                <div class="control-group">
 
-                                                            <td class="col-xs-6">
+                                                                    <div class="controls">
+                                                                        <select required="true"   onchange="getFacilitiesJson();isdisplayindicators();"   name="frmname" id="frmname" class="form-control" >
+                                                                     <%=frm%>                                              
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+
+                                                            <td class="col-xs-4">
                                                                 <div class="control-group">
 
                                                                     <div class="controls">
@@ -218,7 +257,7 @@ input:focus {
                                                             </td>
 
 
-                                                            <td class="col-xs-6">
+                                                            <td class="col-xs-4">
                                                                 <div class="control-group">
 
                                                                     <div class="controls">
@@ -281,11 +320,11 @@ input:focus {
                                         
                                    <br/>
                                     <div style="display:none;" class="controls savebuttons">
-                                        <input type="input" onClick="loadClinicalValidation('loadClinicalValidation','mot_audit','mortality_indicators');"  id='savebutton' value="Save Record"  style="margin-left: 0%;" class="btn-sm btn-success active">
+                                        <input type="input" onClick="loadClinicalValidation('loadClinicalValidation','<%=frm%>','clinical_indicators');"  id='savebutton' value="Save Record"  style="margin-left: 0%;" class="btn-sm btn-success active">
                                             
                                      </div>
                                      <div class="controls">
-                                        <button type="submit" id='updatebutton' onclick="loadClinicalValidation('loadClinicalValidation','mot_audit','mortality_indicators');" style="margin-left: 0%;display:none;" class="btn-sm btn-info active">
+                                        <button type="submit" id='updatebutton' onclick="loadClinicalValidation('loadClinicalValidation','<%=frm%>','clinical_indicators');" style="margin-left: 0%;display:none;" class="btn-sm btn-info active">
                                             Update Record 
                                         </button>
                                     </div>                                   
@@ -747,13 +786,6 @@ function delayedrefresh()
 
 
 
-
-
-
-function closeapp() 
-{
-      //navigator.app.exitApp();   // Closes the new window
-}
 
 
 </script>

@@ -160,7 +160,7 @@ public class uploadMonthlyForm extends HttpServlet {
              
              
        
-            String activeversion = "KP Form  version 2.0.1";
+            String activeversion = "KP Form  version 2.0.2";
          
             
             String dbname = "internal_system.kp_temp";
@@ -614,9 +614,9 @@ while (conn.rs2.next()) {
     }//end of correct version
     else {
         no_uploads=0;
-        failed_reason+= "Failed: You have used Wrong F1a template version "+excelversion+" . Expected Version is 2.0.0 <a href='uploadMonthlyFormv43.jsp'>Upload Version 2.0.0 here</href> <br>";
+        failed_reason+= "Failed: You have used Wrong F1a template version "+excelversion+" . Expected Version is 2.0.2 <a href='uploadMonthlyFormv43.jsp'>Upload Version 2.0.0 here</href> <br>";
 
-        String tx="Failed: You have used Wrong template version "+excelversion+" . Expected Version is 2.0.0. <a href='uploadMonthlyFormv43.jsp'>Upload Version 2.0.0 here</href> \n " ;
+        String tx="Failed: You have used Wrong template version "+excelversion+" . Expected Version is 2.0.2. <a href='uploadMonthlyFormv43.jsp'>Upload Version 2.0.0 here</href> \n " ;
         if(!uploadstatus.contains(tx))
         {
             uploadstatus+=tx;

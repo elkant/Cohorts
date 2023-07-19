@@ -629,84 +629,9 @@ input[readonly]{
 
 
 
-                                  
+ 
 
 
- function getSections(){
-       
-   
-       
-       
-              $.ajax({
-                         url:'getParameterData',                            
-                    type:'post',  
-                    dataType: 'json',  
-                    success: function(data) {                        
-                       
-        var dat=data.sections;
-        
-        console.log(dat[0].section);
-        var o="<option value=''>Select Option</option>";
-                        
-                        for(var a=0;a<dat.length;a++){
-                            
-                     
-                          o+="<option value='"+dat[a].sectio_id+"'>"+dat[a].sectio+"</option>";   
-                        }
-                        
-                   $("#section").html(o);
-                   $(document).ready(function() {
-                    $('#section').select2(); 
-             
-                                 } ); 
-                        
-                        
-                    }});
-   
-   }
-
-//getSections();
-
-
-
-
-
-
- function getModalities(){
-       
-   var sec=$("#section").val();
-       
-       
-              $.ajax({
-                         url:'getParameterData?mod='+sec+"&sec="+sec,                            
-                    type:'post',  
-                    dataType: 'json',  
-                    success: function(data) {                        
-                       
-        var dat=data.modalities;
-        
-      
-        var o="<option value=''>Select Option</option>";
-                        
-                        for(var a=0;a<dat.length;a++)
-                        {                           
-                     
-                          o+="<option value='"+dat[a].modality_id+"'>"+dat[a].modality+"</option>";   
-                        }
-                        
-                   $("#modality").html(o);
-                   $(document).ready(function() {
-                    $('#modality').select2(); 
-             
-                                 } ); 
-                        
-                        
-                    }});
-   
-   }
-   
-   
-   
    
    
    

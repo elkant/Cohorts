@@ -317,11 +317,11 @@ XSSFWorkbook wb = wb1;
   if(1==1){
      XSSFSheet sheet= wb.getSheet("rawdata");
         // tell your xssfsheet where its content begins and where it ends
-((XSSFSheet)shet).getCTWorksheet().getDimension().setRef("A1:L" + (shet.getLastRowNum() + 1));
+((XSSFSheet)shet).getCTWorksheet().getDimension().setRef("A1:N" + (shet.getLastRowNum() + 1));
 
 CTTable ctTable = ((XSSFSheet)shet).getTables().get(0).getCTTable();
 
-ctTable.setRef("A1:L" + (shet.getLastRowNum() + 1)); // adjust reference as needed
+ctTable.setRef("A1:N" + (shet.getLastRowNum() + 1)); // adjust reference as needed
 
 
         

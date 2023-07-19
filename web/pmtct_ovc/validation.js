@@ -13,13 +13,16 @@ var breakloop=false;
 
 var appendstring="";
 
-function loadValidation() {
+function loadClinicalValidation(validation_servelet,fm,indics_tbl) {
     breakloop = false;
 
     $.ajax({
-        url:'loadOtzValidation',
+        url:validation_servelet,
         type:'post',
         dataType:'json',
+        data: {fm:fm,
+        tbl:indics_tbl},
+        
         success:function (data) {
 
 var call_save=true;
@@ -30,7 +33,7 @@ var call_save=true;
 
                 for (var as = 0; as < data.length; as++)
                 {
-                    runvalidation(data[as].validation, data[as].message, data[as].iscritical, data[as].section_name);
+                    runvalidation(data[as].validation, data[as].message, data[as].iscritical, data[as].section_name, data[as].highlight_fields);
                     if (breakloop === true) {
                        call_save=false;
                        console.log(data[as].message);
@@ -54,13 +57,14 @@ var call_save=true;
             }
 
 if(call_save){
-    console.log('call save arrived at');
-    save_data();
     
+    //console.log('call save arrived at');
+    //save_data();
+    getElementsToBeSaved(fm);
 }
 else {
     
-      console.log('NO call save arrived at');
+      //console.log('NO call save arrived at');
 }
 
         }
@@ -71,20 +75,96 @@ else {
 }
 
 
-function runvalidation(valids, message, iscritical, sectionid) 
+function runvalidation(valids, message, iscritical, sectionid,highlightfields) 
 { 
    if(iscritical==='1'){ iscritical="yes";  } 
    else if(iscritical==='0'){iscritical="no";} 
-    
-      if(valids.indexOf("<=")>=0){   lessOrEqual(valids,message,iscritical,sectionid);      }
- else if(valids.indexOf(">=")>=0){   greaterOrEqual(valids,message,iscritical,sectionid);   }
- else if(valids.indexOf("!=")>=0){   notEqual(valids,message,iscritical,sectionid);         }
- else if(valids.indexOf("<")>=0) {   less(valids,message,iscritical,sectionid);             }
- else if(valids.indexOf(">")>=0) {   greater(valids,message,iscritical,sectionid);          }
+   
+   /**
+    * 
+    * @param {type} valids
+    * @param {type} message
+    * @param {type} iscritical
+    * @param {type} sectionid
+    * @returns {undefined}
+    * $('#art_start_date').val()>$('#last_vl_date').val()
+((($('#death_date').val()).replace('-','')).substring(0,6))!==$('#month_of_death').val()
+Here we are doing simple evaluation where we eval() the submitted jquery syntax parameter and if it returns a false, we break a loop and announce a message 
+    */
+    dynamicValidationCheck(valids,message,iscritical,sectionid,highlightfields);
+//      if(valids.indexOf("<=")>=0){   lessOrEqual(valids,message,iscritical,sectionid);      }
+// else if(valids.indexOf(">=")>=0){   greaterOrEqual(valids,message,iscritical,sectionid);   }
+// else if(valids.indexOf("!=")>=0){   notEqual(valids,message,iscritical,sectionid);         }
+// else if(valids.indexOf("<")>=0) {   less(valids,message,iscritical,sectionid);             }
+// else if(valids.indexOf(">")>=0) {   greater(valids,message,iscritical,sectionid);          }
 
 }
 
 
+
+function dynamicValidationCheck(valids, message, iscritical, sectionid,highlightfields) {
+    //1<2
+    //eg 1<2 means for all the age disagregations, indicator 1 should be less than indicator 2
+console.log(valids);
+console.log(message);
+
+console.log("Evaluation result of :"+valids+" is "+eval(valids));
+var hel=highlightfields.split(",");
+if(eval(valids)){
+    //
+     breakloop=true;
+     console.log(message);
+     $("#fedback").html(" <img style='width:4%;' src='images/stop.png'/> <b>" + message+"</b>");
+    alert(message);
+    
+ for (var x=0;x<hel.length;x++){
+    
+      redborder(hel[x],message);
+    }
+    
+}
+else {
+    for (var x=0;x<hel.length;x++)
+    {
+    
+      greyborder(hel[x],message);
+    }
+         
+    
+}
+
+
+}//end of dynamic check
+
+function displayIfFunctionEvaluated(evalsyntax,destination)
+{
+    
+    if (eval(evalsyntax)) {
+        console.log(" custom show " + evalsyntax);
+        $(destination).show();
+
+    } else {
+        $(destination).hide();
+        $(destination).val("");  $(destination).trigger("change");
+        console.log(" custom hide at display if evaluated " + evalsyntax+" results to "+eval(evalsyntax));
+    }
+    
+}
+
+function hideIfFunctionEvaluated(evalsyntax,destination)
+{
+    
+    if (eval(evalsyntax)) {
+        console.log(" custom show " + evalsyntax);
+        $(destination).hide();
+
+    } else {
+        $(destination).show();
+        $(destination).trigger("change");
+        console.log("hide " + destination + ":::while at display ");
+    }
+    
+}
 
 //raise an alarm if indicator 1 is not less than indicator 2
 
@@ -617,66 +697,45 @@ function multisum(vals, age) {
 
 
 
-function redborder(age, elem,msg) {
+function redborder(elem,msg) {
 
-    var valsarr = elem.split("+");
-
-
-
-    for (var v = 0; v < valsarr.length; v++)
-    {
-        if(document.getElementById(valsarr[v] + "_" +age)!==null){
-        $("#" + valsarr[v] + "_" +age ).css('border-color', '#ff0000');
-        $("#" + valsarr[v] + "_" +age).css('background', '#ff0000');
-         $("#" + valsarr[v] + "_" +age).prop('title',msg);
+        if(document.getElementById(elem)!==null){
+        $("#" + elem).css('border-color', '#ff0000');
+        $("#" + elem).css('background', '#ffffff');
+         $("#" + elem).prop('title',msg);
      }
-           
+ 
+}
+function yellowborder(elem,msg) {
 
-    }
+        if(document.getElementById(elem)!==null){
+        $("#" + elem).css('border-color', '#fc7044');
+        $("#" + elem).css('background', '#ffffff');
+         $("#" + elem).prop('title',msg);
+     }
+ 
+}
+function blackborder(elem,msg) 
+{
 
+        if(document.getElementById(elem)!==null){
+        $("#" + elem).css('border-color', '#000000');
+        $("#" + elem).css('background', '#ffffff');
+         $("#" + elem).prop('title',msg);
+     }
+ 
+}
+function greyborder(elem,msg) 
+{
+
+        if(document.getElementById(elem)!==null){
+        $("#" + elem).css('border-color', '#808080');
+        $("#" + elem).css('background', '#ffffff');
+         $("#" + elem).prop('title',msg);
+     }
+ 
 }
 
-function yellowborder(age, elem,msg) {
-
-    var valsarr = elem.split("+");
-
-
-
-    for (var v = 0; v < valsarr.length; v++)
-    {
-        if(document.getElementById(valsarr[v] + "_" +age)!==null){
-        $("#" + valsarr[v] + "_" +age).css('border-color', '#fc7044');
-        $("#" + valsarr[v] + "_" +age).css('background', '#fc7044');
-        $("#" + valsarr[v] + "_" +age).prop('title',msg);
-    }
-    
-
-    }
-
-}
-
-
-function blackborder(age, elem) {
-
-    var valsarr = elem.split("+");
-
-
-
-    for (var v = 0; v < valsarr.length; v++)
-    {
-        if(document.getElementById(valsarr[v] + "_" +age)!==null){
-        $("#" +valsarr[v] + "_" +age).css('border-color', '#000000');
-        //skip blank elements
-        if($("#" + valsarr[v] + "_" +age).val()!==''){
-        $("#" + valsarr[v] + "_" +age).css('background', '#ffffff');
-                                                       }
-                                                   }
-        
-    }
-
-
-
-}
 
 
 function savebutton_active(sectionid) {
@@ -729,7 +788,7 @@ function displayIfFunction(sourceele,iscondition,equalval,destination,action)
             $(destination).show();} 
                          else { $(destination).hide();$(destination).val("");
                              $(destination).trigger("change");
-         console.log("hide "+destination);                 
+         console.log("hide "+destination+":::while at equalto "+sourceele);                 
         }
     }
     else  if(iscondition==='notequalto')
@@ -756,6 +815,33 @@ function displayIfFunction(sourceele,iscondition,equalval,destination,action)
         if(srcval.indexOf(equalval)>=0 ){$(destination).show();  console.log("show "+destination);} 
                          else{$(destination).hide();  console.log("hide "+destination); $(destination).val("");$(destination).trigger("change");}
     }
+        else  if(iscondition==='lessthan')
+    {
+        
+        if(srcval<equalval ){$(destination).show(); $(destination).val("");$(destination).trigger("change"); } 
+                         else{$(destination).hide(); }
+    }
+    else  if(iscondition==='greaterthan')
+    {
+        
+        if(srcval>equalval ){$(destination).show(); $(destination).val("");$(destination).trigger("change"); } 
+                         else{$(destination).hide(); }
+    }
+       else  if(iscondition==='greaterthanorequal')
+    {
+        
+        if(srcval>=equalval ){$(destination).show(); $(destination).val("");$(destination).trigger("change"); } 
+                         else{$(destination).hide(); }
+    }
+       else  if(iscondition==='lessthanorequal')
+    {
+        
+        if(srcval<=equalval ){$(destination).show(); $(destination).val("");$(destination).trigger("change"); } 
+                         else{$(destination).hide(); }
+    }
+    
+    
+   
      else  
     {
         
@@ -763,6 +849,94 @@ function displayIfFunction(sourceele,iscondition,equalval,destination,action)
     }
     
 }
+
+
+
+function displayIfFunctionDontClearVal(sourceele,iscondition,equalval,destination,action)
+{
+    
+    
+   //as at this point and version of the application, the action is assumed to be show 
+   var srcval=$(sourceele).val();
+    //equalto
+    //notequalto
+    //contains
+    if(iscondition==='equalto')
+    {
+        console.log("...in display if "+iscondition);
+        
+        if(srcval===equalval)
+        {
+            
+            console.log("show "+destination);
+            $(destination).show();} 
+                         else { $(destination).hide();
+                             $(destination).trigger("change");
+         console.log("hide "+destination+":::while at equalto "+sourceele);                 
+        }
+    }
+    else  if(iscondition==='notequalto')
+    {
+        
+        if(srcval!==equalval){$(destination).show();  console.log("show "+destination);} 
+                         else{$(destination).hide();  console.log("hide "+destination); $(destination).trigger("change");}
+    }
+     else  if(iscondition==='greaterthan')
+    {
+        
+        if(srcval>equalval){$(destination).show();  console.log("show "+destination);} 
+                         else{$(destination).hide();  console.log("hide "+destination); $(destination).trigger("change");}
+    }
+        else  if(iscondition==='lessthan')
+    {
+        
+        if(srcval<equalval){$(destination).show();  console.log("show "+destination);} 
+                         else{$(destination).hide();  console.log("hide "+destination); $(destination).trigger("change");}
+    }
+    else  if(iscondition==='contains')
+    {
+        
+        if(srcval.indexOf(equalval)>=0 ){$(destination).show();  console.log("show "+destination);} 
+                         else{$(destination).hide();  console.log("hide "+destination); $(destination).trigger("change");}
+    }
+    
+    
+    
+      else  if(iscondition==='lessthan')
+    {
+        
+        if(srcval<equalval ){$(destination).show(); $(destination).val("");$(destination).trigger("change"); } 
+                         else{$(destination).hide(); }
+    }
+    else  if(iscondition==='greaterthan')
+    {
+        
+        if(srcval>equalval ){$(destination).show(); $(destination).val("");$(destination).trigger("change"); } 
+                         else{$(destination).hide(); }
+    }
+       else  if(iscondition==='greaterthanorequal')
+    {
+        
+        if(srcval>=equalval ){$(destination).show(); $(destination).val("");$(destination).trigger("change"); } 
+                         else{$(destination).hide(); }
+    }
+       else  if(iscondition==='lessthanorequal')
+    {
+        
+        if(srcval<=equalval ){$(destination).show(); $(destination).val("");$(destination).trigger("change"); } 
+                         else{$(destination).hide(); }
+    }
+    
+    
+   
+     else  
+    {
+        
+       $(destination).hide();
+    }
+    
+}
+
 
 function hideIfFunction(sourceele,iscondition,equalval,destination,action)
 {
@@ -784,7 +958,7 @@ function hideIfFunction(sourceele,iscondition,equalval,destination,action)
             $(destination).hide();$(destination).val("");  $(destination).trigger("change");
         } 
      else { $(destination).show();
-         console.log("hide "+destination);                 
+         console.log("hide "+destination+":::while at hideif "+sourceele);                 
         }
     }
     else  if(iscondition==='notequalto')
@@ -797,6 +971,30 @@ function hideIfFunction(sourceele,iscondition,equalval,destination,action)
     {
         
         if(srcval.indexOf(equalval)>=0 ){$(destination).hide(); $(destination).val("");$(destination).trigger("change"); } 
+                         else{$(destination).show(); }
+    }
+     else  if(iscondition==='lessthan')
+    {
+        
+        if(srcval<equalval ){$(destination).hide(); $(destination).val("");$(destination).trigger("change"); } 
+                         else{$(destination).show(); }
+    }
+    else  if(iscondition==='greaterthan')
+    {
+        
+        if(srcval>equalval ){$(destination).hide(); $(destination).val("");$(destination).trigger("change"); } 
+                         else{$(destination).show(); }
+    }
+       else  if(iscondition==='greaterthanorequal')
+    {
+        
+        if(srcval>=equalval ){$(destination).hide(); $(destination).val("");$(destination).trigger("change"); } 
+                         else{$(destination).show(); }
+    }
+       else  if(iscondition==='lessthanorequal')
+    {
+        
+        if(srcval<=equalval ){$(destination).hide(); $(destination).val("");$(destination).trigger("change"); } 
                          else{$(destination).show(); }
     }
      else  
@@ -827,7 +1025,7 @@ function disableSelectOptionsIf(source_element,iscondition,expectedsource_value,
          if(srcval===expectedsource_value)
         {
             for(var x=0;x<opts_.length;x++) { $(""+dest_element+" option[value='"+ opts_[x] + "']").attr('disabled', true); } 
-        
+        console.log("Inside Disable if "+source_element+"_"+iscondition+"_"+expectedsource_value+"_"+dest_element+"_"+options_to_disable);
         }
         else 
         {
@@ -918,6 +1116,14 @@ $(dest_element).val("");
         }  
         
     }
+    
+    
+}
+
+
+function deductTwoVariables(expectedgreaterval, expectedlessval, destination)
+{
+    
     
     
 }

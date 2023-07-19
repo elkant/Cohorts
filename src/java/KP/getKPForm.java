@@ -909,8 +909,8 @@ ResultSetMetaData md = rs.getMetaData();
               
           }
          
-         XSSFFormulaEvaluator.evaluateAllFormulaCells(wb);  
-      
+        // XSSFFormulaEvaluator.evaluateAllFormulaCells(wb);  
+        wb.setForceFormulaRecalculation(true);
       return wb;
       }
       
