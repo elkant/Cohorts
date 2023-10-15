@@ -4,7 +4,6 @@
     Author     : Emmanuel E
 --%>
 
-<%@page import="upi.getUpiReportingDates"%>
 <%@page import="General.IdGenerator2"%>
 <%@page import="hfr.getIndicators"%>
 <%@page import="java.util.logging.Logger"%>
@@ -19,26 +18,27 @@
 
 <!DOCTYPE html>
 
-<!--<html  manifest="cohortsv1.appcache">-->
 <html>
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
-		<title>EMR Data Verification</title>
+		<title>Binti Shujaa</title>
 		<meta name="generator" content="Bootply" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-                <link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
+                <!--<link href="css/dataTables.bootstrap.min.css" rel="stylesheet">-->
 		<link href="css/bootstrap.css" rel="stylesheet">
                 <link href="css/bootstrap-datepicker.min.css" rel="stylesheet">
                 <link rel="stylesheet" href="css/select2.min.css">
-                <link rel="shortcut icon" href="images/upi.png">
+                <link rel="shortcut icon" href="images/lab_manifest.png">
                 <!--<link data-jsfiddle="common" rel="stylesheet" media="screen" href="css/handsontable.css">-->
 <!--  <link data-jsfiddle="common" rel="stylesheet" media="screen" href="dist/pikaday/pikaday.css">-->
-                  
+                  <link href="assets/css/dataTables.bootstrap.min.css" rel="stylesheet">
+          <link href="assets/css/responsive.bootstrap.min.css" rel="stylesheet">
 		<!--[if lt IE 9]>
 			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
 		<link href="css/styles.css" rel="stylesheet">
+		<link href="https://cdn.datatables.net/fixedheader/3.3.2/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
                 
                                                 <style type='text/css'>
 input:focus {
@@ -87,7 +87,37 @@ input:focus {
         </div>
         <div class="navbar-collapse collapse">
                        
+<%  dbConn conn = new dbConn();
 
+String frm="";
+String selectedform="cxca_pos";
+if(request.getParameter("frm")!=null){
+
+    selectedform=request.getParameter("frm");
+    
+}
+
+String getfrms="select distinct(Form) as fm, formname as fmn from internal_system.clinical_indicators where Form='"+selectedform+"' ; ";
+
+conn.rs=conn.st.executeQuery(getfrms);
+while (conn.rs.next())
+{
+    String sele="";
+    if(selectedform.equals(conn.rs.getString(1))){sele="selected";}
+
+frm+="<option "+sele+" value='"+conn.rs.getString(1)+"' >"+conn.rs.getString(2)+"</option>";
+    
+}
+
+
+
+
+
+
+
+
+
+%>
             
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
@@ -98,14 +128,28 @@ input:focus {
                 </li>
           
                 
-                 <!--<li><a title="Add Widget" id="adduserbutton" data-toggle="modal" href="#userdetails"><i class="glyphicon glyphicon-user"></i><span id="usernamelabel"> Add Username</span></a></li>-->
-                 <!--<li><a title="Add Widget" data-toggle="modal" style="display:none;" id="exportdataanchor2" href="#addWidgetModal"><i class="glyphicon glyphicon-cloud-upload"></i> Export Data</a></li>-->
+             
                  <li>
                   <a  title="Help" data-toggle="modal" href="#help">
                             <i class="glyphicon glyphicon-question-sign"></i>
                             Help
                         </a></li>
-                              <li><a style="text-align: center;" href='upi_index.jsp'><i class="glyphicon glyphicon-log-out"></i> Logout</a></li>
+                              <li><a style="text-align: center;" href='../InternalSystem/ramcahhome.jsp'><i class="glyphicon glyphicon-home"></i>Home</a></li>
+                              
+                       
+								
+                                                                <li><a href="binti_shujaa.jsp?frm=binti_add_groups" class="glyphicon glyphicon-expand">Add Groups</a></li>
+                                                                <li><li><a href="binti_shujaa.jsp?frm=binti_add_shujaas" class="glyphicon glyphicon-tower">Add Binti Shujaas</a></li>
+                                                                <li><a href="binti_shujaa.jsp?frm=binti_enrollment" class="glyphicon glyphicon-new-window">Enrollment</a></li>
+                                                                <li><a href="binti_shujaa.jsp?frm=binti_anc_visits" class="glyphicon glyphicon-file">ANC Visits</a></li>
+                                                                <li><a href="binti_shujaa.jsp?frm=binti_delivery_immunization" class="glyphicon glyphicon-baby-formula">Immunization</a></li>
+                                                                <li><a href="binti_shujaa.jsp?frm=binti_pnc_visits" class="glyphicon glyphicon-folder-open">Post Natal Services</a></li>
+                                                                <li><a href="binti_shujaa.jsp?frm=binti_followup" class="glyphicon glyphicon-repeat">Follow Up</a></li>
+                                                                <li><a href="binti_shujaa.jsp?frm=binti_exit" class="glyphicon glyphicon-circle-arrow-down">Exit Form</a></li>
+					
+                              
+                              
+                              <li><a style="text-align: center;" href='index.jsp'><i class="glyphicon glyphicon-log-out"></i> Logout</a></li>
             </ul>
         </div>
         
@@ -118,24 +162,16 @@ input:focus {
 <!-- Main -->
 <div class="container-fluid">
     
-<!--    <div class="row">
-         <label class="col-sm-2"></label>
-        <a class='btn btn-default col-sm-1' style="text-align: center;" href='otz_index.jsp'><i class="glyphicon glyphicon-log-out"></i>Logout</a>
-        <label class="col-sm-2"></label>
-          <a class='btn btn-success col-sm-3' style="text-align: center;" href='aca_mca_reports.jsp'>Generate Reports</a>
-           <label class="col-sm-2"></label>
-    </div>-->
+
     <div class="row">
         
         <!-- /col-3 -->
         <div class="col-sm-12">
 
-<!--             <a class='btn-warning btn' target="_blank" href="nupi_summary.txt" style="margin-left:40%;">Access Nupi & Covid Summary Query</a> 
-             <a class='btn-warning btn' target="_blank" href="Missing_nupi_linelist.txt" style="margin-left:1%;">Access Missing Nupi Linelist Query</a> 
-            -->
+            
+            
           
-          <h5 class="btn btn-default col-md-12" style="text-align: center;color:blue;"><b>EMR Data Verification Module</b></h5>
-        
+          <h5 class="btn-default col-md-12" style="text-align: center;color:blue;"><b>Binti Shujaa</b></h5>
 
             <div class="row">
                 <!-- center left-->
@@ -173,28 +209,7 @@ input:focus {
 
                     <hr>
 
-
-                   
-
-                    <!--tabs-->
-                    <div class="panel">
-                        <ul class="nav nav-tabs " id="myTab">
-                            <li class="active newdata"><a href="#dataentry" id="newdatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-plus"></i>New Data</a></li>
-                            <!--<li class="active editdata" style='display:none;' ><a href="#dataentry" id="newdatabutton" data-toggle="tab">  <i class="glyphicon glyphicon-edit"></i> Edit Data</a></li>-->
-                           <li><a href="#reports" style="" id="reportsbutton" data-toggle="tab"> <i class="glyphicon glyphicon-stats"></i>Reports</a></li> 
-                            <!--<li><a href="#searchdata" data-toggle="tab"> <i class="glyphicon glyphicon-search"></i> Edit Data</a></li>--> 
-                           <!-- <li><a href="#export" data-toggle="tab"> <i class="glyphicon glyphicon-cloud-upload"></i> Data Export</a></li>-->
-                        </ul>
-                        <div class="tab-content">
-                            <div class="tab-pane active well col-md-12" id="dataentry">
-                                
-                                
-                              <!--Data entry code-->
-                    <div class="panel panel-default">
-                       
-                        <div class="panel-body" style="width:100%;">
-                            <form class="form form-vertical"  action="#" method="post" id="weeklydataform">
-                              <table class='table table-striped table-bordered'  style=" width:100%;border :3px solid #4b8df8;" >
+<table class='table table-striped table-bordered'  style=" width:100%;border :3px solid #4b8df8;" >
 
                                                         
 
@@ -211,16 +226,27 @@ input:focus {
                       
                                                         <tr>
 
-                                                            <td class="col-xs-6">
+                                                            
+                                                            <td class="col-xs-4">
                                                                 <div class="control-group">
 
                                                                     <div class="controls">
-                                                                        <label><required-option></required-option>Reporting Period</label> 
+                                                                        <label><required-option></required-option>Form Name</label> 
 
                                                                     </div>
                                                                 </div>
                                                             </td>
-                                                            <td class="col-xs-6">
+                                                            
+                                                            <td class="col-xs-4">
+                                                                <div class="control-group">
+
+                                                                    <div class="controls">
+                                                                        <label><required-option></required-option>Reporting Month</label> 
+
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td class="col-xs-4">
                                                                 <div class="control-group">
 
                                                                     <div class="controls">
@@ -235,20 +261,30 @@ input:focus {
 
 
                                                         <tr >
+                                                             <td class="col-xs-4">
+                                                                <div class="control-group">
 
-                                                            <td class="col-xs-6">
+                                                                    <div class="controls">
+                                                                        <select required="true"   onchange="getFacilitiesJson();isdisplayindicators();"   name="frmname" id="frmname" class="form-control" >
+                                                                     <%=frm%>                                              
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+
+                                                            <td class="col-xs-4">
                                                                 <div class="control-group">
 
                                                                     <div class="controls">
                                                                         <select required="true"   onchange="getFacilitiesJson();isdisplayindicators();"   name="period" id="period" class="form-control" >
-                                                                           <option value="202306">2023 June</option>                                
+                                                                                                                   
                                                                         </select>
                                                                     </div>
                                                                 </div>
                                                             </td>
 
 
-                                                            <td class="col-xs-6">
+                                                            <td class="col-xs-4">
                                                                 <div class="control-group">
 
                                                                     <div class="controls">
@@ -264,41 +300,69 @@ input:focus {
 
 
                                                     </table>
-                                         <table class='table table-striped table-bordered' id="dynamicindicators" style="display:none;border :3px solid #4b8df8;" > 
+                   
+
+                    <!--tabs-->
+                    <div class="panel">
+                        <ul class="nav nav-tabs " id="myTab">
+                            <li class="active newdata"> <a href="#add<%=selectedform%>" id="add<%=selectedform%>button" data-toggle="tab">  <i class="glyphicon glyphicon-plus"> </i> <font color='green'><b>Data </b></font>  entry</a></li>                          
+                           
+                            <li class="newdata"> <a href="#edit<%=selectedform%>form" id="edit<%=selectedform%>button" data-toggle="tab">  <i class="glyphicon glyphicon-edit"> </i> <font color='green'><b>Edit</b></font>Records</a></li>
+                           
+                            <li><a href="#reports" style="" id="reportsbutton" data-toggle="tab"> <i class="glyphicon glyphicon-stats"></i>Reports</a></li> 
+                            <!--<li><a href="#searchdata" data-toggle="tab"> <i class="glyphicon glyphicon-search"></i> Edit Data</a></li>--> 
+                           <!-- <li><a href="#export" data-toggle="tab"> <i class="glyphicon glyphicon-cloud-upload"></i> Data Export</a></li>-->
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active well col-md-12" id="add<%=selectedform%>">
+                                
+                                
+                              <!--Data entry code-->
+                    <div class="panel panel-default">
+                       
+                        <div class="panel-body" style="width:100%;">
+                            <form class="form form-vertical"  action="#" method="post" id="weeklydataform">
+                              <table class='table table-striped table-bordered'  style=" width:100%;border :3px solid #4b8df8;" >
+
+
+
+
+                      <!-------Data Management ---------->
+
+
+                                                    </table>
+                                
+                                <!--<form id="addmothersform">-->
+                                
+                                         <table class='table table-striped table-bordered' id="dynamicindicators<%=selectedform%>" style="display:none;border :3px solid #4b8df8;padding:1px;" > 
                                    
                                 <!------INDICATORS----->
-                                 <tr ><td class='col-xs-12' colspan='3'>
-                                 <div class='control-group'>
-                                     
-                                    
-                                    
-                                    
-                                    
-                                  </div></td>
-                                 </tr>                                 
+                                           <tr><td><h3>Select Reporting Year, Month and Facility to Load data for.</h3></td></tr>                    
                                  
                                   
                                      </table>
                                 <table class="table table-striped table-bordered">
                                        <tr><td colspan="3" class="col-xs-12">               
                                 <div class="control-group col-xs-12">
-                                        <div id='fedback' class="alert-info">Note: Please enter all the required data.</div>
+                                        
                                    <br/>
-                                    <div class="controls">
-                                        <input type="input" onClick="loadValidation();"  id='savebutton' value="SAVE"  style="margin-left: 0%;" class="btn-lg btn-success active">
+                                    <div style="display:none;" class="controls savebuttons">
+                                        <input type="input" onClick="loadClinicalValidation('loadClinicalValidation','<%=selectedform%>','clinical_indicators');"  id='savebutton' value="Save Record"  style="margin-left: 0%;" class="btn-sm btn-success active">
                                             
                                      </div>
                                      <div class="controls">
-                                        <button type="submit" id='updatebutton' onclick="loadValidation();" style="margin-left: 0%;display:none;" class="btn-lg btn-info active">
-                                            UPDATE 
+                                        <button type="submit" id='updatebutton' onclick="loadClinicalValidation('loadClinicalValidation','<%=selectedform%>','clinical_indicators');" style="margin-left: 0%;display:none;" class="btn-sm btn-info active">
+                                            Update Record 
                                         </button>
-                                    </div>
-                                   
+                                    </div>                                   
                                     
                                 </div>
                                         </td></tr>
                                         
                                 </table>
+                                
+                                <div class="control-group col-xs-12" id="ujumbe"></div>
+                                
                             </form>
                         </div>
                         <!--/panel content-->
@@ -309,8 +373,21 @@ input:focus {
                               <!--Data entry code-->
                             
                             </div>
-                                                       <div class="tab-pane well" id="reports">
-<form action="upiReports" id="reportingForm">
+                            
+                           
+                             
+                            
+                             <div class="tab-pane well" id="edit<%=selectedform%>form">
+                                
+                                <div id="editmainform_div">
+                                    
+</div>
+                               <!--- Data export---->
+                            </div>
+     
+                            
+<div class="tab-pane well" id="reports">
+<form action="MortalityClinicalReports" id="reportingForm">
 
                                         <!--Dashboard code-->
 
@@ -343,8 +420,7 @@ input:focus {
 
                                                     <div class="controls">
                                                         <select class="form-control input-sm" onchange="checkFormAction();"   name='report' id='report' >
-                                                            <option value='upiReports'>1.Data Summary</option>
-                                                            <option value='upi_missing_reports'>2.Missing Reports</option>
+                                                            <option value='MortalityAuditReports'>1.Tracker and Data Summary</option>
                                                            
                                                             <!--<option value='hts_self_reports'>6.HTS Self</option>-->
 
@@ -382,7 +458,7 @@ input:focus {
                                             </td>
                                             <td class="col-xs-4">
                                                 <div class="controls">
-                                                    <input data-date-end-date="0d" required type="text"  title="this is the date that the week ended" value="<%=ig.toDay()%>" class="form-control input-sm dates" name="enddate" id="enddate" autocomplete="off"/>
+                                                    <input data-date-end-date="0d" required type="text"  title="this is the date that the week ended" value="<%=ig.LastMonthEndDate()%>" class="form-control input-sm dates" name="enddate" id="enddate" autocomplete="off"/>
                                                 </div>
                                                 </div>
                                             </td>
@@ -435,7 +511,7 @@ input:focus {
 
                 </div>
                 <!--/col-->
-               
+               <div id='fedback' class="alert-info">Note: Please enter all the required data.</div>
                 <!--/col-span-6-->
 
             </div>
@@ -576,43 +652,40 @@ input:focus {
 
 	<!-- script references -->
         <script src="js/jquery-1.9.1.js"></script>
+        
 		<script src="js/bootstrap.js"></script>
+                <!--<script type="text/javascript" src="assets/js/dataTables.bootstrap.min.js"></script>--> 
 		<script src="js/scripts.js"></script>
                 <script src="js/bootstrap-datepicker.min.js"></script>
                 <script src="js/select2.min.js"></script>
                  <script src="js/pouchdb-4.0.1.js"></script>
-                 <script type="text/javascript" src="js/datatables.min.js"></script>
-                 <script type="text/javascript" src="afyav/validation.js"></script>
-  
-<!--  <script data-jsfiddle="common" src="dist/pikaday/pikaday.js"></script>
-  <script data-jsfiddle="common" src="dist/moment/moment.js"></script>
-  <script data-jsfiddle="common" src="dist/zeroclipboard/ZeroClipboard.js"></script>
-  <script data-jsfiddle="common" src="dist/numbro/numbro.js"></script>
-  <script data-jsfiddle="common" src="dist/numbro/languages.js"></script>-->
-  <!--<script data-jsfiddle="common" src="js/handsontable.js"></script>-->
+                 <!--<script type="text/javascript" src="js/datatables.min.js"></script>-->
+                 <script type="text/javascript" src="clinical_forms//validation.js"></script>
+                 <script type="text/javascript" src="assets/js/jquery.dataTables_1.3.min.js"></script> 
+                 <script type="text/javascript" src="assets/js/dataTables.responsive.min.js"></script>
+                 <script type="text/javascript" src="https://cdn.datatables.net/fixedheader/3.3.2/js/dataTables.fixedHeader.min.js"></script>
+
                  
 <!--                   <script type="text/javascript" charset="utf-8" src="cordova-1.5.0.js"></script>  -->
                  <script>
-                    
+                     var _frm=$("#frmname").val();
                     
                          $('.dates').datepicker({
-                             todayHighlight: true, daysOfWeekDisabled: "0,6",clearBtn: true, autoclose: true,format: "yyyy-mm-dd",
+                             todayHighlight: true,clearBtn: true, autoclose: true,format: "yyyy-mm-dd",
      });
                  </script>
 
                  <script type="text/javascript">
   $(document).ready(function(){
   $('facilityname').select2();    
+  
+     _frm=$("#frmname").val();
   });   
                  </script>
 
 
 <script>
-   
-  var user="aphiaplus_pca";  
-//load data from the cloud server 
-//
-
+  
 
  function getFacilitiesJson(){
        
@@ -620,7 +693,7 @@ input:focus {
        
        
               $.ajax({
-                    url:'loadeHTSSites',                            
+                    url:'loadRamcahSites',                            
                     type:'post',  
                     dataType: 'html',  
                     success: function(data)
@@ -629,7 +702,7 @@ input:focus {
                    $(document).ready(function() {
           
               $('#facility').select2(); 
-             
+             isdisplayindicators();
                                  } ); 
                         
                         
@@ -639,20 +712,7 @@ input:focus {
  
    getFacilitiesJson();
  
-        
-    //------------------------------------------------------------------------
-    //
-    //
-
-
-    //
-    //------------------------------------------------------------------------
-    
-    
-//prepare form data
-
-//===================================================INSERT WEEKLY DATA===================================
-
+   
   var facility=null;
 
  var month=null;   
@@ -660,290 +720,18 @@ input:focus {
     
 
 
-   //added 201605 
-    var progressbarstoskip=[];
-    var allindicatorsarray=[];
-    var allcommentsarray=[];
-    var allprogressbar_hiddentext_array=[];
-     
-
 //createdynamicinputs();
 
-function sumofindicators(sourceindicators,destinationindicator){
-    var sourceindicatorsarray=sourceindicators.split("@");
-  
-   
-    var destinationelement=destinationindicator;
-    var total=0;
-    for(b=0;b<sourceindicatorsarray.length;b++){
-        //check if there
-        var indiic=sourceindicatorsarray[b].replace("_minus_","");
-        var originalindic=sourceindicatorsarray[b];
-        
-        
-        if($("#"+indiic).val()!==''){
-            //remove negative
-            //if(originalindic.indexOf("_minus_") >==0){
-            if(originalindic.indexOf("_minus_")>=0){
-               //has negative 
-                total=parseInt(total)-parseInt($("#"+indiic).val()); 
-            }
-            else {
-            
-      total=parseInt(total)+parseInt($("#"+indiic).val());
-      
-            }
-        
-            $("#"+destinationelement).val(total);
-            }
-            $("#"+destinationelement).val(total);                                   
-        }
-                                              
-                                             
-    
-}
-
-
-
-//=========================================set targets================================
-
-//function runvalidation(){
-//    
-//    var retv=true;
-//    
-//    //hts tsts > HTS Pos
-//    
-//    //HTS Pos > HTS Link
-//    
-//    //HTS_TST
-//    //HTS_TST_POS
-//    //TX_LINK
-//    
-//       var validationsid=["HTS_TST@HTS_TST_POS","HTS_TST_POS@TX_LINK"];
-// 
-//       var agedis=["bl19_Male","bl19_Female","ttl"];
-//       var agedis_detailed=["< 19 Male","< 19 Female","Total"];
-//    
-//    for( var b=0;b<validationsid.length;b++){
-//    for( var a=0;a<agedis.length;a++)
-//    {
-//        
-//    var indicab=validationsid[b].split("@");
-//        
-//      
-//        
-//    var elem_a=$("#"+indicab[0]+"_"+agedis[a]).val();  
-//    var elem_b=$("#"+indicab[1]+"_"+agedis[a]).val();  
-//     console.log("#"+indicab[0]+"_"+agedis[a]+" is "+elem_a);
-//     console.log("#"+indicab[1]+"_"+agedis[a]+" is "+elem_b);
-//    
-//    
-//    if(elem_a===""){elem_a=0;}
-//    if(elem_b===""){elem_b=0;}
-//            
-//            if(elem_a!=="" && elem_b!==""){
-//                
-//                elem_a=parseInt(elem_a);
-//                elem_b=parseInt(elem_b);
-//                
-//                if(elem_b>elem_a) {
-//                    retv=false;
-//                    
-//                    alert(" Data for "+indicab[1]+" "+agedis_detailed[a]+" cannot be more than "+indicab[0]+" "+agedis_detailed[a]);
-//                    $("#"+indicab[0]+"_"+agedis[a]).css('background-color','red');
-//                    $("#"+indicab[1]+"_"+agedis[a]).css('background-color','red');
-//                    break;
-//                                  }
-//                                 
-//                
-//                
-//                                  }
-//                                            
-//    }
-//    
-//     if(retv===false)
-//                                  {
-//                                      
-//                                  break;    
-//                                      
-//                                  }
-//}
-//    
-// return retv;   
-//}
-//    
 
 
 
 
-
-
-
-
-function save_data(){
-    
-
-
-//___indicators to pull___
-
-var id="";
-var dater="";
-var facility="";
-var indicatorid="";
-var bl15="";
-var ab15="";
-var ttl="";
-var userid="";
-
-facility=$("#facility").val();
-
-dater=$("#period").val();
-
-
-
-//console.log("datimid:"+organisationunitid+"\n edate:"+eddate+"\n stdate:"+stdate+"\n daterange:"+daterange+"\n hospital:"+hosi+"\n mflcode"+facility_mfl_code+"\n ward"+ward);
-//<option data-sdate="2019-09-24" data-edate="2019-09-30" data-wk="20" value="2019-09-30">2019-09-24 to 2019-09-30 (Week 20) </option>
-
-//this should happen in a loop
-
-
-if(facility==='' || facility==='Select facility' ){
-    
-  alert("enter facility name");  
-    
-}
-
-
-else if(dater===''  ){
-    
-   alert("Select Reporting Month");  
-    
-}
-
-// else if(runvalidation()===false)
-//    {       
-//        
-//        
-//        
-//    }
-    
-    else {
-    
-
-
-
-$.ajax({
-                    url:'getafyavIndicators',                            
-                    type:'post',  
-                    dataType: 'json',  
-                    success: function(data){
-                        
-                       for(a=0;a<data.length;a++){
-              var isend=false;             
-                          
-var indicatorid=data[a].id;
-
-
-//imis
-//datim
-//khis
-//ndwh
-//emr
-//moh731
-//register
-//variance
-
-
-var imisv=$("#"+indicatorid+"_imis").val();
-var ndwhv=$("#"+indicatorid+"_ndwh").val();
-var khisv=$("#"+indicatorid+"_khis").val();
-var emrv=$("#"+indicatorid+"_emr").val();
-var moh731v=$("#"+indicatorid+"_moh731").val();
-var registerv=$("#"+indicatorid+"_register").val();
-
-if(imisv===''){alert("Enter Form 1a Value"); $("#"+indicatorid+"_imis").focus(); break;}
-else if(emrv===''){alert("Enter EMR Value"); $("#"+indicatorid+"_emr").focus(); break;}
-else if(moh731v===''){alert("Enter MOH 731 Value"); $("#"+indicatorid+"_moh731").focus(); break;}
-else if(registerv===''){alert("Enter Register Value"); $("#"+indicatorid+"_register").focus(); break;}
-else {
-var variancev=(registerv)-(emrv);
-var identifier=dater+"_"+facility+"_"+indicatorid;
-        
-        
-      
-
-        
-           //save the data
-           
-           var saveddata={
-               id:identifier,              
-               yearmonth:dater,
-               facility:""+facility,
-               indicatorid:indicatorid,
-              imis:imisv,
-               ndwh:ndwhv,
-               khis:khisv,
-               emr:emrv,
-               moh731:moh731v,
-               register:registerv,
-               variance:variancev,
-               userid:'909090'
-               
-           };
-           
-           
-           
-           
-           if(a===parseInt(data.length)-1){
-               isend=true;
-               
-           }
-           
-           exportData(saveddata,isend);
-           }             
-                       } 
-                   
-                    }
-                });
-
-
-
-}
-
-
-
-
-
-    
-}
-
-
-function exportData( data, isend){
-    
-    
-    $.ajax({
-                    url:'saveafyav',                            
-                    type:'post',  
-                    dataType: 'html',
-                    data:data ,
-                    success: function(dat) {
-                       if(isend){
-                           
-                           console.log("Data saved Succesfully!");
-                           $("#fedback").html("<font color='green'><h3>Data saved Succesfully!</h3></f>");
-                             setTimeout(refreshujumbe,2000);
-                       } 
-                        
-                    }
-                });
-    
-    
-}
 
 
 function refreshujumbe(){
     
-  $("#fedback").html("");   
+  $("#fedback").html(""); 
+ //refreshPage();
     
 }
 
@@ -975,68 +763,10 @@ function clickreportstab(){
 }
 
 
-//===========================================EMPTY WEEKLY DATA FIELDS AFTER INSERT============================================================
-
-function clearweeklyfields()
-{
-   // $("#facilityname").val("");
-   //No facility name should have an underscore since its a special key
-   
-//$("#startdate").val("");   
-//$("#enddate").val("");
-
-for(b=0;b<allindicatorsarray.length;b++){
-    
-  $("#"+allindicatorsarray[b]).val("");  
-    
-} 
-
-    
-}
 
 
-var dbdata="";
 
-//===================================================VIEW WEEKLY DATA============================================================
-//a function to select a few search data that should appear in a data table
-function selectsearchdata()
-{
-    
-  
 
-    
-    
-    
-    
-    
-    
-    //read data from the db
-    
-  	  
-    
-    
-}
-
-//call the function that displays the data
-
-function appendtabledata( dbdata ){
-    
-     $("#searchtablediv").html("<table id='searchtable' class='table table-striped table-bordered'><thead><tr><th>week <br/>beginning </th><th>Facility</th><th>Edit</th></tr></thead><tbody>"+dbdata+"</tbody></table>");
-         
-	   $(document).ready(function() {
-                
-          $('#searchtable').DataTable({              
-              "autoWidth": true,
-              "paging": true,
-              "pagingType": "full",
-              "lengthChange": false,                     
-          });
-            
-                                     } ); 
-    
-                                                          }
-
- selectsearchdata();
 
 function showreports(){
     
@@ -1048,7 +778,7 @@ function showreports(){
 $("#refreshpage" ).click(function() 
 {
     window.location.reload();
-    clearweeklyfields();
+   
 });
 
 $("#refr" ).click(function() 
@@ -1085,13 +815,6 @@ function delayedrefresh()
 
 
 
-
-
-
-function closeapp() 
-{
-      //navigator.app.exitApp();   // Closes the new window
-}
 
 
 </script>
@@ -1169,72 +892,9 @@ $('form').on('blur', 'input[type=number]', function (e) {
 
 </script>
 
- <script data-jsfiddle="example1">
-                var
-                 
-                  container = $('example1'),
-                  exampleConsole = $('example1console'),
-                  autosave = $('autosave'),
-                  load = $('load'),
-                  save = $('save'),
-                  autosaveNotification,
-                  hot;
+ <script>
+               
 
-//                hot = new Handsontable(container, {
-//                  startRows: 8,
-//                  startCols: 6,
-//                  rowHeaders: true,
-//                  colHeaders: true,
-//                  minSpareRows: 1,
-//                  contextMenu: true,
-//                  afterChange: function (change, source) {
-//                    if (source === 'loadData') {
-//                      return; //don't save this change
-//                    }
-//                    if (!autosave.checked) {
-//                      return;
-//                    }
-//                    clearTimeout(autosaveNotification);
-//                    ajax('json/save.json', 'GET', JSON.stringify({data: change}), function (data) {
-//                      exampleConsole.innerText  = 'Autosaved (' + change.length + ' ' + 'cell' + (change.length > 1 ? 's' : '') + ')';
-//                      autosaveNotification = setTimeout(function() {
-//                        exampleConsole.innerText ='Changes will be autosaved';
-//                      }, 1000);
-//                    });
-//                  }
-//                });
-
-//                Handsontable.Dom.addEvent(load, 'click', function() {
-//                  ajax('json/load.json', 'GET', '', function(res) {
-//                    var data = JSON.parse(res.response);
-//
-//                    hot.loadData(data.data);
-//                    exampleConsole.innerText = 'Data loaded';
-//                  });
-//                });
-
-//                Handsontable.Dom.addEvent(save, 'click', function() {
-//                  // save all cell's data
-//                  ajax('json/save.json', 'GET', JSON.stringify({data: hot.getData()}), function (res) {
-//                    var response = JSON.parse(res.response);
-//
-//                    if (response.result === 'ok') {
-//                      exampleConsole.innerText = 'Data saved';
-//                    }
-//                    else {
-//                      exampleConsole.innerText = 'Save error';
-//                    }
-//                  });
-//                });
-
-//                Handsontable.Dom.addEvent(autosave, 'click', function() {
-//                  if (autosave.checked) {
-//                    exampleConsole.innerText = 'Changes will be autosaved';
-//                  }
-//                  else {
-//                    exampleConsole.innerText ='Changes will not be autosaved';
-//                  }
-//                });
                 
                 
                
@@ -1255,7 +915,7 @@ function getPeriod(){
         var dat=data.periods;
         
       
-        var o="<option value=''>Select Seriod</option>";
+        var o="";
                         
                         for(var a=0;a<dat.length;a++)
                         {                           
@@ -1286,43 +946,385 @@ function isdisplayindicators()
 { 
     var dt=$("#period").val();
    
+ 
+   
     var fc=$("#facility").val().trim();
 //    console.log("_"+fc+"vs"+dt);
     if( dt!=='' && fc!=='Select Facility'&& fc!=='')
     {        
     // display facility name
-    $("#dynamicindicators").show();    
+    $("#dynamicindicators"+_frm).show();    
      
+            var mainformwhere="Form='"+_frm+"'";
+           
+            
+            
+            //also load the edit fields
+           
+          
+             loadEdits(_frm,'editmainform_div');
+            
             
             //now load the data
           $.ajax({
-                    url:'getafyavIndicators?dt='+dt+"&fc="+fc,                            
+                    url:'loadClinicalIndicators?dt='+dt+"&fc="+fc+"&wr="+mainformwhere,                            
                     type:'post',  
                     dataType: 'html',  
                     success: function(data) 
                     {
                         
-                   $("#dynamicindicators").html(data); 
+                       
+                        $(".savebuttons").show();
+                        
+                   $("#dynamicindicators"+_frm).html(data); 
+                    setuuid('id');
+                         $('.dates').datepicker({
+                             todayHighlight: true,clearBtn: true, autoclose: true,format: "yyyy-mm-dd",
+     });
+     
+     
+
                         
                         
                     }});    
+          
            
             
             
     }
     else 
     {
-    $("#dynamicindicators").hide();
+    $("#dynamicindicators"+_frm).hide();
+   
+      $(".savebuttons").hide();
+    //        
+    }
+    
+    
+}
+function loadExistingClient(clientid,frm)
+{ 
+    
+    //once the edit form is clicked, the assumption is that the add section will be loaded
+    $('#add'+frm+"button").click();
+    
+    var dt=$("#period").val();
+   
+    var fc=$("#facility").val().trim();
+//    console.log("_"+fc+"vs"+dt);
+    if( dt!=='' && fc!=='Select Facility'&& fc!=='')
+    {        
+    // display facility name
+    $("#dynamicindicators"+_frm).show();    
+     
+            var frmwhere="Form='"+frm+"'";
+            
+            
+            
+           
+            
+            //now load the data
+          $.ajax({
+                    url:'loadClinicalIndicators',                            
+                    type:'post',  
+                    data:{
+                        dt:dt,
+                        fc:fc,
+                        wr:frmwhere,
+                    pid:clientid},
+                    dataType: 'html',  
+                    success: function(data) 
+                    {
+                   $(".savebuttons").show();
+                   $("#dynamicindicators"+frm).html(data); 
+                         $('.dates').datepicker({
+                             todayHighlight: true,clearBtn: true, autoclose: true,format: "yyyy-mm-dd",
+     });
+     //cal a trigger to refresh the forms so that hidden forms with data can unhide
+     getElementsToBeRefreshed(frm);
+   
+                        
+                        
+                    }});    
+             
+           
+            
+            
+    }
+    else 
+    {
+    $("#dynamicindicators"+_frm).hide();
+  
     //        
     }
     
     
 }
 
-
-
-
+function getElementsToBeSaved(formname)
+{ 
+    
+    
+    //First do validation checks then save
+    
+    var dt=$("#period").val();
+   
+    var fc=$("#facility").val().trim();
+      
  
+            //now load the data
+          $.ajax({
+                    url:'loadClinicalIndicators?fm='+formname,                            
+                    type:'post',  
+                    dataType: 'json',  
+                    success: function(data) 
+                    {
+                        var dt = data;
+ 
+ 
+ console.log('Save '+formname+' Elements'+dt);
+ //no call the save function and pass the list of variables
+          
+          saveFormDetails(dt,formname);
+                        
+                    }});    
+         
+           
+            
+          
+    
+}
+function getElementsToBeRefreshed(formname)
+{ 
+    
+    
+    //First do validation checks then save
+    
+   
+ 
+            //now load the data
+          $.ajax({
+                    url:'loadClinicalIndicators?fm='+formname,                            
+                    type:'post',  
+                    dataType: 'json',  
+                    success: function(data) 
+                    {
+                        var dt = data;
+ 
+ 
+ console.log('Refresh '+formname+' Elements'+dt);
+ //no call the save function and pass the list of variables
+            for(var i=0;i<dt.length;i++){
+ 
+ var elementid=dt[i].element_id; 
+ 
+  triggerElementChange(elementid);
+ 
+ }
+         
+                        
+                    }});    
+         
+           
+            
+          
+    
+}
+
+
+
+function saveFormDetails(de,frm)
+{
+
+
+
+
+ var pid=$("#"+de[0].client_identifier_field).val(); 
+    
+    
+    console.log("You are requested to save "+de);    
+    
+    //First Delete any entered data
+    
+
+  
+ 
+    //First Delete any entered data
+     var issaveready=true;
+if(1===2){$("#fedback").html("<font color='red'><h3>Please enter Client Name</h3></f>");   $("#client_name").focus();}
+
+else {
+    
+     $.ajax({
+                    url:'deletePatientRecordsClinicalForm',                            
+                    type:'post',  
+                    data:{pid:pid},
+                    dataType: 'html',  
+                    success: function(fdbk) 
+                    {
+             
+             if(fdbk.trim()==='success')
+             {
+             
+                 var last_save_status="";
+               for(var i=0;i<de.length;i++){
+         
+            
+                
+                       
+                       //"id","facility_id","linelisting_month","patient_id","indicator_id","value","encounter_id","user_id","","is_locked"
+                             console.log("at saving point"+de[i].element_id);
+                             
+   var dt=$("#period").val();
+   var fc=$("#facility").val().trim();
+   var tid=uuidv4();
+   var elementid=de[i].element_id; 
+   var lbl=de[i].label; 
+   var val=$("#"+de[i].element_id).val(); 
+  
+ 
+              if($("#"+elementid).is(":visible"))
+              {
+               //check if is element is required
+               if($("#"+elementid).prop('required'))
+               {
+    if(val===''){
+                  issaveready=false;
+                  
+   $("#fedback").html("<font color='red'><h3>Please specify "+lbl+"</h3></f>");  $("#"+elementid).focus();   $("#"+elementid).css('border-color', '#FF0000'); 
+   dltptquietly(pid);
+   
+              }     
+                   
+               }
+               
+              }    
+             
+             //First delete the existing Record in the database then after deletion, proceed and save
+             //
+             
+             
+        if(issaveready){
+             
+               $.ajax({
+                    url:'saveClinical',                            
+                    type:'post',  
+                    data:{id:tid,
+                        facility_id:fc,
+                        linelisting_month:dt,
+                        patient_id:pid,
+                        indicator_id:elementid,
+                        value:val,
+                        encounter_id:pid,
+                        user_id:"not specified",
+                        is_locked:"1",Form:frm},
+                    dataType: 'html',  
+                    success: function(dat) 
+                    {
+                        
+  last_save_status=dat;
+  
+   
+  
+ 
+                    },
+        error: function (xhr, ajaxOptions, thrownError) {
+        alert(xhr.status);
+        alert(thrownError);
+      }
+                
+            
+            }); 
+           
+           
+           if(i===parseInt(de.length)-1){
+            
+            
+            //refresh page
+            
+            console.log("Data saved Succesfully!"+last_save_status);
+                           $("#fedback").html("<font color='green'><h3>Data saved Succesfully</h3></f>");
+                           //getElementsToBeReset(frm);
+                           isdisplayindicators();
+                             setTimeout(refreshujumbe,4000);
+            
+               
+           }
+           
+                }
+                else {
+                    //stop the loop
+                    console.log("Save loop stopped");
+                    break;
+                    
+                }
+                     } //end of for loop
+    
+             
+            }
+            else {
+             console.log("records not saved successfully");   
+                
+                }
+                     
+    } ,
+    
+    error: function (xhr, ajaxOptions, thrownError) {
+        alert(xhr.status);
+        alert(thrownError);
+      }
+
+
+
+
+});
+    
+    
+    }
+  
+}
+
+
+ function getElementsToBeReset(formname)
+{ 
+    
+    
+    //First do validation checks then save
+    
+   
+ 
+            //now load the data
+          $.ajax({
+                    url:'loadClinicalIndicators?fm='+formname,                            
+                    type:'post',  
+                    dataType: 'json',  
+                    success: function(data) 
+                    {
+                        var dt = data;
+ 
+ 
+ console.log('Refresh '+formname+' Elements'+dt);
+ //no call the save function and pass the list of variables
+            for(var i=0;i<dt.length;i++){
+ 
+ var elementid=dt[i].element_id; 
+ 
+  resetElement(elementid);
+  
+  
+  //after the 
+  
+ 
+ }
+         
+                        
+                    }});    
+         
+           
+            
+          
+    
+}
   
 
 
@@ -1344,12 +1346,230 @@ $('#dataentry').on('keydown', 'input, select, textarea', function(e) {
     }
 });
 
-function checkFormAction (){
+
+
+
+
+
+//showedits
+
+function loadEdits(formtoload,elementtoappend){
     
-  $('#reportingForm').attr('action', $("#report").val());  
+    //loadmtrs_sel_val,act=loadmothers,fac
+    
+    { 
+    
+    
+    //First do validation checks then save
+    
+//    var dt=$("#period").val();
+   
+    var fc=$("#facility").val().trim();
+      
+  //now load the data
+          $.ajax({
+                    url:'dataPulls',                            
+                    type:'post',  
+                   
+                    dataType: 'html',  
+                    data:{act:"showClinicalEdits",
+                         fac:fc,
+                         fm:formtoload,
+                         table_docker:elementtoappend},
+                    success: function(data) 
+                    {
+                        var dt = data;
+                        
+     
+//<label class='btn btn-success'>Edit</label>          
+$("#"+elementtoappend).html(""+dt);
+         
+	  
+                
+          var table=$('#searchtable_'+elementtoappend).DataTable({              
+              "autoWidth": true,
+              "paging": true,
+              "pagingType": "full",
+              "lengthChange": true,
+              "responsive":true,
+          "order": [[0,'desc']]});
+            
+           new $.fn.dataTable.FixedHeader( table );
+          
+          //$("#mother_id").html(dt);
+                        
+                    }});    
+         
+           
+            
+          
+    
+}
+    
     
 }
 
+//loadEdits('mot_audit','editmainform_div');
+
+function ShowAge(dob,dest) 
+{
+    
+    var sikuyakuzaliwa=$("#"+dob).val(); 
+    
+    console.log("called at Age"+ sikuyakuzaliwa);
+    if(sikuyakuzaliwa!=='')
+    {
+    var today = new Date();
+    var birthDate = new Date(sikuyakuzaliwa);
+    var age = today.getFullYear() - birthDate.getFullYear();
+    var m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) 
+    {
+        age--;
+    }
+    
+    $("#"+dest).val(age);
+    
+        
+    
+    return age;
+}
+}
+
+function uuidv4() {
+  return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+  );
+}
+
+function setuuid(id){
+    
+    $("#"+id).val(uuidv4());
+}
+
+
+function refreshPage(){
+    
+      window.location.reload();
+    
+}
+
+
+
+function ShowVlStatus(source,dest,hasnumericresults){
+  
+  
+ // vl_results_ldl
+//vl_results_values
+//Suppressed|Suppressed:Unsuppressed|Unsuppressed
+  
+        var src=$("#"+source).val();
+       
+        if(hasnumericresults==='no'){
+        if (src==='LDL') {
+            $("#"+dest).val("Suppressed");
+    
+}
+else {
+    
+    $("#"+dest).val(""); 
+    
+}
+
+
+
+        }
+ if(hasnumericresults==='yes'){
+        if (src>=1000) {
+            $("#"+dest).val("Unsuppressed");
+            $("#"+dest).trigger("change");
+    
+}
+     else  if (src<=1000) {
+            $("#"+dest).val("Suppressed");
+    
+                             }
+                         }
+        
+//        var dest=$("#"+source).val();
+    
+    
+    
+}
+
+
+
+
+function dltpt(pid){
+       var result = confirm("Are you sure you want to delete this patient?");
+if (result) {
+      $.ajax({
+                    url:'deletePatientRecordsClinicalForm',                            
+                    type:'post',  
+                    data:{pid:pid},
+                    dataType: 'html',  
+                    success: function(fdbk) 
+                    {
+                      //after success in deletion, refresh tables
+            
+             loadEdits('<%=selectedform%>','editmainform_div');
+                        
+                        
+                    }
+                });
+                }
+    
+}
+
+
+function dltptquietly(pid){
+     
+      $.ajax({
+                    url:'deletePatientRecordsClinicalForm',                            
+                    type:'post',  
+                    data:{pid:pid},
+                    dataType: 'html',  
+                    success: function(fdbk) 
+                    {
+                      //after success in deletion, refresh tables
+            
+             loadEdits('<%=selectedform%>','editmainform_div');
+                        
+                        
+                    }
+                });
+                
+    
+}
+
+
+function triggerElementChange(el){
+    
+    
+    $("#"+el).trigger("change");
+    
+}
+
+
+
+function resetElement(el)
+{
+    
+    
+    $("#"+el).val("");
+    
+}
+
+function test(){
+    
+    
+    alert((($('#death_date').val()).replace('-','')).substring(0,6));
+    //alert((('2022-05-25').replace('-','')).substring(0,6));
+  
+    
+}
+
+//test();
               </script>
 
 	</body>

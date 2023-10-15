@@ -90,7 +90,7 @@ String userAccess;
              
            session.setAttribute("userAccess", userAccess);  
           status="success"; 
-          nextPage="dataentry.jsp";
+          nextPage="clinicalhome.jsp";
           
           System.out.println("access rights : "+session.getAttribute("userAccess"));
          }

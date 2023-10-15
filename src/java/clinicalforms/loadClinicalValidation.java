@@ -49,8 +49,10 @@ public class loadClinicalValidation extends HttpServlet {
             
             dbConn conn = new dbConn();
             
-            String getList="select * from internal_system.clinical_form_validation where is_active='1' and form='"+fm+"' and table_name='"+indics_table+"'  ";
             
+            
+            String getList="select * from internal_system.clinical_form_validation where is_active='1' and form='"+fm+"' and table_name='"+indics_table+"'  ";
+            System.out.println(getList);
             
             conn.rs=conn.st.executeQuery(getList);
             
@@ -83,7 +85,21 @@ public class loadClinicalValidation extends HttpServlet {
             out.println(arr);
             }
             else{
+                
+                JSONObject obj=new JSONObject();
+                
+            //(valids, message, iscritical, sectionid)
             
+            
+            
+            obj.put("validation", "");
+            obj.put("message", "");
+            obj.put("id", "");
+            obj.put("section_name", "");
+            obj.put("highlight_fields", "");
+            obj.put("iscritical","0");
+            arr.add(obj);
+             out.println(arr);
             }
             
         } catch (SQLException ex) {

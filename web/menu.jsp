@@ -84,14 +84,19 @@
                <ul class="sub">
     
      <%if(1==1){%> 
-                 <li ><a href='importDtriangulation.jsp'><i class='icon-plus'></i>Daily Data Triangulation</a></li>
-                 <li ><a href="importpns.jsp"><i class="icon-plus"></i>Upload PNS</a></li>
-                 <li ><a href="importart.jsp"><i class="icon-edit"></i>Upload ACA</a></li>
-                 <li ><a href="importpmtct.jsp"><i class="icon-plus"></i>Upload MCA</a></li>
-                 <li ><a href="importstf.jsp"><i class="icon-lock"></i>Upload STF Defaulters</a></li>                  
-                 <li ><a href="importdefaulter.jsp"><i class="icon-hospital"></i>Upload New Defaulter</a></li>
-                 <li ><a href='MissingReports.jsp'><i class='icon-stop'></i>Surge Missing Reports</a></li>
-                
+  <li><a href='importDtriangulation.jsp'><i class='icon-plus'></i>Daily Data Triangulation</a></li>
+  <li><a href="importpns.jsp"><i class="icon-plus"></i>Upload PNS</a></li>
+  <li><a href='MissingReports.jsp'><i class='icon-stop'></i>Surge Missing Reports</a></li>
+  <li ><a  target='_blank' href='https://usaidtujengejamii.org:8443/htslive/livesummary.jsp'><i class='icon-list'></i>RRI Live Summary</a></li>
+  <li ><a style='' href='importDtriangulation.jsp'><i class='icon-plus'></i>Daily Data Triangulation</a></li>
+  <li ><a target='_blank' style='' href='https://usaidtujengejamii.org:8443/InternalSystem//fmattupload.jsp'><i class='icon-plus'></i>Daily Fmatt Upload</a></li>
+  <li ><a href='importpns.jsp'><i class='icon-plus'></i>Daily PNS Data Upload</a></li>
+  <li ><a href='importder.jsp'><i class='icon-plus'></i>Daily ART Data Upload</a></li>
+  <li ><a target='_blank'  href='https://usaidtujengejamii.org:8443/Cohorts/upi_main.jsp'><i class='icon-plus'></i>Weekly UPI verification status</a></li> 
+  <li ><a href='importcovid.jsp'><i class='icon-plus'></i>Covid 19 Data Upload</a></li>
+  <li ><a href='pnsreport.jsp'><i class='icon-list'></i>PNS Reports</a></li>
+  <li ><a href='surgereports.jsp'><i class='icon-list'></i>Surge Reports and Tracker</a></li>
+  <li ><a href='MissingReports.jsp'><i class='icon-stop'></i>View Missing Reports</a></li>
                  <%}%>
                </ul>
             </li>
@@ -107,11 +112,9 @@
                <ul class="sub">
     
      <%if(1==1){%> 
-                 <li ><a href="pnsreport.jsp"><i class="icon-plus"></i>PNS reports</a></li>
-                 <li ><a href="aca_mca_reports.jsp"><i class="icon-edit"></i>ACA/MCA Reports</a></li>
-                 <li ><a href="stf_newdefaulter_reports.jsp"><i class="icon-plus"></i>STF/New Defaulter Reports</a></li>
-                 <li ><a href='surgereports.jsp'><i class='icon-list'></i>Surge Reports and Tracker</a></li>
-                 <li ><a href='MissingReports.jsp'><i class='icon-stop'></i>View Missing Reports</a></li>
+                 <li><a href="pnsreport.jsp"><i class="icon-plus"></i>PNS reports</a></li>
+                 <li><a href='surgereports.jsp'><i class='icon-list'></i>Surge Reports and Tracker</a></li>
+                 <li><a href='MissingReports.jsp'><i class='icon-stop'></i>View Missing Reports</a></li>
                 
                  <%}%>
                </ul>
@@ -132,11 +135,11 @@
 else {
 
   out.println("<li ><a  target='_blank' href='https://usaidtujengejamii.org:8443/htslive/livesummary.jsp'><i class='icon-list'></i>RRI Live Summary</a></li>");
-  out.println("<li ><a style='' href='importDtriangulation.jsp'><i class='icon-plus'></i><b>Daily Data Triangulation</b></a></li>");
-  out.println("<li ><a target='_blank' style='' href='https://usaidtujengejamii.org:8443/InternalSystem//fmattupload.jsp'><i class='icon-plus'></i><b>Daily Fmatt Upload</b></a></li>");
+  out.println("<li ><a style='' href='importDtriangulation.jsp'><i class='icon-plus'></i>Daily Data Triangulation</a></li>");
+  out.println("<li ><a target='_blank' style='' href='https://usaidtujengejamii.org:8443/InternalSystem//fmattupload.jsp'><i class='icon-plus'></i>Daily Fmatt Upload</a></li>");
   out.println("<li ><a href='importpns.jsp'><i class='icon-plus'></i>Daily PNS Data Upload</a></li>");
   out.println("<li ><a href='importder.jsp'><i class='icon-plus'></i>Daily ART Data Upload</a></li>");
-out.println("<li ><a target='_blank' style='color:green;' href='https://usaidtujengejamii.org:8443/Cohorts/upi_main.jsp'><i class='icon-plus'></i><b>Weekly UPI verification status</b></a></li>"); 
+out.println("<li ><a target='_blank'  href='https://usaidtujengejamii.org:8443/Cohorts/upi_main.jsp'><i class='icon-plus'></i>Weekly UPI verification status</a></li>"); 
 //  out.println("<li ><a href='importcovid.jsp'><i class='icon-plus'></i>Covid 19 Data Upload</a></li>");
 //  out.println("<li ><a href='pnsreport.jsp'><i class='icon-list'></i>PNS Reports</a></li>");
   out.println("<li ><a href='surgereports.jsp'><i class='icon-list'></i>Surge Reports and Tracker</a></li>");

@@ -28,7 +28,20 @@
 	<link rel="stylesheet" type="text/css" href="Login_v6/css/util.css">
 	<link rel="stylesheet" type="text/css" href="Login_v6/css/main.css">
 <!--===============================================================================================-->
+<style>
 
+.label_clean {
+
+text-align: center;
+border-radius:0.25rem;
+padding: 0.5rem  0.75rem ;
+font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+font-size: 1rem;
+margin-top: 8px;
+background-color: #26252b;
+color:white;
+}
+</style>
       <%if (session.getAttribute("otz_login") != null) { %>
                                 <script type="text/javascript"> 
                     
@@ -46,30 +59,104 @@
 <body>
 	
 	<div class="limiter">
-		<div class="container-login100">
-			<div class="wrap-login100 p-t-3 p-b-20">
+		<div class="container-login100" style="align-items:flex-start;">
+			<div class="" style="width:90%;">
 				<form action='login' class="login100-form validate-form">
-					<h3 style="text-align: center;">IMIS Clinical</h3>
-                                        <hr>
-					<span class="login100-form-avatar">
-                                            <img src="images/imis_clinical.png" alt="welcome">
-					</span>
+					<!--<h3 style="text-align: center;"> Clinical Home</h3>-->
+                                        <h5 style="background-color: #3c9ced;"  class="label_clean">Clinical IMIS</h5> 
+                                        <!--<hr>-->
+                                        <div class='col-md-12'>
+                                            
+                                                <div class="form-row col-md-12"> 
+            
+            
+<div class='form-group col-md-4'>
+    <hr/><span class="login100-form-avatar"> <a href='pmtct_ovc_main.jsp'>   <img src="images/pmtct_ovc.png" alt="welcome"></a></span>
+    <div >
+    <h5  class="label_clean">PMTCT OVC</h5> </div>
+    </div>
+<div class='form-group col-md-4'>
+    <hr/>
+    <span class="login100-form-avatar"> <a href='mortality_audit.jsp'>   <img src="images/mot_audit.png" alt="Mortality Audir"></a></span>
+<h5  class="label_clean">Mortality Audit</h5> 
+</div>
+<div class='form-group col-md-4'>
+    <hr/>
+    <span class="login100-form-avatar"> <a href='clinicalforms.jsp?frm=cxca_pos'>   <img src="images/cxca_screen.png" alt="CXCA Screening Treatment"></a></span>
+<h5  class="label_clean">Cervical Cancer Treatment</h5> 
+</div>
+
+                                               
+                                                
+                                                </div>
+                                            
+					
+					
+<div class="form-row col-md-12"> 
+            
+            
+
+<div class='form-group col-md-4'>
+    <hr/><span class="login100-form-avatar"> <a href='binti_shujaa.jsp?frm=binti_enrollment'>   <img src="images/binti_shujaa.png" alt="Binti Shujaa"></a></span>
+<h5  class="label_clean">Binti Shujaa</h5> 
+</div>
+                                               
+<div class='form-group col-md-4'>
+    <hr/><span class="login100-form-avatar"> <a href='clinicalforms.jsp?frm=client_exit_form'>   <img src="images/client_exit.png" alt="Client Exit"></a></span>
+<h5  class="label_clean">Client Exit Interview</h5> 
+</div>
+    
+    
+    <div class='form-group col-md-4'>
+    <hr/><span class="login100-form-avatar"> <a href='clinicalforms.jsp?frm=hpv_vaccination'>   <img src="images/hpv.png" alt="HPV Vaccination"></a></span>
+<h5  class="label_clean">HPV Vaccination Status</h5> 
+</div>
+          
+                                                </div>
+					
+<div class="form-row col-md-12"> 
+<div class='form-group col-md-4'>
+<hr/><span class="login100-form-avatar"> <a href='ahd_main.jsp'>   <img src="images/ahd.png" alt="AHD"></a></span>
+<h5  class="label_clean">AHD</h5> 
+</div>
+                                                    
+                                                    
+    
+    
+    <div class='form-group col-md-4'>
+        <hr/><span class="login100-form-avatar"> <a href='hpdm_main.jsp'>   <img src="images/hpdm.png" alt="HPDM"></a></span>
+<h5  class="label_clean">Diabetes & Hypertension Management</h5> 
+</div>
+     
+    
+<div class='form-group col-md-4'>
+        <hr/><span class="login100-form-avatar"> <a href='otz_main.jsp'>   <img src="images/otz.png" alt="OTZ"></a></span>
+<h5  class="label_clean">OTZ</h5> 
+</div>
+
+                                                   
+                                               
+                                                
+                                                </div>
+                                        
+<div class="form-row col-md-12"> 
+
+    <div class='form-group col-md-6'>
+        <hr/><span class="login100-form-avatar"> <a href='hei_weekly_main.jsp'>   <img src="images/hei_weekly.png" alt="HEI"></a></span>
+<h5  class="label_clean">Weekly HEI</h5> 
+</div>
+
+    
+      <div class='form-group col-md-6'>
+          <hr/><span class="login100-form-avatar"> <a href='see_main.jsp'>   <img src="images/see.png" alt="SEE"></a></span>
+<h5  class="label_clean">Social Economic & Enviromental Factors affecting ROCs</h5> 
+</div>
+    
+    
+</div>
 					
 
-					<div class="wrap-input100 validate-input m-b-50" data-validate="Enter Username">
-						<input class="input100" type="text" name="username">
-						<span class="focus-input100" data-placeholder="Enter Username"></span>
-					</div>
-                                        <div class="wrap-input100 validate-input m-b-50" data-validate="Enter Password">
-						<input class="input100" type="password" name="password">
-						<span class="focus-input100" data-placeholder="Enter Password"></span>
-					</div>
-
-					<div class="container-login100-form-btn">
-						<button class="login100-form-btn" style="background-color: #2196f3;">
-							Submit
-						</button>
-					</div>
+                                            </div>
 <%
 Calendar cal = Calendar.getInstance();
 int year= cal.get(Calendar.YEAR);              

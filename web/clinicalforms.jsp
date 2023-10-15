@@ -22,7 +22,7 @@
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
-		<title>Clinical Imis</title>
+		<title>Case Based IMIS</title>
 		<meta name="generator" content="Bootply" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
                 <!--<link href="css/dataTables.bootstrap.min.css" rel="stylesheet">-->
@@ -90,16 +90,28 @@ input:focus {
 <%  dbConn conn = new dbConn();
 
 String frm="";
+String selectedform="cxca_pos";
+if(request.getParameter("frm")!=null){
 
-String getfrms="select distinct(Form) as fm from internal_system.clinical_indicators; ";
+    selectedform=request.getParameter("frm");
+    
+}
+
+String getfrms="select distinct(Form) as fm, formname as fmn from internal_system.clinical_indicators where Form='"+selectedform+"' ; ";
 
 conn.rs=conn.st.executeQuery(getfrms);
 while (conn.rs.next())
 {
+    String sele="";
+    if(selectedform.equals(conn.rs.getString(1))){sele="selected";}
 
-frm+="<option value='"+conn.rs.getString(1)+"' >"+conn.rs.getString(1)+"</option>";
+frm+="<option "+sele+" value='"+conn.rs.getString(1)+"' >"+conn.rs.getString(2)+"</option>";
     
 }
+
+
+
+
 
 
 
@@ -122,6 +134,7 @@ frm+="<option value='"+conn.rs.getString(1)+"' >"+conn.rs.getString(1)+"</option
                             <i class="glyphicon glyphicon-question-sign"></i>
                             Help
                         </a></li>
+                              <li><a style="text-align: center;" href='clinicalhome.jsp'><i class="glyphicon glyphicon-home"></i>Home</a></li>
                               <li><a style="text-align: center;" href='index.jsp'><i class="glyphicon glyphicon-log-out"></i> Logout</a></li>
             </ul>
         </div>
@@ -144,7 +157,7 @@ frm+="<option value='"+conn.rs.getString(1)+"' >"+conn.rs.getString(1)+"</option
             
             
           
-          <h5 class="btn btn-default col-md-12" style="text-align: center;color:blue;"><b>Clinical Forms</b></h5>
+          <h5 class="btn-default col-md-12" style="text-align: center;color:blue;"><b>Case-Based Forms</b></h5>
 
             <div class="row">
                 <!-- center left-->
@@ -278,16 +291,16 @@ frm+="<option value='"+conn.rs.getString(1)+"' >"+conn.rs.getString(1)+"</option
                     <!--tabs-->
                     <div class="panel">
                         <ul class="nav nav-tabs " id="myTab">
-                            <li class="active newdata"> <a href="#addmot_audit" id="addmot_auditbutton" data-toggle="tab">  <i class="glyphicon glyphicon-plus"> </i> <font color='green'><b>Data </b></font>  entry</a></li>                          
+                            <li class="active newdata"> <a href="#add<%=selectedform%>" id="add<%=selectedform%>button" data-toggle="tab">  <i class="glyphicon glyphicon-plus"> </i> <font color='green'><b>Data </b></font>  entry</a></li>                          
                            
-                            <li class="newdata"> <a href="#editmot_auditform" id="editmotherbutton" data-toggle="tab">  <i class="glyphicon glyphicon-edit"> </i> <font color='green'><b>Edit</b></font>Records</a></li>
+                            <li class="newdata"> <a href="#edit<%=selectedform%>form" id="edit<%=selectedform%>button" data-toggle="tab">  <i class="glyphicon glyphicon-edit"> </i> <font color='green'><b>Edit</b></font>Records</a></li>
                            
                             <li><a href="#reports" style="" id="reportsbutton" data-toggle="tab"> <i class="glyphicon glyphicon-stats"></i>Reports</a></li> 
                             <!--<li><a href="#searchdata" data-toggle="tab"> <i class="glyphicon glyphicon-search"></i> Edit Data</a></li>--> 
                            <!-- <li><a href="#export" data-toggle="tab"> <i class="glyphicon glyphicon-cloud-upload"></i> Data Export</a></li>-->
                         </ul>
                         <div class="tab-content">
-                            <div class="tab-pane active well col-md-12" id="addmot_audit">
+                            <div class="tab-pane active well col-md-12" id="add<%=selectedform%>">
                                 
                                 
                               <!--Data entry code-->
@@ -307,7 +320,7 @@ frm+="<option value='"+conn.rs.getString(1)+"' >"+conn.rs.getString(1)+"</option
                                 
                                 <!--<form id="addmothersform">-->
                                 
-                                         <table class='table table-striped table-bordered' id="dynamicindicatorsmot_audit" style="display:none;border :3px solid #4b8df8;padding:1px;" > 
+                                         <table class='table table-striped table-bordered' id="dynamicindicators<%=selectedform%>" style="display:none;border :3px solid #4b8df8;padding:1px;" > 
                                    
                                 <!------INDICATORS----->
                                            <tr><td><h3>Select Reporting Year, Month and Facility to Load data for.</h3></td></tr>                    
@@ -320,11 +333,11 @@ frm+="<option value='"+conn.rs.getString(1)+"' >"+conn.rs.getString(1)+"</option
                                         
                                    <br/>
                                     <div style="display:none;" class="controls savebuttons">
-                                        <input type="input" onClick="loadClinicalValidation('loadClinicalValidation','<%=frm%>','clinical_indicators');"  id='savebutton' value="Save Record"  style="margin-left: 0%;" class="btn-sm btn-success active">
+                                        <input type="input" onClick="loadClinicalValidation('loadClinicalValidation','<%=selectedform%>','clinical_indicators');"  id='savebutton' value="Save Record"  style="margin-left: 0%;" class="btn-sm btn-success active">
                                             
                                      </div>
                                      <div class="controls">
-                                        <button type="submit" id='updatebutton' onclick="loadClinicalValidation('loadClinicalValidation','<%=frm%>','clinical_indicators');" style="margin-left: 0%;display:none;" class="btn-sm btn-info active">
+                                        <button type="submit" id='updatebutton' onclick="loadClinicalValidation('loadClinicalValidation','<%=selectedform%>','clinical_indicators');" style="margin-left: 0%;display:none;" class="btn-sm btn-info active">
                                             Update Record 
                                         </button>
                                     </div>                                   
@@ -350,7 +363,7 @@ frm+="<option value='"+conn.rs.getString(1)+"' >"+conn.rs.getString(1)+"</option
                            
                              
                             
-                             <div class="tab-pane well" id="editmot_auditform">
+                             <div class="tab-pane well" id="edit<%=selectedform%>form">
                                 
                                 <div id="editmainform_div">
                                     
@@ -360,7 +373,7 @@ frm+="<option value='"+conn.rs.getString(1)+"' >"+conn.rs.getString(1)+"</option
      
                             
 <div class="tab-pane well" id="reports">
-<form action="MortalityAuditReports" id="reportingForm">
+<form action="MortalityClinicalReports" id="reportingForm">
 
                                         <!--Dashboard code-->
 
@@ -633,7 +646,7 @@ frm+="<option value='"+conn.rs.getString(1)+"' >"+conn.rs.getString(1)+"</option
                 <script src="js/select2.min.js"></script>
                  <script src="js/pouchdb-4.0.1.js"></script>
                  <!--<script type="text/javascript" src="js/datatables.min.js"></script>-->
-                 <script type="text/javascript" src="pmtct_ovc/validation.js"></script>
+                 <script type="text/javascript" src="clinical_forms//validation.js"></script>
                  <script type="text/javascript" src="assets/js/jquery.dataTables_1.3.min.js"></script> 
                  <script type="text/javascript" src="assets/js/dataTables.responsive.min.js"></script>
                  <script type="text/javascript" src="https://cdn.datatables.net/fixedheader/3.3.2/js/dataTables.fixedHeader.min.js"></script>
@@ -641,7 +654,7 @@ frm+="<option value='"+conn.rs.getString(1)+"' >"+conn.rs.getString(1)+"</option
                  
 <!--                   <script type="text/javascript" charset="utf-8" src="cordova-1.5.0.js"></script>  -->
                  <script>
-                    
+                     var _frm=$("#frmname").val();
                     
                          $('.dates').datepicker({
                              todayHighlight: true,clearBtn: true, autoclose: true,format: "yyyy-mm-dd",
@@ -651,6 +664,8 @@ frm+="<option value='"+conn.rs.getString(1)+"' >"+conn.rs.getString(1)+"</option
                  <script type="text/javascript">
   $(document).ready(function(){
   $('facilityname').select2();    
+  
+     _frm=$("#frmname").val();
   });   
                  </script>
 
@@ -917,26 +932,28 @@ function isdisplayindicators()
 { 
     var dt=$("#period").val();
    
+ 
+   
     var fc=$("#facility").val().trim();
 //    console.log("_"+fc+"vs"+dt);
     if( dt!=='' && fc!=='Select Facility'&& fc!=='')
     {        
     // display facility name
-    $("#dynamicindicatorsmot_audit").show();    
+    $("#dynamicindicators"+_frm).show();    
      
-            var mainformwhere="Form='mot_audit'";
+            var mainformwhere="Form='"+_frm+"'";
            
             
             
             //also load the edit fields
            
           
-             loadEdits('mot_audit','editmainform_div');
+             loadEdits(_frm,'editmainform_div');
             
             
             //now load the data
           $.ajax({
-                    url:'loadMortIndicators?dt='+dt+"&fc="+fc+"&wr="+mainformwhere,                            
+                    url:'loadClinicalIndicators?dt='+dt+"&fc="+fc+"&wr="+mainformwhere,                            
                     type:'post',  
                     dataType: 'html',  
                     success: function(data) 
@@ -945,7 +962,7 @@ function isdisplayindicators()
                        
                         $(".savebuttons").show();
                         
-                   $("#dynamicindicatorsmot_audit").html(data); 
+                   $("#dynamicindicators"+_frm).html(data); 
                     setuuid('id');
                          $('.dates').datepicker({
                              todayHighlight: true,clearBtn: true, autoclose: true,format: "yyyy-mm-dd",
@@ -963,7 +980,7 @@ function isdisplayindicators()
     }
     else 
     {
-    $("#dynamicindicatorsmot_audit").hide();
+    $("#dynamicindicators"+_frm).hide();
    
       $(".savebuttons").hide();
     //        
@@ -984,7 +1001,7 @@ function loadExistingClient(clientid,frm)
     if( dt!=='' && fc!=='Select Facility'&& fc!=='')
     {        
     // display facility name
-    $("#dynamicindicatorsmot_audit").show();    
+    $("#dynamicindicators"+_frm).show();    
      
             var frmwhere="Form='"+frm+"'";
             
@@ -994,7 +1011,7 @@ function loadExistingClient(clientid,frm)
             
             //now load the data
           $.ajax({
-                    url:'loadMortIndicators',                            
+                    url:'loadClinicalIndicators',                            
                     type:'post',  
                     data:{
                         dt:dt,
@@ -1022,7 +1039,7 @@ function loadExistingClient(clientid,frm)
     }
     else 
     {
-    $("#dynamicindicatorsmot_audit").hide();
+    $("#dynamicindicators"+_frm).hide();
   
     //        
     }
@@ -1043,7 +1060,7 @@ function getElementsToBeSaved(formname)
  
             //now load the data
           $.ajax({
-                    url:'loadMortIndicators?fm='+formname,                            
+                    url:'loadClinicalIndicators?fm='+formname,                            
                     type:'post',  
                     dataType: 'json',  
                     success: function(data) 
@@ -1073,7 +1090,7 @@ function getElementsToBeRefreshed(formname)
  
             //now load the data
           $.ajax({
-                    url:'loadMortIndicators?fm='+formname,                            
+                    url:'loadClinicalIndicators?fm='+formname,                            
                     type:'post',  
                     dataType: 'json',  
                     success: function(data) 
@@ -1125,7 +1142,7 @@ if(1===2){$("#fedback").html("<font color='red'><h3>Please enter Client Name</h3
 else {
     
      $.ajax({
-                    url:'deletePatientRecordsMotAudit',                            
+                    url:'deletePatientRecordsClinicalForm',                            
                     type:'post',  
                     data:{pid:pid},
                     dataType: 'html',  
@@ -1157,7 +1174,7 @@ else {
                //check if is element is required
                if($("#"+elementid).prop('required'))
                {
-              if(val===''){
+    if(val===''){
                   issaveready=false;
                   
    $("#fedback").html("<font color='red'><h3>Please specify "+lbl+"</h3></f>");  $("#"+elementid).focus();   $("#"+elementid).css('border-color', '#FF0000'); 
@@ -1176,7 +1193,7 @@ else {
         if(issaveready){
              
                $.ajax({
-                    url:'save_mort',                            
+                    url:'saveClinical',                            
                     type:'post',  
                     data:{id:tid,
                         facility_id:fc,
@@ -1186,7 +1203,7 @@ else {
                         value:val,
                         encounter_id:pid,
                         user_id:"not specified",
-                        is_locked:"1"},
+                        is_locked:"1",Form:frm},
                     dataType: 'html',  
                     success: function(dat) 
                     {
@@ -1264,7 +1281,7 @@ else {
  
             //now load the data
           $.ajax({
-                    url:'loadMortIndicators?fm='+formname,                            
+                    url:'loadClinicalIndicators?fm='+formname,                            
                     type:'post',  
                     dataType: 'json',  
                     success: function(data) 
@@ -1341,7 +1358,7 @@ function loadEdits(formtoload,elementtoappend){
                     type:'post',  
                    
                     dataType: 'html',  
-                    data:{act:"showMortalityedits",
+                    data:{act:"showClinicalEdits",
                          fac:fc,
                          fm:formtoload,
                          table_docker:elementtoappend},
@@ -1473,7 +1490,7 @@ function dltpt(pid){
        var result = confirm("Are you sure you want to delete this patient?");
 if (result) {
       $.ajax({
-                    url:'deletePatientRecordsMotAudit',                            
+                    url:'deletePatientRecordsClinicalForm',                            
                     type:'post',  
                     data:{pid:pid},
                     dataType: 'html',  
@@ -1481,7 +1498,7 @@ if (result) {
                     {
                       //after success in deletion, refresh tables
             
-             loadEdits('mot_audit','editmainform_div');
+             loadEdits('<%=selectedform%>','editmainform_div');
                         
                         
                     }
@@ -1494,7 +1511,7 @@ if (result) {
 function dltptquietly(pid){
      
       $.ajax({
-                    url:'deletePatientRecordsMotAudit',                            
+                    url:'deletePatientRecordsClinicalForm',                            
                     type:'post',  
                     data:{pid:pid},
                     dataType: 'html',  
@@ -1502,7 +1519,7 @@ function dltptquietly(pid){
                     {
                       //after success in deletion, refresh tables
             
-             loadEdits('mot_audit','editmainform_div');
+             loadEdits('<%=selectedform%>','editmainform_div');
                         
                         
                     }

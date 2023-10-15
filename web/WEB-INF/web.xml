@@ -736,6 +736,38 @@
         <servlet-name>afyavreports</servlet-name>
         <servlet-class>afyastat_verification.afyavreports</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>loadClinicalIndicators</servlet-name>
+        <servlet-class>clinicalforms.loadClinicalIndicators</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>importderv97</servlet-name>
+        <servlet-class>imports.importderv97</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>importderv98</servlet-name>
+        <servlet-class>imports.importderv98</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>deletePatientRecordsClinicalForm</servlet-name>
+        <servlet-class>clinicalforms.deletePatientRecordsClinicalForm</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>saveClinical</servlet-name>
+        <servlet-class>clinicalforms.saveClinical</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>loadRamcahSites</servlet-name>
+        <servlet-class>loaders.loadRamcahSites</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>importderv99</servlet-name>
+        <servlet-class>imports.importderv99</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>importderv991</servlet-name>
+        <servlet-class>imports.importderv991</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loadcohort</servlet-name>
         <url-pattern>/loadcohort</url-pattern>
@@ -1471,6 +1503,38 @@
     <servlet-mapping>
         <servlet-name>afyavreports</servlet-name>
         <url-pattern>/afyavreports</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>loadClinicalIndicators</servlet-name>
+        <url-pattern>/loadClinicalIndicators</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>importderv97</servlet-name>
+        <url-pattern>/importderv97</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>importderv98</servlet-name>
+        <url-pattern>/importderv98</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>deletePatientRecordsClinicalForm</servlet-name>
+        <url-pattern>/deletePatientRecordsClinicalForm</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>saveClinical</servlet-name>
+        <url-pattern>/saveClinical</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>loadRamcahSites</servlet-name>
+        <url-pattern>/loadRamcahSites</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>importderv99</servlet-name>
+        <url-pattern>/importderv99</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>importderv991</servlet-name>
+        <url-pattern>/importderv991</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

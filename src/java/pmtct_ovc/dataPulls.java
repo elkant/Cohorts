@@ -91,6 +91,16 @@ public class dataPulls extends HttpServlet {
                 out.println(tbl);                                               
     
             }
+             if(act.equals("showClinicalEdits"))
+            {               
+               
+               ResultSet rs1=pullAddedDataPerFormForEditing(conn,fm,fac,"sp_clinical_form_pull_all_editing_data_dynamically");//edit_stored_procedure
+
+               String tbl=buildDataTable(conn,rs1,table_docker,fm);               
+                System.out.println("_______"+tbl);
+                out.println(tbl);                                               
+    
+            }
             
             
         }

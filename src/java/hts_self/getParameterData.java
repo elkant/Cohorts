@@ -157,7 +157,7 @@ public class getParameterData extends HttpServlet {
              IdGenerator ig= new IdGenerator();
         
         
-        String qry="select * from internal_system.htsself_period where id <="+ig.CurrentYearMonth()+" order by id desc limit 12";
+        String qry="select * from internal_system.htsself_period where id <="+ig.CurrentYearMonth()+" order by id desc limit 14";
         
              System.out.println(qry);
         
