@@ -56,8 +56,10 @@
 					</span>-->
 					
 
-					
-
+					<%if (session.getAttribute("level") != null) { %>
+ <!---M&E Admins only-->
+  <%if(session.getAttribute("level").toString().equals("1")){%>
+                                        
 					<div class="container-login100-form-btn">
 						<a href='kp_main.jsp' class="login100-form-btn" style="background-color: #2196f3;">
 							Monthly Data Section
@@ -66,13 +68,41 @@
 					</div>
 
 <br/>
-
+ <%}%>
+ <!---M&E Admins and hts counsellors-->
+ <%if(session.getAttribute("level").toString().equals("1")|| session.getAttribute("level").toString().equals("3")){%>
 <div class="container-login100-form-btn">
 						
                                             <a href='kp_daily_main.jsp' class="login100-form-btn" style="background-color: #2196f3;">
 							Daily Data Section
 						</a>
+</div>
+
+<br/>
+<%}%>
+<!---M&E Admins only-->
+ <%if(session.getAttribute("level").toString().equals("1")){%>
+                                        <div class="container-login100-form-btn">
+						
+                                            <a href='kp_verification.jsp' class="login100-form-btn" style="background-color: #2196f3;">
+							KP_PREV Verification Summary
+						</a>
 					</div>
+
+<br/>
+<%}%>
+<!---M&E Admins and Outreach workers-->
+
+ <%if(session.getAttribute("level").toString().equals("1")|| session.getAttribute("level").toString().equals("4")){%>
+                                        <div class="container-login100-form-btn">
+						
+                                            <a href='kp_client_verification.jsp' class="login100-form-btn" style="background-color: #2196f3;">
+							KP_PREV Verification Clients List
+						</a>
+					</div>
+<%}%>
+                                       <%}%>
+
 
 <%
 Calendar cal = Calendar.getInstance();

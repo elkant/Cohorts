@@ -15,80 +15,48 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 /**
  *
- * @author EKaunda
+ * @author Emmanuel Kaunda
  */
-public class loadKPDailyValidation extends HttpServlet {
+public class deletePatientRecordsKPClientForm extends HttpServlet {
 
-   
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
+        try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-         
-                        
+           
             
-            JSONArray arr= new JSONArray();
-            
-            
-            String fm="";
-            
-            if(request.getParameter("fm")!=null)
-            {
-            fm=request.getParameter("fm");
-            }
-            
-            String validation="";
-            
+            String tablename="internal_system.kp_client_data";
+            String pid="";
             dbConn conn = new dbConn();
             
-            String getList="select * from aphiaplus_moi.kp_daily_validation where is_active='1' and frm='"+fm+"'  ";
             
-            System.out.println("______"+getList);
-            conn.rs=conn.st.executeQuery(getList);
-            
-            while(conn.rs.next()){
-                
-                JSONObject obj=new JSONObject();
-                
-            //(valids, message, iscritical, sectionid)
+         if(request.getParameter("pid")!=null){pid=request.getParameter("pid");}
             
             
             
-            obj.put("validation", conn.rs.getString("flag_if"));
-            obj.put("message", conn.rs.getString("message"));
-            obj.put("id", conn.rs.getString("id"));
-            obj.put("section_name", conn.rs.getString("section"));
-            obj.put("iscritical","1");
+            out.println(deleteAllPatientRecords(conn,tablename,pid));
             
-           arr.add(obj);
-            
-            
-            }
-            
+        if(conn.rs!=null){conn.rs.close();}
+        if(conn.rs1!=null){conn.rs1.close();}
+        if(conn.st!=null){conn.st.close();}
+        if(conn.st1!=null){conn.st1.close();}
+        if(conn.connect!=null){conn.connect.close();}
+
           
-            if(conn.rs!=null){conn.rs.close();}
-            if(conn.st!=null){conn.st.close();}
-            
-            
-            if(!arr.isEmpty()){
-            out.println(arr);
-            }
-            else{
-            
-            }
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(loadKPDailyValidation.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            out.close();
-                  }
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -103,7 +71,11 @@ public class loadKPDailyValidation extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(deletePatientRecordsKPClientForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -117,7 +89,11 @@ public class loadKPDailyValidation extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(deletePatientRecordsKPClientForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -130,4 +106,25 @@ public class loadKPDailyValidation extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    
+    public String deleteAllPatientRecords(dbConn cn,String tbl,String patientid){
+             String status="success";
+        try {
+       
+            String qry="delete from "+tbl+" where patient_id='"+patientid+"';";
+            
+            System.out.println(""+qry);
+            
+            cn.st.executeUpdate(qry);
+            
+            return status;
+        } catch (SQLException ex) 
+        {
+            
+            status="failed";
+            Logger.getLogger(deletePatientRecordsKPClientForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    return status;
+    }
+    
 }

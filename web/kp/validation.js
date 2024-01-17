@@ -13,12 +13,13 @@ var breakloop=false;
 
 var appendstring="";
 
-function loadValidation() {
+function loadValidation(fr) {
     breakloop = false;
 
     $.ajax({
         url:'loadKPDailyValidation',
         type:'post',
+        data:{fm:fr},
         dataType:'json',
         success:function (data) {
 

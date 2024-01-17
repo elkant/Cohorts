@@ -4,7 +4,6 @@
     Author     : Emmanuel E
 --%>
 
-<%@page import="upi.getUpiReportingDates"%>
 <%@page import="General.IdGenerator2"%>
 <%@page import="hfr.getIndicators"%>
 <%@page import="java.util.logging.Logger"%>
@@ -24,14 +23,14 @@
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
-		<title>EMR Data Verification</title>
+		<title>KP-Prev Verification</title>
 		<meta name="generator" content="Bootply" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
                 <link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
 		<link href="css/bootstrap.css" rel="stylesheet">
                 <link href="css/bootstrap-datepicker.min.css" rel="stylesheet">
                 <link rel="stylesheet" href="css/select2.min.css">
-                <link rel="shortcut icon" href="images/upi.png">
+                <link rel="shortcut icon" href="Login_v6/images/kp.png">
                 <!--<link data-jsfiddle="common" rel="stylesheet" media="screen" href="css/handsontable.css">-->
 <!--  <link data-jsfiddle="common" rel="stylesheet" media="screen" href="dist/pikaday/pikaday.css">-->
                   
@@ -105,7 +104,8 @@ input:focus {
                             <i class="glyphicon glyphicon-question-sign"></i>
                             Help
                         </a></li>
-                              <li><a style="text-align: center;" href='upi_index.jsp'><i class="glyphicon glyphicon-log-out"></i> Logout</a></li>
+                              <li><a style="text-align: center;" href='kp_home.jsp'><i class="glyphicon glyphicon-stats"></i>Home</a></li>
+                              <li><a style="text-align: center;" href='kp_index.jsp'><i class="glyphicon glyphicon-log-out"></i> Logout</a></li>
             </ul>
         </div>
         
@@ -130,12 +130,10 @@ input:focus {
         <!-- /col-3 -->
         <div class="col-sm-12">
 
-<!--             <a class='btn-warning btn' target="_blank" href="nupi_summary.txt" style="margin-left:40%;">Access Nupi & Covid Summary Query</a> 
-             <a class='btn-warning btn' target="_blank" href="Missing_nupi_linelist.txt" style="margin-left:1%;">Access Missing Nupi Linelist Query</a> 
-            -->
+            
+            
           
-          <h5 class="btn btn-default col-md-12" style="text-align: center;color:blue;"><b>EMR Data Verification Module</b></h5>
-        
+          <h5 class="btn btn-default col-md-12" style="text-align: center;color:blue;"><b>KP Verification Module</b></h5>
 
             <div class="row">
                 <!-- center left-->
@@ -147,28 +145,7 @@ input:focus {
                     <div class="btn-group btn-group-justified">
                       
                         
-                         
-<!--                            
-                            <a  class="btn btn-danger col-sm-3" id="exportdataanchor1" style="display:none;" title="Add Widget" data-toggle="modal" href="#addWidgetModal">
-                                <i class="glyphicon glyphicon-cloud-upload"></i>
-                                <br/>Export Data 
-                                <span id="unexportedno" style="color:yellow;">(0 site )</span>
-                            </a>
-                            
                         
-                        <a href="#" class="btn btn-primary col-sm-3">
-                            <i class="glyphicon glyphicon-cog"></i>
-                            <br> Settings
-                        </a>
-                        <a class="btn btn-info col-sm-4" title="Help" data-toggle="modal" href="#help">
-                            <i class="glyphicon glyphicon-question-sign"></i>
-                            <br> Help
-                        </a>
-                        <a class="btn btn-success col-sm-4" title="Reports"  href="hfrreports.jsp">
-                            <i class="glyphicon glyphicon-question-sign"></i>
-                            <br> Reports
-                        </a>
-                        -->
                     </div>
 
                     <hr>
@@ -210,8 +187,12 @@ input:focus {
                       
                       
                                                         <tr>
+                                                            
+                                                            
+                                                        
+                                                            
 
-                                                            <td class="col-xs-6">
+                                                            <td style="display:none;" class="col-xs-4">
                                                                 <div class="control-group">
 
                                                                     <div class="controls">
@@ -224,7 +205,16 @@ input:focus {
                                                                 <div class="control-group">
 
                                                                     <div class="controls">
-                                                                        <label><required-option></required-option>Facility</label> 
+                                                                        <label><required-option></required-option>Lip</label> 
+
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td class="col-xs-6">
+                                                                <div class="control-group">
+
+                                                                    <div class="controls">
+                                                                        <label><required-option></required-option>Dice/Site Name</label> 
 
                                                                     </div>
                                                                 </div>
@@ -236,24 +226,43 @@ input:focus {
 
                                                         <tr >
 
-                                                            <td class="col-xs-6">
+                                                            <td style="display:none;" class="col-xs-4">
                                                                 <div class="control-group">
 
                                                                     <div class="controls">
-                                                                        <select required="true"   onchange="getFacilitiesJson();isdisplayindicators();"   name="period" id="period" class="form-control" >
-                                                                           <option value="202306">2023 June</option>                                
+                                                                        
+                                                                          <input value="2023-10-25" onchange="isdisplayindicators();" readonly  required type="text"  title="this is the reporting date"  class="form-control input-sm" name="period" id="period" autocomplete="off">                                         
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                                        <td class="col-xs-6">
+                                                                <div class="control-group">
+
+                                                                    <div class="controls">
+                                                                        <select required="true"   onchange=""   name="lip" id="lip" class="form-control" >
+                                                                            <%
+
+                                                                                if (session.getAttribute("liplist") != null) {
+
+                                                                                    out.println(session.getAttribute("liplist").toString());
+                                                                                } else {
+                                                                                    out.println("<option value=''>login to select LIP</option>");
+                                                                                }
+                                                                            %>                                          
                                                                         </select>
                                                                     </div>
                                                                 </div>
                                                             </td>
 
-
                                                             <td class="col-xs-6">
                                                                 <div class="control-group">
 
                                                                     <div class="controls">
-                                                                     <select required="true"   onchange="isdisplayindicators();"   name="facility" id="facility" class="form-control" >
-                                                                                                                   
+                                                                     
+                                                                         <select required="true"  onchange="isdisplayindicators();"   name="facility" id="facility" class="form-control" >
+                                                                            <option>Select DIC Name</option>
+
                                                                         </select>
                                                                     </div>
                                                                 </div>
@@ -285,11 +294,11 @@ input:focus {
                                         <div id='fedback' class="alert-info">Note: Please enter all the required data.</div>
                                    <br/>
                                     <div class="controls">
-                                        <input type="input" onClick="loadValidation();"  id='savebutton' value="SAVE"  style="margin-left: 0%;" class="btn-lg btn-success active">
+                                        <input type="input" onClick="loadValidation('kp_verification');"  id='savebutton' value="SAVE"  style="margin-left: 0%;" class="btn-lg btn-success active">
                                             
                                      </div>
                                      <div class="controls">
-                                        <button type="submit" id='updatebutton' onclick="loadValidation();" style="margin-left: 0%;display:none;" class="btn-lg btn-info active">
+                                        <button type="submit" id='updatebutton' onclick="loadValidation('kp_verification');" style="margin-left: 0%;display:none;" class="btn-lg btn-info active">
                                             UPDATE 
                                         </button>
                                     </div>
@@ -310,7 +319,7 @@ input:focus {
                             
                             </div>
                                                        <div class="tab-pane well" id="reports">
-<form action="upiReports" id="reportingForm">
+<form action="kpDailyReports" id="reportingForm">
 
                                         <!--Dashboard code-->
 
@@ -343,8 +352,7 @@ input:focus {
 
                                                     <div class="controls">
                                                         <select class="form-control input-sm" onchange="checkFormAction();"   name='report' id='report' >
-                                                            <option value='upiReports'>1.Data Summary</option>
-                                                            <option value='upi_missing_reports'>2.Missing Reports</option>
+                                                            <option value='kpDailyReports'>1.Data Summary</option>
                                                            
                                                             <!--<option value='hts_self_reports'>6.HTS Self</option>-->
 
@@ -382,11 +390,38 @@ input:focus {
                                             </td>
                                             <td class="col-xs-4">
                                                 <div class="controls">
-                                                    <input data-date-end-date="0d" required type="text"  title="this is the date that the week ended" value="<%=ig.toDay()%>" class="form-control input-sm dates" name="enddate" id="enddate" autocomplete="off"/>
+                                                    <input data-date-end-date="0d" required type="text"  title="this is the date that the week ended" value="<%=ig.LastMonthEndDate()%>" class="form-control input-sm dates" name="enddate" id="enddate" autocomplete="off"/>
                                                 </div>
                                                 </div>
                                             </td>
                                         </tr>
+                                        <tr >
+                                            <td class="col-xs-4">
+                                                <div class="control-group">
+
+                                                    <div class="controls">
+                                                        <label ><b>Lip:</b><font color='red'><b>*</b></font></label>
+
+                                                    </div> </div>
+                                            </td>
+                                            <td class="col-xs-4">
+                                                <div class="controls">
+                                                <select required="true"   onchange=""   name="liprpt" id="liprpt" class="form-control" >
+                                                                            <%
+
+                                                                                if (session.getAttribute("liplist") != null) {
+
+                                                                                    out.println(session.getAttribute("liplist").toString());
+                                                                                } else {
+                                                                                    out.println("<option value=''>login to select LIP</option>");
+                                                                                }
+                                                                            %>                                          
+                                                                        </select>
+                                                </div>
+                                            </td>
+                                            
+                                        </tr>
+                                        
                                        <tr >
                                        <td colspan="2"> <div class="form-actions">
 
@@ -582,7 +617,8 @@ input:focus {
                 <script src="js/select2.min.js"></script>
                  <script src="js/pouchdb-4.0.1.js"></script>
                  <script type="text/javascript" src="js/datatables.min.js"></script>
-                 <script type="text/javascript" src="afyav/validation.js"></script>
+                 <script type="text/javascript" src="kp/validation.js"></script>
+                 <script type="text/javascript" src="kp/sum_values.js"></script>
   
 <!--  <script data-jsfiddle="common" src="dist/pikaday/pikaday.js"></script>
   <script data-jsfiddle="common" src="dist/moment/moment.js"></script>
@@ -614,32 +650,38 @@ input:focus {
 //
 
 
- function getFacilitiesJson(){
-       
+ 
+ 
      
-       
-       
-              $.ajax({
-                    url:'loadeHTSSites',                            
-                    type:'post',  
-                    dataType: 'html',  
-                    success: function(data)
-                    {
-                     $("#facility").html(data);
-                   $(document).ready(function() {
-          
-              $('#facility').select2(); 
-             
-                                 } ); 
-                        
-                        
-                    }});
-   
-   }
- 
-   getFacilitiesJson();
- 
-        
+    
+    function getDicsJson() {
+
+                                       var lip = $("#lip").val();
+
+                                      var dicoption="<option data-ward_name='' data-ward_id='' data-supported_kp='' value=''>select dic</option>";
+                                       $.ajax({
+                                           url: 'getDics?lip=' + lip,
+                                           type: 'post',
+                                           dataType: 'html',
+                                           success: function (data) {
+                                               $("#facility").html(dicoption+data);
+                                              
+                                               
+                                               $(document).ready(function () {
+
+                                                   $('#dic').select2();
+
+                                               });
+
+
+                                           }});
+
+                                   }
+
+
+
+                                   getDicsJson();
+    
     //------------------------------------------------------------------------
     //
     //
@@ -705,78 +747,6 @@ function sumofindicators(sourceindicators,destinationindicator){
 
 
 
-//=========================================set targets================================
-
-//function runvalidation(){
-//    
-//    var retv=true;
-//    
-//    //hts tsts > HTS Pos
-//    
-//    //HTS Pos > HTS Link
-//    
-//    //HTS_TST
-//    //HTS_TST_POS
-//    //TX_LINK
-//    
-//       var validationsid=["HTS_TST@HTS_TST_POS","HTS_TST_POS@TX_LINK"];
-// 
-//       var agedis=["bl19_Male","bl19_Female","ttl"];
-//       var agedis_detailed=["< 19 Male","< 19 Female","Total"];
-//    
-//    for( var b=0;b<validationsid.length;b++){
-//    for( var a=0;a<agedis.length;a++)
-//    {
-//        
-//    var indicab=validationsid[b].split("@");
-//        
-//      
-//        
-//    var elem_a=$("#"+indicab[0]+"_"+agedis[a]).val();  
-//    var elem_b=$("#"+indicab[1]+"_"+agedis[a]).val();  
-//     console.log("#"+indicab[0]+"_"+agedis[a]+" is "+elem_a);
-//     console.log("#"+indicab[1]+"_"+agedis[a]+" is "+elem_b);
-//    
-//    
-//    if(elem_a===""){elem_a=0;}
-//    if(elem_b===""){elem_b=0;}
-//            
-//            if(elem_a!=="" && elem_b!==""){
-//                
-//                elem_a=parseInt(elem_a);
-//                elem_b=parseInt(elem_b);
-//                
-//                if(elem_b>elem_a) {
-//                    retv=false;
-//                    
-//                    alert(" Data for "+indicab[1]+" "+agedis_detailed[a]+" cannot be more than "+indicab[0]+" "+agedis_detailed[a]);
-//                    $("#"+indicab[0]+"_"+agedis[a]).css('background-color','red');
-//                    $("#"+indicab[1]+"_"+agedis[a]).css('background-color','red');
-//                    break;
-//                                  }
-//                                 
-//                
-//                
-//                                  }
-//                                            
-//    }
-//    
-//     if(retv===false)
-//                                  {
-//                                      
-//                                  break;    
-//                                      
-//                                  }
-//}
-//    
-// return retv;   
-//}
-//    
-
-
-
-
-
 
 
 
@@ -787,17 +757,17 @@ function save_data(){
 //___indicators to pull___
 
 var id="";
-var dater="";
+var yearmonth="";
 var facility="";
 var indicatorid="";
-var bl15="";
-var ab15="";
+var _19m="";
+var _19f="";
 var ttl="";
 var userid="";
 
 facility=$("#facility").val();
 
-dater=$("#period").val();
+yearmonth=$("#period").val();
 
 
 
@@ -814,7 +784,7 @@ if(facility==='' || facility==='Select facility' ){
 }
 
 
-else if(dater===''  ){
+else if(yearmonth===''  ){
     
    alert("Select Reporting Month");  
     
@@ -833,7 +803,7 @@ else if(dater===''  ){
 
 
 $.ajax({
-                    url:'getafyavIndicators',                            
+                    url:'getKPValidationIndicators',                            
                     type:'post',  
                     dataType: 'json',  
                     success: function(data){
@@ -842,56 +812,26 @@ $.ajax({
               var isend=false;             
                           
 var indicatorid=data[a].id;
-
-
-//imis
-//datim
-//khis
-//ndwh
-//emr
-//moh731
-//register
-//variance
-
-
-var imisv=$("#"+indicatorid+"_imis").val();
-var ndwhv=$("#"+indicatorid+"_ndwh").val();
-var khisv=$("#"+indicatorid+"_khis").val();
-var emrv=$("#"+indicatorid+"_emr").val();
-var moh731v=$("#"+indicatorid+"_moh731").val();
-var registerv=$("#"+indicatorid+"_register").val();
-var corrective_actionv=$("#"+indicatorid+"_corrective_action").val();
-var concordancev=$("#"+indicatorid+"_concordance").val();
-
-if(imisv===''){alert("Enter Form 1a Value"); $("#"+indicatorid+"_imis").focus(); break;}
-else if(emrv===''){alert("Enter EMR Value"); $("#"+indicatorid+"_emr").focus(); break;}
-else if(moh731v===''){alert("Enter MOH 731 Value"); $("#"+indicatorid+"_moh731").focus(); break;}
-else if(registerv===''){alert("Enter Register Value"); $("#"+indicatorid+"_register").focus(); break;}
-else if(concordancev!=='100' && corrective_actionv===''){alert("Enter Corrective Action Taken to address data variance"); $("#"+indicatorid+"_corrective_action").focus(); break;}
-else {
-var variancev=(registerv)-(emrv);
-var identifier=dater+"_"+facility+"_"+indicatorid;
-        
+var msm=$("#"+indicatorid+"_msm").val();
+var fsw=$("#"+indicatorid+"_fsw").val();
+var ttl=$("#"+indicatorid+"_ttl").val();
+var identifier=facility+"_"+yearmonth+"_"+indicatorid;
+        var   ward = $("#facility").find(":selected").data("ward_id");
         
       
 
         
            //save the data
-           
+//            {"id","ward","date","dic","indicator","fsw","msm","ttl"};
            var saveddata={
                id:identifier,              
-               yearmonth:dater,
-               facility:""+facility,
-               indicatorid:indicatorid,
-              imis:imisv,
-               ndwh:ndwhv,
-               khis:khisv,
-               emr:emrv,
-               moh731:moh731v,
-               register:registerv,
-               variance:variancev,
-               corrective_action:corrective_actionv,
-               concordance:concordancev,
+               date:yearmonth,
+               dic:""+facility,
+               ward:""+ward,
+               indicator:indicatorid,
+               msm:msm,
+               fsw:fsw,
+               ttl:ttl,
                userid:'909090'
                
            };
@@ -905,7 +845,7 @@ var identifier=dater+"_"+facility+"_"+indicatorid;
            }
            
            exportData(saveddata,isend);
-           }             
+                           
                        } 
                    
                     }
@@ -927,7 +867,7 @@ function exportData( data, isend){
     
     
     $.ajax({
-                    url:'saveafyav',                            
+                    url:'saveKpdaily',                            
                     type:'post',  
                     dataType: 'html',
                     data:data ,
@@ -999,6 +939,25 @@ for(b=0;b<allindicatorsarray.length;b++){
     
 }
 
+function clearcmtsandprcent(){
+    
+       //clear progress bar hidden fields too
+   
+  for(b=0;b<allprogressbar_hiddentext_array.length;b++){
+    
+  $("#"+allprogressbar_hiddentext_array[b]).val("");  
+    
+} 
+       
+       //comnts
+ 
+     for(b=0;b<allcommentsarray.length;b++){
+    
+  $("#"+allcommentsarray[b]).val("");  
+    
+                                            }//end of for loop 
+    
+}
 
 var dbdata="";
 
@@ -1184,103 +1143,11 @@ $('form').on('blur', 'input[type=number]', function (e) {
                   save = $('save'),
                   autosaveNotification,
                   hot;
-
-//                hot = new Handsontable(container, {
-//                  startRows: 8,
-//                  startCols: 6,
-//                  rowHeaders: true,
-//                  colHeaders: true,
-//                  minSpareRows: 1,
-//                  contextMenu: true,
-//                  afterChange: function (change, source) {
-//                    if (source === 'loadData') {
-//                      return; //don't save this change
-//                    }
-//                    if (!autosave.checked) {
-//                      return;
-//                    }
-//                    clearTimeout(autosaveNotification);
-//                    ajax('json/save.json', 'GET', JSON.stringify({data: change}), function (data) {
-//                      exampleConsole.innerText  = 'Autosaved (' + change.length + ' ' + 'cell' + (change.length > 1 ? 's' : '') + ')';
-//                      autosaveNotification = setTimeout(function() {
-//                        exampleConsole.innerText ='Changes will be autosaved';
-//                      }, 1000);
-//                    });
-//                  }
-//                });
-
-//                Handsontable.Dom.addEvent(load, 'click', function() {
-//                  ajax('json/load.json', 'GET', '', function(res) {
-//                    var data = JSON.parse(res.response);
-//
-//                    hot.loadData(data.data);
-//                    exampleConsole.innerText = 'Data loaded';
-//                  });
-//                });
-
-//                Handsontable.Dom.addEvent(save, 'click', function() {
-//                  // save all cell's data
-//                  ajax('json/save.json', 'GET', JSON.stringify({data: hot.getData()}), function (res) {
-//                    var response = JSON.parse(res.response);
-//
-//                    if (response.result === 'ok') {
-//                      exampleConsole.innerText = 'Data saved';
-//                    }
-//                    else {
-//                      exampleConsole.innerText = 'Save error';
-//                    }
-//                  });
-//                });
-
-//                Handsontable.Dom.addEvent(autosave, 'click', function() {
-//                  if (autosave.checked) {
-//                    exampleConsole.innerText = 'Changes will be autosaved';
-//                  }
-//                  else {
-//                    exampleConsole.innerText ='Changes will not be autosaved';
-//                  }
-//                });
                 
                 
                
    
 
-
-function getPeriod(){
-       
-   var sec=$("#section").val();
-       
-       
-              $.ajax({
-                         url:'getParameterData?per=yes',                            
-                    type:'post',  
-                    dataType: 'json',  
-                    success: function(data) {                        
-                       
-        var dat=data.periods;
-        
-      
-        var o="<option value=''>Select Seriod</option>";
-                        
-                        for(var a=0;a<dat.length;a++)
-                        {                           
-                     
-                          o+="<option value='"+dat[a].id+"'>"+dat[a].year+" "+dat[a].month+"</option>";   
-                        }
-                        
-                   $("#period").html(o);
-                   $(document).ready(function() {
-                    $('#period').select2(); 
-             
-                                 } ); 
-                        
-                        
-                    }});
-   
-   }
-   
-
-getPeriod();
 
 
 
@@ -1301,7 +1168,7 @@ function isdisplayindicators()
             
             //now load the data
           $.ajax({
-                    url:'getafyavIndicators?dt='+dt+"&fc="+fc,                            
+                    url:'getKPValidationIndicators?dt='+dt+"&fc="+fc,                            
                     type:'post',  
                     dataType: 'html',  
                     success: function(data) 
@@ -1349,58 +1216,41 @@ $('#dataentry').on('keydown', 'input, select, textarea', function(e) {
     }
 });
 
-function checkFormAction (){
-    
-  $('#reportingForm').attr('action', $("#report").val());  
-    
-}
-
-function calculateconcordance(indicatorid){
- 
-var ndwhv=$("#"+indicatorid+"_ndwh").val();
-
-var emrv=$("#"+indicatorid+"_emr").val();
-        
-   var registerv=$("#"+indicatorid+"_register").val();     
-        if(ndwhv!=='' && emrv!==''){
-            
-            var num=parseInt(ndwhv);
-            var den=parseInt(registerv);
-            
-            
-            
-            
-            var cd=Math.round((num/den)*100);
-            
-            
-            if(num===0 && den===0){cd=100;}
-            
-            console.log("Concordance::"+cd);
-            $("#"+indicatorid+"_concordance").val(cd);
-            
-           if(cd===100){
-               $("#"+indicatorid+ "_corrective_action").hide(); 
-         
-                $("#"+indicatorid+ "_concordance").css('border-color','#000000');
-                $("#"+indicatorid + "_concordance").css('background','#ffffff');
-            
-            }
-            
-            else {
-                $("#"+indicatorid+ "_corrective_action").show(); 
-                
-         $("#"+indicatorid+ "_concordance").css('border-color','#ff0000');
-         $("#"+indicatorid + "_concordance").css('background','#ff0000');
-              }
-            
-        }
-        
-       
-    
-    
-}
+ function showtoday() {
 
 
+
+                                       var currentdate = new Date();
+
+                                       var mn = "" + (currentdate.getMonth() + 1);
+                                       var dt = "" + currentdate.getDate();
+                                       var hr = "" + currentdate.getHours();
+                                       var min = "" + currentdate.getMinutes();
+                                       var sc = "" + currentdate.getSeconds();
+                                       if (mn.length === 1) {
+                                           mn = '0' + mn;
+                                       }
+                                       if (dt.length === 1) {
+                                           dt = '0' + dt;
+                                       }
+                                       if (hr.length === 1) {
+                                           hr = '0' + hr;
+                                       }
+                                       if (min.length === 1) {
+                                           min = '0' + min;
+                                       }
+                                       if (sc.length === 1) {
+                                           sc = '0' + sc;
+                                       }
+
+
+                                       var leo = "" + currentdate.getFullYear() + "-" + mn + "-" + dt;
+
+                                       $("#period").val(leo);
+
+                                       return leo;
+                                   }
+                                  // showtoday();
 
               </script>
 

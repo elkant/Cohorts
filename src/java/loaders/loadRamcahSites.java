@@ -57,7 +57,7 @@ if(session.getAttribute("lastsavedfacil")!=null)
 {
     
     fac=session.getAttribute("lastsavedfacil").toString();
-    System.out.println("_______________________________:::"+fac);
+    //System.out.println("_______________________________:::"+fac);
     if(subpartnerid.equals(fac)){selectedval="selected";} 
 }
 

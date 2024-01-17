@@ -7,7 +7,7 @@
 <!-- BEGIN HEAD -->
 <head>
    <meta charset="utf-8" />
-   <title>Upload ART daily</title>
+   <title>Upload Weekly PMTCT RRI</title>
    <link rel="shortcut icon" href="images/logo.png"/>
    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
    <meta content="" name="description" />
@@ -55,7 +55,7 @@
       <div class="navbar-inner">
          <div class="container-fluid">
             <!-- BEGIN LOGO -->
-            <h1 style="text-align:center;font-size: 50px;color:white;padding-bottom:16px ;font-weight: bolder;">ART Daily Form</h1><br/>
+            <h1 style="text-align:center;font-size: 50px;color:white;padding-bottom:16px ;font-weight: bolder;">PMTCT RRI Form</h1><br/>
             
             <!-- END LOGO -->
             <!-- BEGIN RESPONSIVE MENU TOGGLER -->
@@ -103,7 +103,7 @@
                
                   <!-- END BEGIN STYLE CUSTOMIZER -->   
                   <h3 class="page-title" style="text-align: center;">
-                    <a class='btn-warning btn' href="pns/ART_Daily_Form_v990_2023_10_26_.xlsx" style="margin-left:40%;">Download ART Daily Template ( v 9.9.1)</a> 
+                    <a class='btn-warning btn' href="utj_pmtct_rri_tool_v6.xlsx" style="margin-left:40%;">Download PMTCT RRI Template ( v 1.0.1)</a> 
                    
 <!--                    Internal System-->
                   </h3>
@@ -112,7 +112,7 @@
                   <ul class="breadcrumb">
                      <li style="width: 900px;">
                         <i class="icon-upload"></i>
-                        <a href="#" style="margin-left:40%;">Upload ART daily Data v9.9.1 (11th Oct 2023).</a> 
+                        <a href="#" style="margin-left:40%;">Upload PMTCT RRI Data.</a> 
                         <!--<span class="icon-angle-right"></span>-->
                      </li>
            
@@ -126,12 +126,12 @@
                   <!-- BEGIN SAMPLE FORM PORTLET-->   
                   <div class="portlet box blue">
                      <div class="portlet-title">
-                        <h4><i class="icon-reorder"></i> Ensure that the ART excel template name ends with <b>.xlsx</b> and that all sheets with data have MFLCode</h4>
+                        <h4><i class="icon-reorder"></i> Ensure that the PMTCT RRI excel template name ends with <b>.xlsx</b> and that all sheets with data have Facility name selected</h4>
                        
                      </div>
                      <div class="portlet-body form">
                         <!-- BEGIN FORM-->
-                        <form action="importderv991" method="post" enctype="multipart/form-data" class="form-horizontal" >
+                        <form action="importpmtctrri" method="post" enctype="multipart/form-data" class="form-horizontal" >
                        
                              <div  class="portlet-body form" id="progress_area" hidden="true">
                      <div class="progress"  style="height: 35px;">
@@ -139,7 +139,7 @@
                       </div>   
                   </div> 
                             
-                            <div class="control-group">
+                            <div class="control-group" style="display:none;">
                               <label class="control-label"><b>Select Date</b><font color='red'><b>*</b></font></label>
                               <div class="controls">
                                   <input readonly required type="text" title="This is the date the data is being uploaded" value="<%if (session.getAttribute("weekstart") != null) {out.println(session.getAttribute("weekstart")); }%>" class="form-control input-lg tarehe" name="weekstart" autocomplete="off" id="weekstart">
@@ -451,7 +451,7 @@ $("#matokeo").html('<%=session.getAttribute("uploadedpns")%>');
          
          
              $.ajax({
-        url:'checkstatus?load_type=dailyart',
+        url:'checkstatus?load_type=pmtctrri',
         type:"post",
         dataType:"json",
         success:function(response){
@@ -498,11 +498,11 @@ var message = "["+per_value+"%] Complete "+response.message+" Records Uploaded";
      }
 </script>
    
- <%if (session.getAttribute("uploadedart") != null) { %>
+ <%if (session.getAttribute("uploadedPRR") != null) { %>
    <script type="text/javascript"> 
                     
        
-  $("#matokeo").html('<%=session.getAttribute("uploadedart")%>');
+  $("#matokeo").html('<%=session.getAttribute("uploadedPRR")%>');
       
                     
                 </script>

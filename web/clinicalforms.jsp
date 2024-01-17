@@ -254,6 +254,9 @@ frm+="<option "+sele+" value='"+conn.rs.getString(1)+"' >"+conn.rs.getString(2)+
                                                                         <select required="true"   onchange="getFacilitiesJson();isdisplayindicators();"   name="frmname" id="frmname" class="form-control" >
                                                                      <%=frm%>                                              
                                                                         </select>
+                                                                        
+                                                                        
+                                                                        
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -265,6 +268,8 @@ frm+="<option "+sele+" value='"+conn.rs.getString(1)+"' >"+conn.rs.getString(2)+
                                                                         <select required="true"   onchange="getFacilitiesJson();isdisplayindicators();"   name="period" id="period" class="form-control" >
                                                                                                                    
                                                                         </select>
+                                                                        
+                                                                        
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -1419,6 +1424,34 @@ function ShowAge(dob,dest)
         
     
     return age;
+}
+}
+
+
+function ShowAgeMonths(dob,dest) 
+{
+    
+    var sikuyakuzaliwa=$("#"+dob).val(); 
+    
+    console.log("called at Age"+ sikuyakuzaliwa);
+    if(sikuyakuzaliwa!=='')
+    {
+   const birthDateObj = new Date(sikuyakuzaliwa);
+
+  // Get the current date
+  const currentDate = new Date();
+
+  // Calculate the difference in months
+  const monthsDiff = (currentDate.getFullYear() - birthDateObj.getFullYear()) * 12 +
+    (currentDate.getMonth() - birthDateObj.getMonth());
+
+
+    
+    $("#"+dest).val(monthsDiff);
+    
+        
+    
+    return monthsDiff;
 }
 }
 

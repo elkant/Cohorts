@@ -1008,7 +1008,7 @@ function hideIfFunction(sourceele,iscondition,equalval,destination,action)
 //Below is a function for disabling passed select options 
 
 function disableSelectOptionsIf(source_element,iscondition,expectedsource_value,dest_element,options_to_disable){
-    
+    //disableSelectOptionsIf("#last_hiv_test_setting","equalto","Never Tested","#self_reported_status","Positive:Negative");
     
     var srcval=$(source_element).val();
     var opts_=options_to_disable.split(":");

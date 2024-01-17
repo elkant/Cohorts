@@ -39,11 +39,13 @@ public class dataPulls extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
+          dbConn conn = null;
+        
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             
             
-            dbConn conn = new dbConn();
+             conn = new dbConn();
             
             String fac="";
             
@@ -87,7 +89,7 @@ public class dataPulls extends HttpServlet {
                ResultSet rs1=pullAddedDataPerFormForEditing(conn,fm,fac,"sp_mot_audit_pull_all_editing_data_dynamically");
 
                String tbl=buildDataTable(conn,rs1,table_docker,fm);               
-                System.out.println("_______"+tbl);
+                //System.out.println("_______"+tbl);
                 out.println(tbl);                                               
     
             }
@@ -97,13 +99,33 @@ public class dataPulls extends HttpServlet {
                ResultSet rs1=pullAddedDataPerFormForEditing(conn,fm,fac,"sp_clinical_form_pull_all_editing_data_dynamically");//edit_stored_procedure
 
                String tbl=buildDataTable(conn,rs1,table_docker,fm);               
-                System.out.println("_______"+tbl);
+                //System.out.println("_______"+tbl);
                 out.println(tbl);                                               
     
             }
+             
+              if(act.equals("showKPEdits"))
+            {               
+               
+               ResultSet rs1=pullAddedDataPerFormForEditing(conn,fm,fac,"sp_kpvalidation_form_pull_all_editing_data_dynamically");//edit_stored_procedure
+
+               String tbl=buildDataTable(conn,rs1,table_docker,fm);               
+                //System.out.println("_______"+tbl);
+                out.println(tbl);                                               
+    
+            }
+             
             
             
         }
+        
+        finally {   
+         
+               if(conn.rs!=null){ conn.rs.close();}
+               if(conn.st!=null){ conn.st.close();}
+                if(conn.connect!=null){ conn.connect.close();}
+        
+    }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -370,7 +392,7 @@ for(int c=0;c<mycolumns.size();c++)
 {
     
      String id="";
- if(c==0){id="id='"+res.getString(mycolumns.get(c).toString())+"'"; System.out.println("Id Ni __"+id);  dtlist_html+="<tr "+id+">";}
+ if(c==0){id="id='"+res.getString(mycolumns.get(c).toString())+"'";   dtlist_html+="<tr "+id+">";}
       dtlist_html+="<td>"+res.getString(mycolumns.get(c).toString())+"</td>";
       if(c==mycolumns.size()-1){ dtlist_html+="<td><label onclick='loadExistingClient(\""+res.getString("patient_id")+"\",\""+frm+"\");' class='btn btn-info'>Edit</label></td><td><label onclick='dltpt(\""+res.getString("patient_id")+"\");' class='btn btn-danger'>Delete</label></td></tr>";}
 

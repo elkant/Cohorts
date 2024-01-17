@@ -193,8 +193,8 @@ String minchars=r.getString("minchars");
     //if length is greater than 0
     if(!jo.get("length").toString().equals("0"))
     {
-        System.out.println("ID ni "+id);
-        System.out.println(""+jo.toString());
+        //System.out.println("ID ni "+id);
+        //System.out.println(""+jo.toString());
     if(jo.get(id)!=null)
     {
        

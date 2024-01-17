@@ -71,7 +71,9 @@ color:white;
             
             
 <div class='form-group col-md-4'>
-    <hr/><span class="login100-form-avatar"> <a href='pmtct_ovc_main.jsp'>   <img src="images/pmtct_ovc.png" alt="welcome"></a></span>
+    <hr/>
+    <!--<span class="login100-form-avatar"> <a href='pmtct_ovc_main.jsp'>   <img src="images/pmtct_ovc.png" alt="welcome"></a></span>-->
+    <span class="login100-form-avatar"> <a href='clinicalforms.jsp?frm=mother'>   <img src="images/pmtct_ovc.png" alt="welcome"></a></span>
     <div >
     <h5  class="label_clean">PMTCT OVC</h5> </div>
     </div>

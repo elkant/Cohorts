@@ -182,7 +182,10 @@
                                       <option value='hfrreport'>1.HFR Reports - Excel Version(Surge and Non Surge)</option>                                      
                                       <option value='hfrreport_uploadble'>2.HFR Reports - Uploadable Version (Surge and Non Surge)</option>
                                       <option value='jmwppmsReport'>3.JMW PPMS Reports</option>
-                                      <option value='nonsurge_tracker'>4.Missing Reports Tracker</option>
+                                      <option value='cirg_kp_ppmsreport'>4.CIRG KP Reports</option>
+                                      <option value='cirg_prep_ppms'>5.CIRG PREP Reports</option>
+                                      <option value='cirg_gend_link_comm_ppms'>6.CIRG GEND LINK Reports</option>
+                                      <option value='nonsurge_tracker'>7.Missing Reports Tracker</option>
                                       
 <!--                                      <option value='htsclientraw'>3. HTS Client Level Raw </option>
                                       <option value='WeeklyData'>4. Data file only</option>-->

@@ -15,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -30,6 +31,8 @@ public class getDics extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
            response.setContentType("text/html;charset=UTF-8");
     
+           HttpSession session = request.getSession();
+           
 String dics="";
     
     String lip="";
@@ -42,7 +45,7 @@ String dics="";
 
        String getdics="Select * from internal_system.dic where `lip` in ('"+lip+"') and active='1' ";
        
-            System.out.println(""+getdics);
+            System.out.println("___"+getdics);
        
        dbConn conn=new dbConn();
        
@@ -52,8 +55,19 @@ String dics="";
        
        while(conn.rs.next())
        {
+           
+           String fac="";
+String selectedval="";
 
-dics+="<option data-ward_name='"+conn.rs.getString("ward_name")+"' data-ward_id='"+conn.rs.getString("ward_id")+"' data-supported_kp='"+conn.rs.getString("supported_kp")+"' value=\""+conn.rs.getString("dic_id")+"\">"+conn.rs.getString("dic_name")+"</option>";
+if(session.getAttribute("lastsaveddic")!=null)
+{
+    
+    fac=session.getAttribute("lastsaveddic").toString();
+    //System.out.println("_______________________________:::"+fac);
+    if((conn.rs.getString("dic_id")).equals(fac)){selectedval="selected";} 
+}
+
+dics+="<option "+selectedval+" data-ward_name='"+conn.rs.getString("ward_name")+"' data-ward_id='"+conn.rs.getString("ward_id")+"' data-supported_kp='"+conn.rs.getString("supported_kp")+"' value=\""+conn.rs.getString("dic_id")+"\">"+conn.rs.getString("dic_name")+"</option>";
 
        }
     

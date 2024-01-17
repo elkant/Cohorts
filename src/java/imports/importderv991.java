@@ -27,6 +27,7 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
@@ -185,6 +186,7 @@ String der_50m = "";
 
 String submitted_by="";
 String Designation="";
+String validation="";
 
 
 String yearmonth="";
@@ -264,11 +266,10 @@ if(1==2){
 int totalsheets=workbook.getNumberOfSheets();
 DataFormatter formatter = new DataFormatter(); //creating formatter using the default locale
 int rowsngapi=1;
-int rowCount=216;
+int rowCount=290;
 for(int a=0;a<totalsheets;a++){
     
     XSSFSheet worksheet = workbook.getSheetAt(a);
-    
     String hasdata="no";
     
   //  System.out.println( a+" ("+workbook.getSheetName(a)+") out of "+totalsheets+" sheets");
@@ -381,7 +382,65 @@ else if(celldesignation.getCellType()==1)
 {
     Designation =celldesignation.getStringCellValue();
 }
+
     
+    
+    
+    
+
+      XSSFCell cellvallidation=worksheet.getRow(9).getCell((short)29);
+      FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator(); 
+    evaluator.evaluateFormulaCell(cellvallidation);
+    
+    if(cellvallidation==null){ System.out.println("Kuna error_____");} else {
+    
+   
+    
+//    validation =celldesignation.getStringCellValue(); 
+        switch (cellvallidation.getCellType()) {
+            case 0:
+                //numeric
+                validation =""+(int)cellvallidation.getNumericCellValue();
+                break;
+            case 1:
+                validation =cellvallidation.getStringCellValue();
+                break;
+                 case 2:
+                validation =""+cellvallidation.getRawValue();
+                break;
+            default:
+                validation =cellvallidation.getRawValue();
+                break;
+        }
+    
+   
+    
+    
+    
+    
+    String id1=weekend.replace("-","_")+"_"+mflcode+"_validation_"+delivery_point;
+    
+    String insertval="Replace INTO der_rri.validations (id, date, delivery_point, year, month, indicator_id, mflcode,  submitted_by, validation_error) "
+            + "VALUES(?,?,?,?,?,?,?,?,?)";
+    conn.pst1=conn.connect.prepareStatement(insertval);
+    conn.pst1.setString(1,id1);
+    conn.pst1.setString(2,weekend);
+    conn.pst1.setString(3,delivery_point);
+    conn.pst1.setString(4,reportingyear);
+    conn.pst1.setString(5,reportingmonth);
+    conn.pst1.setString(6,"validation");
+    conn.pst1.setString(7,mflcode);
+    conn.pst1.setString(8,submitted_by);
+    conn.pst1.setString(9,validation);
+ 
+    
+    System.out.println("_____"+conn.pst1+":"+cellvallidation.getCellType());  
+    
+        conn.pst1.executeUpdate();
+    
+    
+     System.out.println("Hakuna error_____");
+    }
     
     
     String dd="";
@@ -1192,7 +1251,7 @@ missingFacility+="facility  : "+sheetname+" mfl code : "+mflcode+" not in system
 
     else {
         
-        sessionText="<h2><font color=\"red\">Note: Data was uploaded using Wrong Templete version. Click here to <a class=\"btn btn-success\" href=\"pns/ART_Daily_Form_v990_2023_10_11_.xlsx\">download correct template</a></font><h2>";
+        sessionText="<h2><font color=\"red\">Note: Data was uploaded using Wrong Templete version. Click here to <a class=\"btn btn-success\" href=\"pns/ART_Daily_Form_v990_2023_10_26_.xlsx\">download correct template</a></font><h2>";
         
          }
     
@@ -1200,7 +1259,7 @@ missingFacility+="facility  : "+sheetname+" mfl code : "+mflcode+" not in system
  
   else {
         
-        sessionText="<h2><font color=\"red\">Note: Data was uploaded using Wrong Templete version. Click here to <a class=\"btn btn-success\" href=\"pns/ART_Daily_Form_v990_2023_10_11_.xlsx\">download template V 9.9.1</a></font><h2>";
+        sessionText="<h2><font color=\"red\">Note: Data was uploaded using Wrong Templete version. Click here to <a class=\"btn btn-success\" href=\"pns/ART_Daily_Form_v990_2023_10_26_.xlsx\">download template V 9.9.1</a></font><h2>";
         
          }
 }
@@ -1208,6 +1267,8 @@ missingFacility+="facility  : "+sheetname+" mfl code : "+mflcode+" not in system
 rowsngapi=204;
                } catch (InvalidFormatException ex) {
                    Logger.getLogger(importpns.class.getName()).log(Level.SEVERE, null, ex);
+               } catch (SQLException ex) {
+                   Logger.getLogger(importderv991.class.getName()).log(Level.SEVERE, null, ex);
                }
 
      }

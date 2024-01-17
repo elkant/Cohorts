@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package see;
+package KP;
 
 import db.dbConn;
 import java.io.IOException;
@@ -22,12 +22,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import see.loadSeeIndicators;
 
 /**
  *
  * @author EKaunda
  */
-public class loadSeeIndicators extends HttpServlet {
+public class loadKpClientIndicators extends HttpServlet {
 
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -100,7 +101,7 @@ if(request.getParameter("fm")!=null){fm=request.getParameter("fm");}
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(loadSeeIndicators.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(loadKpClientIndicators.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -118,7 +119,7 @@ if(request.getParameter("fm")!=null){fm=request.getParameter("fm");}
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(loadSeeIndicators.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(loadKpClientIndicators.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -200,7 +201,7 @@ String minchars=r.getString("minchars");
         JSONObject joage=(JSONObject) jo.get(id);
         
          val=joage.get("value").toString();
-        System.out.println("Value ya "+id+" ni "+val);
+        //System.out.println("Value ya "+id+" ni "+val);
     }
         
     
@@ -226,9 +227,9 @@ String minchars=r.getString("minchars");
   }
   else if(field_type.equals("select"))
   {
-  indicators+=""+buildSelectField(conn,field_type, is_future_date, element_id, val, label, readonly, label, is_hidden, required, js_class, guide, condition, show_section, section, onchange, options);
+  indicators+=""+buildSelectField(facility,conn,field_type, is_future_date, element_id, val, label, readonly, label, is_hidden, required, js_class, guide, condition, show_section, section, onchange, options);
   }
-   else if(field_type.equals("multiselect"))
+  else if(field_type.equals("multiselect"))
   {
   indicators+=""+buildMultiSelectField(facility,conn,field_type, is_future_date, element_id, val, label, readonly, label, is_hidden, required, js_class, guide, condition, show_section, section, onchange, options);
   }
@@ -260,7 +261,7 @@ public JSONObject getData( dbConn conn, String reportingdate, String facilitymfl
 
 int hasdata=0;
 
-String getdata=" select * from internal_system.see_data where linelisting_month='"+reportingdate+"' and patient_id='"+patientId+"'";
+String getdata=" select * from internal_system.kp_client_data where  patient_id='"+patientId+"'";
 
 conn.rs1=conn.st1.executeQuery(getdata);
 
@@ -326,10 +327,10 @@ String qry="select "
 +", ifnull(isphonenumber,'') as isphonenumber"
 +", ifnull(acceptnumbersonly,'') as acceptnumbersonly"
 +", ifnull(minchars,'') as minchars"
-        + " from internal_system.see_indicators where is_active='1' and "+where+" order by order_no ";
+        + " from internal_system.kp_client_indicators where is_active='1' and "+where+" order by order_no ";
 //maxchars	isphonenumber	acceptnumbersonly	minchars
 
-    System.out.println(""+qry);
+    //System.out.println(""+qry);
 conn.rs=conn.st.executeQuery(qry);
 
 
@@ -518,11 +519,10 @@ if(is_hidden.equals("yes")){showstatus="display:none;";}
 
 
 String section_n="";
-if(show_section.equals("1")){section_n="<br/><div class='form-group col-md-12' style='background-color:#4b8df8;text-align:center;padding-top:2px;padding-bottom:2px;'><b>"+section+"</b></div><br/>";}else{section_n="";}
-
+if(show_section.equals("1")){section_n="<br/><div class='form-group control-group col-xs-12 btn' style='background-color:#4b8df8;text-align:center;padding-top5px;padding-bottom:5px; margin-bottom:6px;color:white;'><b>"+section+"</b></div><br/>";}else{section_n="";}
 
 finalelement=""+section_n
-        + "<div class='form-group col-md-3 "+js_class+"' style="+showstatus+">" +
+        + "<div class='form-group col-md-4 "+js_class+"' style="+showstatus+">" +
 "<label>" +
 req_asterick+"<b>"+label+"</b>\n" +
 "</label>\n" +
@@ -574,11 +574,11 @@ if(is_hidden.equals("yes")){showstatus="display:none;";}
 
 
 String section_n="";
-if(show_section.equals("1")){section_n="<br/><div class='form-group col-md-12' style='background-color:#4b8df8;text-align:center;padding-top:2px;padding-bottom:2px;'><b>"+section+"</b></div><br/>";}else{section_n="";}
+if(show_section.equals("1")){section_n="<br/><div class='form-group control-group col-xs-12 btn' style='background-color:#4b8df8;text-align:center;padding-top5px;padding-bottom:5px; margin-bottom:6px;color:white;'><b>"+section+"</b></div><br/>";}else{section_n="";}
 
 
 finalelement=""+section_n
-        + "<div class='form-group col-md-3 "+js_class+"' style="+showstatus+">" +
+        + "<div class='form-group col-md-4 "+js_class+"' style="+showstatus+">" +
 "<label>" +
 req_asterick+"<b>"+label+"</b>\n" +
 "</label>\n" +
@@ -595,7 +595,7 @@ return finalelement;
 }
 
 
-public String buildSelectField(dbConn conn,String field_type, String is_future_date, String id, String Value, String label, String readonly, String placeholder, String is_hidden, String required,String js_class, String guide, String condition, String show_section,String section,String onchange,String opts){
+public String buildSelectField(String facil,dbConn conn,String field_type, String is_future_date, String id, String Value, String label, String readonly, String placeholder, String is_hidden, String required,String js_class, String guide, String condition, String show_section,String section,String onchange,String opts){
 String finalelement="";
 //___Required attribute
 String req_asterick="";
@@ -631,7 +631,7 @@ if(is_hidden.equals("yes")){showstatus="display:none;";}
 
 
 String section_n="";
-if(show_section.equals("1")){section_n="<br/><div class='form-group col-md-12' style='background-color:#4b8df8;text-align:center;padding-top:2px;padding-bottom:2px;'><b>"+section+"</b></div><br/>";}else{section_n="";}
+if(show_section.equals("1")){section_n="<br/><div class='form-group control-group col-xs-12 btn' style='background-color:#4b8df8;text-align:center;padding-top5px;padding-bottom:5px; margin-bottom:6px;color:white;'><b>"+section+"</b></div><br/>";}else{section_n="";}
 
 //String conditionfun="";
 //String changefunction="";
@@ -657,10 +657,20 @@ if(opts.contains("vw_")){try {
         Logger.getLogger(loadSeeIndicators.class.getName()).log(Level.SEVERE, null, ex);
     }
 }
-
+if(opts.contains("sp_")){try {
+    //the assumption is that the select column looks like vw_see_loadcts|Select County, where vw_see_loadcts is a view in the db that nned to be executed and return 1 row of data in format of 
+    //1|Nakuru:2|Laikipia:4|Baringo:7|Samburu
+    //Therefore, we need to split opts with | delimitter into an array, then pick index 0 of the array
+   
+    finaloptions=buildopts(queryRowsToBuildOptionsString(pullDataFromSpperOrgunit(conn, opts.split("\\|")[0],facil)), Value);
+    
+    } catch (SQLException ex) {
+        Logger.getLogger(loadSeeIndicators.class.getName()).log(Level.SEVERE, null, ex);
+    }
+}
 
 finalelement=""+section_n
-        + "<div class='form-group col-md-3 "+js_class+"' style="+showstatus+">" +
+        + "<div class='form-group col-md-4 "+js_class+"' style="+showstatus+">" +
 "<label>" +
 req_asterick+"<b>"+label+"</b>\n" +
 "</label>\n" +
@@ -677,10 +687,6 @@ return finalelement;
 
 
 }
-
-
-
-
 public String buildMultiSelectField(String facil,dbConn conn,String field_type, String is_future_date, String id, String Value, String label, String readonly, String placeholder, String is_hidden, String required,String js_class, String guide, String condition, String show_section,String section,String onchange,String opts){
 String finalelement="";
 //___Required attribute
@@ -717,7 +723,7 @@ if(is_hidden.equals("yes")){showstatus="display:none;";}
 
 
 String section_n="";
-if(show_section.equals("1")){section_n="<br/><div class='form-group col-md-12' style='background-color:#4b8df8;text-align:center;padding-top:2px;padding-bottom:2px;'><b>"+section+"</b></div><br/>";}else{section_n="";}
+if(show_section.equals("1")){section_n="<br/><div class='form-group control-group col-xs-12 btn ' style='background-color:#4b8df8;text-align:center;padding-top5px;padding-bottom:5px; margin-bottom:6px;color:white;'><b>"+section+"</b></div><br/>";}else{section_n="";}
 
 //String conditionfun="";
 //String changefunction="";
@@ -748,7 +754,7 @@ if(opts.contains("sp_")){try {
     //1|Nakuru:2|Laikipia:4|Baringo:7|Samburu
     //Therefore, we need to split opts with | delimitter into an array, then pick index 0 of the array
    
-    finaloptions=buildoptsMultiselect(queryToString(pullDataFromSpperOrgunit(conn, opts.split("\\|")[0],facil)), Value);
+    finaloptions=buildoptsMultiselect(queryRowsToBuildOptionsString(pullDataFromSpperOrgunit(conn, opts.split("\\|")[0],facil)), Value);
     
     } catch (SQLException ex) {
         Logger.getLogger(loadSeeIndicators.class.getName()).log(Level.SEVERE, null, ex);
@@ -756,7 +762,7 @@ if(opts.contains("sp_")){try {
 }
 
 finalelement=""+section_n
-        + "<div class='form-group col-md-3 "+js_class+"' style="+showstatus+">" +
+        + "<div class='form-group col-md-4 "+js_class+"' style="+showstatus+">" +
 "<label>" +
 req_asterick+"<b>"+label+"</b>\n" +
 "</label>\n" +
@@ -774,18 +780,11 @@ return finalelement;
 
 }
 
-
-
-
-
-
-
-
 public  String buildopts(String opts, String value){
 
 String finalopts="<option value=''>select option</option>";
 //Yes|Yes:No|No
-//System.out.println(""+opts);
+//System.out.println("fff"+opts);
 
 String valkey[]=opts.split(":");
 for(int s=0;s<valkey.length;s++){
@@ -795,7 +794,8 @@ for(int s=0;s<valkey.length;s++){
   
    String selected="";
   if(value.equals(valkey_in[0])){selected="selected";}
-   
+   //System.out.println("valkey_in 1"+valkey_in[0]);
+   //System.out.println("valkey_in 2"+valkey_in[1]);
  finalopts+="<option "+selected+" value='"+valkey_in[0]+"'>"+valkey_in[1]+"</option>";
     //System.out.println("valkey_in 1"+valkey_in[0]);
     //System.out.println("valkey_in 2"+valkey_in[1]);
@@ -810,14 +810,11 @@ return finalopts;
 }
     
 
-
-
-
 public  String buildoptsMultiselect(String opts, String value){
     //Note: comma on multiselect option is a special character 
     
     String[] ms=value.split(",");
-String finalopts="";
+String finalopts="<option value=''>select option</option>";
 //Yes|Yes:No|No
 //System.out.println(""+opts);
 
@@ -832,7 +829,6 @@ for(int s=0;s<valkey.length;s++){
    for (String t : ms) {
 	if (valkey_in[0].equals(t)) {
 		selected="selected";
-            System.out.println(" While searching for Key, "+valkey_in[0]+"  is selected");     
 	}
    }
  // if(value.equals(valkey_in[0])){selected="selected";}
@@ -849,7 +845,7 @@ return finalopts;
     
     
 }
-
+  
 
 public int getRandNo(int start, int end ){
         Random random = new Random();
@@ -866,9 +862,9 @@ public ResultSet pullElementsBySection(dbConn conn, String Sectionname) throws S
 
     if(Sectionname.equals("")){where="";} else {where="and  Form in ('"+Sectionname+"')";}
     
-String qry="select  ifnull(element_id,'') as element_id,client_identifier_field from internal_system.see_indicators where is_active='1' "+where+"";
+String qry="select  ifnull(element_id,'') as element_id,client_identifier_field,label from internal_system.kp_client_indicators where is_active='1' "+where+"";
 
-    System.out.println(""+qry);
+    //System.out.println(""+qry);
 conn.rs=conn.st.executeQuery(qry);
 
 
@@ -880,6 +876,27 @@ return conn.rs;
 private ResultSet pullDataFromView(dbConn conn, String tbl) throws SQLException {
     
     return conn.st3.executeQuery("select * from "+tbl);
+    
+    
+    }
+private ResultSet pullDataFromSpperOrgunit(dbConn conn, String sp,String orgunit) throws SQLException {
+    
+  
+    String qry="call "+sp+"('"+orgunit+"');";
+    
+    if(sp.contains("(")){qry="call "+sp+";";}
+    
+    
+    //System.out.println("~~~~"+qry);
+    return conn.st3.executeQuery(qry);
+    
+    
+    }
+private ResultSet pullDataFromSpperOrgunit(dbConn conn, String sp) throws SQLException {
+    
+  
+    
+    return conn.st3.executeQuery("call "+sp+"();");
     
     
     }
@@ -897,12 +914,42 @@ return status;
 
 }
 
+private String queryRowsToBuildOptionsString(ResultSet rs) throws SQLException{
+//here we expect data to come from db in multiple rows.
+//since mysql has a limt of characters available in group_concat, we will convert the rwoes to a string using this java method
+//
 
-private ResultSet pullDataFromSpperOrgunit(dbConn conn, String sp,String orgunit) throws SQLException {
-    
-    return conn.st3.executeQuery("call "+sp+"('"+orgunit+"');");
-    
-    
+/***
+ * 
+ * example
+ * 1|Jane
+ * 2|Alex
+ * 
+ * will be converted as 1"Jane:2|Alex
+ * 
+ * This we will then pass to the build options for conversion to select options
+ */
+String status="";
+
+while(rs.next()){
+
+status+=rs.getString(1)+":";
+}
+
+status=removeLast(status, 1);
+
+return status;
+
+}
+
+
+
+
+ public String removeLast(String str, int num) {
+    if (str != null && str.length() > 0) {
+        str = str.substring(0, str.length() - num);
+    }
+    return str;
     }
 
 }

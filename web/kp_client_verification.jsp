@@ -22,7 +22,7 @@
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
-		<title>Binti Shujaa</title>
+		<title>KP Clients Verification</title>
 		<meta name="generator" content="Bootply" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
                 <!--<link href="css/dataTables.bootstrap.min.css" rel="stylesheet">-->
@@ -90,14 +90,14 @@ input:focus {
 <%  dbConn conn = new dbConn();
 
 String frm="";
-String selectedform="binti_enrollment";
+String selectedform="kp_validation";
 if(request.getParameter("frm")!=null){
 
     selectedform=request.getParameter("frm");
     
 }
 
-String getfrms="select distinct(Form) as fm, formname as fmn from internal_system.clinical_indicators where Form='"+selectedform+"' ; ";
+String getfrms="select distinct(Form) as fm, formname as fmn from internal_system.kp_client_indicators where Form='"+selectedform+"' ; ";
 
 conn.rs=conn.st.executeQuery(getfrms);
 while (conn.rs.next())
@@ -134,22 +134,8 @@ frm+="<option "+sele+" value='"+conn.rs.getString(1)+"' >"+conn.rs.getString(2)+
                             <i class="glyphicon glyphicon-question-sign"></i>
                             Help
                         </a></li>
-                              <li><a style="text-align: center;" href='../InternalSystem/ramcahhome.jsp'><i class="glyphicon glyphicon-home"></i>Home</a></li>
-                              
-                       
-								
-                                                                <li><a href="binti_shujaa.jsp?frm=binti_add_groups" class="glyphicon glyphicon-expand">Add Groups</a></li>
-                                                                <li><li><a href="binti_shujaa.jsp?frm=binti_add_shujaas" class="glyphicon glyphicon-tower">Add Binti Shujaas</a></li>
-                                                                <li><a href="binti_shujaa.jsp?frm=binti_enrollment" class="glyphicon glyphicon-new-window">Enrollment</a></li>
-                                                                <li><a href="binti_shujaa.jsp?frm=binti_anc_visits" class="glyphicon glyphicon-file">ANC Visits</a></li>
-                                                                <li><a href="binti_shujaa.jsp?frm=binti_delivery_immunization" class="glyphicon glyphicon-baby-formula">Immunization</a></li>
-                                                                <li><a href="binti_shujaa.jsp?frm=binti_pnc_visits" class="glyphicon glyphicon-folder-open">Post Natal Services</a></li>
-                                                                <li><a href="binti_shujaa.jsp?frm=binti_followup" class="glyphicon glyphicon-repeat">Follow Up</a></li>
-                                                                <li><a href="binti_shujaa.jsp?frm=binti_exit" class="glyphicon glyphicon-circle-arrow-down">Exit Form</a></li>
-					
-                              
-                              
-                              <li><a style="text-align: center;" href='index.jsp'><i class="glyphicon glyphicon-log-out"></i> Logout</a></li>
+                              <li><a style="text-align: center;" href='kp_home.jsp'><i class="glyphicon glyphicon-home"></i>Home</a></li>
+                              <li><a style="text-align: center;" href='kp_index.jsp'><i class="glyphicon glyphicon-log-out"></i> Logout</a></li>
             </ul>
         </div>
         
@@ -166,16 +152,24 @@ frm+="<option "+sele+" value='"+conn.rs.getString(1)+"' >"+conn.rs.getString(2)+
     <div class="row">
         
         <!-- /col-3 -->
-        <div class="col-sm-12">
-
+        <div class="col-sm-12">            
             
-            
-          
-          <h5 class="btn-default col-md-12" style="text-align: center;color:blue;"><b>Binti Shujaa</b></h5>
+            <div class="col-sm-4">
+            <a href='kp_client_verification.jsp?frm=kp_validation'><label class="btn btn-primary"><i class="glyphicon glyphicon-user"></i> Validate Clients Form</label></a>
+            </div>
+             <div class="col-sm-4">
+            <a href='kp_client_verification.jsp?frm=kp_outreach_workers'><label class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i>Outreach Worker</label></a>
+            </div>
+             <div class="col-sm-4">
+            <a href='kp_client_verification.jsp?frm=kp_peer_educators'><label class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i>Contact Person</label></a>
+            </div>
+        </div>
+          <div class="row">
+          <h5 class="btn-default col-md-12" style="text-align: center;color:blue;"><b>KP Case-Based Forms</b></h5>
 
             <div class="row">
                 <!-- center left-->
-                <div class="col-md-12">
+                <div style="padding-left:10%;padding-right:10%;" class="col-md-12">
                     
 
                   
@@ -231,7 +225,7 @@ frm+="<option "+sele+" value='"+conn.rs.getString(1)+"' >"+conn.rs.getString(2)+
                                                                 <div class="control-group">
 
                                                                     <div class="controls">
-                                                                        <label><required-option></required-option>Form Name</label> 
+                                                                        <label><required-option></required-option>LIP</label> 
 
                                                                     </div>
                                                                 </div>
@@ -265,9 +259,24 @@ frm+="<option "+sele+" value='"+conn.rs.getString(1)+"' >"+conn.rs.getString(2)+
                                                                 <div class="control-group">
 
                                                                     <div class="controls">
-                                                                        <select required="true"   onchange="getFacilitiesJson();isdisplayindicators();"   name="frmname" id="frmname" class="form-control" >
+                                                                        <select style="display:none;" required="true"   onchange="getFacilitiesJson();isdisplayindicators();"   name="frmname" id="frmname" class="form-control" >
                                                                      <%=frm%>                                              
                                                                         </select>
+                                                                        
+                                                                        
+                                                                        <select required="true"   onchange=""   name="lip" id="lip" class="form-control" >
+                                                                            <%
+
+                                                                                if (session.getAttribute("liplist") != null) {
+
+                                                                                    out.println(session.getAttribute("liplist").toString());
+                                                                                } else {
+                                                                                    out.println("<option value=''>login to select LIP</option>");
+                                                                                }
+                                                                            %>                                          
+                                                                        </select>
+                                                                        
+                                                                        
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -276,7 +285,10 @@ frm+="<option "+sele+" value='"+conn.rs.getString(1)+"' >"+conn.rs.getString(2)+
                                                                 <div class="control-group">
 
                                                                     <div class="controls">
-                                                                        <select required="true"   onchange="getFacilitiesJson();isdisplayindicators();"   name="period" id="period" class="form-control" >
+                                                                        
+                                                                      
+                                                                        
+                                                                        <select required="true"   onchange="getDicesJson();isdisplayindicators();"   name="period" id="period" class="form-control" >
                                                                                                                    
                                                                         </select>
                                                                     </div>
@@ -288,9 +300,13 @@ frm+="<option "+sele+" value='"+conn.rs.getString(1)+"' >"+conn.rs.getString(2)+
                                                                 <div class="control-group">
 
                                                                     <div class="controls">
-                                                                     <select required="true"   onchange="isdisplayindicators();"   name="facility" id="facility" class="form-control" >
-                                                                                                                   
+                                                                   
+                                                                        
+                                                                          <select required="true"  onchange="isdisplayindicators();"   name="facility" id="facility" class="form-control" >
+                                                                            <option>Select DIC Name</option>
+
                                                                         </select>
+                                                                        
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -347,11 +363,11 @@ frm+="<option "+sele+" value='"+conn.rs.getString(1)+"' >"+conn.rs.getString(2)+
                                         
                                    <br/>
                                     <div style="display:none;" class="controls savebuttons">
-                                        <input type="input" onClick="loadClinicalValidation('loadClinicalValidation','<%=selectedform%>','clinical_indicators');"  id='savebutton' value="Save Record"  style="margin-left: 0%;" class="btn-sm btn-success active">
+                                        <input type="input" onClick="loadClinicalValidation('loadClinicalValidation','<%=selectedform%>','kp_client_indicators');"  id='savebutton' value="Save Record"  style="margin-left: 0%;" class="btn-sm btn-success active">
                                             
                                      </div>
                                      <div class="controls">
-                                        <button type="submit" id='updatebutton' onclick="loadClinicalValidation('loadClinicalValidation','<%=selectedform%>','clinical_indicators');" style="margin-left: 0%;display:none;" class="btn-sm btn-info active">
+                                        <button type="submit" id='updatebutton' onclick="loadClinicalValidation('loadClinicalValidation','<%=selectedform%>','kp_client_indicators');" style="margin-left: 0%;display:none;" class="btn-sm btn-info active">
                                             Update Record 
                                         </button>
                                     </div>                                   
@@ -616,25 +632,20 @@ frm+="<option "+sele+" value='"+conn.rs.getString(1)+"' >"+conn.rs.getString(2)+
                 <h4 class="modal-title">Help</h4>
             </div>
             <div class="modal-body">
-                <p>This  application is created for aiding users in collecting data for Weekly High Frequency Reporting.</p>
+                <p>This  application is created for aiding users in collecting data for KP Clients Verification purpose only.</p>
                 <h3>Indicators</h3>
-                <p>The specific indicators that one should enter data for are;</p>
+               
                 <ul>
 
 
-<li>HTS TST- No Tested for HIV	</li>														
-<li>HTS TST POS		</li>													
-<li>TX LINK</li>													
-<li>TX NEW</li>													
-<li>TX BTC</li>												
-<li>PREP NEW</li>													
-<li>VMMC CIRC</li>												
+													
+<!--<li>VMMC CIRC</li>												-->
 
 
 
 
                 </ul>
-             <h3> Facilities</h3>
+             <h3> Data is reported by Facility type </h3>
                  <p> You are only able to report data for non - surge / Non priority site</p>
               </div>
             <div class="modal-footer">
@@ -693,7 +704,7 @@ frm+="<option "+sele+" value='"+conn.rs.getString(1)+"' >"+conn.rs.getString(2)+
        
        
               $.ajax({
-                    url:'loadRamcahSites',                            
+                    url:'loadActiveSites',                            
                     type:'post',  
                     dataType: 'html',  
                     success: function(data)
@@ -702,7 +713,7 @@ frm+="<option "+sele+" value='"+conn.rs.getString(1)+"' >"+conn.rs.getString(2)+
                    $(document).ready(function() {
           
               $('#facility').select2(); 
-             isdisplayindicators();
+             
                                  } ); 
                         
                         
@@ -710,8 +721,41 @@ frm+="<option "+sele+" value='"+conn.rs.getString(1)+"' >"+conn.rs.getString(2)+
    
    }
  
-   getFacilitiesJson();
+  // getFacilitiesJson();
  
+   
+   
+   
+   
+      function getDicsJson() {
+
+                                       var lip = $("#lip").val();
+
+                                      var dicoption="<option data-ward_name='' data-ward_id='' data-supported_kp='' value=''>select dic</option>";
+                                       $.ajax({
+                                           url: 'getDics?lip=' + lip,
+                                           type: 'post',
+                                           dataType: 'html',
+                                           success: function (data) {
+                                               $("#facility").html(dicoption+data);
+                                              
+                                               
+                                               $(document).ready(function () {
+
+                                                   $('#dic').select2();
+isdisplayindicators();
+                                               });
+
+
+                                           }});
+
+                                   }
+
+
+
+                                   getDicsJson();
+   
+   
    
   var facility=null;
 
@@ -967,7 +1011,7 @@ function isdisplayindicators()
             
             //now load the data
           $.ajax({
-                    url:'loadClinicalIndicators?dt='+dt+"&fc="+fc+"&wr="+mainformwhere,                            
+                    url:'loadKpClientIndicators?dt='+dt+"&fc="+fc+"&wr="+mainformwhere,                            
                     type:'post',  
                     dataType: 'html',  
                     success: function(data) 
@@ -1002,6 +1046,8 @@ function isdisplayindicators()
     
     
 }
+
+
 function loadExistingClient(clientid,frm)
 { 
     
@@ -1025,7 +1071,7 @@ function loadExistingClient(clientid,frm)
             
             //now load the data
           $.ajax({
-                    url:'loadClinicalIndicators',                            
+                    url:'loadKpClientIndicators',                            
                     type:'post',  
                     data:{
                         dt:dt,
@@ -1074,7 +1120,7 @@ function getElementsToBeSaved(formname)
  
             //now load the data
           $.ajax({
-                    url:'loadClinicalIndicators?fm='+formname,                            
+                    url:'loadKpClientIndicators?fm='+formname,                            
                     type:'post',  
                     dataType: 'json',  
                     success: function(data) 
@@ -1104,7 +1150,7 @@ function getElementsToBeRefreshed(formname)
  
             //now load the data
           $.ajax({
-                    url:'loadClinicalIndicators?fm='+formname,                            
+                    url:'loadKpClientIndicators?fm='+formname,                            
                     type:'post',  
                     dataType: 'json',  
                     success: function(data) 
@@ -1156,7 +1202,7 @@ if(1===2){$("#fedback").html("<font color='red'><h3>Please enter Client Name</h3
 else {
     
      $.ajax({
-                    url:'deletePatientRecordsClinicalForm',                            
+                    url:'deletePatientRecordsKPClientForm',                            
                     type:'post',  
                     data:{pid:pid},
                     dataType: 'html',  
@@ -1207,7 +1253,7 @@ else {
         if(issaveready){
              
                $.ajax({
-                    url:'saveClinical',                            
+                    url:'saveKpClientdata',                            
                     type:'post',  
                     data:{id:tid,
                         facility_id:fc,
@@ -1295,7 +1341,7 @@ else {
  
             //now load the data
           $.ajax({
-                    url:'loadClinicalIndicators?fm='+formname,                            
+                    url:'loadKpClientIndicators?fm='+formname,                            
                     type:'post',  
                     dataType: 'json',  
                     success: function(data) 
@@ -1372,7 +1418,7 @@ function loadEdits(formtoload,elementtoappend){
                     type:'post',  
                    
                     dataType: 'html',  
-                    data:{act:"showClinicalEdits",
+                    data:{act:"showKPEdits",
                          fac:fc,
                          fm:formtoload,
                          table_docker:elementtoappend},
@@ -1456,46 +1502,6 @@ function refreshPage(){
 
 
 
-function ShowVlStatus(source,dest,hasnumericresults){
-  
-  
- // vl_results_ldl
-//vl_results_values
-//Suppressed|Suppressed:Unsuppressed|Unsuppressed
-  
-        var src=$("#"+source).val();
-       
-        if(hasnumericresults==='no'){
-        if (src==='LDL') {
-            $("#"+dest).val("Suppressed");
-    
-}
-else {
-    
-    $("#"+dest).val(""); 
-    
-}
-
-
-
-        }
- if(hasnumericresults==='yes'){
-        if (src>=1000) {
-            $("#"+dest).val("Unsuppressed");
-            $("#"+dest).trigger("change");
-    
-}
-     else  if (src<=1000) {
-            $("#"+dest).val("Suppressed");
-    
-                             }
-                         }
-        
-//        var dest=$("#"+source).val();
-    
-    
-    
-}
 
 
 
@@ -1504,7 +1510,7 @@ function dltpt(pid){
        var result = confirm("Are you sure you want to delete this patient?");
 if (result) {
       $.ajax({
-                    url:'deletePatientRecordsClinicalForm',                            
+                    url:'deletePatientRecordsKPClientForm',                            
                     type:'post',  
                     data:{pid:pid},
                     dataType: 'html',  
@@ -1525,7 +1531,7 @@ if (result) {
 function dltptquietly(pid){
      
       $.ajax({
-                    url:'deletePatientRecordsClinicalForm',                            
+                    url:'deletePatientRecordsKPClientForm',                            
                     type:'post',  
                     data:{pid:pid},
                     dataType: 'html',  

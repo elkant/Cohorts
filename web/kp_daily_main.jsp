@@ -104,8 +104,7 @@ input:focus {
                             <i class="glyphicon glyphicon-question-sign"></i>
                             Help
                         </a></li>
-                              <li><a style="text-align: center;" href='kp_daily_main.jsp'><i class="glyphicon glyphicon-star"></i> Daily Data Section</a></li>
-                              <li><a style="text-align: center;" href='kp_main.jsp'><i class="glyphicon glyphicon-stats"></i> Monthly Data Section</a></li>
+                              <li><a style="text-align: center;" href='kp_home.jsp'><i class="glyphicon glyphicon-stats"></i>Home</a></li>
                               <li><a style="text-align: center;" href='kp_index.jsp'><i class="glyphicon glyphicon-log-out"></i> Logout</a></li>
             </ul>
         </div>
@@ -316,11 +315,11 @@ input:focus {
                                         <div id='fedback' class="alert-info">Note: Please enter all the required data.</div>
                                    <br/>
                                     <div class="controls">
-                                        <input type="input" onClick="loadValidation();"  id='savebutton' value="SAVE"  style="margin-left: 0%;" class="btn-lg btn-success active">
+                                        <input type="input" onClick="loadValidation('daily_kp');"  id='savebutton' value="SAVE"  style="margin-left: 0%;" class="btn-lg btn-success active">
                                             
                                      </div>
                                      <div class="controls">
-                                        <button type="submit" id='updatebutton' onclick="loadValidation();" style="margin-left: 0%;display:none;" class="btn-lg btn-info active">
+                                        <button type="submit" id='updatebutton' onclick="loadValidation('daily_kp');" style="margin-left: 0%;display:none;" class="btn-lg btn-info active">
                                             UPDATE 
                                         </button>
                                     </div>
@@ -692,7 +691,7 @@ input:focus {
                                                $(document).ready(function () {
 
                                                    $('#dic').select2();
-
+isdisplayindicators();
                                                });
 
 

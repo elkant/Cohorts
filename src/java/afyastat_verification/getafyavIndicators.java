@@ -119,7 +119,8 @@ String indicators="<thead><tr style='background-color:#9f9999;color:white;'><th>
         + "<th>KenyaEMR</th>"
         + "<th> MOH_731 </th>"
         + "<th>Registers</th>"
-       // + "<th>Variance</th>"
+        + "<th>% Concordance</th>"
+        + "<th>Corrective action taken</th>"
         + "</tr></thead><tbody>";
 
     
@@ -149,7 +150,9 @@ String ndwh="";
 String emr="";
 String moh731="";
 String register="";
-String variance="";
+
+String conc="";
+String corrective_action="";
 
     
     
@@ -170,7 +173,8 @@ ndwh=joage.get("ndwh").toString();
 emr=joage.get("emr").toString();
 moh731=joage.get("moh731").toString();
 register=joage.get("register").toString();
-variance=joage.get("variance").toString();
+corrective_action=joage.get("corrective_action").toString();
+conc=""+Math.round((new Double(joage.get("ndwh").toString())/new Double(joage.get("emr").toString()))*100);
 
          
    }
@@ -196,7 +200,9 @@ variance=joage.get("variance").toString();
             + "<td>EMR</td>"
             + "<td>MOH 731</td>"
             + "<td>Registers</td>"
-           // + "<td>Variance</td></tr>"
+            + "<td>% Concordance</td>"
+            + "<td>Corrective Action Taken</td>"
+            + "</tr>"
             + "";
     }
     else {
@@ -212,8 +218,9 @@ variance=joage.get("variance").toString();
      String inputndwh="<input "+readonly_variance+" value='"+ndwh+"'   onkeypress='return numbers(event); ' placeholder='NDWH'  type='tel' maxlength='4' min='0' max='9999' name='"+id+"_ndwh' id='"+id+"_ndwh' class='form-control inputs'>"; 
      String inputemr="<input  value='"+emr+"'   onkeypress='return numbers(event); ' placeholder='EMR'  type='tel' maxlength='4' min='0' max='9999' name='"+id+"_emr' id='"+id+"_emr' class='form-control inputs'>"; 
      String inputmoh731="<input  value='"+moh731+"'   onkeypress='return numbers(event); ' placeholder='MOH 731'  type='tel' maxlength='4' min='0' max='9999' name='"+id+"_moh731' id='"+id+"_moh731' class='form-control inputs'>"; 
-     String inputregister="<input  value='"+register+"'   onkeypress='return numbers(event); ' placeholder='Register'  type='tel' maxlength='4' min='0' max='9999' name='"+id+"_register' id='"+id+"_register' class='form-control inputs'>"; 
-     String inputvariance="<input "+readonly_variance+" tabindex='-1'   value='"+variance+"'   onkeypress='return numbers(event); ' placeholder='Variance'  type='tel' maxlength='4' min='0' max='9999' name='"+id+"_variance' id='"+id+"_variance' class='form-control inputs'>"; 
+     String inputregister="<input  value='"+register+"'   onkeypress='return numbers(event);' placeholder='Register'  type='tel' maxlength='4' min='0' max='9999' name='"+id+"_register' id='"+id+"_register' class='form-control inputs'>"; 
+     String inputvariance="<input "+readonly_variance+" tabindex='-1'   value='"+conc+"'   onkeypress='return numbers(event); ' placeholder='concordance'  type='tel' maxlength='4' min='0' max='9999' name='"+id+"_concordance' id='"+id+"_concordance' class='form-control inputs'>"; 
+     String inputcar="<input  tabindex='-1'   value='"+corrective_action+"'   onkeypress='return numbers(event); ' placeholder='Variance'  type='tel' maxlength='4' min='0' max='9999' name='"+id+"_variance' id='"+id+"_variance' class='form-control inputs'>"; 
      
     //imis	datim	khis	ndwh	emr	moh731	register	variance
 indicators+=""+displaysection
@@ -227,7 +234,8 @@ indicators+=""+displaysection
         + "<td>"+inputemr+"</td>"
         + "<td>"+inputmoh731+"</td>"
         + "<td>"+inputregister+"</td>"
-        //+ "<td>"+inputvariance+"</td>"
+        + "<td>"+inputvariance+"</td>"
+        + "<td>"+inputcar+"</td>"
         + "</tr>";
         
 
@@ -251,14 +259,15 @@ String getdata=" select `id`,\n" +
 "    `yearmonth`,\n" +
 "    `facility`,\n" +
 "    `indicatorid`,\n" +
-"    ifnull(`imis`,'') as imis,\n" +
-"    ifnull(`datim`,'') as datim,\n" +
-"    ifnull(`khis`,'') as khis,\n" +
-"    ifnull(`ndwh`,'') as ndwh,\n" +
+"    ifnull(`imis`,'0') as imis,\n" +
+"    ifnull(`datim`,'0') as datim,\n" +
+"    ifnull(`khis`,'0') as khis,\n" +
+"    if(ifnull(`ndwh`,'0')='',0,ifnull(`ndwh`,'0')) as ndwh,\n" +
 "    ifnull(`emr`,'') as emr,\n" +
 "    ifnull(`moh731`,'') as moh731,\n" +
 "    ifnull(`register`,'') as register,\n" +
 "    ifnull(`variance`,'') as variance,\n" +
+"    ifnull(`corrective_action`,'') as corrective_action,\n" +
 "    `timestamp`,\n" +
 "    `lastupdated`,\n" +
 "    `userid` from internal_system.afyav_data where yearmonth='"+reportingdate+"' and facility='"+facilitymfl+"'";
@@ -292,6 +301,7 @@ hm2.put("emr", conn.rs1.getString("emr"));
 hm2.put("moh731", conn.rs1.getString("moh731"));
 hm2.put("register", conn.rs1.getString("register"));
 hm2.put("variance", conn.rs1.getString("variance"));
+hm2.put("corrective_action", conn.rs1.getString("corrective_action"));
  hm.put(conn.rs1.getString("indicatorid"), hm2);
 //ja.put(hm);
       }
@@ -402,6 +412,8 @@ String emr="";
 String moh731="";
 String register="";
 String variance="";
+String concordance="";
+String corrective_action="";
 
     
     
@@ -423,6 +435,16 @@ emr=joage.get("emr").toString();
 moh731=joage.get("moh731").toString();
 register=joage.get("register").toString();
 variance=joage.get("variance").toString();
+corrective_action=joage.get("corrective_action").toString();
+double nm=0;
+double dn=1;
+
+if(!joage.get("ndwh").toString().equalsIgnoreCase("")){nm=new Double(joage.get("ndwh").toString());}
+if(!joage.get("register").toString().equalsIgnoreCase("")){dn=new Double(joage.get("register").toString());}
+
+//concordance=(joage.get("ndwh").toString())+"/"+(joage.get("emr").toString());
+concordance=""+Math.round((nm/dn)*100);
+
 
          
    }
@@ -461,16 +483,18 @@ variance=joage.get("variance").toString();
      String inputimis="<input "+readonly_variance+" value='"+imis+"'   onkeypress='return numbers(event); ' placeholder='IMIS'  type='tel' maxlength='4' min='0' max='9999' name='"+id+"_imis' id='"+id+"_imis' class='form-control inputs'>"; 
      String inputdatim="<input  value='"+datim+"'   onkeypress='return numbers(event); ' placeholder='Datim'  type='tel' maxlength='4' min='0' max='9999' name='"+id+"_datim' id='"+id+"_datim' class='form-control inputs'>"; 
      String inputkhis="<input "+readonly_variance+"  value='"+khis+"'   onkeypress='return numbers(event); ' placeholder='KHIS'  type='tel' maxlength='4' min='0' max='9999' name='"+id+"_khis' id='"+id+"_khis' class='form-control inputs'>"; 
-     String inputndwh="<input "+readonly_variance+" value='"+ndwh+"'   onkeypress='return numbers(event); ' placeholder='NDWH'  type='tel' maxlength='4' min='0' max='9999' name='"+id+"_ndwh' id='"+id+"_ndwh' class='form-control inputs'>"; 
-     String inputemr="<input  value='"+emr+"'   onkeypress='return numbers(event); ' placeholder='EMR'  type='tel' maxlength='4' min='0' max='9999' name='"+id+"_emr' id='"+id+"_emr' class='form-control inputs'>"; 
+     String inputndwh="<input "+readonly_variance+" onkeyup='calculateconcordance("+id+");' value='"+ndwh+"'   onkeypress='return numbers(event); ' placeholder='NDWH'  type='tel' maxlength='4' min='0' max='9999' name='"+id+"_ndwh' id='"+id+"_ndwh' class='form-control inputs'>"; 
+     String inputemr="<input  value='"+emr+"' onkeyup='calculateconcordance("+id+");'   onkeypress='return numbers(event); ' placeholder='EMR'  type='tel' maxlength='4' min='0' max='9999' name='"+id+"_emr' id='"+id+"_emr' class='form-control inputs'>"; 
      String inputmoh731="<input  value='"+moh731+"'   onkeypress='return numbers(event); ' placeholder='MOH 731'  type='tel' maxlength='4' min='0' max='9999' name='"+id+"_moh731' id='"+id+"_moh731' class='form-control inputs'>"; 
-     String inputregister="<input  value='"+register+"'   onkeypress='return numbers(event); ' placeholder='Register'  type='tel' maxlength='4' min='0' max='9999' name='"+id+"_register' id='"+id+"_register' class='form-control inputs'>"; 
+     String inputregister="<input  value='"+register+"' onkeyup='calculateconcordance("+id+");'   onkeypress='return numbers(event); ' placeholder='Register'  type='tel' maxlength='4' min='0' max='9999' name='"+id+"_register' id='"+id+"_register' class='form-control inputs'>"; 
      String inputvariance="<input "+readonly_variance+" tabindex='-1'   value='"+variance+"'   onkeypress='return numbers(event); ' placeholder='Variance'  type='tel' maxlength='4' min='0' max='9999' name='"+id+"_variance' id='"+id+"_variance' class='form-control inputs'>"; 
+     String inputconcordance="<input "+readonly_variance+" tabindex='-1'   value='"+concordance+"'   onkeypress='return numbers(event); ' placeholder='Concordance'  type='tel' maxlength='4' min='0' max='9999' name='"+id+"_concordance' id='"+id+"_concordance' class='form-control inputs'>"; 
+     String inputcorrective_action="<textarea rows='3'   placeholder='corrective action'  type='text'  name='"+id+"_corrective_action' id='"+id+"_corrective_action' class='form-control inputs'>"+corrective_action+"</textarea>"; 
      
     //imis	datim	khis	ndwh	emr	moh731	register	variance
 indicators+=""+displaysection
         + "<tr>"
-        + "<td style='vertical-align: middle;' rowspan='6'> <span class='badge'>"+count+"  </span><b> "+indic+"</b></td><td>Form 1a</td> <td>"+inputimis+"</td></tr>"
+        + "<td style='vertical-align: middle;' rowspan='8'> <span class='badge'>"+count+"  </span><b> "+indic+"</b></td><td>Form 1a</td> <td>"+inputimis+"</td></tr>"
         //+ "<td>"+indicator_code+"</td>"
        
        
@@ -479,6 +503,8 @@ indicators+=""+displaysection
         + "<tr><td>KenyaEMR</td><td>"+inputemr+"</td></tr>"
         + "<tr><td>MOH 731</td><td>"+inputmoh731+"</td></tr>"
         + "<tr><td>Registers <br/>(All valid registers)</td><td>"+inputregister+"</td></tr>"
+        + "<tr><td>Concordance (%)</td><td>"+inputconcordance+"</td></tr>"
+        + "<tr><td>Corrective Action Plan</td><td>"+inputcorrective_action+"</td></tr>"
         //+ "<td>"+inputvariance+"</td>"
         + "";
         

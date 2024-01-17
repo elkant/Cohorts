@@ -84,6 +84,7 @@
                <ul class="sub">
     
      <%if(1==1){%> 
+  <li><a href='importpmtctrri.jsp'><i class='icon-plus'></i>PMTCT RRI ( Weekly )</a></li>
   <li><a href='importDtriangulation.jsp'><i class='icon-plus'></i>Daily Data Triangulation</a></li>
   <li><a href="importpns.jsp"><i class="icon-plus"></i>Upload PNS</a></li>
   <li><a href='MissingReports.jsp'><i class='icon-stop'></i>Surge Missing Reports</a></li>
@@ -133,7 +134,8 @@
             
          <%  } 
 else {
-
+  
+  out.println("  <li><a style='color:green;' href='importpmtctrri.jsp'><i class='icon-plus'></i><b>PMTCT RRI ( Weekly )</b></a></li>");
   out.println("<li ><a  target='_blank' href='https://usaidtujengejamii.org:8443/htslive/livesummary.jsp'><i class='icon-list'></i>RRI Live Summary</a></li>");
   out.println("<li ><a style='' href='importDtriangulation.jsp'><i class='icon-plus'></i>Daily Data Triangulation</a></li>");
   out.println("<li ><a target='_blank' style='' href='https://usaidtujengejamii.org:8443/InternalSystem//fmattupload.jsp'><i class='icon-plus'></i>Daily Fmatt Upload</a></li>");

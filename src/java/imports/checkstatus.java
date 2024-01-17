@@ -57,6 +57,18 @@ int pos=0;
              }
              }
          }
+        
+         if(load_type.equalsIgnoreCase("pmtctrri"))
+         {
+             if(session.getAttribute("prrpos")!=null){
+             message = session.getAttribute("prrpos").toString();
+             if(isNumeric(session.getAttribute("prrpos_count").toString())){
+             pos = Integer.parseInt(session.getAttribute("prrpos_count").toString());
+                 System.out.println("pos ni :"+pos);
+             
+             }
+             }
+         }
        
          
          obj.put("count", pos);

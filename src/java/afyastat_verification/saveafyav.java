@@ -54,7 +54,7 @@ public class saveafyav extends HttpServlet {
            */
             
  //String[] dataelementsarr= {"id","yearmonth","facility","indicatorid","imis","datim","khis","ndwh","emr","moh731","register","variance","userid"}; 
- String[] dataelementsarr= {"id","yearmonth","facility","indicatorid","imis","khis","ndwh","emr","moh731","register","variance","userid"}; 
+ String[] dataelementsarr= {"id","yearmonth","facility","indicatorid","imis","khis","ndwh","emr","moh731","register","variance","concordance","corrective_action","userid"}; 
  //String[] orgunitsarr= {"county","`sub-county`"}; 
           
  ArrayList al= new ArrayList();

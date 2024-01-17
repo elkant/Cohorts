@@ -768,6 +768,38 @@
         <servlet-name>importderv991</servlet-name>
         <servlet-class>imports.importderv991</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>importpmtctrri</servlet-name>
+        <servlet-class>pmtct_rri.importpmtctrri</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>getKPValidationIndicators</servlet-name>
+        <servlet-class>KP.getKPValidationIndicators</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>loadKpClientIndicators</servlet-name>
+        <servlet-class>KP.loadKpClientIndicators</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>saveKpClientdata</servlet-name>
+        <servlet-class>KP.saveKpClientdata</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>deletePatientRecordsKPClientForm</servlet-name>
+        <servlet-class>KP.deletePatientRecordsKPClientForm</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>cirg_kp_ppmsreport</servlet-name>
+        <servlet-class>hfr.cirg_kp_ppmsreport</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>cirg_prep_ppms</servlet-name>
+        <servlet-class>hfr.cirg_prep_ppms</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>cirg_gend_link_comm_ppms</servlet-name>
+        <servlet-class>hfr.cirg_gend_link_comm_ppms</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loadcohort</servlet-name>
         <url-pattern>/loadcohort</url-pattern>
@@ -1535,6 +1567,38 @@
     <servlet-mapping>
         <servlet-name>importderv991</servlet-name>
         <url-pattern>/importderv991</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>importpmtctrri</servlet-name>
+        <url-pattern>/importpmtctrri</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getKPValidationIndicators</servlet-name>
+        <url-pattern>/getKPValidationIndicators</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>loadKpClientIndicators</servlet-name>
+        <url-pattern>/loadKpClientIndicators</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>saveKpClientdata</servlet-name>
+        <url-pattern>/saveKpClientdata</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>deletePatientRecordsKPClientForm</servlet-name>
+        <url-pattern>/deletePatientRecordsKPClientForm</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>cirg_kp_ppmsreport</servlet-name>
+        <url-pattern>/cirg_kp_ppmsreport</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>cirg_prep_ppms</servlet-name>
+        <url-pattern>/cirg_prep_ppms</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>cirg_gend_link_comm_ppms</servlet-name>
+        <url-pattern>/cirg_gend_link_comm_ppms</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

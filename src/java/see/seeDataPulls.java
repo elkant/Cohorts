@@ -372,7 +372,7 @@ for(int c=0;c<mycolumns.size();c++)
 {
     
      String id="";
- if(c==0){id="id='"+res.getString(mycolumns.get(c).toString())+"'"; System.out.println("Id Ni __"+id);  dtlist_html+="<tr "+id+">";}
+ if(c==0){id="id='"+res.getString(mycolumns.get(c).toString())+"'";   dtlist_html+="<tr "+id+">";}
       dtlist_html+="<td>"+res.getString(mycolumns.get(c).toString())+"</td>";
       if(c==mycolumns.size()-1){ dtlist_html+="<td><label onclick='loadExistingClient(\""+res.getString("patient_id")+"\",\""+frm+"\");' class='btn btn-info'>Edit</label></td></tr>";}
 
