@@ -135,7 +135,8 @@
          <%  } 
 else {
   
-  out.println("  <li><a style='color:green;' href='importpmtctrri.jsp'><i class='icon-plus'></i><b>PMTCT RRI ( Weekly )</b></a></li>");
+  out.println("  <li><a style='color:green;' href='dailyart.jsp'><i class='icon-plus'></i><b>Daily ART Web</b></a></li>");
+  out.println("  <li><a style='' href='importpmtctrri.jsp'><i class='icon-plus'></i>PMTCT RRI ( Weekly )</a></li>");
   out.println("<li ><a  target='_blank' href='https://usaidtujengejamii.org:8443/htslive/livesummary.jsp'><i class='icon-list'></i>RRI Live Summary</a></li>");
   out.println("<li ><a style='' href='importDtriangulation.jsp'><i class='icon-plus'></i>Daily Data Triangulation</a></li>");
   out.println("<li ><a target='_blank' style='' href='https://usaidtujengejamii.org:8443/InternalSystem//fmattupload.jsp'><i class='icon-plus'></i>Daily Fmatt Upload</a></li>");

@@ -95,18 +95,19 @@
          </div>
          <!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
          <!-- BEGIN PAGE CONTAINER-->
-         <div class="container-fluid">
+         
             <!-- BEGIN PAGE HEADER-->   
             <div class="row-fluid">
                <div class="span12">
                   <!-- BEGIN STYLE CUSTOMIZER -->
                
                   <!-- END BEGIN STYLE CUSTOMIZER -->   
-                  <h3 class="page-title" style="text-align: center;">
-                    <a class='btn-warning btn' href="pns/ART_Daily_Form_v990_2023_10_26_.xlsx" style="margin-left:40%;">Download ART Daily Template ( v 9.9.1)</a> 
+                  <div class="page-title" style="text-align: center;">
+                    <a class='btn-warning btn' href="pns/ART_Daily_Form_v990_2023_10_26_.xlsx" style="padding:4px; margin-left:10%;">Download ART Daily Template ( v 9.9.1)</a> 
+                    <a class='btn-warning btn' href="dailyart.jsp" style="padding:4px;margin-left:10%;">Daily ART Web</a> 
                    
 <!--                    Internal System-->
-                  </h3>
+                  </div>
                  
                   
                   <ul class="breadcrumb">
@@ -121,6 +122,8 @@
             </div>
             <!-- END PAGE HEADER-->
             <!-- BEGIN PAGE CONTENT-->
+            <% response.sendRedirect("dailyart.jsp");%>
+            
             <div class="row-fluid">
                <div class="span12">
                   <!-- BEGIN SAMPLE FORM PORTLET-->   
@@ -213,7 +216,7 @@
             <!-- END PAGE CONTENT-->         
          </div>
          <!-- END PAGE CONTAINER-->
-      </div>
+      
       <!-- END PAGE -->  
    </div>
    <!-- END CONTAINER -->

@@ -141,21 +141,33 @@ color:white;
                                                 
                                                 </div>
                                         
-<div class="form-row col-md-12"> 
+                                            
+                                            
+                                            
+                                            <div class="form-row col-md-12"> 
 
-    <div class='form-group col-md-6'>
-        <hr/><span class="login100-form-avatar"> <a href='hei_weekly_main.jsp'>   <img src="images/hei_weekly.png" alt="HEI"></a></span>
+    <div class='form-group col-md-4'>
+         <hr/><span class="login100-form-avatar"> <a href='hei_weekly_main.jsp'>   <img src="images/hei_weekly.png" alt="HEI"></a></span>
 <h5  class="label_clean">Weekly HEI</h5> 
 </div>
 
-    
-      <div class='form-group col-md-6'>
+                                                
+ <div class='form-group col-md-4'>
           <hr/><span class="login100-form-avatar"> <a href='see_main.jsp'>   <img src="images/see.png" alt="SEE"></a></span>
-<h5  class="label_clean">Social Economic & Enviromental Factors affecting ROCs</h5> 
+<h5  class="label_clean">Social Economic & Environmental Factors affecting ROCs</h5> 
+</div>
+                                                
+    
+      <div class='form-group col-md-4'>
+          <hr/><span class="login100-form-avatar"> <a href='clinicalforms.jsp?frm=hei_audit'>   <img src="images/heiaudit.png" alt="Hei Audit"></a></span>
+<h5  class="label_clean">HEI Audit</h5> 
 </div>
     
     
 </div>
+                                            
+                                            
+                                            
 					
 
                                             </div>

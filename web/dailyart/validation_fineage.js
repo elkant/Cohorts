@@ -17,7 +17,7 @@ function loadValidation() {
     breakloop = false;
 
     $.ajax({
-        url:'loadRetValidation',
+        url:'loadDailyARTValidation',
         type:'post',
         dataType:'json',
         success:function (data) {
@@ -97,8 +97,8 @@ function less(valids, message, iscritical, sectionid) {
 
     var val1, val2;
 
-var columns = ["9m","9f","14m","14f","19m","19f","24m","24f","25m","25f"];
-var agearray = ["9m","9f","14m","14f","19m","19f","24m","24f","25m","25f"];
+var columns = ["der_1f","der_1m","der_4f","der_4m","der_9f","der_9m","der_14f","der_14m","der_19f","der_19m","der_24f","der_24m","der_29f","der_29m","der_34f","der_34m","der_39f","der_39m","der_44f","der_44m","der_49f","der_49m","der_50f","der_50m"];
+var agearray = ["der_1f","der_1m","der_4f","der_4m","der_9f","der_9m","der_14f","der_14m","der_19f","der_19m","der_24f","der_24m","der_29f","der_29m","der_34f","der_34m","der_39f","der_39m","der_44f","der_44m","der_49f","der_49m","der_50f","der_50m"];
 
 
 
@@ -190,8 +190,9 @@ function greater(valids, message, iscritical, sectionid) {
 
     var val1, val2;
 
-    var columns = ["9m","9f","14m","14f","19m","19f","24m","24f","25m","25f"];
-var agearray = ["9m","9f","14m","14f","19m","19f","24m","24f","25m","25f"];
+ var columns = ["der_1f","der_1m","der_4f","der_4m","der_9f","der_9m","der_14f","der_14m","der_19f","der_19m","der_24f","der_24m","der_29f","der_29m","der_34f","der_34m","der_39f","der_39m","der_44f","der_44m","der_49f","der_49m","der_50f","der_50m"];
+var agearray = ["der_1f","der_1m","der_4f","der_4m","der_9f","der_9m","der_14f","der_14m","der_19f","der_19m","der_24f","der_24m","der_29f","der_29m","der_34f","der_34m","der_39f","der_39m","der_44f","der_44m","der_49f","der_49m","der_50f","der_50m"];
+
 
 
 
@@ -205,7 +206,7 @@ var agearray = ["9m","9f","14m","14f","19m","19f","24m","24f","25m","25f"];
 
 
 
-        //    alert(columns[i]+"_"+indicator_id);
+            //alert(columns[i]+"_"+indicator_id);
         val1 = multisum(valarray[0], columns[i]);
         val2 = multisum(valarray[1], columns[i]);
         //m_uk
@@ -287,8 +288,9 @@ function lessOrEqual(valids, message, iscritical, sectionid) {
 
     var val1, val2;
 
-   var columns = ["9m","9f","14m","14f","19m","19f","24m","24f","25m","25f"];
-var agearray = ["9m","9f","14m","14f","19m","19f","24m","24f","25m","25f"];
+var columns = ["der_1f","der_1m","der_4f","der_4m","der_9f","der_9m","der_14f","der_14m","der_19f","der_19m","der_24f","der_24m","der_29f","der_29m","der_34f","der_34m","der_39f","der_39m","der_44f","der_44m","der_49f","der_49m","der_50f","der_50m"];
+var agearray = ["der_1f","der_1m","der_4f","der_4m","der_9f","der_9m","der_14f","der_14m","der_19f","der_19m","der_24f","der_24m","der_29f","der_29m","der_34f","der_34m","der_39f","der_39m","der_44f","der_44m","der_49f","der_49m","der_50f","der_50m"];
+
 
 
 
@@ -388,8 +390,9 @@ function greaterOrEqual(valids, message, iscritical, sectionid) {
 
     var val1, val2;
 
-   var columns = ["9m","9f","14m","14f","19m","19f","24m","24f","25m","25f"];
-var agearray = ["9m","9f","14m","14f","19m","19f","24m","24f","25m","25f"];
+var columns = ["der_1f","der_1m","der_4f","der_4m","der_9f","der_9m","der_14f","der_14m","der_19f","der_19m","der_24f","der_24m","der_29f","der_29m","der_34f","der_34m","der_39f","der_39m","der_44f","der_44m","der_49f","der_49m","der_50f","der_50m"];
+var agearray = ["der_1f","der_1m","der_4f","der_4m","der_9f","der_9m","der_14f","der_14m","der_19f","der_19m","der_24f","der_24m","der_29f","der_29m","der_34f","der_34m","der_39f","der_39m","der_44f","der_44m","der_49f","der_49m","der_50f","der_50m"];
+
 
 
 
@@ -503,8 +506,9 @@ function notEqual(valids, message, iscritical, sectionid) {
 
     var val1, val2;
 
-   var columns = ["9m","9f","14m","14f","19m","19f","24m","24f","25m","25f"];
-var agearray = ["9m","9f","14m","14f","19m","19f","24m","24f","25m","25f"];
+var columns = ["der_1f","der_1m","der_4f","der_4m","der_9f","der_9m","der_14f","der_14m","der_19f","der_19m","der_24f","der_24m","der_29f","der_29m","der_34f","der_34m","der_39f","der_39m","der_44f","der_44m","der_49f","der_49m","der_50f","der_50m"];
+var agearray = ["der_1f","der_1m","der_4f","der_4m","der_9f","der_9m","der_14f","der_14m","der_19f","der_19m","der_24f","der_24m","der_29f","der_29m","der_34f","der_34m","der_39f","der_39m","der_44f","der_44m","der_49f","der_49m","der_50f","der_50m"];
+
 
 
 
@@ -595,13 +599,16 @@ console.log("vals ni::"+vals);
     var valsarr = vals.split("+");
 
     var totl = 0;
- console.log("valsarray"+valsarr);
+ console.log("valsarray::"+valsarr);
  
     for (var v = 0; v < valsarr.length; v++)
     {
         if(document.getElementById(valsarr[v]+"_"+age)!==null){
         
         var val = document.getElementById(valsarr[v]+"_"+age).value;
+        
+        console.log("multisum picked value::"+val);
+        
         if (isNumber(val))
         {
 

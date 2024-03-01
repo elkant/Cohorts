@@ -187,6 +187,24 @@
                                        <option value='internal_system.sp_rri_gaps_baselines_netloss'>4. Refresh NetLoss gaps</option>
                                        <option value='internal_system.sp_rri_gaps_stfs'>5. Refresh STFs</option>
                                        <option value='internal_system.sp_rri_gaps_prep_declined'>6. Refresh Prep Reasons for Decline</option>
+                                       
+                                       
+                                       <option value='internal_system.sp_rri_gaps_tb_testing'>7. Refresh Missed HIV Testing in TB Clinic</option>
+                                       <option value='internal_system.sp_rri_gaps_tb_art_initiation'>7. Refresh Missed ART Initiation among TB POS</option>
+                                       <option value='internal_system.sp_rri_gaps_tb_prev_comp'>7. Refresh TB_Prev Completion Gaps </option>
+                                       <option value='internal_system.sp_rri_gaps_tb_scrn'>7. Refresh Missed TB Screening</option>
+                                       <option value='internal_system.sp_rri_gaps_tb_specimen_not_sent'>7. Refresh TB Pos specimen Not Sent</option>
+                                       <option value='internal_system.sp_rri_gaps_tb_not_started_on_trt'>7. Refresh Confirmed active TB not started on TB Tx</option>
+                                       
+                                       
+                                        
+	
+           
+	  
+ 
+	
+                                       
+                                       
                                       </select>
                               </div>
                            </div>

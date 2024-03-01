@@ -17,7 +17,7 @@ function loadValidation() {
     breakloop = false;
 
     $.ajax({
-        url:'loadRetValidation',
+        url:'loadDailyARTValidation',
         type:'post',
         dataType:'json',
         success:function (data) {
@@ -97,8 +97,8 @@ function less(valids, message, iscritical, sectionid) {
 
     var val1, val2;
 
-var columns = ["9m","9f","14m","14f","19m","19f","24m","24f","25m","25f"];
-var agearray = ["9m","9f","14m","14f","19m","19f","24m","24f","25m","25f"];
+var columns = ["f14","m14","f15","m15"];
+var agearray = ["f14","m14","f15","m15"];
 
 
 
@@ -190,8 +190,9 @@ function greater(valids, message, iscritical, sectionid) {
 
     var val1, val2;
 
-    var columns = ["9m","9f","14m","14f","19m","19f","24m","24f","25m","25f"];
-var agearray = ["9m","9f","14m","14f","19m","19f","24m","24f","25m","25f"];
+ var columns = ["f14","m14","f15","m15"];
+var agearray = ["f14","m14","f15","m15"];
+
 
 
 
@@ -205,7 +206,7 @@ var agearray = ["9m","9f","14m","14f","19m","19f","24m","24f","25m","25f"];
 
 
 
-        //    alert(columns[i]+"_"+indicator_id);
+            //alert(columns[i]+"_"+indicator_id);
         val1 = multisum(valarray[0], columns[i]);
         val2 = multisum(valarray[1], columns[i]);
         //m_uk
@@ -287,8 +288,9 @@ function lessOrEqual(valids, message, iscritical, sectionid) {
 
     var val1, val2;
 
-   var columns = ["9m","9f","14m","14f","19m","19f","24m","24f","25m","25f"];
-var agearray = ["9m","9f","14m","14f","19m","19f","24m","24f","25m","25f"];
+var columns = ["f14","m14","f15","m15"];
+var agearray = ["f14","m14","f15","m15"];
+
 
 
 
@@ -388,8 +390,9 @@ function greaterOrEqual(valids, message, iscritical, sectionid) {
 
     var val1, val2;
 
-   var columns = ["9m","9f","14m","14f","19m","19f","24m","24f","25m","25f"];
-var agearray = ["9m","9f","14m","14f","19m","19f","24m","24f","25m","25f"];
+var columns = ["f14","m14","f15","m15"];
+var agearray = ["f14","m14","f15","m15"];
+
 
 
 
@@ -503,8 +506,9 @@ function notEqual(valids, message, iscritical, sectionid) {
 
     var val1, val2;
 
-   var columns = ["9m","9f","14m","14f","19m","19f","24m","24f","25m","25f"];
-var agearray = ["9m","9f","14m","14f","19m","19f","24m","24f","25m","25f"];
+var columns = ["f14","m14","f15","m15"];
+var agearray = ["f14","m14","f15","m15"];
+
 
 
 
@@ -595,13 +599,16 @@ console.log("vals ni::"+vals);
     var valsarr = vals.split("+");
 
     var totl = 0;
- console.log("valsarray"+valsarr);
+ console.log("valsarray::"+valsarr);
  
     for (var v = 0; v < valsarr.length; v++)
     {
         if(document.getElementById(valsarr[v]+"_"+age)!==null){
         
         var val = document.getElementById(valsarr[v]+"_"+age).value;
+        
+        console.log("multisum picked value::"+val);
+        
         if (isNumber(val))
         {
 
@@ -638,7 +645,9 @@ function redborder(age, elem,msg) {
         if(document.getElementById(valsarr[v] + "_" +age)!==null){
         $("#" + valsarr[v] + "_" +age ).css('border-color', '#ff0000');
         $("#" + valsarr[v] + "_" +age).css('background', '#ff0000');
+        $("#" + valsarr[v] + "_" +age).css('color', '#000000');
          $("#" + valsarr[v] + "_" +age).prop('title',msg);
+         $("#" + valsarr[v] + "_" +age).focus();
      }
            
 

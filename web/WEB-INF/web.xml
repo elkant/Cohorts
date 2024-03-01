@@ -800,6 +800,34 @@
         <servlet-name>cirg_gend_link_comm_ppms</servlet-name>
         <servlet-class>hfr.cirg_gend_link_comm_ppms</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>clinicalreports</servlet-name>
+        <servlet-class>pmtct_ovc.clinicalreports</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>dailyart_getIndicators</servlet-name>
+        <servlet-class>dailyart_web.dailyart_getIndicators</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>saveDailyArt</servlet-name>
+        <servlet-class>dailyart_web.saveDailyArt</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>loadAllActiveSites</servlet-name>
+        <servlet-class>loaders.loadAllActiveSites</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>loadDailyARTValidation</servlet-name>
+        <servlet-class>dailyart_web.loadDailyARTValidation</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>dailyart_getIndicators_backup</servlet-name>
+        <servlet-class>dailyart_web.dailyart_getIndicators_backup</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>updatebroadages</servlet-name>
+        <servlet-class>dailyart_web.updatebroadages</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loadcohort</servlet-name>
         <url-pattern>/loadcohort</url-pattern>
@@ -1599,6 +1627,34 @@
     <servlet-mapping>
         <servlet-name>cirg_gend_link_comm_ppms</servlet-name>
         <url-pattern>/cirg_gend_link_comm_ppms</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>clinicalreports</servlet-name>
+        <url-pattern>/clinicalreports</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>dailyart_getIndicators</servlet-name>
+        <url-pattern>/dailyart_getIndicators</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>saveDailyArt</servlet-name>
+        <url-pattern>/saveDailyArt</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>loadAllActiveSites</servlet-name>
+        <url-pattern>/loadAllActiveSites</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>loadDailyARTValidation</servlet-name>
+        <url-pattern>/loadDailyARTValidation</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>dailyart_getIndicators_backup</servlet-name>
+        <url-pattern>/dailyart_getIndicators_backup</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>updatebroadages</servlet-name>
+        <url-pattern>/updatebroadages</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

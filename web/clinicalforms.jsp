@@ -91,9 +91,24 @@ input:focus {
 
 String frm="";
 String selectedform="cxca_pos";
+
+
+String ac="";
+
 if(request.getParameter("frm")!=null){
 
     selectedform=request.getParameter("frm");
+    
+    
+   
+    
+}
+
+if(request.getParameter("ac")!=null){
+
+    ac=request.getParameter("ac"); 
+    
+   
     
 }
 
@@ -378,7 +393,7 @@ frm+="<option "+sele+" value='"+conn.rs.getString(1)+"' >"+conn.rs.getString(2)+
      
                             
 <div class="tab-pane well" id="reports">
-<form action="MortalityClinicalReports" id="reportingForm">
+<form action="clinicalreports" id="reportingForm">
 
                                         <!--Dashboard code-->
 
@@ -411,7 +426,8 @@ frm+="<option "+sele+" value='"+conn.rs.getString(1)+"' >"+conn.rs.getString(2)+
 
                                                     <div class="controls">
                                                         <select class="form-control input-sm" onchange="checkFormAction();"   name='report' id='report' >
-                                                            <option value='MortalityAuditReports'>1.Tracker and Data Summary</option>
+                                                           
+                                                            <option value='clinicalreports'>1.Clinical OVC Linelist</option>
                                                            
                                                             <!--<option value='hts_self_reports'>6.HTS Self</option>-->
 
@@ -454,11 +470,30 @@ frm+="<option "+sele+" value='"+conn.rs.getString(1)+"' >"+conn.rs.getString(2)+
                                                 </div>
                                             </td>
                                         </tr>
+                                        
+                                        
+                                        <tr >
+                                            <td class="col-xs-4">
+                                                <div class="control-group">
+
+                                                    <div class="controls">
+                                                        <label ><b>Report Access Code</b><font color='red'><b>*</b></font></label>
+
+                                                    </div> </div>
+                                            </td>
+                                            <td class="col-xs-4">
+                                                <div class="controls">
+                                                    <input id="reportaccesscode" value="<%=ac%>" name="reportaccesscode" type="password" class="form-control input-sm col-sx-2">
+                                                </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        
                                        <tr >
                                        <td colspan="2"> <div class="form-actions">
 
 
-                                                    <input type="submit" id="generaterpt" class="btn green" value="Generate report" />
+                                                    <input type="submit" id="generaterpt" class="btn green" value="Generate report" /> 
 
 
 

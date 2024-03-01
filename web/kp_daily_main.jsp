@@ -253,7 +253,7 @@ input:focus {
                                                                     <div class="controls">
                                                                         
                                                                           <input onchange="isdisplayindicators();" readonly data-date-end-date="0d" required type="text"  title="this is the reporting date"  class="form-control input-sm dates" name="period" id="period" autocomplete="off">                                         
-                                                                        </select>
+                                                                      
                                                                     </div>
                                                                 </div>
                                                             </td>
