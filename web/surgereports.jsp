@@ -184,7 +184,7 @@
                                                              <option value='SurgeRawData'>1. All data Reports</option>  
                                                             <option value='surge_tracker'>2. Excel Reporting Tracker</option>                                                                                                                    
                                                              <option value='htsclientraw'>3. HTS Client Level Raw-Pivoted </option>
-                                                            <option value='WeeklyData'>4. Data file only(surge sites)</option>
+                                                            <!--<option value='WeeklyData'>4. Data file only(surge sites)</option>-->
                                                             <option value='htsrriplainexcel'>5.HTS Client Level Raw-Plain file</option>
                                                             <option value='allSitesTrackerViaSurge'>6.All Sites Tracker(Daily Reporting)</option>
                                                             <option value='allSitesDataViaSurge'>7. Data File Only (All Sites)</option>

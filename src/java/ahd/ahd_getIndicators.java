@@ -5,6 +5,8 @@
  */
 package ahd;
 
+
+
 import db.dbConn;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -20,6 +22,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+
 
 /**
  *
@@ -237,6 +241,10 @@ while(r.next()){
      
      String readonly_value="";
 
+     if(id.equals("new_art") || id.equals("new_cd4_200") )
+     {
+         readonly_value="readonly='true'";
+     }
      
 
      String   inputtotal="<td><input "+readonly_value+" value='"+_5m+"' onkeyup='sum_indicators(\""+id+"\");' onkeypress='return numbers(event);'   type='tel' maxlength='4' min='0' max='9999' name='"+id+"_5m' id='"+id+"_5m' class='form-control inputs'></td>"
@@ -245,8 +253,8 @@ while(r.next()){
                        + "<td><input "+readonly_value+" value='"+_14f+"' onkeyup='sum_indicators(\""+id+"\");' onkeypress='return numbers(event);'   type='tel' maxlength='4' min='0' max='9999' name='"+id+"_14f' id='"+id+"_14f' class='form-control inputs'></td>" 
                        + "<td><input "+readonly_value+" value='"+_15m+"' onkeyup='sum_indicators(\""+id+"\");' onkeypress='return numbers(event);'   type='tel' maxlength='4' min='0' max='9999' name='"+id+"_15m' id='"+id+"_15m' class='form-control inputs'></td>"
                        + "<td><input "+readonly_value+" value='"+_15f+"' onkeyup='sum_indicators(\""+id+"\");' onkeypress='return numbers(event);'   type='tel' maxlength='4' min='0' max='9999' name='"+id+"_15f' id='"+id+"_15f' class='form-control inputs'></td>"
-                       + "<td><input "+readonly_value+" value='"+_pbfw+"' onkeyup='sum_indicators(\""+id+"\");'  onkeypress='return numbers(event);'   type='tel' maxlength='4' min='0' max='9999' name='"+id+"_pbfw' id='"+id+"_pbfw' class='form-control inputs'></td>" 
-                       + "<td><input "+readonly_value+" value='"+_ttl+"' tabindex='-1'  readonly='true' placeholder='Total '  type='tel' maxlength='4' min='0' max='9999' name='"+id+"_ttl' id='"+id+"_ttl' class='form-control inputs'></td>"; 
+                       + "<td><input  value='"+_pbfw+"' onkeyup='sum_indicators(\""+id+"\");'  onkeypress='return numbers(event);'   type='tel' maxlength='4' min='0' max='9999' name='"+id+"_pbfw' id='"+id+"_pbfw' class='form-control inputs'></td>" 
+                       + "<td><input  value='"+_ttl+"' tabindex='-1'  readonly='true' placeholder='Total '  type='tel' maxlength='4' min='0' max='9999' name='"+id+"_ttl' id='"+id+"_ttl' class='form-control inputs'></td>"; 
    
     //0-9	10-14	15-19	20-24	25+
 indicators+=""+displaymainsection+displaysection
@@ -273,7 +281,7 @@ public JSONObject getData( dbConn conn, HashMap par) throws SQLException{
 
 int hasdata=0;
 
-String getdata=" select * from internal_system.ahd_data where yearmonth='"+par.get("yearmonth")+"' and facility ='"+par.get("facility")+"'  ";
+String getdata="call internal_system.sp_ahd_getdata('"+par.get("yearmonth")+"','"+par.get("facility")+"')  ";
   
     System.out.println(""+getdata);
 conn.rs1=conn.st1.executeQuery(getdata);

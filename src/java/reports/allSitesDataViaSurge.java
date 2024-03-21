@@ -290,7 +290,7 @@ SXSSFWorkbook wb = new SXSSFWorkbook(1000);
         
         //========Query two====Facility Details==============
         
-        String qry = "SELECT * FROM aphiaplus_moi.allsites_overall_fine where "+orgunits+" ;";
+        String qry = "call der_rri.sp_daily_indicators_allsites_fine('"+startdate+"', '"+enddate+"', '');";
         System.out.println(qry);
         conn.rs = conn.st.executeQuery(qry);
         
@@ -336,7 +336,7 @@ SXSSFWorkbook wb = new SXSSFWorkbook(1000);
                 {
                   // System.out.println(mycolumns.get(a)+" Last option"+conn.rs.getString("" + mycolumns.get(a)));
                    //System.out.println( mycolumns.get(a)+" --Last option"+conn.rs.getString("" + mycolumns.get(a)));
-                     cell0.setCellValue(conn.rs.getString("" + mycolumns.get(a)));
+                     cell0.setCellValue(conn.rs.getString("" + mycolumns.get(a).toString()));//
                     //cell0.setCellValue(conn.rs.getString("" + mycolumns.get(a)));
                    
                 }

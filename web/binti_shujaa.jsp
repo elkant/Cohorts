@@ -347,7 +347,7 @@ frm+="<option "+sele+" value='"+conn.rs.getString(1)+"' >"+conn.rs.getString(2)+
                                         
                                    <br/>
                                     <div style="display:none;" class="controls savebuttons">
-                                        <input type="input" onClick="loadClinicalValidation('loadClinicalValidation','<%=selectedform%>','clinical_indicators');"  id='savebutton' value="Save Record"  style="margin-left: 0%;" class="btn-sm btn-success active">
+                                        <input type="input" onClick="loadClinicalValidation('loadClinicalValidation','<%=selectedform%>','clinical_indicators');"  id='savebutton' value="Save"  style="text-align: center;" class="btn-sm btn-primary active">
                                             
                                      </div>
                                      <div class="controls">
@@ -355,7 +355,13 @@ frm+="<option "+sele+" value='"+conn.rs.getString(1)+"' >"+conn.rs.getString(2)+
                                             Update Record 
                                         </button>
                                     </div>                                   
-                                    
+                                            <div class="control-group">
+                                                <hr/>
+                                       <a href="binti_shujaa.jsp?frm=binti_anc_visits" class="btn btn-default glyphicon glyphicon-file"> ANC</a>
+                                       <a href="binti_shujaa.jsp?frm=binti_delivery_immunization" class="btn btn-default glyphicon glyphicon-baby-formula"> Immunization</a>
+                                       <a href="binti_shujaa.jsp?frm=binti_pnc_visits" class="btn btn-default glyphicon glyphicon-folder-open"> PNC Services</a>
+                                       <a href="binti_shujaa.jsp?frm=binti_followup" class="btn btn-default glyphicon glyphicon-repeat"> Follow Up</a>
+                                            </div>
                                 </div>
                                         </td></tr>
                                         

@@ -36,7 +36,7 @@ import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openxmlformats.schemas.spreadsheetml.x2006.main.CTTable;
-import static reports.pnsreports.isNumeric;
+
 import static scripts.OSValidator.isUnix;
 import scripts.copytemplates;
 
@@ -134,11 +134,22 @@ wb1 = new XSSFWorkbook(pkg);
 
 
 
+OPCPackage opc = OPCPackage.open(allpath);
+ 
 
-//XSSFWorkbook wb = wb1;
 
 
-SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 1000);
+wb1 = new XSSFWorkbook( opc );
+//wb1 = new XSSFWorkbook();
+
+ 
+
+
+
+
+
+
+XSSFWorkbook wb = wb1;
 
         Font font =  wb.createFont();
         font.setFontHeightInPoints((short) 18);
@@ -192,7 +203,7 @@ SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 1000);
         stylesum.setFont(fontx);
         stylesum.setWrapText(true);
 
-        Sheet shet = wb.getSheet("DATA");
+        XSSFSheet shet = wb.getSheet("rawdata");
 
         String year="";
        IdGenerator dats= new IdGenerator();
@@ -338,13 +349,13 @@ SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 1000);
 //        cell.setCellStyle(style);
 //        shet.addMergedRegion(new CellRangeAddress(1, 1, 0,10));
 //                    
-                int count1  = 1;
+                int count1  = 0;
         
        
         
         //========Query two====Facility Details==============
         
-        String qry = "SELECT * FROM aphiaplus_moi.surge_overall_fine where "+orgunits+" ;";
+        String qry = "call der_rri.sp_daily_indicators_allsites_fine('"+startdate+"', '"+enddate+"', '');";
         System.out.println(qry);
         conn.rs = conn.st.executeQuery(qry);
         
@@ -360,20 +371,43 @@ SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 1000);
 
          if (count == (count1)) {
 //header rows
-         Row rw = shet.getRow(count);
+          Row rw = shet.getRow(count);
 //rw.setHeightInPoints(26);
-                for (int i = 1; i <= columnCount; i++) 
+               for (int i = 1; i <= columnCount; i++) 
                 {
-//skip header
+//skip headers
+               
                     mycolumns.add(metaData.getColumnLabel(i));
-//                    XSSFCell cell0 = rw.getCell(i - 1);
-//                    cell0.setCellValue(metaData.getColumnLabel(i));
-//                    cell0.setCellStyle(stylex);
-
+                    System.out.println("Tuko hapa::"+i+"Row:"+count+":1st Cell num:"+rw.getRowNum());
+                    
+                    if(rw.getFirstCellNum()>0){
+                    
+                    
+                     Cell cell0 = rw.getCell(i-1);
+                          
+                     if(isNumeric(conn.rs.getString("" + metaData.getColumnLabel(i))))
+                 {
+               // if(1==1){
+                
+                     cell0.setCellValue(conn.rs.getInt(metaData.getColumnLabel(i)));
+                    
+                 }
+                else 
+                {
+                    //System.out.println(mycolumns.get(a)+" Last option"+conn.rs.getString("" + mycolumns.get(a)));
+                   // System.out.println( mycolumns.get(a)+" --Last option"+conn.rs.getString("" + mycolumns.get(a)));
+                     cell0.setCellValue(conn.rs.getString("" +metaData.getColumnLabel(i)));
+                    //cell0.setCellValue(conn.rs.getString("" + mycolumns.get(a)));
+                   
+                }
+                }
+                    
                     //create row header
                 }//end of for loop
                 count++;
             }//end of if
+         
+         else {
             //data rows     
             Row rw = shet.createRow(count);
 
@@ -392,7 +426,7 @@ SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 1000);
                 else 
                 {
                     //System.out.println(mycolumns.get(a)+" Last option"+conn.rs.getString("" + mycolumns.get(a)));
-                    System.out.println( mycolumns.get(a)+" --Last option"+conn.rs.getString("" + mycolumns.get(a)));
+                   // System.out.println( mycolumns.get(a)+" --Last option"+conn.rs.getString("" + mycolumns.get(a)));
                      cell0.setCellValue(conn.rs.getString("" + mycolumns.get(a)));
                     //cell0.setCellValue(conn.rs.getString("" + mycolumns.get(a)));
                    
@@ -401,9 +435,10 @@ SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 1000);
                 cell0.setCellStyle(style2);
 
             }
-
+             count++;
+         }
             // System.out.println("");
-            count++;
+           
         }
 
         
@@ -425,13 +460,16 @@ SXSSFWorkbook wb = new SXSSFWorkbook(wb1, 1000);
      
      
    if(1==1){
-     XSSFSheet shet2= wb.getXSSFWorkbook().getSheet("DATA");
+      XSSFSheet sheet= wb.getSheet("rawdata");
         // tell your xssfsheet where its content begins and where it ends
-((XSSFSheet)shet2).getCTWorksheet().getDimension().setRef("A1:AN" + (shet.getLastRowNum() + 1));
+((XSSFSheet)shet).getCTWorksheet().getDimension().setRef("A1:AR" + (shet.getLastRowNum() + 1));
 
-CTTable ctTable = ((XSSFSheet)shet2).getTables().get(0).getCTTable();
+CTTable ctTable = ((XSSFSheet)shet).getTables().get(0).getCTTable();
 
-ctTable.setRef("A1:AN" + (shet.getLastRowNum() + 1)); // adjust reference as needed
+ctTable.setRef("A1:AR" + (shet.getLastRowNum() + 1)); // adjust reference as needed
+
+
+        
 
 }
     
@@ -492,4 +530,17 @@ ctTable.setRef("A1:AN" + (shet.getLastRowNum() + 1)); // adjust reference as nee
         return "Short description";
     }// </editor-fold>
 
+    
+         public static boolean isNumeric(String strNum) {
+      
+    
+    try {
+        double d = Double.parseDouble(strNum);
+    } catch (NumberFormatException | NullPointerException nfe) {
+        return false;
+    }
+    return true;
+      
+}
+    
 }

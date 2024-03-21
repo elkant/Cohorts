@@ -721,6 +721,25 @@ var f25=$("#"+indicatorid+"_25f").val();
 var ttl=$("#"+indicatorid+"_ttl").val();
  
 
+m9=m9.replaceAll(" ","");
+f9=f9.replaceAll(" ","");
+
+m14=m14.replaceAll(" ","");
+f14=f14.replaceAll(" ","");
+
+m19=m19.replaceAll(" ","");
+f19=f19.replaceAll(" ","");
+
+
+m24=m24.replaceAll(" ","");
+f24=f24.replaceAll(" ","");
+
+m25=m25.replaceAll(" ","");
+f25=f25.replaceAll(" ","");
+
+ttl=ttl.replaceAll(" ","");
+
+
 var identifier=facility_mfl_code+"_"+period+"_"+indicatorid;
         
         
