@@ -828,6 +828,14 @@
         <servlet-name>updatebroadages</servlet-name>
         <servlet-class>dailyart_web.updatebroadages</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>getMiLiIndicators</servlet-name>
+        <servlet-class>KP.getMiLiIndicators</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>saveMicLif</servlet-name>
+        <servlet-class>KP.saveMicLif</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loadcohort</servlet-name>
         <url-pattern>/loadcohort</url-pattern>
@@ -1655,6 +1663,14 @@
     <servlet-mapping>
         <servlet-name>updatebroadages</servlet-name>
         <url-pattern>/updatebroadages</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getMiLiIndicators</servlet-name>
+        <url-pattern>/getMiLiIndicators</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>saveMicLif</servlet-name>
+        <url-pattern>/saveMicLif</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

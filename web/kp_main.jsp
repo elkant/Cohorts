@@ -250,12 +250,6 @@ tr>td {
                                                         </tr>
 
 
-
-
-
-
-
-
                                                         <tr>
                                                             <td class="col-xs-12" colspan="2">
 
