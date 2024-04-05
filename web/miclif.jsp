@@ -174,7 +174,7 @@ input[readonly]{
                                 <i class="glyphicon glyphicon-question-sign"></i>
                                 Help
                             </a></li>
-                        <li><a  class=''  href='ret_index.jsp'><i class='glyphicon glyphicon-log-out'></i> Log out</a></li>
+                        <li><a  class=''  href='kp_index.jsp'><i class='glyphicon glyphicon-log-out'></i> Log out</a></li>
                     </ul>
                 </div>
 
@@ -722,6 +722,10 @@ so+="<option "+selected+"  value='"+sectsArr[a]+"'>"+sectsArr[a]+"</option>";
                                            type: 'post',
                                            dataType: 'html',
                                            success: function (data) {
+                                               console.log("_"+data+"%");
+                                               
+                                               if(data==='%0D%0A'|| data.trim()===''){dicoption="<option data-ward_name='' data-ward_id='' data-supported_kp='' value=''>Login to select Dice</option>";}
+                                               
                                                $("#facility").html(dicoption+data);
                                               
                                                
@@ -778,7 +782,7 @@ getPeriod();
 
 
 
-                                   function save_data() {
+    function save_data() {
                                        
 var facility_mfl_code="";
 var period="";
@@ -799,7 +803,7 @@ period=$("#period").val();
       
         
         $.ajax({
-                    url:'dailyart_getIndicators',                            
+                    url:'getMiLiIndicators',                            
                     type:'post',  
                     dataType: 'json',  
                     success: function(data){
@@ -809,12 +813,18 @@ period=$("#period").val();
                           
 var numericid=data[a].id;
 var indicatorid=data[a].indicators_id;//has an underscore before the emenet id
-var f14=$("#"+indicatorid+"_f14").val();
-var m14=$("#"+indicatorid+"_m14").val();
-var f15=$("#"+indicatorid+"_f15").val();
-var m15=$("#"+indicatorid+"_m15").val();
 
+var _17=$("#"+indicatorid+"__17").val();
+var _19=$("#"+indicatorid+"__19").val();
+var _24=$("#"+indicatorid+"__24").val();
+var _29=$("#"+indicatorid+"__29").val();
+var _34=$("#"+indicatorid+"__34").val();
+var _39=$("#"+indicatorid+"__39").val();
+var _44=$("#"+indicatorid+"__44").val();
+var _49=$("#"+indicatorid+"__49").val();
+var _50=$("#"+indicatorid+"__50").val();
 var value=$("#"+indicatorid+"_value").val();
+
 
  
 
@@ -827,31 +837,37 @@ var value=$("#"+indicatorid+"_value").val();
            //save the data
            
            var saveddata={
-               id:identifier,
-               date:period,
-               facility:facility_mfl_code,
-               indicatorid:numericid,
-               sdp:sc,
-m14:m14,
-f14:f14,
-m15:m15,
-f15:f15,
-value:value,
-
-              userid:''              
+                id:identifier,
+                yearmonth:period,
+                facility_id:facility_mfl_code,
+                indicator_id:numericid,
+                sdp:sc,
+                _17:_17,
+                _19:_19,
+                _24:_24,
+                _29:_29,
+                _34:_34,
+                _39:_39,
+                _44:_44,
+                _49:_49,
+                _50:_50,
+                value:value,
+                userid:'',
+                _islocked:'0'            
            };
            
            
            
            
-           if(a===parseInt(data.length)-1){
-               isend=true;
-               
+           if(a===parseInt(data.length)-1)
+           {
+               isend=true;               
            }
            //only save where there are values
-           if(value!==""){
+           if(value!=="" || isend===true)
+           {
            exportData(saveddata,isend);
-       }
+           }
                            
                        } 
                    

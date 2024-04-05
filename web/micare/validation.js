@@ -17,7 +17,7 @@ function loadValidation() {
     breakloop = false;
 
     $.ajax({
-        url:'loadDailyARTValidation',
+        url:'loadMicareValidation',
         type:'post',
         dataType:'json',
         success:function (data) {
@@ -97,8 +97,8 @@ function less(valids, message, iscritical, sectionid) {
 
     var val1, val2;
 
-var columns = ["f14","m14","f15","m15"];
-var agearray = ["f14","m14","f15","m15"];
+var columns = ["_17","_19","_24","_29","_34","_39","_44","_49","_50"];
+var agearray = ["_17","_19","_24","_29","_34","_39","_44","_49","_50"];
 
 
 
@@ -190,8 +190,8 @@ function greater(valids, message, iscritical, sectionid) {
 
     var val1, val2;
 
- var columns = ["f14","m14","f15","m15"];
-var agearray = ["f14","m14","f15","m15"];
+ var columns = ["_17","_19","_24","_29","_34","_39","_44","_49","_50"];
+var agearray = ["_17","_19","_24","_29","_34","_39","_44","_49","_50"];
 
 
 
@@ -288,8 +288,8 @@ function lessOrEqual(valids, message, iscritical, sectionid) {
 
     var val1, val2;
 
-var columns = ["f14","m14","f15","m15"];
-var agearray = ["f14","m14","f15","m15"];
+var columns = ["_17","_19","_24","_29","_34","_39","_44","_49","_50"];
+var agearray = ["_17","_19","_24","_29","_34","_39","_44","_49","_50"];
 
 
 
@@ -390,8 +390,8 @@ function greaterOrEqual(valids, message, iscritical, sectionid) {
 
     var val1, val2;
 
-var columns = ["f14","m14","f15","m15"];
-var agearray = ["f14","m14","f15","m15"];
+var columns = ["_17","_19","_24","_29","_34","_39","_44","_49","_50"];
+var agearray = ["_17","_19","_24","_29","_34","_39","_44","_49","_50"];
 
 
 
@@ -506,8 +506,8 @@ function notEqual(valids, message, iscritical, sectionid) {
 
     var val1, val2;
 
-var columns = ["f14","m14","f15","m15"];
-var agearray = ["f14","m14","f15","m15"];
+var columns = ["_17","_19","_24","_29","_34","_39","_44","_49","_50"];
+var agearray = ["_17","_19","_24","_29","_34","_39","_44","_49","_50"];
 
 
 

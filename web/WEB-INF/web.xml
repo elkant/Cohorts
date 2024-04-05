@@ -836,6 +836,10 @@
         <servlet-name>saveMicLif</servlet-name>
         <servlet-class>KP.saveMicLif</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>loadMicareValidation</servlet-name>
+        <servlet-class>KP.loadMicareValidation</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loadcohort</servlet-name>
         <url-pattern>/loadcohort</url-pattern>
@@ -1671,6 +1675,10 @@
     <servlet-mapping>
         <servlet-name>saveMicLif</servlet-name>
         <url-pattern>/saveMicLif</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>loadMicareValidation</servlet-name>
+        <url-pattern>/loadMicareValidation</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

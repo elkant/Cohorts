@@ -50,8 +50,8 @@ public class saveMicLif extends HttpServlet {
 //          }
            //id	yearmonth	facility	indicatorid	9m	9f	14m	14f	19m	19f	24m	24f	25m	25f	ttl	timestamp	lastupdated	userid
 
- String[] dataelementsarr= {"id","yearmonth","facility_id","indicator_id","sdp","_17","_19","_24","_29","_34","_44","_49","_50","value","userid","_islocked"}; 
- String[] destelementsarr= {"id","yearmonth","facility_id","indicator_id","poptype","_17","_19","_24","_29","_34","_44","_49","_50","value","userid","_islocked"}; 
+ String[] dataelementsarr= {"id","yearmonth","facility_id","indicator_id","sdp","_17","_19","_24","_29","_34","_39","_44","_49","_50","value","userid","_islocked"}; 
+ String[] destelementsarr= {"id","yearmonth","facility_id","indicator_id","poptype","_17","_19","_24","_29","_34","_39","_44","_49","_50","value","userid","islocked"}; 
  //String[] orgunitsarr= {"county","`sub-county`"}; 
 
   //String[] dataelementsarr= {"id","date","facility","indicatorid","sdp","der_1f","der_1m","der_4f","der_4m","der_9f","der_9m","der_14f","der_14m","der_19f","der_19m","der_24f","der_24m","der_29f","der_29m","der_34f","der_34m","der_39f","der_39m","der_44f","der_44m","der_49f","der_49m","der_50f","der_50m","value","userid","date"}; 

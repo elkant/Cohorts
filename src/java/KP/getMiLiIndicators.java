@@ -162,7 +162,7 @@ while(r.next()){
     
     if(showsection.equals("1"))
     {
-    displaysection="<tr style='background-color:#4b8df8;'><td ><b>"+mainsection+"</b></td><td><b>15-17 Yrs</b></td><td><b>18-19 Yrs</b></td><td><b>20-24 Yrs</b></td><td><b>25-29 Yrs</b></td><td><b>30-34Yrs</b></td><td><b>35-39Yrs</b></td><td><b>40-44Yrs</b></td><td><b>45-49Yrs</b></td><td><b>50+Yrs</b></td><td><b>Total Total</b></td></tr>";
+    displaysection="<tr style='background-color:#4b8df8;'><td ><b>"+mainsection+"</b></td><td><b>15-17 Yrs</b></td><td><b>18-19 Yrs</b></td><td><b>20-24 Yrs</b></td><td><b>25-29 Yrs</b></td><td><b>30-34Yrs</b></td><td><b>35-39Yrs</b></td><td><b>40-44Yrs</b></td><td><b>45-49Yrs</b></td><td><b>50+Yrs</b></td><td><b>Total</b></td></tr>";
     }
     else {
     displaysection="";
@@ -283,7 +283,7 @@ if(disablecolumns.contains("_50")){dis__50="readonly='true'";}
 +"<td><input "+dis__44+"  onblur='indicate_changed(\""+id+"__44\");'   "+readonly_value+" value='"+__44+"' placeholder='' onkeyup='sum_indicators(\""+id+"\");"+hasautocalc+"' onkeypress='return numbers(event);'   type='tel' maxlength='4' min='0' max='9999' name='"+id+"__44' id='"+id+"__44' class='form-control inputs'></td>"
 +"<td><input "+dis__49+"  onblur='indicate_changed(\""+id+"__49\");'   "+readonly_value+" value='"+__49+"' placeholder='' onkeyup='sum_indicators(\""+id+"\");"+hasautocalc+"' onkeypress='return numbers(event);'   type='tel' maxlength='4' min='0' max='9999' name='"+id+"__49' id='"+id+"__49' class='form-control inputs'></td>"
 +"<td><input "+dis__50+"  onblur='indicate_changed(\""+id+"__50\");'   "+readonly_value+" value='"+__50+"' placeholder='' onkeyup='sum_indicators(\""+id+"\");"+hasautocalc+"' onkeypress='return numbers(event);'   type='tel' maxlength='4' min='0' max='9999' name='"+id+"__50' id='"+id+"__50' class='form-control inputs'></td>"
-+"<td><input  onblur='indicate_changed(\""+id+"_value\");'   "+readonly_value+" value='"+_value+"' placeholder='' onkeyup='sum_indicators(\""+id+"\");' onkeypress='return numbers(event);'   type='tel' maxlength='4' min='0' max='9999' name='"+id+"_value' id='"+id+"_value' class='form-control inputs'></td>"
++"<td><input  onblur='indicate_changed(\""+id+"_value\");'   readonly='true' value='"+_value+"' placeholder='' onkeyup='sum_indicators(\""+id+"\");' onkeypress='return numbers(event);'   type='tel' maxlength='4' min='0' max='9999' name='"+id+"_value' id='"+id+"_value' class='form-control inputs'></td>"
 ; 
    
     //0-9	10-14	15-19	20-24	25+

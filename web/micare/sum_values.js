@@ -7,7 +7,7 @@ function sum_indicators(indicator_id){
     var total=0, elem_value="";
    // indic	9m	9f	14m	14f	19m	19f	24m	24f	25m	25f	ttl
 
-var columns = ["f14","m14","f15","m15"];
+var columns = ["_17","_19","_24","_29","_34","_39","_44","_49","_50"];
 //    var indicator_id=document.getElementById("indic_pos_"+indic_pos).value;
 //    alert(indicator_id);
 var has_a_non_blank=0;
@@ -110,6 +110,38 @@ function buildAutocalculate(dataelements)
             }
          
      }
+     //division
+     else   if(lftside.indexOf("/")>=0){
+         
+         var ttl=0;
+         
+         //here awe are sssuming that we only having two variables being devided
+         
+         //i expecte tio be parsing parameters that look like 12/13@14 
+       ttl=devide_and_display(dems[s]);  
+     
+         
+         
+                 
+       // console.log("Total__"+rightside);
+        
+        //document.getElementById(rightside).value = ttl;
+             
+             
+             
+            if(ttl<0){redbordercl(rightside);
+                $("#savebutton").hide();
+            $("#fedback").html("Validation Error!. Please correct to save entries");
+            } else 
+            {blackbordercl(rightside);
+                $("#savebutton").show();
+             $("#fedback").html("");
+            }
+         
+     }
+     
+     
+     
      else {
         autocalculate(innerdems[0],innerdems[1]);
     }
@@ -120,7 +152,7 @@ function autocalculate_and_return(sourceindicators)
 {
    // console.log(sourceindicators+" = source indicators");
     
-var agesets = ["msm","fsw","ttl"];
+var agesets = ["_17","_19","_24","_29","_34","_39","_44","_49","_50","value"];
 //    var indicator_id=document.getElementById("indic_pos_"+indic_pos).value;
 //    alert(indicator_id);
 
@@ -204,12 +236,137 @@ else {
 return total;
 }
 
+function devide_and_return(sourceindicators)
+{
+   // console.log(sourceindicators+" = source indicators");
+    
+var agesets = ["_17","_19","_24","_29","_34","_39","_44","_49","_50","value"];
+//    var indicator_id=document.getElementById("indic_pos_"+indic_pos).value;
+//    alert(indicator_id);
 
+//if the split function contains both + and -, work on splitting the + first then - inside the function loops
+
+
+
+ var sourcearrays=sourceindicators.split("/");
+
+var num_agesets = agesets.length;
+
+var num_indics = sourcearrays.length;
+
+//alert(num_indics);
+
+for(var i=0;i<num_agesets;i++){
+ var total='', elem_value="",value="";   
+for(var f=0;f<num_indics;f++){
+//    alert(columns[i]+"_"+indicator_id);
+//check for existance of -
+
+
+if(1==1) {
+    
+  value=document.getElementById(sourcearrays[f]+"_"+agesets[i]).value;
+  $(sourcearrays[f]+"_"+agesets[i]).change();
+  
+    if(value!=='')
+    {
+        
+  total = parseInt(value); 
+  //console.log(" sum of "+sourcearrays[f]+" is "+total);
+  
+    }
+    
+    
+}
+
+    
+}//end of looping of indicators
+
+
+
+}//end of age sets
+
+
+return total;
+}
+
+
+function devide_and_display(sourceindicators)
+{
+   // console.log(sourceindicators+" = source indicators");
+    //i expect to be parsing parameters that look like 12/13@14 
+var agesets = ["_17","_19","_24","_29","_34","_39","_44","_49","_50","value"];
+//    var indicator_id=document.getElementById("indic_pos_"+indic_pos).value;
+//    alert(indicator_id);
+
+//if the split function contains both + and -, work on splitting the + first then - inside the function loops
+
+
+
+ var innerdems=sourceindicators.split("@");  
+     
+     //if the formula has a -(, then work on the two data values separately and submit the total
+     //here, we are assuming a maximum of only 
+     var sourceiis=innerdems[0];
+     var destiis=innerdems[1];
+
+
+ var sourceiisar=sourceiis.split("/");
+
+
+console.log("Variable one ni ::"+sourceiisar[0]);
+console.log("Variable two ni ::"+sourceiisar[1]);
+
+var num_agesets = agesets.length;
+
+
+//alert(num_indics);
+
+for(var i=0;i<num_agesets;i++){
+    
+ var total='', elem_value="",value1="";   
+ var value2="";   
+//for(var f=0;f<num_indics;f++){
+//    alert(columns[i]+"_"+indicator_id);
+//check for existance of -
+
+
+if(1===1) {
+    
+  value1=document.getElementById(sourceiisar[0]+"_"+agesets[i]).value;
+  value2=document.getElementById(sourceiisar[1]+"_"+agesets[i]).value;
+  $(sourceiisar[0]+"_"+agesets[i]).change();
+  $(sourceiisar[1]+"_"+agesets[i]).change();
+  
+    if(value1!=='' && value2!=='')
+    {
+        
+  total = Math.round((parseInt(value1)/parseInt(value2))*100); 
+  console.log(total);
+  if(isNaN(total) || value2==='0' ){total=0;}
+  
+  //console.log(" sum of "+sourcearrays[f]+" is "+total);
+  document.getElementById(destiis+"_"+agesets[i]).value = total;
+    }
+    
+    
+}
+
+    
+//}//end of looping of indicators
+
+
+
+}//end of age sets
+
+
+return total;
+}
 
 function autocalculate(sourceindicators,destination_indicator){
   //  console.log(sourceindicators+" = source indicators");
   //  console.log(destination_indicator+" = destination indicators");
-var agesets = ["f14","m14","f15","m15","value"];
+var agesets = ["_17","_19","_24","_29","_34","_39","_44","_49","_50","value"];
 //    var indicator_id=document.getElementById("indic_pos_"+indic_pos).value;
 //    alert(indicator_id);
 
