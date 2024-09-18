@@ -12,12 +12,14 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -44,6 +46,8 @@ public class dataPulls extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             
+            
+            HttpSession sess= request.getSession();
             
              conn = new dbConn();
             
@@ -79,7 +83,7 @@ public class dataPulls extends HttpServlet {
                 
                ResultSet rs1=pullAddedDataPerFormForEditing(conn,fm,fac,"sp_pmtct_ovc_pull_all_editing_data_dynamically");
 
-                out.println(buildDataTable(conn,rs1,table_docker,fm));                                               
+                out.println(buildDataTable(sess,conn,rs1,table_docker,fm));                                               
     
             }
             
@@ -88,7 +92,7 @@ public class dataPulls extends HttpServlet {
                
                ResultSet rs1=pullAddedDataPerFormForEditing(conn,fm,fac,"sp_mot_audit_pull_all_editing_data_dynamically");
 
-               String tbl=buildDataTable(conn,rs1,table_docker,fm);               
+               String tbl=buildDataTable(sess,conn,rs1,table_docker,fm);               
                 //System.out.println("_______"+tbl);
                 out.println(tbl);                                               
     
@@ -98,7 +102,7 @@ public class dataPulls extends HttpServlet {
                
                ResultSet rs1=pullAddedDataPerFormForEditing(conn,fm,fac,"sp_clinical_form_pull_all_editing_data_dynamically");//edit_stored_procedure
 
-               String tbl=buildDataTable(conn,rs1,table_docker,fm);               
+               String tbl=buildDataTable(sess,conn,rs1,table_docker,fm);               
                 //System.out.println("_______"+tbl);
                 out.println(tbl);                                               
     
@@ -109,7 +113,7 @@ public class dataPulls extends HttpServlet {
                
                ResultSet rs1=pullAddedDataPerFormForEditing(conn,fm,fac,"sp_kpvalidation_form_pull_all_editing_data_dynamically");//edit_stored_procedure
 
-               String tbl=buildDataTable(conn,rs1,table_docker,fm);               
+               String tbl=buildDataTable(sess,conn,rs1,table_docker,fm);               
                 //System.out.println("_______"+tbl);
                 out.println(tbl);                                               
     
@@ -121,9 +125,21 @@ public class dataPulls extends HttpServlet {
         
         finally {   
          
-               if(conn.rs!=null){ conn.rs.close();}
-               if(conn.st!=null){ conn.st.close();}
-                if(conn.connect!=null){ conn.connect.close();}
+                         if (conn.rs != null) {
+                conn.rs.close();
+            }
+            if (conn.rs1 != null) {
+                conn.rs1.close();
+            }
+            if (conn.st != null) {
+                conn.st.close();
+            }
+            if (conn.st1 != null) {
+                conn.st1.close();
+            }
+            if (conn.connect != null) {
+                conn.connect.close();
+            }
         
     }
     }
@@ -348,7 +364,7 @@ return jo2;
 
 
 
-public String buildDataTable(dbConn con, ResultSet res, String elementtoappend,String frm) throws SQLException{
+public String buildDataTable(HttpSession ss,dbConn con, ResultSet res, String elementtoappend,String frm) throws SQLException{
     
 String finaltbl="";
 String hdslist_html="";
@@ -394,7 +410,27 @@ for(int c=0;c<mycolumns.size();c++)
      String id="";
  if(c==0){id="id='"+res.getString(mycolumns.get(c).toString())+"'";   dtlist_html+="<tr "+id+">";}
       dtlist_html+="<td>"+res.getString(mycolumns.get(c).toString())+"</td>";
-      if(c==mycolumns.size()-1){ dtlist_html+="<td><label onclick='loadExistingClient(\""+res.getString("patient_id")+"\",\""+frm+"\");' class='btn btn-info'>Edit</label></td><td><label onclick='dltpt(\""+res.getString("patient_id")+"\");' class='btn btn-danger'>Delete</label></td></tr>";}
+      
+      
+      
+      String edt="<label onclick='loadExistingClient(\""+res.getString("patient_id")+"\",\""+frm+"\");' class='btn btn-info'>Edit</label>";
+      String dlt="<label onclick='dltpt(\""+res.getString("patient_id")+"\");' class='btn btn-danger'>Delete</label>";
+      if(ss.getAttribute("kd_session")!=null){
+      
+      HashMap hm= new HashMap();
+      
+      hm=(HashMap)ss.getAttribute("kd_session");
+      
+      String userlevel="";
+       userlevel=hm.get("level").toString();
+       
+       if(!userlevel.equals("3")){dlt="";}
+      
+      } else {dlt="";edt="";  }
+      
+      
+      
+      if(c==mycolumns.size()-1){ dtlist_html+="<td>"+edt+"</td><td>"+dlt+"</td></tr>";}
 
 }
     

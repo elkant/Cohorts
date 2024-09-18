@@ -304,6 +304,7 @@ so+="<option "+selected+"  value='"+sectsArr[a]+"'>"+sectsArr[a]+"</option>";
                                                                                     out.println(session.getAttribute("liplist").toString());
                                                                                 } else {
                                                                                     out.println("<option value=''>login to select LIP</option>");
+                                                                                    response.sendRedirect("logout");
                                                                                 }
                                                                             %>                                          
                                                                         </select>
@@ -865,6 +866,7 @@ var value=$("#"+indicatorid+"_value").val();
            }
            //only save where there are values
            if(value!=="" || isend===true)
+           //if(isend===true)
            {
            exportData(saveddata,isend);
            }

@@ -274,15 +274,15 @@ if(disablecolumns.contains("_50")){dis__50="readonly='true'";}
 
      String   inputtotal=""
                       
-+"<td><input "+dis__17+"  onblur='indicate_changed(\""+id+"__17\");'   "+readonly_value+" value='"+__17+"' placeholder='' onkeyup='sum_indicators(\""+id+"\");"+hasautocalc+"' onkeypress='return numbers(event);'   type='tel' maxlength='4' min='0' max='9999' name='"+id+"__17' id='"+id+"__17' class='form-control inputs'></td>"
-+"<td><input "+dis__19+"  onblur='indicate_changed(\""+id+"__19\");'   "+readonly_value+" value='"+__19+"' placeholder='' onkeyup='sum_indicators(\""+id+"\");"+hasautocalc+"' onkeypress='return numbers(event);'   type='tel' maxlength='4' min='0' max='9999' name='"+id+"__19' id='"+id+"__19' class='form-control inputs'></td>"
-+"<td><input "+dis__24+"  onblur='indicate_changed(\""+id+"__24\");'   "+readonly_value+" value='"+__24+"' placeholder='' onkeyup='sum_indicators(\""+id+"\");"+hasautocalc+"' onkeypress='return numbers(event);'   type='tel' maxlength='4' min='0' max='9999' name='"+id+"__24' id='"+id+"__24' class='form-control inputs'></td>"
-+"<td><input "+dis__29+"  onblur='indicate_changed(\""+id+"__29\");'   "+readonly_value+" value='"+__29+"' placeholder='' onkeyup='sum_indicators(\""+id+"\");"+hasautocalc+"' onkeypress='return numbers(event);'   type='tel' maxlength='4' min='0' max='9999' name='"+id+"__29' id='"+id+"__29' class='form-control inputs'></td>"
-+"<td><input "+dis__34+"  onblur='indicate_changed(\""+id+"__34\");'   "+readonly_value+" value='"+__34+"' placeholder='' onkeyup='sum_indicators(\""+id+"\");"+hasautocalc+"' onkeypress='return numbers(event);'   type='tel' maxlength='4' min='0' max='9999' name='"+id+"__34' id='"+id+"__34' class='form-control inputs'></td>"
-+"<td><input "+dis__39+"  onblur='indicate_changed(\""+id+"__39\");'   "+readonly_value+" value='"+__39+"' placeholder='' onkeyup='sum_indicators(\""+id+"\");"+hasautocalc+"' onkeypress='return numbers(event);'   type='tel' maxlength='4' min='0' max='9999' name='"+id+"__39' id='"+id+"__39' class='form-control inputs'></td>"
-+"<td><input "+dis__44+"  onblur='indicate_changed(\""+id+"__44\");'   "+readonly_value+" value='"+__44+"' placeholder='' onkeyup='sum_indicators(\""+id+"\");"+hasautocalc+"' onkeypress='return numbers(event);'   type='tel' maxlength='4' min='0' max='9999' name='"+id+"__44' id='"+id+"__44' class='form-control inputs'></td>"
-+"<td><input "+dis__49+"  onblur='indicate_changed(\""+id+"__49\");'   "+readonly_value+" value='"+__49+"' placeholder='' onkeyup='sum_indicators(\""+id+"\");"+hasautocalc+"' onkeypress='return numbers(event);'   type='tel' maxlength='4' min='0' max='9999' name='"+id+"__49' id='"+id+"__49' class='form-control inputs'></td>"
-+"<td><input "+dis__50+"  onblur='indicate_changed(\""+id+"__50\");'   "+readonly_value+" value='"+__50+"' placeholder='' onkeyup='sum_indicators(\""+id+"\");"+hasautocalc+"' onkeypress='return numbers(event);'   type='tel' maxlength='4' min='0' max='9999' name='"+id+"__50' id='"+id+"__50' class='form-control inputs'></td>"
++"<td><input "+dis__17+"  onblur='indicate_changed(\""+id+"__17\",\""+id+"\");'   "+readonly_value+" value='"+__17+"' placeholder='' onkeyup='sum_indicators(\""+id+"\");"+hasautocalc+"' onkeypress='return numbers(event);'   type='tel' maxlength='4' min='0' max='9999' name='"+id+"__17' id='"+id+"__17' class='form-control inputs'></td>"
++"<td><input "+dis__19+"  onblur='indicate_changed(\""+id+"__19\",\""+id+"\");'   "+readonly_value+" value='"+__19+"' placeholder='' onkeyup='sum_indicators(\""+id+"\");"+hasautocalc+"' onkeypress='return numbers(event);'   type='tel' maxlength='4' min='0' max='9999' name='"+id+"__19' id='"+id+"__19' class='form-control inputs'></td>"
++"<td><input "+dis__24+"  onblur='indicate_changed(\""+id+"__24\",\""+id+"\");'   "+readonly_value+" value='"+__24+"' placeholder='' onkeyup='sum_indicators(\""+id+"\");"+hasautocalc+"' onkeypress='return numbers(event);'   type='tel' maxlength='4' min='0' max='9999' name='"+id+"__24' id='"+id+"__24' class='form-control inputs'></td>"
++"<td><input "+dis__29+"  onblur='indicate_changed(\""+id+"__29\",\""+id+"\");'   "+readonly_value+" value='"+__29+"' placeholder='' onkeyup='sum_indicators(\""+id+"\");"+hasautocalc+"' onkeypress='return numbers(event);'   type='tel' maxlength='4' min='0' max='9999' name='"+id+"__29' id='"+id+"__29' class='form-control inputs'></td>"
++"<td><input "+dis__34+"  onblur='indicate_changed(\""+id+"__34\",\""+id+"\");'   "+readonly_value+" value='"+__34+"' placeholder='' onkeyup='sum_indicators(\""+id+"\");"+hasautocalc+"' onkeypress='return numbers(event);'   type='tel' maxlength='4' min='0' max='9999' name='"+id+"__34' id='"+id+"__34' class='form-control inputs'></td>"
++"<td><input "+dis__39+"  onblur='indicate_changed(\""+id+"__39\",\""+id+"\");'   "+readonly_value+" value='"+__39+"' placeholder='' onkeyup='sum_indicators(\""+id+"\");"+hasautocalc+"' onkeypress='return numbers(event);'   type='tel' maxlength='4' min='0' max='9999' name='"+id+"__39' id='"+id+"__39' class='form-control inputs'></td>"
++"<td><input "+dis__44+"  onblur='indicate_changed(\""+id+"__44\",\""+id+"\");'   "+readonly_value+" value='"+__44+"' placeholder='' onkeyup='sum_indicators(\""+id+"\");"+hasautocalc+"' onkeypress='return numbers(event);'   type='tel' maxlength='4' min='0' max='9999' name='"+id+"__44' id='"+id+"__44' class='form-control inputs'></td>"
++"<td><input "+dis__49+"  onblur='indicate_changed(\""+id+"__49\",\""+id+"\");'   "+readonly_value+" value='"+__49+"' placeholder='' onkeyup='sum_indicators(\""+id+"\");"+hasautocalc+"' onkeypress='return numbers(event);'   type='tel' maxlength='4' min='0' max='9999' name='"+id+"__49' id='"+id+"__49' class='form-control inputs'></td>"
++"<td><input "+dis__50+"  onblur='indicate_changed(\""+id+"__50\",\""+id+"\");'   "+readonly_value+" value='"+__50+"' placeholder='' onkeyup='sum_indicators(\""+id+"\");"+hasautocalc+"' onkeypress='return numbers(event);'   type='tel' maxlength='4' min='0' max='9999' name='"+id+"__50' id='"+id+"__50' class='form-control inputs'></td>"
 +"<td><input  onblur='indicate_changed(\""+id+"_value\");'   readonly='true' value='"+_value+"' placeholder='' onkeyup='sum_indicators(\""+id+"\");' onkeypress='return numbers(event);'   type='tel' maxlength='4' min='0' max='9999' name='"+id+"_value' id='"+id+"_value' class='form-control inputs'></td>"
 ; 
    
@@ -311,7 +311,26 @@ public JSONObject getData( dbConn conn, HashMap<String,String> par) throws SQLEx
 String sdp[]=par.get("sdp").split("_");
 int hasdata=0;
 
-String getdata=" select * from internal_system.micare_liftup_data where yearmonth='"+par.get("date")+"' and facility_id ='"+par.get("mflcode")+"' and  poptype='"+sdp[0]+"' ";
+int curperiod=new Integer(par.get("date"));
+int prevperiod=curperiod-1;
+String prd=par.get("date");
+
+if(prd.endsWith("01"))
+{
+    String prdyr=prd.substring(0,4 );
+String prdmn=prd.substring(4,6);
+
+int prevprdyr=new Integer(prdyr)-1;
+String prevym=prevprdyr+"12";
+
+ prevperiod=new Integer(prevym);
+
+}
+
+
+String getdata=" select * from internal_system.micare_liftup_data where yearmonth='"+curperiod+"' and facility_id ='"+par.get("mflcode")+"' and  poptype='"+sdp[0]+"' and indicator_id !='1'   "
+        + " union all  "
+        + " select * from internal_system.micare_liftup_data where yearmonth='"+prevperiod+"' and facility_id ='"+par.get("mflcode")+"' and  poptype='"+sdp[0]+"' and indicator_id ='1' ";
   
     System.out.println(""+getdata);
 conn.rs1=conn.st1.executeQuery(getdata);

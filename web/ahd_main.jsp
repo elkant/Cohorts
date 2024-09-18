@@ -40,6 +40,8 @@
         <link href="css/styles.css" rel="stylesheet">
         <link href="assets/css/metro.css" rel="stylesheet" />
 
+        
+        
         <style type='text/css'>
             input:focus {
                 border-color: red;
@@ -145,7 +147,7 @@ input[readonly]{
 }
 
 </style>
-
+<%if(session.getAttribute("kd_session")!=null){%><%} else {  response.sendRedirect("logout");}%>   
     </head>
     <body >
         <!-- header -->

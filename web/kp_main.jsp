@@ -230,6 +230,7 @@ tr>td {
                                                                                     out.println(session.getAttribute("liplist").toString());
                                                                                 } else {
                                                                                     out.println("<option value=''>login to select LIP</option>");
+                                                                                    response.sendRedirect("kp_index.jsp");
                                                                                 }
                                                                             %>                                          
                                                                         </select>
@@ -468,7 +469,10 @@ tr>td {
                                                     <div class="controls">
                                                         <select class="form-control input-sm" onchange="checkFormAction();"   name='report' id='report' >
                                                             
-                                                            <option value='kp_monthly_report'>1.Submitted Data</option>
+                                                            <option value='kp_monthly_report'>1.Submitted Monthly Data</option>
+                                                            <option value='kpDailyReports'>2.KP Daily Reports</option>
+                                                            <option value='micareliftupreport'>3.Micare Data Reports</option>
+                                                            <option value='micarereportingrates'>4.Micare Reporting Rates</option>
                                                            
                                                             <!--<option value='hts_self_reports'>6.HTS Self</option>-->
 

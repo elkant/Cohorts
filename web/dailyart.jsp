@@ -139,6 +139,7 @@ input[readonly]{
 }
 
 </style>
+<%if(session.getAttribute("kd_session")!=null){%><%} else {  response.sendRedirect("logout");}%> 
 
     </head>
     <body >
@@ -174,7 +175,7 @@ input[readonly]{
                                 <i class="glyphicon glyphicon-question-sign"></i>
                                 Help
                             </a></li>
-                        <li><a  class=''  href='ret_index.jsp'><i class='glyphicon glyphicon-log-out'></i> Log out</a></li>
+                        <li><a  class=''  href='clinicalhome.jsp'><i class='glyphicon glyphicon-log-out'></i> Home</a></li>
                     </ul>
                 </div>
 

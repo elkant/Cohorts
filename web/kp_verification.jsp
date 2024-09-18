@@ -248,6 +248,7 @@ input:focus {
                                                                                     out.println(session.getAttribute("liplist").toString());
                                                                                 } else {
                                                                                     out.println("<option value=''>login to select LIP</option>");
+                                                                                    response.sendRedirect("kp_index.jsp");
                                                                                 }
                                                                             %>                                          
                                                                         </select>

@@ -780,10 +780,10 @@ function displayIfFunction(sourceele,iscondition,equalval,destination,action)
     if(iscondition==='equalto')
     {
         console.log("...in display if "+iscondition);
-        
-        if(srcval===equalval)
-        {
-            
+         console.log("source val is:"+srcval+": equalval is :"+equalval+":");
+        if(srcval==equalval)
+        {            
+            console.log("source val is "+srcval);
             console.log("show "+destination);
             $(destination).show();} 
                          else { $(destination).hide();$(destination).val("");

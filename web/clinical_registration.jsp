@@ -38,6 +38,18 @@
                     
                 </script> <%
                 session.removeAttribute("pmtct_ovc_register");
+                
+                
+                %>
+                               
+                 <script type="text/javascript"> 
+                     
+                window.location.href = "index.jsp";     
+                     
+                </script>
+                
+                <%
+                
                             }
 
                         %>
@@ -50,11 +62,7 @@
 			<div class="wrap-login100 p-t-3 p-b-20">
 				<form action='registeruser' class="login100-form validate-form">
                                     
-                                    <div class="container-login100-form-btn">
-						<a href='clinical_index.jsp'   class="login100-form-btn" style="background-color: #2196f3;">
-							Login
-						</a>
-					</div>
+                                  
                                     <hr>
 					<h4 style="text-align: center;">Create User Account</h4>
                                         <hr>
@@ -64,12 +72,24 @@
                                         <%  IdGenerator dp= new IdGenerator(); String nm=""+dp.getRandNo(1,100000); %>
 <input required="true" value="<%=nm%>" type='hidden' class='form-control' id='userid' name='userid'  placeholder='Enter id'/>
 <input required="true" value="827ccb0eea8a706c4c34a16891f84e7b" type='hidden' class='form-control' id='password' name='password'  placeholder='Enter Password'/>
-<input required="true" value="pmtct_ovc" type='hidden' class='form-control' id='assigned_modules' name='assigned_modules'  placeholder='Enter Level'/>
+<input required="true" value="Clinical IMIS" type='hidden' class='form-control' id='assigned_modules' name='assigned_modules'  placeholder='Enter Level'/>
 <input required="true" value="1" type='hidden' class='form-control' id='level' name='level'  placeholder='Enter Level'/>
                                         <div class="wrap-input100 validate-input m-b-50" data-validate="Full Namer">
 						<input  required='true' class="input100" type="text" maxlength='100' name="fullname">
 						<span class="focus-input100" data-placeholder="*Full Name"></span>
 					</div>
+
+<div class="wrap-input100 validate-input m-b-50" data-validate="User Type">
+    <select  required='true' class="input100" type="text" maxlength='100' name="usertype">
+        <option value="">Specify User Type</option>
+        <option value="Facility Based">Facility Based Staff</option>
+        <option value="U4BH">USAID 4BH Staff</option>
+        <option value="Roving Staff">UTJ Roving Staff</option>
+        
+    </select>
+						
+					</div>
+                                        
 					<div class="wrap-input100 validate-input m-b-50" data-validate="Phone number">
 						<input pattern='[0-9]{10,10}' required='true' class="input100" type="text" maxlength='10' id='phone' minlength='10' name="phone">
 						<span class="focus-input100" data-placeholder="*Phone Number"></span>
@@ -99,6 +119,14 @@
 							Create account
 						</button>
 					</div>
+                                        <br/>
+                                        
+                                          <div class="container-login100-form-btn">
+						<a href='index.jsp'   class="login100-form-btn" style="background-color: #2196f3;">
+							Back to Login Page
+						</a>
+					</div>
+                                        
 <%
 Calendar cal = Calendar.getInstance();
 int year= cal.get(Calendar.YEAR);              
@@ -140,8 +168,7 @@ int year= cal.get(Calendar.YEAR);
     
     function getFacilitiesJson(){
        
-     
-       
+           
        
               $.ajax({
                     url:'loadActiveSites',                            
@@ -157,9 +184,11 @@ int year= cal.get(Calendar.YEAR);
                                  } ); 
                         
                         
-                    }});
+                    }
+                });
    
    }
+  
  
    getFacilitiesJson();
    
@@ -185,6 +214,7 @@ int year= cal.get(Calendar.YEAR);
        else {
             $("#registerbtn").show(); 
              $("#msg").html("");
+             checkemailRegistration();
             
        }
    }
@@ -194,6 +224,37 @@ int year= cal.get(Calendar.YEAR);
        
    }
        
+   }
+   
+   
+     function checkemailRegistration(){
+       
+     
+       var eml=$("#email").val();
+       
+              $.ajax({
+                    url:'checkduplicateemail?eml='+eml,                            
+                    type:'post',  
+                    dataType: 'html',  
+                    success: function(data)
+                    {
+                        
+                        if(data.trim()==='true'){
+                     $("#registerbtn").hide();
+                     
+                     $("#msg").html("<font color='red'>An account using this email account has already been registered. Please check your email for Login instructions</font>");
+                 }
+                 
+                 else {
+                     $("#registerbtn").show();
+                     $("#msg").html("");
+                 }
+                  
+                        
+                        
+                    }//end od succes
+                });
+   
    }
     
     </script>

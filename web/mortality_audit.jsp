@@ -15,7 +15,7 @@
 <%@page import="java.util.Calendar"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-
+<%if(session.getAttribute("kd_session")!=null){%><%} else {  response.sendRedirect("logout");}%>   
 <!DOCTYPE html>
 
 <html>

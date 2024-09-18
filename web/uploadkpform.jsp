@@ -69,6 +69,8 @@ tr>td {
   padding-right: 3em;
 }                  
                 </style>
+                
+<%if(session.getAttribute("kd_session")!=null){%><%} else {  response.sendRedirect("logout");}%> 
   
 </head>
 <!-- END HEAD -->

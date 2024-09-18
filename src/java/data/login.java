@@ -13,6 +13,7 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -40,7 +41,7 @@ String userAccess;
           userAccess=",";
           username=request.getParameter("username").trim();
           pass=request.getParameter("password").trim();
-         
+         String email="";
           System.out.println("username : "+username+" password : "+pass);
           m = MessageDigest.getInstance("MD5");
        m.update(pass.getBytes(), 0, pass.length());
@@ -60,6 +61,7 @@ String userAccess;
              mname=conn.rs.getString(3);
              lname=conn.rs.getString(4);
              level=conn.rs.getString(5);
+             email=conn.rs.getString("email");
              fullname=fname+" "+mname+" "+lname;
              session.setAttribute("userid", userid);
              session.setAttribute("fullname", fullname);
@@ -69,6 +71,20 @@ String userAccess;
              session.setAttribute("fname", fname);
              session.setAttribute("mname", mname);
              session.setAttribute("lname", lname);
+             
+             
+             HashMap<String, String> kd= new HashMap<>();
+
+             kd.put("userid", userid);
+             kd.put("fullname", fullname);
+             kd.put("level", level);
+             kd.put("username", username);
+             kd.put("fname", fname);
+             kd.put("mname", mname);
+             kd.put("lname", lname);
+             kd.put("email", email);
+             
+           session.setAttribute("kd_session", kd);
              
              if(conn.rs.getInt("access_reports")==1){userAccess+="reports,";}
              if(conn.rs.getInt("access_maintenance")==1){userAccess+="maintenance,";}

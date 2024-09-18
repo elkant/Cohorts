@@ -22,7 +22,7 @@
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
-		<title>Case Based IMIS</title>
+		<title>Clinical IMIS</title>
 		<meta name="generator" content="Bootply" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
                 <!--<link href="css/dataTables.bootstrap.min.css" rel="stylesheet">-->
@@ -71,7 +71,7 @@ input:focus {
 
 
 </style>
-                
+             <%if(session.getAttribute("kd_session")!=null){%><%} else {  response.sendRedirect("logout");}%>      
 	</head>
 	<body >
 <!-- header -->
@@ -104,9 +104,9 @@ if(request.getParameter("frm")!=null){
     
 }
 
-if(request.getParameter("ac")!=null){
+if(request.getParameter("act")!=null){
 
-    ac=request.getParameter("ac"); 
+    ac=request.getParameter("act"); 
     
    
     
@@ -150,7 +150,7 @@ frm+="<option "+sele+" value='"+conn.rs.getString(1)+"' >"+conn.rs.getString(2)+
                             Help
                         </a></li>
                               <li><a style="text-align: center;" href='clinicalhome.jsp'><i class="glyphicon glyphicon-home"></i>Home</a></li>
-                              <li><a style="text-align: center;" href='index.jsp'><i class="glyphicon glyphicon-log-out"></i> Logout</a></li>
+                              <li><a style="text-align: center;" href='logout'><i class="glyphicon glyphicon-log-out"></i> Logout</a></li>
             </ul>
         </div>
         
@@ -427,7 +427,8 @@ frm+="<option "+sele+" value='"+conn.rs.getString(1)+"' >"+conn.rs.getString(2)+
                                                     <div class="controls">
                                                         <select class="form-control input-sm" onchange="checkFormAction();"   name='report' id='report' >
                                                            
-                                                            <option value='clinicalreports'>1.Clinical OVC Linelist</option>
+                                                            <option value='clinicalreports'>1.PMTCT OVC Linelist</option>
+                                                            <option value='pmtct_ovc_dashboard'>2.PMTCT OVC Dashboard</option>
                                                            
                                                             <!--<option value='hts_self_reports'>6.HTS Self</option>-->
 
@@ -1490,6 +1491,37 @@ function ShowAgeMonths(dob,dest)
 }
 }
 
+//ShowAgeMonthsAtsomePoint('date_started _prophyl','dt_guardian_rec_res','duration_on_proph');
+function ShowAgeMonthsAtsomePoint(dob,asat,dest) 
+{
+    
+    var sikuyakuzaliwa=$("#"+dob).val(); 
+    var sikuyakupima=$("#"+asat).val(); 
+    
+    console.log("starting date"+ sikuyakuzaliwa);
+    console.log("asat value "+ sikuyakupima);
+    if(sikuyakuzaliwa!=='')
+    {
+   const birthDateObj = new Date(sikuyakuzaliwa);
+   const asatDateObj = new Date(sikuyakupima);
+
+  // Get the current date
+  const currentDate = new Date();
+
+  // Calculate the difference in months
+  const monthsDiff = (asatDateObj.getFullYear() - birthDateObj.getFullYear()) * 12 +
+    (asatDateObj.getMonth() - birthDateObj.getMonth());
+
+
+    
+    $("#"+dest).val(monthsDiff);
+    
+        
+    
+    return monthsDiff;
+}
+}
+
 function uuidv4() {
   return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
     (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
@@ -1624,6 +1656,13 @@ function test(){
 }
 
 //test();
+
+function checkFormAction (){
+    
+  $('#reportingForm').attr('action', $("#report").val());  
+    
+}
+
               </script>
 
 	</body>

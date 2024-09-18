@@ -283,7 +283,7 @@ XSSFWorkbook wb = wb1;
                 for (int i = 1; i <= columnCount; i++) 
                 {
 //skip header
-                   // System.out.println("Column number "+i);
+                    System.out.println("Column number "+i);
                     mycolumns.add(metaData.getColumnLabel(i));
                      Cell cell0 = rw.getCell(i-1);
                  if(isNumeric(conn.rs.getString("" + metaData.getColumnLabel(i))) && conn.rs.getString("" + metaData.getColumnLabel(i)).length()<=10 )

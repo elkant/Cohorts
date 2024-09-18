@@ -71,7 +71,7 @@ input:focus {
 
 
 </style>
-                
+        <%if(session.getAttribute("kd_session")!=null){%><%} else {  response.sendRedirect("logout");}%>        
 	</head>
 	<body >
 <!-- header -->
@@ -86,6 +86,8 @@ input:focus {
             
         </div>
         <div class="navbar-collapse collapse">
+            
+            
                        
 <%  dbConn conn = new dbConn();
 
@@ -134,7 +136,7 @@ frm+="<option "+sele+" value='"+conn.rs.getString(1)+"' >"+conn.rs.getString(2)+
                             <i class="glyphicon glyphicon-question-sign"></i>
                             Help
                         </a></li>
-                              <li><a style="text-align: center;" href='../InternalSystem/ramcahhome.jsp'><i class="glyphicon glyphicon-home"></i>Home</a></li>
+                              <!--<li><a style="text-align: center;" href='../InternalSystem/ramcahhome.jsp'><i class="glyphicon glyphicon-home"></i>Home</a></li>-->
                               
                        
 								

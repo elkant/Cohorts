@@ -143,7 +143,7 @@ rowcount++;
 
 
 
-
+            System.out.println("Query ni :"+conn.pst1);
 if(conn.pst1.executeUpdate()==1)
 {
    out.println("Micare data Saved succesfully ");

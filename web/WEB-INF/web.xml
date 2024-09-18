@@ -840,6 +840,46 @@
         <servlet-name>loadMicareValidation</servlet-name>
         <servlet-class>KP.loadMicareValidation</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>pmtct_ovc_dashboard</servlet-name>
+        <servlet-class>pmtct_ovc.pmtct_ovc_dashboard</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>getEligibleIndicators</servlet-name>
+        <servlet-class>eligiblenotdoneforvl.getEligibleIndicators</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>saveEligibleNotDoneForVl</servlet-name>
+        <servlet-class>eligiblenotdoneforvl.saveEligiblenotdoneforvl</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>loadEligibleNotDoneForVlValidation</servlet-name>
+        <servlet-class>eligiblenotdoneforvl.loadEligibleNotDoneForVlValidation</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>micareliftupreport</servlet-name>
+        <servlet-class>KP.micareliftupreport</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>micarereportingrates</servlet-name>
+        <servlet-class>KP.micarereportingrates</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>logout</servlet-name>
+        <servlet-class>Logout.logout</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>facility_login</servlet-name>
+        <servlet-class>login.facility_login</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>issessionactive</servlet-name>
+        <servlet-class>isactivesession.issessionactive</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>checkduplicateemail</servlet-name>
+        <servlet-class>login.checkduplicateemail</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loadcohort</servlet-name>
         <url-pattern>/loadcohort</url-pattern>
@@ -1680,9 +1720,53 @@
         <servlet-name>loadMicareValidation</servlet-name>
         <url-pattern>/loadMicareValidation</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>pmtct_ovc_dashboard</servlet-name>
+        <url-pattern>/pmtct_ovc_dashboard</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getEligibleIndicators</servlet-name>
+        <url-pattern>/getEligibleIndicators</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>saveEligibleNotDoneForVl</servlet-name>
+        <url-pattern>/saveEligiblenotdoneforvl</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>loadEligibleNotDoneForVlValidation</servlet-name>
+        <url-pattern>/loadEligibleNotDoneForVlValidation</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>micareliftupreport</servlet-name>
+        <url-pattern>/micareliftupreport</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>micarereportingrates</servlet-name>
+        <url-pattern>/micarereportingrates</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>logout</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>facility_login</servlet-name>
+        <url-pattern>/facility_login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>issessionactive</servlet-name>
+        <url-pattern>/issessionactive</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>checkduplicateemail</servlet-name>
+        <url-pattern>/checkduplicateemail</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/errorpage.jsp</location>
+    </error-page>
 </web-app>

@@ -70,6 +70,8 @@ input:focus {
 
 
 </style>
+
+<%if(session.getAttribute("kd_session")!=null){%><%} else {  response.sendRedirect("logout");}%> 
                 
 	</head>
 	<body >

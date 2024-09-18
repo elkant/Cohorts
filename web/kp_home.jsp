@@ -67,7 +67,14 @@
                                            
 					</div>
   
-  <br/>
+  
+
+
+ <%}%>
+ <!---M&E Admins and hts counsellors-->
+ <%if(session.getAttribute("level").toString().equals("1")|| session.getAttribute("level").toString().equals("3")){%>
+ 
+ <br/>
   
                                        <div class="container-login100-form-btn">
 						<a href='miclif.jsp' class="login100-form-btn" style="background-color: #2196f3;">
@@ -75,11 +82,7 @@
 						</a>
                                            
 					</div>
-
-<br/>
- <%}%>
- <!---M&E Admins and hts counsellors-->
- <%if(session.getAttribute("level").toString().equals("1")|| session.getAttribute("level").toString().equals("3")){%>
+ <br/>
 <div class="container-login100-form-btn">
 						
                                             <a href='kp_daily_main.jsp' class="login100-form-btn" style="background-color: #2196f3;">

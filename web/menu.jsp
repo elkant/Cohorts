@@ -57,7 +57,7 @@
             </li>
             <li class="start " style="background-color: #4b8df8;">
                <a href="index.jsp">
-             <span class="title" ><b><%if(session.getAttribute("userid")!=null){out.println("Hi "+session.getAttribute("fullname").toString());} else {out.println("Sign in");}%></b></span>
+             <span class="title" ><b><%if(session.getAttribute("userid")!=null){out.println("Hi "+session.getAttribute("fullname").toString());} else {out.println("<a style='color:green;' href='clinicalhome.jsp'><i class='icon-plus'></i><b>Home</b></a>");}%></b></span>
                </a>
                 </li>
                 <br/>
@@ -67,7 +67,12 @@
                   <br/>
                   
                  <br/>
-                <%if(session.getAttribute("userid")!=null){%>
+                
+                <%
+                   // if(session.getAttribute("userid")!=null){
+                     if(1==2){   
+                        
+    %>
                 <li class="active" style="border-top: 1px solid #e2e2e2 !important;">
                 <a href="index.jsp">
                <i class="icon-home"></i> 
@@ -147,6 +152,7 @@ out.println("<li ><a target='_blank'  href='https://usaidtujengejamii.org:8443/C
 //  out.println("<li ><a href='pnsreport.jsp'><i class='icon-list'></i>PNS Reports</a></li>");
   out.println("<li ><a href='surgereports.jsp'><i class='icon-list'></i>Surge Reports and Tracker</a></li>");
   out.println("<li ><a href='MissingReports.jsp'><i class='icon-stop'></i>View Missing Reports</a></li>");
+  out.println("<li ><a href='clinicalhome.jsp'><i class='icon-stop'></i>Home</a></li>");
      } %>
             
          </ul>

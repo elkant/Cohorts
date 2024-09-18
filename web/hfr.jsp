@@ -69,6 +69,7 @@ input:focus {
 
 
 </style>
+<%if(session.getAttribute("kd_session")!=null){%><%} else {  response.sendRedirect("logout");}%> 
                 
 	</head>
 	<body >
@@ -118,7 +119,7 @@ input:focus {
     
     <div class="row">
          <label class="col-sm-2"></label>
-        <a class='btn btn-success col-sm-3' style="text-align: center;" href='https://hsdsacluster2.fhi360.org'>Logout</a>
+        <a class='btn btn-success col-sm-3' style="text-align: center;" href='clinicalhome.jsp'>Home</a>
         <label class="col-sm-2"></label>
           <!--<a class='btn btn-success col-sm-3' style="text-align: center;" href='aca_mca_reports.jsp'>Generate Reports</a>-->
            <label class="col-sm-2"></label>

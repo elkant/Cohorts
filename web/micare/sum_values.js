@@ -46,8 +46,10 @@ if(has_a_non_blank===0){total=0; document.getElementById(indicator_id+"_value").
     }
     
     
-    function indicate_changed(id){
+    function indicate_changed(id,sumindic){
      $("#"+id).css('background-color', '#fae512');
+     if($("#"+id).val()===''){$("#"+id).val("0");}
+     sum_indicators(sumindic);
      
     } 
     function section_changed(section_id){
