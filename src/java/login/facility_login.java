@@ -43,7 +43,7 @@ IdGenerator2 ig= new IdGenerator2();
 
       session=request.getSession();
           dbConn conn = new dbConn();
-         //conn.st.executeUpdate("Set GLOBAL  max_connections=6000");
+         conn.st.executeUpdate("Set GLOBAL  max_connections=6000;");
           
           username=password=phone=mname=lname=userid=level=pass=fullname=status=nextPage=active=ipv4ad="";
           userAccess=",";
@@ -62,7 +62,7 @@ IdGenerator2 ig= new IdGenerator2();
 		  if(isMaxLimitsReached(conn, username, 5)){// denie user login
     
     
-     status="<font color='red'><b>Failed:</b> You have entered incorrect Password too many times. Please Try login again after 5 minutes!.</font>";
+     status="<font color='red'><b>Failed:</b> You have entered incorrect Password too many times. Please Try login again after 15 minutes!.</font>";
              nextPage="index.jsp";
              session.setAttribute("login", status);
 }
@@ -299,7 +299,7 @@ else {
        
        boolean reachedlimits=false;
        
-       String maxlimits="select wrongattempts, TIMESTAMPDIFF(MINUTE, substring(lastloginattempt,1,19), '"+ig.timestamp().substring(0, 19)+"') AS minutes from internal_system.loginlogs where username='"+uname+"' and wrongattempts >='"+wrongattemptsthreshold+"' and TIMESTAMPDIFF(MINUTE, lastloginattempt, '"+ig.timestamp()+"') <5 ";
+       String maxlimits="select wrongattempts, TIMESTAMPDIFF(MINUTE, substring(lastloginattempt,1,19), '"+ig.timestamp().substring(0, 19)+"') AS minutes from internal_system.loginlogs where username='"+uname+"' and wrongattempts >='"+wrongattemptsthreshold+"' and TIMESTAMPDIFF(MINUTE, lastloginattempt, '"+ig.timestamp()+"') <15 ";
        
        System.out.println("max Limit query: "+maxlimits);
        conn.rs=conn.st.executeQuery(maxlimits);

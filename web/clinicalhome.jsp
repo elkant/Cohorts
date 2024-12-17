@@ -116,7 +116,43 @@ color:white;
     </div>
     </div>
               <%}
-              
+            
+
+
+
+else  if(utype.equals("Binti")){
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        %>
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                                                            <h5 style="background-color: #3c9ced;"  class="label_clean">Clinical Forms</h5> 
+                                        <!--<hr>-->
+                                        <div class='col-md-12'>
+                                            
+                                                <div class="form-row col-md-12"> 
+            
+            
+ <div class='form-group col-md-3'>
+    <hr/><span class="login100-form-avatar"> <a href='binti_shujaa.jsp?frm=binti_enrollment'>   <img src="images/binti_shujaa.png" alt="Binti Shujaa"></a></span>
+<h5  class="label_clean">Binti Shujaa</h5> 
+</div>
+    </div>
+    </div>
+              <%}
+
+
               
 else {
               
@@ -167,7 +203,7 @@ else {
     <hr/>
     <!--<span class="login100-form-avatar"> <a href='pmtct_ovc_main.jsp'>   <img src="images/pmtct_ovc.png" alt="welcome"></a></span>-->
     <span class="login100-form-avatar"> 
-       <a target="_blank" href="https://usaidtujengejamii.org:8443/htsrri" class="btn btn-light">
+       <a target="_blank" href="https://usaidtujengejamii.org:8443/htsrri/index.jsp?p=909090" class="btn btn-light">
                             <img   src="images/htsrri.png"/></a>
     
     </span>
@@ -318,6 +354,12 @@ else {
         <hr/><span class="login100-form-avatar"> <a href='clinicalforms.jsp?frm=intergration_feedback'>   <img src="images/see_1.png" alt="Surge Reports"></a></span>
 <h5  class="label_clean">Intergration feedback Form</h5> 
 </div>
+                                                                   
+                                                                     
+    <div class='form-group col-md-3'>
+        <hr/><span class="login100-form-avatar"> <a href='me_matrix_main.jsp'>   <img src="images/me_matrix.png" alt="M&E Matrix"></a></span>
+        <h5  class="label_clean">M&E Matrix</h5> 
+    </div>
                                             
                                                 </div>
                                             

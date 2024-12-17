@@ -359,10 +359,12 @@ frm+="<option "+sele+" value='"+conn.rs.getString(1)+"' >"+conn.rs.getString(2)+
                                     </div>                                   
                                             <div class="control-group">
                                                 <hr/>
-                                       <a href="binti_shujaa.jsp?frm=binti_anc_visits" class="btn btn-default glyphicon glyphicon-file"> ANC</a>
-                                       <a href="binti_shujaa.jsp?frm=binti_delivery_immunization" class="btn btn-default glyphicon glyphicon-baby-formula"> Immunization</a>
-                                       <a href="binti_shujaa.jsp?frm=binti_pnc_visits" class="btn btn-default glyphicon glyphicon-folder-open"> PNC Services</a>
-                                       <a href="binti_shujaa.jsp?frm=binti_followup" class="btn btn-default glyphicon glyphicon-repeat"> Follow Up</a>
+                                       <a href="binti_shujaa.jsp?frm=binti_enrollment" class="btn btn-default glyphicon glyphicon-file"> Binti Enrollments</a>
+                                       <a href="binti_shujaa.jsp?frm=binti_anc_visits" class="btn btn-warning glyphicon glyphicon-file"> ANC</a>
+                                       <a href="binti_shujaa.jsp?frm=binti_delivery_immunization" class="btn btn-info glyphicon glyphicon-baby-formula"> Immunization</a>
+                                       <a href="binti_shujaa.jsp?frm=binti_pnc_visits" class="btn btn-danger glyphicon glyphicon-folder-open"> PNC Services</a>
+                                       <a href="binti_shujaa.jsp?frm=binti_followup" class="btn btn-success glyphicon glyphicon-repeat"> Follow Up</a>
+                                       <a href="binti_shujaa.jsp?frm=binti_exit" class="btn btn-success glyphicon glyphicon-repeat"> Exit Form</a>
                                             </div>
                                 </div>
                                         </td></tr>

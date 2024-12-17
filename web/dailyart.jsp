@@ -236,7 +236,7 @@ String sects="";
 
 dbConn conn= new dbConn();
 
-String qr="select GROUP_CONCAT(DISTINCT(category)) as Category from der_rri.dailyart_indicators;";
+String qr="SELECT GROUP_CONCAT(DISTINCT category ORDER BY   CASE  WHEN category = '6_Quality Of Care Indicators' THEN 0  ELSE 1  END,   category DESC) AS Category FROM der_rri.dailyart_indicators;";
 
 conn.rs=conn.st.executeQuery(qr);
 
@@ -288,7 +288,7 @@ so+="<option "+selected+"  value='"+sectsArr[a]+"'>"+sectsArr[a]+"</option>";
                                                                 <div class="control-group">
 
                                                                     <div class="controls">
-                                                                        <label><required-option></required-option>Service Delivery Point</label> 
+                                                                        <label><required-option></required-option>Section</label> 
 
                                                                     </div>
                                                                 </div>

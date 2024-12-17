@@ -45,7 +45,17 @@ if(request.getParameter("p")!=null){
 %>
 
 
-                <%if(session.getAttribute("kd_session")!=null){ response.sendRedirect("clinicalhome.jsp"); %><%} else {  }%>   
+<%if(session.getAttribute("kd_session")!=null){
+         
+        if(request.getParameter("p")!=null){} else {
+        response.sendRedirect("clinicalhome.jsp"); 
+        }
+     
+     
+     %><%} else {  }%>   
+
+
+               
 </head>
 <body>
     
@@ -163,7 +173,8 @@ if($("#username")!==''){
 });
     
     </script>
-                        
+       
+     
                         
 </body>
 </html>

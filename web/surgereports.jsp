@@ -192,6 +192,7 @@
                                                             <option value='allSitesDataViaSurge'>7. Data File Only (All Sites)</option>
                                                             <option value='screening'>8. HTS Screening</option>
                                                             <option value='ramcah_tracker'>9. RMCAH Reporting Rates</option>
+                                                            <option value='qoctracker'>10. QOC Reporting Rates</option>
                                                             <!--<option value='hts_self_reports'>6.HTS Self</option>-->
 
                                                         </select>

@@ -215,14 +215,14 @@ rw.setHeightInPoints(26);
         
         //Autofreeze  || Autofilter  || Remove Gridlines ||  
         
-        shet.setAutoFilter(new CellRangeAddress(count1, count - 1, 0, columnCount-1));
+      //  shet.setAutoFilter(new CellRangeAddress(count1, count - 1, 0, columnCount-1));
         //System.out.println("1,"+rowpos+",0,"+colposcopy);
         for (int i = 0; i <= columnCount; i++) {
             shet.autoSizeColumn(i);
         }
         
-        shet.setDisplayGridlines(false);
-        shet.createFreezePane(6, 0);
+       // shet.setDisplayGridlines(false);
+      //  shet.createFreezePane(6, 0);
         
         if(conn.rs!=null){conn.rs.close();}
         if(conn.rs1!=null){conn.rs1.close();}

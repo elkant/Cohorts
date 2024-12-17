@@ -880,6 +880,10 @@
         <servlet-name>checkduplicateemail</servlet-name>
         <servlet-class>login.checkduplicateemail</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>qoctracker</servlet-name>
+        <servlet-class>reports.qoctracker</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loadcohort</servlet-name>
         <url-pattern>/loadcohort</url-pattern>
@@ -1759,6 +1763,10 @@
     <servlet-mapping>
         <servlet-name>checkduplicateemail</servlet-name>
         <url-pattern>/checkduplicateemail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>qoctracker</servlet-name>
+        <url-pattern>/qoctracker</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

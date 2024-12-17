@@ -59,6 +59,7 @@ public class getParameterData extends HttpServlet {
             
             if(conn.rs!=null){conn.rs.close();}
             if(conn.st!=null){conn.st.close();}
+            if(conn.connect!=null){conn.connect.close();}
             
             
         } catch (SQLException ex) {

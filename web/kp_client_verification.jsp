@@ -111,7 +111,8 @@ frm+="<option "+sele+" value='"+conn.rs.getString(1)+"' >"+conn.rs.getString(2)+
 
 
 
-
+if(conn.rs!=null){conn.rs.close();}
+if(conn.st!=null){conn.st.close();}
 
 
 
